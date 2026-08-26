@@ -1,0 +1,23 @@
+{
+  "annotations": {
+    "changelogDate": "20260826203956"
+  },
+  "applications": ["myApp"],
+  "fields": [
+    {
+      "fieldName": "question",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Question",
+  "relationships": [
+    {
+      "otherEntityName": "topic",
+      "relationshipName": "topic",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

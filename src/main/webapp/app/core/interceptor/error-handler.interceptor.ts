@@ -12,7 +12,7 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
     tap({
       error(err: HttpErrorResponse) {
         if (!(err.status === 401 && (err.message === '' || err.url?.includes('api/account')))) {
-          eventManager.broadcast(new EventWithContent('kipApp.httpError', err));
+          eventManager.broadcast(new EventWithContent('myApp.httpError', err));
         }
       },
     }),

@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-user-detail-heading" data-cy="UserDetailCreateUpdateHeading">Create or edit a User Detail</h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+
+        <div class="mb-3">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+        } @let usernameRef = editForm.get('username')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_username">Username</label>
+          <input type="text" class="form-control" name="username" id="field_username" data-cy="username" formControlName="username" />
+          @if (usernameRef.invalid && (usernameRef.dirty || usernameRef.touched)) {
+          <div>
+            @if (usernameRef.errors?.required) {
+            <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+          }
+        </div>
+
+        @let emailRef = editForm.get('email')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
+          <div>
+            @if (emailRef.errors?.required) {
+            <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dataUser">Data User</label>
+          <select
+            class="form-control"
+            id="field_dataUser"
+            data-cy="dataUser"
+            name="dataUser"
+            formControlName="dataUser"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            @for (userOption of usersSharedCollection(); track $index) {
+            <option [ngValue]="userOption">{{ userOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

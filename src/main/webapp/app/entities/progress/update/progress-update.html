@@ -1,0 +1,81 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-progress-heading" data-cy="ProgressCreateUpdateHeading">Create or edit a Progress</h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+
+        <div class="mb-3">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+        } @let moduleCompletionRef = editForm.get('moduleCompletion')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_moduleCompletion">Module Completion</label>
+          <input
+            type="number"
+            class="form-control"
+            name="moduleCompletion"
+            id="field_moduleCompletion"
+            data-cy="moduleCompletion"
+            formControlName="moduleCompletion"
+          />
+          @if (moduleCompletionRef.invalid && (moduleCompletionRef.dirty || moduleCompletionRef.touched)) {
+          <div>
+            @if (moduleCompletionRef.errors?.required) {
+            <small class="form-text text-danger">This field is required.</small>
+            }
+            <small class="form-text text-danger" [hidden]="!moduleCompletionRef.errors?.number">This field should be a number.</small>
+          </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_module">Module</label>
+          <select
+            class="form-control"
+            id="field_module"
+            data-cy="module"
+            name="module"
+            formControlName="module"
+            [compareWith]="compareModule"
+          >
+            <option [ngValue]="null"></option>
+            @for (moduleOption of modulesSharedCollection(); track $index) {
+            <option [ngValue]="moduleOption">{{ moduleOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUserDetail">
+            <option [ngValue]="null"></option>
+            @for (userDetailOption of userDetailsSharedCollection(); track $index) {
+            <option [ngValue]="userDetailOption">{{ userDetailOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

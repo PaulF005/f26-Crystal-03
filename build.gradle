@@ -12,7 +12,7 @@ plugins {
     // jhipster-needle-gradle-plugins - JHipster will add additional gradle plugins here
 }
 
-group = "com.mycompany.myapp"
+group = "com.myapp"
 version = "0.0.1-SNAPSHOT"
 
 description = ""

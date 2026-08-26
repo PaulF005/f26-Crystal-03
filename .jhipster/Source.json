@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "changelogDate": "20260826203958"
+  },
+  "applications": ["myApp"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "url",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "data",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Source",
+  "relationships": [
+    {
+      "otherEntityName": "legalContent",
+      "relationshipName": "legalContent",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

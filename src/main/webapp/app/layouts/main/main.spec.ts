@@ -44,7 +44,7 @@ describe('Main', () => {
   });
 
   describe('page title', () => {
-    const defaultPageTitle = 'KIP';
+    const defaultPageTitle = 'My App';
     const parentRoutePageTitle = 'parentTitle';
     const childRoutePageTitle = 'childTitle';
 

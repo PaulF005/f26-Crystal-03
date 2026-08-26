@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20260826203953"
+  },
+  "applications": ["myApp"],
+  "fields": [
+    {
+      "fieldName": "moduleCompletion",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Progress",
+  "relationships": [
+    {
+      "otherEntityName": "module",
+      "relationshipName": "module",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "userDetail",
+      "relationshipName": "user",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}
