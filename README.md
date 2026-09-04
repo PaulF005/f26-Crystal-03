@@ -10,7 +10,7 @@ Team Crystal - Fall 2026
 - pbandjprogramstyle - Christopher Humphreys - Chump011@odu.edu
 - Parselangua - Marshall Hoar - Mhoar002@odu.edu
 - Hasibnoor22 - Hasib Noor - hnoor002@odu.edu
-- neelanoor - Neela Noor - nnoor001@odu.edu
+- Nnoor22 - Neela Noor - nnoor001@odu.edu
 
 # Instructor
 
