@@ -1,0 +1,36 @@
+{
+  "annotations": {
+    "changelogDate": "20260913173100"
+  },
+  "applications": ["kip"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Scenario",
+  "relationships": [
+    {
+      "relationshipName": "game",
+      "otherEntityName": "game",
+      "otherEntityRelationshipName": "scenario",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "relationshipName": "topic",
+      "otherEntityName": "topic",
+      "otherEntityRelationshipName": "scenario",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "relationshipName": "stage",
+      "otherEntityName": "stage",
+      "otherEntityRelationshipName": "scenario",
+      "relationshipType": "one-to-many",
+      "relationshipSide": "left"
+    }
+  ],
+  "searchEngine": "no"
+}

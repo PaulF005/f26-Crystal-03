@@ -1,0 +1,24 @@
+{
+  "annotations": {
+    "changelogDate": "20260913173000"
+  },
+  "applications": ["kip"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Game",
+  "relationships": [
+    {
+      "relationshipName": "scenario",
+      "otherEntityName": "scenario",
+      "otherEntityRelationshipName": "game",
+      "relationshipType": "one-to-many",
+      "relationshipSide": "left"
+    }
+  ],
+  "searchEngine": "no"
+}

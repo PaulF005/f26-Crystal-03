@@ -1,0 +1,39 @@
+{
+  "annotations": {
+    "changelogDate": "20260913180000"
+  },
+  "applications": ["kip"],
+  "fields": [
+    {
+      "fieldName": "answer",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "correct",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Answer",
+  "relationships": [
+    {
+      "relationshipName": "question",
+      "otherEntityName": "question",
+      "otherEntityRelationshipName": "answer",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "relationshipName": "feedback",
+      "otherEntityName": "feedback",
+      "otherEntityRelationshipName": "answer",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "relationshipName": "nextStage",
+      "otherEntityName": "stage",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

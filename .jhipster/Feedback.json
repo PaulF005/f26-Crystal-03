@@ -1,27 +1,25 @@
 {
   "annotations": {
-    "changelogDate": "20260826203956"
+    "changelogDate": "20260913180100"
   },
   "applications": ["kip"],
   "fields": [
     {
-      "fieldName": "question",
+      "fieldName": "feedback",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "explanation",
+      "fieldType": "String"
     }
   ],
-  "name": "Question",
+  "name": "Feedback",
   "relationships": [
-    {
-      "relationshipName": "concept",
-      "otherEntityName": "concept",
-      "otherEntityRelationshipName": "question",
-      "relationshipType": "many-to-one"
-    },
     {
       "relationshipName": "answer",
       "otherEntityName": "answer",
-      "otherEntityRelationshipName": "question",
+      "otherEntityRelationshipName": "feedback",
       "relationshipType": "one-to-many",
       "relationshipSide": "left"
     }

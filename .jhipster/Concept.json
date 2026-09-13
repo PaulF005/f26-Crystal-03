@@ -1,0 +1,40 @@
+{
+  "annotations": {
+    "changelogDate": "20260826203955"
+  },
+  "applications": ["kip"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "explanation",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Concept",
+  "relationships": [
+    {
+      "otherEntityName": "question",
+      "otherEntityRelationshipName": "concept",
+      "relationshipName": "question",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "legalContent",
+      "relationshipName": "legalContent",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "topic",
+      "relationshipName": "topic",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}
