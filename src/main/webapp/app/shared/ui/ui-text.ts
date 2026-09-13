@@ -29,7 +29,7 @@ export const UI_TEXT = {
     },
   },
 
-  module: {
+  topic: {
     onTheRoad: 'On the Road',
     creativeRights: 'Creative Rights',
   },
