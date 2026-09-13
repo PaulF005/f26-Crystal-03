@@ -2,7 +2,7 @@
   "annotations": {
     "changelogDate": "20260826203958"
   },
-  "applications": ["myApp"],
+  "applications": ["kip"],
   "fields": [
     {
       "fieldName": "name",

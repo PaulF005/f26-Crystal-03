@@ -1,9 +1,9 @@
 
 application {
   config {
-    baseName myApp
+    baseName kip
     applicationType monolith
-    packageName com.myapp
+    packageName com.crystal.kip
     authenticationType jwt
     prodDatabaseType mysql
     devDatabaseType mysql

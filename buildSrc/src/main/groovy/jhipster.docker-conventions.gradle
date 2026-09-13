@@ -14,7 +14,7 @@ jib {
         }
     }
     to {
-        image = "myapp:latest"
+        image = "kip:latest"
     }
     container {
         entrypoint = ["bash", "-c", "/entrypoint.sh"]

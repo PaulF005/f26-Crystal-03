@@ -1,16 +1,16 @@
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
-name: myapp
+name: kip
 services:
   app:
-    image: myapp
+    image: kip
     environment:
       - _JAVA_OPTIONS=-Xmx512m -Xms256m
       - SPRING_PROFILES_ACTIVE=prod,api-docs,secret-samples
       - MANAGEMENT_PROMETHEUS_METRICS_EXPORT_ENABLED=true
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/myapp?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/kip?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=
-      - SPRING_LIQUIBASE_URL=jdbc:mysql://mysql:3306/myapp?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
+      - SPRING_LIQUIBASE_URL=jdbc:mysql://mysql:3306/kip?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true
     ports:
       - 127.0.0.1:8080:8080
     healthcheck:

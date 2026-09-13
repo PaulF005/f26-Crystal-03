@@ -2,7 +2,7 @@
   "generator-jhipster": {
     "applicationType": "monolith",
     "authenticationType": "jwt",
-    "baseName": "myApp",
+    "baseName": "kip",
     "buildTool": "gradle",
     "cacheProvider": "caffeine",
     "clientFramework": "angular",
@@ -23,7 +23,7 @@
     "lastLiquibaseTimestamp": 1787776798000,
     "microfrontend": null,
     "nativeLanguage": "en",
-    "packageName": "com.myapp",
+    "packageName": "com.crystal.kip",
     "prodDatabaseType": "mysql",
     "reactive": false,
     "serverPort": null,

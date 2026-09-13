@@ -92,7 +92,7 @@ management:
 
 spring:
   application:
-    name: myApp
+    name: kip
   docker:
     compose:
       enabled: true
@@ -189,7 +189,7 @@ info:
 
 jhipster:
   clientApp:
-    name: 'myApp'
+    name: 'kip'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #   allowed-origins: "http://localhost:8100,http://localhost:9000"
@@ -199,7 +199,7 @@ jhipster:
   #   allow-credentials: true
   #   max-age: 1800
   mail:
-    from: myApp@localhost
+    from: kip@localhost
   api-docs:
     default-include-pattern: /api/**
     management-include-pattern: /management/**
