@@ -203,8 +203,8 @@ jhipster:
   api-docs:
     default-include-pattern: /api/**
     management-include-pattern: /management/**
-    title: My App API
-    description: My App API documentation
+    title: KIP API
+    description: KIP API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:

@@ -44,7 +44,7 @@ describe('Main', () => {
   });
 
   describe('page title', () => {
-    const defaultPageTitle = 'My App';
+    const defaultPageTitle = 'Knowledge Is Power';
     const parentRoutePageTitle = 'parentTitle';
     const childRoutePageTitle = 'childTitle';
 
