@@ -21,21 +21,6 @@ public class Game {
         this.scenarios = scenarios;
     }
 
-    public List<Game> getGamesByTopic(Topic topic, List<Game> allGames) {
-        List<Game> matchingGames = new ArrayList<>();
-
-        for (Game game : allGames) {
-            for (Scenario scenario : game.getScenarios()) {
-                if (scenario.getTopic().equals(topic)) {
-                    matchingGames.add(game);
-                    break;
-                }
-            }
-        }
-
-        return matchingGames;
-    }
-
     // Getters
     public Long getId() {
         return id;

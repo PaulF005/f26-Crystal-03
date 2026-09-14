@@ -18,7 +18,7 @@ public class Stage {
         return id;
     }
 
-    public List<Question> getAnswerChoices() {
+    public List<Question> getQuestions() {
         return questions;
     }
 }
