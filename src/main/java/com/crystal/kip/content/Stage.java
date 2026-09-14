@@ -5,26 +5,20 @@ import java.util.List;
 public class Stage {
 
     private Long id;
-    private String question;
-    private List<AnswerChoice> answerChoices;
+    private List<Question> questions;
 
     public Stage() {}
 
-    public Stage(Long id, String question, List<AnswerChoice> answerChoices) {
+    public Stage(Long id, List<Question> questions) {
         this.id = id;
-        this.question = question;
-        this.answerChoices = answerChoices;
+        this.questions = questions;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getQuestion() {
-        return question;
-    }
-
-    public List<AnswerChoice> getAnswerChoices() {
-        return answerChoices;
+    public List<Question> getAnswerChoices() {
+        return questions;
     }
 }

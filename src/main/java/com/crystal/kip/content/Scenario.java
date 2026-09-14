@@ -5,14 +5,14 @@ import java.util.List;
 public class Scenario {
 
     private Game game;
-    private Topic module;
+    private Topic topic;
     private List<Stage> stages;
 
     public Scenario() {}
 
-    public Scenario(Game game, Topic module, List<Stage> stages) {
+    public Scenario(Game game, Topic topic, List<Stage> stages) {
         this.game = game;
-        this.module = module;
+        this.topic = topic;
         this.stages = stages;
     }
 
@@ -20,8 +20,8 @@ public class Scenario {
         return game;
     }
 
-    public Topic getModule() {
-        return module;
+    public Topic getTopic() {
+        return topic;
     }
 
     public List<Stage> getStages() {

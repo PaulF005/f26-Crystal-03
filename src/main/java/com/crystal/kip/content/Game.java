@@ -26,7 +26,7 @@ public class Game {
 
         for (Game game : allGames) {
             for (Scenario scenario : game.getScenarios()) {
-                if (scenario.getModule().equals(topic)) {
+                if (scenario.getTopic().equals(topic)) {
                     matchingGames.add(game);
                     break;
                 }
