@@ -1,31 +1,26 @@
 package com.crystal.kip.content;
 
-public class Answer {
+public class Answer extends Content {
 
-    private Long id;
-    private String answerChoice;
-    private String feedback;
+    private String text;
+    private String outcomeText;
     private Stage nextStage;
 
     public Answer() {}
 
-    public Answer(Long id, String answerChoice, String feedback, Stage nextStage) {
+    public Answer(Long id, String text, String outcomeText, Stage nextStage) {
         this.id = id;
-        this.answerChoice = answerChoice;
-        this.feedback = feedback;
+        this.text = text;
+        this.outcomeText = outcomeText;
         this.nextStage = nextStage;
     }
 
-    public Long getId() {
-        return id;
+    public String getText() {
+        return text;
     }
 
-    public String getAnswerChoice() {
-        return answerChoice;
-    }
-
-    public String getFeedback() {
-        return feedback;
+    public String getOutcomeText() {
+        return outcomeText;
     }
 
     public Stage getNextStage() {

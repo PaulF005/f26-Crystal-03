@@ -1,24 +1,17 @@
 package com.crystal.kip.content;
 
-import java.util.List;
+public class Stage extends Content {
 
-public class Stage {
-
-    private Long id;
-    private List<Question> questions;
+    private Question question;
 
     public Stage() {}
 
-    public Stage(Long id, List<Question> questions) {
+    public Stage(Long id, Question question) {
         this.id = id;
-        this.questions = questions;
+        this.question = question;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
+    public Question getQuestion() {
+        return question;
     }
 }

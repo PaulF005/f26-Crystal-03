@@ -2,7 +2,7 @@ package com.crystal.kip.content;
 
 import java.util.List;
 
-public class Scenario {
+public class Scenario extends Content {
 
     private Game game;
     private Topic topic;

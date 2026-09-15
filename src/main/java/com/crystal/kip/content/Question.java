@@ -2,9 +2,8 @@ package com.crystal.kip.content;
 
 import java.util.List;
 
-public class Question {
+public class Question extends Content {
 
-    private Long id;
     private String concept;
     private List<Answer> answerChoices;
 
@@ -14,10 +13,6 @@ public class Question {
         this.id = id;
         this.concept = concept;
         this.answerChoices = answerChoices;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getConcept() {

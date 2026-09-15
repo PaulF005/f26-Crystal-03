@@ -1,18 +1,24 @@
 package com.crystal.kip.game;
 
+import org.springframework.stereotype.Service;
+
 import com.crystal.kip.content.Game;
+import com.crystal.kip.content.Topic;
 import com.crystal.kip.domain.User;
 
+@Service
 public class GameEngine {
 
-    public GameSession startSession(User user, Game game) {
-        GameSession session = new GameSession(game);
+    public GameEngine GameEngine() {
+        return new GameEngine();
+    }
 
-        return session;
+    public GameSession startSession(User user, Game game, Topic topic) {
+        return new GameSession(user, game, topic);
     }
 
     private void endSession(GameSession session) {
-        
+       
     }
 
     public void completeSession(GameSession session) {
