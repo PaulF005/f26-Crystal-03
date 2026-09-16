@@ -1,0 +1,89 @@
+application {
+  config {
+    baseName kip
+    applicationType monolith
+    packageName com.crystal.kip
+    authenticationType jwt
+    prodDatabaseType mysql
+    devDatabaseType mysql
+    clientFramework angular
+  }
+  entities *
+}
+
+entity UserDetail {
+  username String required
+  email String required
+}
+
+entity Progress {
+  moduleCompletion Float required
+}
+
+// Renamed from Module to align with team updates
+entity Topic {
+  name String required
+}
+
+// Renamed from Topic to align with team updates
+entity Concept {
+  name String required
+  explanation String
+}
+
+entity Question {
+  question String required
+}
+
+entity LegalContent {
+  name String required
+}
+
+entity Source {
+  name String required
+  url String
+  date String
+  data String required
+}
+
+// NEW GAMEPLAY ENTITIES
+entity Scenario {
+  name String required
+}
+
+entity Stage {
+  // Acts as the adaptive execution node mapping to a specific question
+}
+
+// ==========================================
+// RELATIONSHIPS CONFIGURATION
+// ==========================================
+
+relationship OneToOne {
+  UserDetail{dataUser} to User with builtInEntity
+}
+
+relationship OneToMany {
+  UserDetail to Progress{user}
+  
+  // Topic (formerly Module) contains child Concepts (formerly Topics)
+  Topic to Concept{topic}
+  
+  // Concept contains child Questions
+  Concept to Question{concept}
+  
+  LegalContent to Source{legalContent}
+  
+  // Scenario contains the sequential execution Levels/Stages
+  Scenario to Stage{scenario}
+}
+
+relationship ManyToOne {
+  Progress{module} to Topic
+  Concept{legalContent} to LegalContent
+  
+  // Connects gameplay loops to content tracking structures
+  Scenario{game} to Topic
+  Scenario{topic} to Topic
+  Stage{question} to Question
+}
