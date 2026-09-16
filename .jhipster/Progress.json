@@ -13,8 +13,8 @@
   "name": "Progress",
   "relationships": [
     {
-      "otherEntityName": "module",
-      "relationshipName": "module",
+      "otherEntityName": "topic",
+      "relationshipName": "topic",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
