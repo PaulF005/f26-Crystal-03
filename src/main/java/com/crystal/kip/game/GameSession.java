@@ -1,9 +1,9 @@
 package com.crystal.kip.game;
 
-import com.crystal.kip.domain.User;
 import com.crystal.kip.content.Game;
 import com.crystal.kip.content.Topic;
-
+import com.crystal.kip.domain.User;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,7 +11,7 @@ class GameSession {
 
     UUID id;
     User user;
-    
+
     Game game;
     Topic topic;
 
@@ -24,6 +24,19 @@ class GameSession {
         this.topic = topic;
 
         this.id = UUID.randomUUID();
+        scenarios = new ArrayList<>();
+    }
+
+    public void addScenario(GameScenario scenario) {
+        scenarios.add(scenario);
+    }
+
+    public void addScenarios(List<GameScenario> scenarios) {
+        this.scenarios.addAll(scenarios);
+    }
+
+    public void startScenario(GameScenario scenario) {
+        this.currentScenario = scenario;
     }
 
     public UUID getId() {
@@ -36,5 +49,9 @@ class GameSession {
 
     public Topic getTopic() {
         return topic;
+    }
+
+    public GameScenario getCurrentScenario() {
+        return currentScenario;
     }
 }

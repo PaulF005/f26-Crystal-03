@@ -7,4 +7,12 @@ public class Content {
     public Long getId() {
         return id;
     }
+
+    public boolean equals(Content content) {
+        if (this.id == content.id) {
+            return true;
+        }
+
+        return false;
+    }
 }
