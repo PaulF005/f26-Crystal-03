@@ -20,12 +20,10 @@ entity Progress {
   moduleCompletion Float required
 }
 
-// Renamed from Module to align with team updates
 entity Topic {
   name String required
 }
 
-// Renamed from Topic to align with team updates
 entity Concept {
   name String required
   explanation String
@@ -34,6 +32,26 @@ entity Concept {
 entity Question {
   question String required
 }
+
+entity Answer {
+  answer String required
+  correct Boolean required
+}
+
+entity Feedback {
+  feedback String required
+  explanation String
+}
+
+entity Game {
+  name String required
+}
+
+entity Scenario {
+  name String required
+}
+
+entity Stage {}
 
 entity LegalContent {
   name String required
@@ -46,44 +64,24 @@ entity Source {
   data String required
 }
 
-// NEW GAMEPLAY ENTITIES
-entity Scenario {
-  name String required
-}
-
-entity Stage {
-  // Acts as the adaptive execution node mapping to a specific question
-}
-
-// ==========================================
-// RELATIONSHIPS CONFIGURATION
-// ==========================================
-
 relationship OneToOne {
   UserDetail{dataUser} to User with builtInEntity
 }
 
 relationship OneToMany {
   UserDetail to Progress{user}
-  
-  // Topic (formerly Module) contains child Concepts (formerly Topics)
-  Topic to Concept{topic}
-  
-  // Concept contains child Questions
-  Concept to Question{concept}
-  
-  LegalContent to Source{legalContent}
-  
-  // Scenario contains the sequential execution Levels/Stages
+  Game to Scenario{game}
   Scenario to Stage{scenario}
+  Topic to Concept{topic}
+  Concept to Question{concept}
+  Question to Answer{question}
 }
 
 relationship ManyToOne {
-  Progress{module} to Topic
+  Source{legalContent} to LegalContent
   Concept{legalContent} to LegalContent
-  
-  // Connects gameplay loops to content tracking structures
-  Scenario{game} to Topic
   Scenario{topic} to Topic
   Stage{question} to Question
+  Answer{nextStage} to Stage
+  Answer{feedback} to Feedback
 }
