@@ -13,14 +13,12 @@
   "name": "Progress",
   "relationships": [
     {
-
       "otherEntityName": "topic",
       "relationshipName": "topic",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
-
       "otherEntityName": "userDetail",
       "relationshipName": "user",
       "relationshipSide": "right",

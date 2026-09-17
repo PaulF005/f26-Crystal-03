@@ -44,6 +44,10 @@ public class Scenario implements Serializable {
     @JsonIgnoreProperties(value = { "scenarios" }, allowSetters = true)
     private Game game;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "question", "scenario" }, allowSetters = true)
+    private Stage startingStage;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -126,6 +130,19 @@ public class Scenario implements Serializable {
 
     public Scenario game(Game game) {
         this.setGame(game);
+        return this;
+    }
+
+    public Stage getStartingStage() {
+    return this.startingStage;
+}
+
+    public void setStartingStage(Stage startingStage) {
+        this.startingStage = startingStage;
+    }
+
+    public Scenario startingStage(Stage startingStage) {
+        this.setStartingStage(startingStage);
         return this;
     }
 

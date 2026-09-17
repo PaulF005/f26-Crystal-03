@@ -124,7 +124,7 @@ public class AnswerResource {
         Optional<Answer> result = answerRepository
             .findById(answer.getId())
             .map(existingAnswer -> {
-                updateIfPresent(existingAnswer::setAnswer, answer.getAnswer());
+                updateIfPresent(existingAnswer::setText, answer.getText());
                 updateIfPresent(existingAnswer::setCorrect, answer.getCorrect());
 
                 return existingAnswer;

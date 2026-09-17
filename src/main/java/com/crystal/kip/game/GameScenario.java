@@ -1,6 +1,6 @@
 package com.crystal.kip.game;
 
-import com.crystal.kip.content.Scenario;
+import com.crystal.kip.domain.Scenario;
 
 public class GameScenario {
 

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20260917030000-1" author="kip">
+
+        <!-- Answer.answer -> Answer.text -->
+        <renameColumn
+            tableName="answer"
+            oldColumnName="answer"
+            newColumnName="text"
+            columnDataType="varchar(255)" />
+
+        <!-- New Answer fields -->
+        <addColumn tableName="answer">
+            <column name="outcome_text" type="varchar(255)" />
+            <column name="terminal_resolution" type="varchar(255)" />
+        </addColumn>
+
+        <!-- Answer.correct is optional -->
+        <dropNotNullConstraint
+            tableName="answer"
+            columnName="correct"
+            columnDataType="boolean" />
+
+        <!-- Scenario.startingStage -->
+        <addColumn tableName="scenario">
+            <column name="starting_stage_id" type="bigint" />
+        </addColumn>
+
+        <addForeignKeyConstraint
+            baseTableName="scenario"
+            baseColumnNames="starting_stage_id"
+            referencedTableName="stage"
+            referencedColumnNames="id"
+            constraintName="fk_scenario__starting_stage" />
+
+        <createIndex
+            tableName="scenario"
+            indexName="idx_scenario__starting_stage">
+            <column name="starting_stage_id" />
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

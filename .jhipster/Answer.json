@@ -5,14 +5,22 @@
   "applications": ["kip"],
   "fields": [
     {
-      "fieldName": "answer",
+      "fieldName": "text",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "outcomeText",
+      "fieldType": "String"
+    },
+    {
       "fieldName": "correct",
-      "fieldType": "Boolean",
-      "fieldValidateRules": ["required"]
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "terminalResolution",
+      "fieldType": "ScenarioResolution",
+      "fieldValues": "POSITIVE,NEGATIVE,INCONCLUSIVE"
     }
   ],
   "name": "Answer",

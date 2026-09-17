@@ -20,6 +20,12 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityName": "stage",
+      "relationshipName": "startingStage",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
       "otherEntityName": "topic",
       "relationshipName": "topic",
       "relationshipSide": "left",

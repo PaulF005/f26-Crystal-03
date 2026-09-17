@@ -1,10 +1,10 @@
 package com.crystal.kip.game;
 
-import com.crystal.kip.content.Game;
-import com.crystal.kip.content.Scenario;
-import com.crystal.kip.content.Topic;
 import com.crystal.kip.domain.User;
 import org.springframework.stereotype.Service;
+import com.crystal.kip.domain.Game;
+import com.crystal.kip.domain.Topic;
+import com.crystal.kip.domain.Scenario;
 
 @Service
 public class GameEngine {

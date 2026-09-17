@@ -1,22 +1,29 @@
 package com.crystal.kip.game;
 
-import com.crystal.kip.content.Game;
-import com.crystal.kip.content.Scenario;
-import com.crystal.kip.content.Topic;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
+import com.crystal.kip.domain.Game;
+import com.crystal.kip.domain.Scenario;
+import com.crystal.kip.domain.Topic;
+import com.crystal.kip.repository.ScenarioRepository;
+
+@Service
 public class ScenarioSelector {
+
+    private final ScenarioRepository scenarioRepository;
+
+    public ScenarioSelector(ScenarioRepository scenarioRepository) {
+        this.scenarioRepository = scenarioRepository;
+    }
 
     public Scenario selectNext(GameSession session) {
         Game game = session.getGame();
         Topic topic = session.getTopic();
 
-        // choose from scenarios that are eligible with the given game and topic
-        // TODO: what else determines eligibility tbd
-        for (Scenario scenario : game.getScenarios()) {
-            if (scenario.getTopic().equals(topic)) {
-                return scenario;
-            }
-        }
+        List<Scenario> scenarios = scenarioRepository.findByGameAndTopic(game.getId(), topic.getId());
+        
+        // choose from scenarios that fit some criteria tbd
 
         return null;
     }
