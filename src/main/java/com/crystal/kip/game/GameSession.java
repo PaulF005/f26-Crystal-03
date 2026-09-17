@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-class GameSession {
+public class GameSession {
 
     UUID id;
     User user;
@@ -49,6 +49,10 @@ class GameSession {
 
     public Topic getTopic() {
         return topic;
+    }
+
+    public List<GameScenario> getScenarios() {
+        return scenarios;
     }
 
     public GameScenario getCurrentScenario() {
