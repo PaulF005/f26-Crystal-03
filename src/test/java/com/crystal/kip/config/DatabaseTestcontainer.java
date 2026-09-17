@@ -10,7 +10,7 @@ import org.testcontainers.junit.jupiter.Container;
 public interface DatabaseTestcontainer {
     @Container
     MySQLContainer<?> databaseContainer = (MySQLContainer) new MySQLContainer<>("mysql:9.7.1")
-        .withDatabaseName("KIP")
+        .withDatabaseName("kip")
         .withConfigurationOverride("conf/mysql")
         .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger(DatabaseTestcontainer.class)))
         .withReuse(true);

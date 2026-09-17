@@ -17,19 +17,44 @@ const routes: Routes = [
     loadChildren: () => import('./progress/progress.routes'),
   },
   {
-    path: 'module',
-    data: { pageTitle: 'Modules' },
-    loadChildren: () => import('./module/module.routes'),
-  },
-  {
     path: 'topic',
     data: { pageTitle: 'Topics' },
     loadChildren: () => import('./topic/topic.routes'),
   },
   {
+    path: 'concept',
+    data: { pageTitle: 'Concepts' },
+    loadChildren: () => import('./concept/concept.routes'),
+  },
+  {
     path: 'question',
     data: { pageTitle: 'Questions' },
     loadChildren: () => import('./question/question.routes'),
+  },
+  {
+    path: 'answer',
+    data: { pageTitle: 'Answers' },
+    loadChildren: () => import('./answer/answer.routes'),
+  },
+  {
+    path: 'feedback',
+    data: { pageTitle: 'Feedbacks' },
+    loadChildren: () => import('./feedback/feedback.routes'),
+  },
+  {
+    path: 'game',
+    data: { pageTitle: 'Games' },
+    loadChildren: () => import('./game/game.routes'),
+  },
+  {
+    path: 'scenario',
+    data: { pageTitle: 'Scenarios' },
+    loadChildren: () => import('./scenario/scenario.routes'),
+  },
+  {
+    path: 'stage',
+    data: { pageTitle: 'Stages' },
+    loadChildren: () => import('./stage/stage.routes'),
   },
   {
     path: 'legal-content',

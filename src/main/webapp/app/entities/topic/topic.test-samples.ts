@@ -6,14 +6,13 @@ export const sampleWithRequiredData: ITopic = {
 };
 
 export const sampleWithPartialData: ITopic = {
-  id: 27054,
-  name: 'questionably',
+  id: 23965,
+  name: 'black-and-white pfft vision',
 };
 
 export const sampleWithFullData: ITopic = {
   id: 1471,
   name: 'brr gosh and',
-  explanation: 'babushka',
 };
 
 export const sampleWithNewData: NewTopic = {

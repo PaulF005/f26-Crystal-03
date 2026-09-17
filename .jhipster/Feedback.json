@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20260913180100"
+    "changelogDate": "20260916023747"
   },
   "applications": ["kip"],
   "fields": [
@@ -15,14 +15,6 @@
     }
   ],
   "name": "Feedback",
-  "relationships": [
-    {
-      "relationshipName": "answer",
-      "otherEntityName": "answer",
-      "otherEntityRelationshipName": "feedback",
-      "relationshipType": "one-to-many",
-      "relationshipSide": "left"
-    }
-  ],
+  "relationships": [],
   "searchEngine": "no"
 }

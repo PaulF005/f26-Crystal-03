@@ -1,0 +1,111 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-answer-heading" data-cy="AnswerCreateUpdateHeading">Create or edit a Answer</h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let answerRef = editForm.get('answer')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_answer">Answer</label>
+          <input type="text" class="form-control" name="answer" id="field_answer" data-cy="answer" formControlName="answer" />
+          @if (answerRef.invalid && (answerRef.dirty || answerRef.touched)) {
+            <div>
+              @if (answerRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let correctRef = editForm.get('correct')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_correct">Correct</label>
+          <input type="checkbox" class="form-check" name="correct" id="field_correct" data-cy="correct" formControlName="correct" />
+          @if (correctRef.invalid && (correctRef.dirty || correctRef.touched)) {
+            <div>
+              @if (correctRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_nextStage">Next Stage</label>
+          <select
+            class="form-control"
+            id="field_nextStage"
+            data-cy="nextStage"
+            name="nextStage"
+            formControlName="nextStage"
+            [compareWith]="compareStage"
+          >
+            <option [ngValue]="null"></option>
+            @for (stageOption of stagesSharedCollection(); track $index) {
+              <option [ngValue]="stageOption">{{ stageOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_feedback">Feedback</label>
+          <select
+            class="form-control"
+            id="field_feedback"
+            data-cy="feedback"
+            name="feedback"
+            formControlName="feedback"
+            [compareWith]="compareFeedback"
+          >
+            <option [ngValue]="null"></option>
+            @for (feedbackOption of feedbacksSharedCollection(); track $index) {
+              <option [ngValue]="feedbackOption">{{ feedbackOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_question">Question</label>
+          <select
+            class="form-control"
+            id="field_question"
+            data-cy="question"
+            name="question"
+            formControlName="question"
+            [compareWith]="compareQuestion"
+          >
+            <option [ngValue]="null"></option>
+            @for (questionOption of questionsSharedCollection(); track $index) {
+              <option [ngValue]="questionOption">{{ questionOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

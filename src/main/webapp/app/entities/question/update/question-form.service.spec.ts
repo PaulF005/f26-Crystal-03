@@ -21,7 +21,7 @@ describe('Question Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             question: expect.any(Object),
-            topic: expect.any(Object),
+            concept: expect.any(Object),
           }),
         );
       });
@@ -33,7 +33,7 @@ describe('Question Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             question: expect.any(Object),
-            topic: expect.any(Object),
+            concept: expect.any(Object),
           }),
         );
       });

@@ -5,7 +5,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.crystal.kip.IntegrationTest;
 import com.crystal.kip.domain.User;
 import com.crystal.kip.repository.UserRepository;
@@ -13,6 +12,7 @@ import com.crystal.kip.security.AuthoritiesConstants;
 import com.crystal.kip.service.UserService;
 import com.crystal.kip.service.dto.AdminUserDTO;
 import com.crystal.kip.service.mapper.UserMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.*;
 import java.util.function.Consumer;

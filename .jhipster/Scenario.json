@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20260913173100"
+    "changelogDate": "20260916023749"
   },
   "applications": ["kip"],
   "fields": [
@@ -13,23 +13,23 @@
   "name": "Scenario",
   "relationships": [
     {
-      "relationshipName": "game",
-      "otherEntityName": "game",
-      "otherEntityRelationshipName": "scenario",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "relationshipName": "topic",
-      "otherEntityName": "topic",
-      "otherEntityRelationshipName": "scenario",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "relationshipName": "stage",
       "otherEntityName": "stage",
       "otherEntityRelationshipName": "scenario",
-      "relationshipType": "one-to-many",
-      "relationshipSide": "left"
+      "relationshipName": "stage",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "topic",
+      "relationshipName": "topic",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "game",
+      "relationshipName": "game",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no"

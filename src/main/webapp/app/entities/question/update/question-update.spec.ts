@@ -6,8 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subject, from, of } from 'rxjs';
 
-import { TopicService } from 'app/entities/topic/service/topic.service';
-import { ITopic } from 'app/entities/topic/topic.model';
+import { IConcept } from 'app/entities/concept/concept.model';
+import { ConceptService } from 'app/entities/concept/service/concept.service';
 import { IQuestion } from '../question.model';
 import { QuestionService } from '../service/question.service';
 
@@ -20,7 +20,7 @@ describe('Question Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let questionFormService: QuestionFormService;
   let questionService: QuestionService;
-  let topicService: TopicService;
+  let conceptService: ConceptService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -39,43 +39,43 @@ describe('Question Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     questionFormService = TestBed.inject(QuestionFormService);
     questionService = TestBed.inject(QuestionService);
-    topicService = TestBed.inject(TopicService);
+    conceptService = TestBed.inject(ConceptService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('should call Topic query and add missing value', () => {
+    it('should call Concept query and add missing value', () => {
       const question: IQuestion = { id: 15287 };
-      const topic: ITopic = { id: 29581 };
-      question.topic = topic;
+      const concept: IConcept = { id: 29097 };
+      question.concept = concept;
 
-      const topicCollection: ITopic[] = [{ id: 29581 }];
-      vitest.spyOn(topicService, 'query').mockReturnValue(of(new HttpResponse({ body: topicCollection })));
-      const additionalTopics = [topic];
-      const expectedCollection: ITopic[] = [...additionalTopics, ...topicCollection];
-      vitest.spyOn(topicService, 'addTopicToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const conceptCollection: IConcept[] = [{ id: 29097 }];
+      vitest.spyOn(conceptService, 'query').mockReturnValue(of(new HttpResponse({ body: conceptCollection })));
+      const additionalConcepts = [concept];
+      const expectedCollection: IConcept[] = [...additionalConcepts, ...conceptCollection];
+      vitest.spyOn(conceptService, 'addConceptToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ question });
       comp.ngOnInit();
 
-      expect(topicService.query).toHaveBeenCalled();
-      expect(topicService.addTopicToCollectionIfMissing).toHaveBeenCalledWith(
-        topicCollection,
-        ...additionalTopics.map(i => expect.objectContaining(i) as typeof i),
+      expect(conceptService.query).toHaveBeenCalled();
+      expect(conceptService.addConceptToCollectionIfMissing).toHaveBeenCalledWith(
+        conceptCollection,
+        ...additionalConcepts.map(i => expect.objectContaining(i) as typeof i),
       );
-      expect(comp.topicsSharedCollection()).toEqual(expectedCollection);
+      expect(comp.conceptsSharedCollection()).toEqual(expectedCollection);
     });
 
     it('should update editForm', () => {
       const question: IQuestion = { id: 15287 };
-      const topic: ITopic = { id: 29581 };
-      question.topic = topic;
+      const concept: IConcept = { id: 29097 };
+      question.concept = concept;
 
       activatedRoute.data = of({ question });
       comp.ngOnInit();
 
-      expect(comp.topicsSharedCollection()).toContainEqual(topic);
+      expect(comp.conceptsSharedCollection()).toContainEqual(concept);
       expect(comp.question).toEqual(question);
     });
   });
@@ -149,13 +149,13 @@ describe('Question Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareTopic', () => {
-      it('should forward to topicService', () => {
-        const entity = { id: 29581 };
-        const entity2 = { id: 14122 };
-        vitest.spyOn(topicService, 'compareTopic');
-        comp.compareTopic(entity, entity2);
-        expect(topicService.compareTopic).toHaveBeenCalledWith(entity, entity2);
+    describe('compareConcept', () => {
+      it('should forward to conceptService', () => {
+        const entity = { id: 29097 };
+        const entity2 = { id: 14426 };
+        vitest.spyOn(conceptService, 'compareConcept');
+        comp.compareConcept(entity, entity2);
+        expect(conceptService.compareConcept).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

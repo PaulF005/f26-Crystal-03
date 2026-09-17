@@ -152,13 +152,13 @@ spring:
           authorities-claim-name: auth
   task:
     execution:
-      thread-name-prefix: my-app-task-
+      thread-name-prefix: kip-task-
       pool:
         core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: my-app-scheduling-
+      thread-name-prefix: kip-scheduling-
       pool:
         size: 2
   thymeleaf:
@@ -189,7 +189,7 @@ info:
 
 jhipster:
   clientApp:
-    name: 'kip'
+    name: 'kipApp'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #   allowed-origins: "http://localhost:8100,http://localhost:9000"
@@ -203,8 +203,8 @@ jhipster:
   api-docs:
     default-include-pattern: /api/**
     management-include-pattern: /management/**
-    title: KIP API
-    description: KIP API documentation
+    title: Kip API
+    description: Kip API documentation
     version: 0.0.1
     terms-of-service-url:
     contact-name:

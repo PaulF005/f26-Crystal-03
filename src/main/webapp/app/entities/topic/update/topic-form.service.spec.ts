@@ -21,9 +21,6 @@ describe('Topic Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             name: expect.any(Object),
-            explanation: expect.any(Object),
-            legalContent: expect.any(Object),
-            module: expect.any(Object),
           }),
         );
       });
@@ -35,9 +32,6 @@ describe('Topic Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             name: expect.any(Object),
-            explanation: expect.any(Object),
-            legalContent: expect.any(Object),
-            module: expect.any(Object),
           }),
         );
       });

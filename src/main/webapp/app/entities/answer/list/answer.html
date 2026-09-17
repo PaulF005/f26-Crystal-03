@@ -1,0 +1,131 @@
+<div>
+  <h2 id="page-heading" data-cy="AnswerHeading">
+    <span>Answers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-answer"
+        [routerLink]="['/answer/new']"
+      >
+        <fa-icon icon="plus" />
+        <span>Create a new Answer</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (answers().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>No Answers found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="answer">
+              <div class="d-flex">
+                <span>Answer</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="correct">
+              <div class="d-flex">
+                <span>Correct</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="nextStage.id">
+              <div class="d-flex">
+                <span>Next Stage</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="feedback.id">
+              <div class="d-flex">
+                <span>Feedback</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="question.id">
+              <div class="d-flex">
+                <span>Question</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (answer of answers(); track trackId(answer)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/answer', answer.id, 'view']">{{ answer.id }}</a>
+              </td>
+              <td>{{ answer.answer }}</td>
+              <td>{{ answer.correct }}</td>
+              <td>
+                @if (answer.nextStage) {
+                  <div>
+                    <a [routerLink]="['/stage', answer.nextStage.id, 'view']">{{ answer.nextStage.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (answer.feedback) {
+                  <div>
+                    <a [routerLink]="['/feedback', answer.feedback.id, 'view']">{{ answer.feedback.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (answer.question) {
+                  <div>
+                    <a [routerLink]="['/question', answer.question.id, 'view']">{{ answer.question.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/answer', answer.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline">View</span>
+                  </a>
+
+                  <a [routerLink]="['/answer', answer.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(answer)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

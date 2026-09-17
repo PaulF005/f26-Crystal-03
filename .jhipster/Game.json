@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20260913173000"
+    "changelogDate": "20260916023748"
   },
   "applications": ["kip"],
   "fields": [
@@ -13,11 +13,11 @@
   "name": "Game",
   "relationships": [
     {
-      "relationshipName": "scenario",
       "otherEntityName": "scenario",
       "otherEntityRelationshipName": "game",
-      "relationshipType": "one-to-many",
-      "relationshipSide": "left"
+      "relationshipName": "scenario",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no"

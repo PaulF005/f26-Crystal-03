@@ -1,50 +1,42 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     @if (progress(); as progressRef) {
-    <div>
-      <h2 data-cy="progressDetailsHeading"><span>Progress</span></h2>
+      <div>
+        <h2 data-cy="progressDetailsHeading"><span>Progress</span></h2>
 
-      <hr />
+        <hr />
 
-      <jhi-alert-error />
+        <jhi-alert-error />
 
-      <jhi-alert />
+        <jhi-alert />
 
-      <dl class="row-md jh-entity-details">
-        <dt><span>ID</span></dt>
-        <dd>
-          <span>{{ progressRef.id }}</span>
-        </dd>
-        <dt><span>Module Completion</span></dt>
-        <dd>
-          <span>{{ progressRef.moduleCompletion }}</span>
-        </dd>
-        <dt><span>Module</span></dt>
-        <dd>
-          @if (progress()!.module) {
-          <div>
-            <a [routerLink]="['/module', progress()!.module?.id, 'view']">{{ progressRef.module?.id }}</a>
-          </div>
-          }
-        </dd>
-        <dt><span>User</span></dt>
-        <dd>
-          @if (progress()!.user) {
-          <div>
-            <a [routerLink]="['/user-detail', progress()!.user?.id, 'view']">{{ progressRef.user?.id }}</a>
-          </div>
-          }
-        </dd>
-      </dl>
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ progressRef.id }}</span>
+          </dd>
+          <dt><span>Module Completion</span></dt>
+          <dd>
+            <span>{{ progressRef.moduleCompletion }}</span>
+          </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            @if (progress()!.user) {
+              <div>
+                <a [routerLink]="['/user-detail', progress()!.user?.id, 'view']">{{ progressRef.user?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
-      </button>
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
+        </button>
 
-      <button type="button" [routerLink]="['/progress', progressRef.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
-      </button>
-    </div>
+        <button type="button" [routerLink]="['/progress', progressRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
+        </button>
+      </div>
     }
   </div>
 </div>

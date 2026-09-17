@@ -25,95 +25,97 @@
   <jhi-alert />
 
   @if (sources().length === 0) {
-  <div class="alert alert-warning" id="no-result">
-    <span>No Sources found</span>
-  </div>
+    <div class="alert alert-warning" id="no-result">
+      <span>No Sources found</span>
+    </div>
   } @else {
-  <div class="table-responsive table-entities" id="entities">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>ID</span>
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>ID</span>
 
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="name">
-            <div class="d-flex">
-              <span>Name</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="name">
+              <div class="d-flex">
+                <span>Name</span>
 
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="url">
-            <div class="d-flex">
-              <span>Url</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="url">
+              <div class="d-flex">
+                <span>Url</span>
 
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="date">
-            <div class="d-flex">
-              <span>Date</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="date">
+              <div class="d-flex">
+                <span>Date</span>
 
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="data">
-            <div class="d-flex">
-              <span>Data</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="data">
+              <div class="d-flex">
+                <span>Data</span>
 
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="legalContent.id">
-            <div class="d-flex">
-              <span>Legal Content</span>
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (source of sources(); track trackId(source)) {
-        <tr data-cy="entityTable">
-          <td><a [routerLink]="['/source', source.id, 'view']">{{ source.id }}</a></td>
-          <td>{{ source.name }}</td>
-          <td>{{ source.url }}</td>
-          <td>{{ source.date }}</td>
-          <td>{{ source.data }}</td>
-          <td>
-            @if (source.legalContent) {
-            <div>
-              <a [routerLink]="['/legal-content', source.legalContent.id, 'view']">{{ source.legalContent.id }}</a>
-            </div>
-            }
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-              <a [routerLink]="['/source', source.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                <fa-icon icon="eye" />
-                <span class="d-none d-md-inline">View</span>
-              </a>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="legalContent.id">
+              <div class="d-flex">
+                <span>Legal Content</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (source of sources(); track trackId(source)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/source', source.id, 'view']">{{ source.id }}</a>
+              </td>
+              <td>{{ source.name }}</td>
+              <td>{{ source.url }}</td>
+              <td>{{ source.date }}</td>
+              <td>{{ source.data }}</td>
+              <td>
+                @if (source.legalContent) {
+                  <div>
+                    <a [routerLink]="['/legal-content', source.legalContent.id, 'view']">{{ source.legalContent.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/source', source.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline">View</span>
+                  </a>
 
-              <a [routerLink]="['/source', source.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                <fa-icon icon="pencil-alt" />
-                <span class="d-none d-md-inline">Edit</span>
-              </a>
+                  <a [routerLink]="['/source', source.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline">Edit</span>
+                  </a>
 
-              <button type="submit" (click)="delete(source)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times" />
-                <span class="d-none d-md-inline">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+                  <button type="submit" (click)="delete(source)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   }
 </div>

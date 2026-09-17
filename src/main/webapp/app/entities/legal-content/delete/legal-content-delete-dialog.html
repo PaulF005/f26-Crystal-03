@@ -1,22 +1,22 @@
 @if (legalContent) {
-<form name="deleteForm" (ngSubmit)="confirmDelete(legalContent.id!)">
-  <div class="modal-header">
-    <h4 class="modal-title" data-cy="legalContentDeleteDialogHeading">Confirm delete operation</h4>
-  </div>
+  <form name="deleteForm" (ngSubmit)="confirmDelete(legalContent.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="legalContentDeleteDialogHeading">Confirm delete operation</h4>
+    </div>
 
-  <div class="modal-body">
-    <jhi-alert-error />
-    <p id="jhi-delete-legalContent-heading">Are you sure you want to delete Legal Content {{ legalContent.id }}?</p>
-  </div>
+    <div class="modal-body">
+      <jhi-alert-error />
+      <p id="jhi-delete-legalContent-heading">Are you sure you want to delete Legal Content {{ legalContent.id }}?</p>
+    </div>
 
-  <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
-      <fa-icon icon="ban" />&nbsp;<span>Cancel</span>
-    </button>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <fa-icon icon="ban" />&nbsp;<span>Cancel</span>
+      </button>
 
-    <button id="jhi-confirm-delete-legalContent" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
-      <fa-icon icon="times" />&nbsp;<span>Delete</span>
-    </button>
-  </div>
-</form>
+      <button id="jhi-confirm-delete-legalContent" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times" />&nbsp;<span>Delete</span>
+      </button>
+    </div>
+  </form>
 }

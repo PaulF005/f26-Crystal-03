@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.crystal.kip.IntegrationTest;
 import com.crystal.kip.config.Constants;
 import com.crystal.kip.domain.User;
@@ -16,6 +15,7 @@ import com.crystal.kip.service.dto.AdminUserDTO;
 import com.crystal.kip.service.dto.PasswordChangeDTO;
 import com.crystal.kip.web.rest.vm.KeyAndPasswordVM;
 import com.crystal.kip.web.rest.vm.ManagedUserVM;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Stream;

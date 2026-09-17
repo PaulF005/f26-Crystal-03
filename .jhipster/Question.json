@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20260826203956"
+    "changelogDate": "20260916023745"
   },
   "applications": ["kip"],
   "fields": [
@@ -13,17 +13,17 @@
   "name": "Question",
   "relationships": [
     {
-      "relationshipName": "concept",
-      "otherEntityName": "concept",
-      "otherEntityRelationshipName": "question",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "relationshipName": "answer",
       "otherEntityName": "answer",
       "otherEntityRelationshipName": "question",
-      "relationshipType": "one-to-many",
-      "relationshipSide": "left"
+      "relationshipName": "answer",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "concept",
+      "relationshipName": "concept",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
     }
   ],
   "searchEngine": "no"

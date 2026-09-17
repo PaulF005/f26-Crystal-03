@@ -1,20 +1,21 @@
 {
   "annotations": {
-    "changelogDate": "20260913173200"
+    "changelogDate": "20260916023750"
   },
   "applications": ["kip"],
   "fields": [],
   "name": "Stage",
   "relationships": [
     {
-      "relationshipName": "scenario",
-      "otherEntityName": "scenario",
-      "otherEntityRelationshipName": "stage",
+      "otherEntityName": "question",
+      "relationshipName": "question",
+      "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
-      "relationshipName": "question",
-      "otherEntityName": "question",
+      "otherEntityName": "scenario",
+      "relationshipName": "scenario",
+      "relationshipSide": "right",
       "relationshipType": "many-to-one"
     }
   ],

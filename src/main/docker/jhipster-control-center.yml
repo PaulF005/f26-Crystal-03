@@ -14,9 +14,9 @@
 #       - SPRING_CLOUD_CONSUL_HOST=host.docker.internal
 #       - SPRING_CLOUD_CONSUL_PORT=8500
 #### Static
-# Add instances to "kip"
-#       - SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_kip_0_URI=http://host.docker.internal:8081
-#       - SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_kip_1_URI=http://host.docker.internal:8082
+# Add instances to "MyApp"
+#       - SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_MYAPP_0_URI=http://host.docker.internal:8081
+#       - SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_MYAPP_1_URI=http://host.docker.internal:8082
 # Or add a new application named MyNewApp
 #       - SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_MYNEWAPP_0_URI=http://host.docker.internal:8080
 # This configuration is intended for development purpose, it's **your** responsibility to harden it for production
@@ -43,7 +43,7 @@ services:
       - SPRING_SECURITY_USER_PASSWORD=admin
       # The token should have the same value than the one declared in you Spring configuration under the jhipster.security.authentication.jwt.base64-secret configuration's entry
       - JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET=ZjI3MjhiZWE1NDQzZTZhYTZkMDYxMTg4YTliODAwMTUwYjBiMDk4MTZkYWQ5MDIyYmJkZjRiY2NjYWU1Y2RmY2U0YTk1MTRlNWRhZGIxZDk3MDEwNTMzOTI5ZGI3MTYyZjMwOGQ5Njc5ODNmYTU4MDk4MGNjOGE0ZDhiMDFhMTQ=
-      - SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_kip_0_URI=http://host.docker.internal:8080
+      - SPRING_CLOUD_DISCOVERY_CLIENT_SIMPLE_INSTANCES_KIP_0_URI=http://host.docker.internal:8080
       - LOGGING_FILE_NAME=/tmp/jhipster-control-center.log
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix

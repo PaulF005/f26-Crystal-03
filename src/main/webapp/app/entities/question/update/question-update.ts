@@ -6,8 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, finalize, map } from 'rxjs';
 
-import { TopicService } from 'app/entities/topic/service/topic.service';
-import { ITopic } from 'app/entities/topic/topic.model';
+import { IConcept } from 'app/entities/concept/concept.model';
+import { ConceptService } from 'app/entities/concept/service/concept.service';
 import { AlertError } from 'app/shared/alert/alert-error';
 import { IQuestion } from '../question.model';
 import { QuestionService } from '../service/question.service';
@@ -24,17 +24,17 @@ export class QuestionUpdate implements OnInit {
   readonly isSaving = signal(false);
   question: IQuestion | null = null;
 
-  topicsSharedCollection = signal<ITopic[]>([]);
+  conceptsSharedCollection = signal<IConcept[]>([]);
 
   protected questionService = inject(QuestionService);
   protected questionFormService = inject(QuestionFormService);
-  protected topicService = inject(TopicService);
+  protected conceptService = inject(ConceptService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: QuestionFormGroup = this.questionFormService.createQuestionFormGroup();
 
-  compareTopic = (o1: ITopic | null, o2: ITopic | null): boolean => this.topicService.compareTopic(o1, o2);
+  compareConcept = (o1: IConcept | null, o2: IConcept | null): boolean => this.conceptService.compareConcept(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ question }) => {
@@ -84,14 +84,16 @@ export class QuestionUpdate implements OnInit {
     this.question = question;
     this.questionFormService.resetForm(this.editForm, question);
 
-    this.topicsSharedCollection.update(topics => this.topicService.addTopicToCollectionIfMissing<ITopic>(topics, question.topic));
+    this.conceptsSharedCollection.update(concepts =>
+      this.conceptService.addConceptToCollectionIfMissing<IConcept>(concepts, question.concept),
+    );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.topicService
+    this.conceptService
       .query()
-      .pipe(map((res: HttpResponse<ITopic[]>) => res.body ?? []))
-      .pipe(map((topics: ITopic[]) => this.topicService.addTopicToCollectionIfMissing<ITopic>(topics, this.question?.topic)))
-      .subscribe((topics: ITopic[]) => this.topicsSharedCollection.set(topics));
+      .pipe(map((res: HttpResponse<IConcept[]>) => res.body ?? []))
+      .pipe(map((concepts: IConcept[]) => this.conceptService.addConceptToCollectionIfMissing<IConcept>(concepts, this.question?.concept)))
+      .subscribe((concepts: IConcept[]) => this.conceptsSharedCollection.set(concepts));
   }
 }

@@ -7,21 +7,22 @@
         <jhi-alert-error />
 
         @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
 
-        <div class="mb-3">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-        } @let usernameRef = editForm.get('username')!;
+        @let usernameRef = editForm.get('username')!;
         <div class="mb-3">
           <label class="form-label" for="field_username">Username</label>
           <input type="text" class="form-control" name="username" id="field_username" data-cy="username" formControlName="username" />
           @if (usernameRef.invalid && (usernameRef.dirty || usernameRef.touched)) {
-          <div>
-            @if (usernameRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            }
-          </div>
+            <div>
+              @if (usernameRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
           }
         </div>
 
@@ -30,11 +31,11 @@
           <label class="form-label" for="field_email">Email</label>
           <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
           @if (emailRef.invalid && (emailRef.dirty || emailRef.touched)) {
-          <div>
-            @if (emailRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            }
-          </div>
+            <div>
+              @if (emailRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
           }
         </div>
 
@@ -50,7 +51,7 @@
           >
             <option [ngValue]="null"></option>
             @for (userOption of usersSharedCollection(); track $index) {
-            <option [ngValue]="userOption">{{ userOption.id }}</option>
+              <option [ngValue]="userOption">{{ userOption.id }}</option>
             }
           </select>
         </div>

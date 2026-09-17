@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "my-app": {
+    "kip": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -83,17 +83,17 @@
         "serve": {
           "builder": "@angular-builders/custom-esbuild:dev-server",
           "options": {
-            "buildTarget": "my-app:build:development",
+            "buildTarget": "kip:build:development",
             "open": true,
             "proxyConfig": "proxy.config.mjs",
             "port": 4200
           },
           "configurations": {
             "production": {
-              "buildTarget": "my-app:build:production"
+              "buildTarget": "kip:build:production"
             },
             "development": {
-              "buildTarget": "my-app:build:development"
+              "buildTarget": "kip:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -119,6 +119,7 @@
       "path": "./build/angular/",
       "environment": "all"
     },
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   }
 }

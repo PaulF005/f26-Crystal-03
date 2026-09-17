@@ -21,7 +21,6 @@ describe('Progress Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             moduleCompletion: expect.any(Object),
-            module: expect.any(Object),
             user: expect.any(Object),
           }),
         );
@@ -34,7 +33,6 @@ describe('Progress Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             moduleCompletion: expect.any(Object),
-            module: expect.any(Object),
             user: expect.any(Object),
           }),
         );

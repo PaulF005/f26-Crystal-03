@@ -19,7 +19,6 @@ type ProgressFormDefaults = Pick<NewProgress, 'id'>;
 type ProgressFormGroupContent = {
   id: FormControl<IProgress['id'] | NewProgress['id']>;
   moduleCompletion: FormControl<IProgress['moduleCompletion']>;
-  module: FormControl<IProgress['module']>;
   user: FormControl<IProgress['user']>;
 };
 
@@ -44,7 +43,6 @@ export class ProgressFormService {
       moduleCompletion: new FormControl(progressRawValue.moduleCompletion, {
         validators: [Validators.required],
       }),
-      module: new FormControl(progressRawValue.module),
       user: new FormControl(progressRawValue.user),
     });
   }

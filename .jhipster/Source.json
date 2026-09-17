@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20260826203958"
+    "changelogDate": "20260916023752"
   },
   "applications": ["kip"],
   "fields": [
@@ -28,7 +28,7 @@
     {
       "otherEntityName": "legalContent",
       "relationshipName": "legalContent",
-      "relationshipSide": "right",
+      "relationshipSide": "left",
       "relationshipType": "many-to-one"
     }
   ],

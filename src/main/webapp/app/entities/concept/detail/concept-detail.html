@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (concept(); as conceptRef) {
+      <div>
+        <h2 data-cy="conceptDetailsHeading"><span>Concept</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ conceptRef.id }}</span>
+          </dd>
+          <dt><span>Name</span></dt>
+          <dd>
+            <span>{{ conceptRef.name }}</span>
+          </dd>
+          <dt><span>Explanation</span></dt>
+          <dd>
+            <span>{{ conceptRef.explanation }}</span>
+          </dd>
+          <dt><span>Legal Content</span></dt>
+          <dd>
+            @if (concept()!.legalContent) {
+              <div>
+                <a [routerLink]="['/legal-content', concept()!.legalContent?.id, 'view']">{{ conceptRef.legalContent?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Topic</span></dt>
+          <dd>
+            @if (concept()!.topic) {
+              <div>
+                <a [routerLink]="['/topic', concept()!.topic?.id, 'view']">{{ conceptRef.topic?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/concept', conceptRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

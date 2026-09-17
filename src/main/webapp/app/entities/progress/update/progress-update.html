@@ -7,12 +7,13 @@
         <jhi-alert-error />
 
         @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
 
-        <div class="mb-3">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-        } @let moduleCompletionRef = editForm.get('moduleCompletion')!;
+        @let moduleCompletionRef = editForm.get('moduleCompletion')!;
         <div class="mb-3">
           <label class="form-label" for="field_moduleCompletion">Module Completion</label>
           <input
@@ -24,30 +25,13 @@
             formControlName="moduleCompletion"
           />
           @if (moduleCompletionRef.invalid && (moduleCompletionRef.dirty || moduleCompletionRef.touched)) {
-          <div>
-            @if (moduleCompletionRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!moduleCompletionRef.errors?.number">This field should be a number.</small>
-          </div>
+            <div>
+              @if (moduleCompletionRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!moduleCompletionRef.errors?.number">This field should be a number.</small>
+            </div>
           }
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_module">Module</label>
-          <select
-            class="form-control"
-            id="field_module"
-            data-cy="module"
-            name="module"
-            formControlName="module"
-            [compareWith]="compareModule"
-          >
-            <option [ngValue]="null"></option>
-            @for (moduleOption of modulesSharedCollection(); track $index) {
-            <option [ngValue]="moduleOption">{{ moduleOption.id }}</option>
-            }
-          </select>
         </div>
 
         <div class="mb-3">
@@ -55,7 +39,7 @@
           <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUserDetail">
             <option [ngValue]="null"></option>
             @for (userDetailOption of userDetailsSharedCollection(); track $index) {
-            <option [ngValue]="userDetailOption">{{ userDetailOption.id }}</option>
+              <option [ngValue]="userDetailOption">{{ userDetailOption.id }}</option>
             }
           </select>
         </div>

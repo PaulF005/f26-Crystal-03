@@ -4,9 +4,9 @@ import static com.crystal.kip.security.SecurityUtils.AUTHORITIES_CLAIM;
 import static com.crystal.kip.security.SecurityUtils.JWT_ALGORITHM;
 import static com.crystal.kip.security.SecurityUtils.USER_ID_CLAIM;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.crystal.kip.security.DomainUserDetailsService.UserWithId;
 import com.crystal.kip.web.rest.vm.LoginVM;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import java.security.Principal;
 import java.time.Instant;

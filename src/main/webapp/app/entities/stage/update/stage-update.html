@@ -1,0 +1,68 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-stage-heading" data-cy="StageCreateUpdateHeading">Create or edit a Stage</h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_question">Question</label>
+          <select
+            class="form-control"
+            id="field_question"
+            data-cy="question"
+            name="question"
+            formControlName="question"
+            [compareWith]="compareQuestion"
+          >
+            <option [ngValue]="null"></option>
+            @for (questionOption of questionsSharedCollection(); track $index) {
+              <option [ngValue]="questionOption">{{ questionOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_scenario">Scenario</label>
+          <select
+            class="form-control"
+            id="field_scenario"
+            data-cy="scenario"
+            name="scenario"
+            formControlName="scenario"
+            [compareWith]="compareScenario"
+          >
+            <option [ngValue]="null"></option>
+            @for (scenarioOption of scenariosSharedCollection(); track $index) {
+              <option [ngValue]="scenarioOption">{{ scenarioOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

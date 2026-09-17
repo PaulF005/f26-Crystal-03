@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20260826203953"
+    "changelogDate": "20260916023742"
   },
   "applications": ["kip"],
   "fields": [
@@ -13,12 +13,15 @@
   "name": "Progress",
   "relationships": [
     {
+<<<<<<< Updated upstream
       "otherEntityName": "topic",
       "relationshipName": "topic",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
+=======
+>>>>>>> Stashed changes
       "otherEntityName": "userDetail",
       "relationshipName": "user",
       "relationshipSide": "right",

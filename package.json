@@ -1,8 +1,8 @@
 {
-  "name": "my-app",
+  "name": "kip",
   "version": "0.0.1-SNAPSHOT",
   "private": true,
-  "description": "Description for My App",
+  "description": "Description for Kip",
   "license": "UNLICENSED",
   "type": "module",
   "scripts": {

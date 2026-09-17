@@ -53,7 +53,7 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionTranslator.class);
 
-    @Value("${jhipster.clientApp.name:kIP}")
+    @Value("${jhipster.clientApp.name:kip}")
     private String applicationName;
 
     private final Environment env;

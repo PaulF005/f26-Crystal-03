@@ -19,7 +19,7 @@ type QuestionFormDefaults = Pick<NewQuestion, 'id'>;
 type QuestionFormGroupContent = {
   id: FormControl<IQuestion['id'] | NewQuestion['id']>;
   question: FormControl<IQuestion['question']>;
-  topic: FormControl<IQuestion['topic']>;
+  concept: FormControl<IQuestion['concept']>;
 };
 
 export type QuestionFormGroup = FormGroup<QuestionFormGroupContent>;
@@ -43,7 +43,7 @@ export class QuestionFormService {
       question: new FormControl(questionRawValue.question, {
         validators: [Validators.required],
       }),
-      topic: new FormControl(questionRawValue.topic),
+      concept: new FormControl(questionRawValue.concept),
     });
   }
 
