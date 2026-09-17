@@ -33,7 +33,7 @@
             class="nav-item dropdown pointer"
             display="dynamic"
             routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
+            [routerLinkActiveOptions]="{ exact: false }"
             data-cy="entity"
           >
             <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
@@ -197,7 +197,7 @@
           class="nav-item dropdown pointer"
           display="dynamic"
           routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLinkActiveOptions]="{ exact: false }"
           data-cy="adminMenu"
         >
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
@@ -271,7 +271,8 @@
           class="nav-item dropdown pointer"
           display="dynamic"
           routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
+          [routerLinkActiveOptions]="{ exact: false }"
+          [class.active]="isAccountRouteActive()"
           data-cy="accountMenu"
         >
           @let accountRef = account();
@@ -340,6 +341,30 @@
               </li>
             }
           </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/PaulF005/f26-Crystal-03" target="_blank" rel="noopener noreferrer">
+            <span>
+              <fa-icon icon="code-branch" />
+              <span>KIP Github REPO</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="$event.preventDefault()">
+            <span>
+              <fa-icon icon="asterisk" />
+              <span>To be updated when there are more pages</span>
+            </span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="$event.preventDefault()">
+            <span>
+              <fa-icon icon="asterisk" />
+              <span>Let me know of any wanted style changes</span>
+            </span>
+          </a>
         </li>
       </ul>
     </div>
