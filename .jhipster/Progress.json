@@ -13,15 +13,14 @@
   "name": "Progress",
   "relationships": [
     {
-<<<<<<< Updated upstream
+
       "otherEntityName": "topic",
       "relationshipName": "topic",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
-=======
->>>>>>> Stashed changes
+
       "otherEntityName": "userDetail",
       "relationshipName": "user",
       "relationshipSide": "right",
