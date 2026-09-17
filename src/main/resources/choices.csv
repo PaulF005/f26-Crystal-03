@@ -1,0 +1,9 @@
+id,questionId,text,correct,nextStageId,feedbackText
+301,201,Say: 'I was probably speeding, sorry officer. Also my inspection sticker is fake.',false,51,Incorrect. Never volunteer violations!
+302,201,Say: 'No officer. Please tell me.',true,52,Correct! 
+303,202,Lock the doors and mouth 'PROBABLE CAUSE?',false,60,Incorrect. Don't escalate.
+304,202,Politely state: 'Officer, I do not consent to any searches.',true,61,Correct! You have a Fourth Amendment right to refuse a consent search. Keep it professional.
+305,203,Hit the door locks and shout: 'Am I being detained or am I free to go?',false,70,Incorrect.Pennsylvania v. Mimms says you are legally required to step out if ordered.
+306,203,Exit the vehicle calmly while keeping your hands visible.,true,71,Correct. You must comply with orders to exit the vehicle for safety, but you preserve your rights by staying cool.
+307,204,Say: 'Can I call my mom?' and reach for your cell phone.,false,80,Incorrect. Reaching into your pockets or making sudden movements during an active interrogation is a great way to meet the pavement. 
+308,204,State clearly: 'I am invoking my right to remain silent and want a lawyer.',true,81,Correct. Explicitly invoking your Miranda rights puts the legal brakes on the interrogation.
