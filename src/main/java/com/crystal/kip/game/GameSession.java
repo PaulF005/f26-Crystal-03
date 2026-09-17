@@ -7,7 +7,7 @@ import java.util.UUID;
 import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Topic;
 
-class GameSession {
+public class GameSession {
 
     UUID id;
     User user;
@@ -49,6 +49,10 @@ class GameSession {
 
     public Topic getTopic() {
         return topic;
+    }
+
+    public List<GameScenario> getScenarios() {
+        return scenarios;
     }
 
     public GameScenario getCurrentScenario() {
