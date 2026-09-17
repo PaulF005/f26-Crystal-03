@@ -3,7 +3,9 @@ package com.crystal.kip.game;
 import com.crystal.kip.content.Game;
 import com.crystal.kip.content.Scenario;
 import com.crystal.kip.content.Topic;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ScenarioSelector {
 
     public Scenario selectNext(GameSession session) {
