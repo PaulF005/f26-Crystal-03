@@ -31,6 +31,7 @@ export default class Navbar implements OnInit {
   readonly inProduction = signal(true);
   readonly isNavbarCollapsed = signal(true);
   readonly openAPIEnabled = signal(false);
+  readonly currentUrl = signal('');
   readonly version: string;
   readonly account = inject(AccountService).account;
 
@@ -48,10 +49,17 @@ export default class Navbar implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentUrl.set(this.router.url);
+    this.router.events.subscribe(() => this.currentUrl.set(this.router.url));
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction.set(profileInfo.inProduction ?? true);
       this.openAPIEnabled.set(profileInfo.openAPIEnabled ?? false);
     });
+  }
+
+  isAccountRouteActive(): boolean {
+    const url = this.currentUrl();
+    return url === '/login' || url.startsWith('/account');
   }
 
   collapseNavbar(): void {

@@ -10,6 +10,7 @@ import PageRibbon from '../profiles/page-ribbon';
   selector: 'jhi-main',
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './main.html',
+  styleUrl: './main.scss',
   providers: [AppPageTitleStrategy],
   imports: [RouterOutlet, Footer, PageRibbon],
 })
