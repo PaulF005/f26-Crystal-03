@@ -40,7 +40,7 @@ public class Feedback {
             checkForMax();
             return questionResponse;
         } else {
-            questionResponse = questionWrong(answer, explanation);
+            questionResponse = questionWrong(explanation);
             checkForMax();
             return questionResponse;
         }
@@ -61,10 +61,10 @@ public class Feedback {
 
     private String questionRight(String explano) {
         numberOfRight++;
-        return "Y || " + explano;
+        return "Corrrect || " + explano;
     }
 
-    private String questionWrong(int correctAnswer, String explano) {
-        return "Incorrect, the right answer was option " + correctAnswer + " || " + explano;
+    private String questionWrong(String explano) {
+        return "Incorrect " + " || " + explano;
     }
 }
