@@ -71,6 +71,36 @@ const routes: Routes = [
     data: { pageTitle: 'UserManagements' },
     loadChildren: () => import('./admin/user-management/user-management.routes'),
   },
+  {
+    path: 'user-profile',
+    data: { pageTitle: 'UserProfiles' },
+    loadChildren: () => import('./user-profile/user-profile.routes'),
+  },
+  {
+    path: 'topic-progress',
+    data: { pageTitle: 'TopicProgresses' },
+    loadChildren: () => import('./topic-progress/topic-progress.routes'),
+  },
+  {
+    path: 'game-progress',
+    data: { pageTitle: 'GameProgresses' },
+    loadChildren: () => import('./game-progress/game-progress.routes'),
+  },
+  {
+    path: 'game-session',
+    data: { pageTitle: 'GameSessions' },
+    loadChildren: () => import('./game-session/game-session.routes'),
+  },
+  {
+    path: 'stage-attempt',
+    data: { pageTitle: 'StageAttempts' },
+    loadChildren: () => import('./stage-attempt/stage-attempt.routes'),
+  },
+  {
+    path: 'concept-progress',
+    data: { pageTitle: 'ConceptProgresses' },
+    loadChildren: () => import('./concept-progress/concept-progress.routes'),
+  },
   /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 

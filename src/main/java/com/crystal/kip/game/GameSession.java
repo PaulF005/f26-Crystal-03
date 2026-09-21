@@ -1,11 +1,11 @@
 package com.crystal.kip.game;
 
+import com.crystal.kip.domain.Game;
+import com.crystal.kip.domain.Topic;
 import com.crystal.kip.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import com.crystal.kip.domain.Game;
-import com.crystal.kip.domain.Topic;
 
 public class GameSession {
 

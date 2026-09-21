@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, finalize, map } from 'rxjs';
 
+import { ScenarioResolution } from 'app/entities/enumerations/scenario-resolution.model';
 import { IFeedback } from 'app/entities/feedback/feedback.model';
 import { FeedbackService } from 'app/entities/feedback/service/feedback.service';
 import { IQuestion } from 'app/entities/question/question.model';
@@ -27,6 +28,7 @@ import { AnswerFormGroup, AnswerFormService } from './answer-form.service';
 export class AnswerUpdate implements OnInit {
   readonly isSaving = signal(false);
   answer: IAnswer | null = null;
+  scenarioResolutionValues = Object.keys(ScenarioResolution);
 
   stagesSharedCollection = signal<IStage[]>([]);
   feedbacksSharedCollection = signal<IFeedback[]>([]);

@@ -1,0 +1,136 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-stage-attempt-heading" data-cy="StageAttemptCreateUpdateHeading">Create or edit a Stage Attempt</h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let answeredAtRef = editForm.get('answeredAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_answeredAt">Answered At</label>
+          <div class="d-flex">
+            <input
+              id="field_answeredAt"
+              data-cy="answeredAt"
+              type="datetime-local"
+              class="form-control"
+              name="answeredAt"
+              formControlName="answeredAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (answeredAtRef.invalid && (answeredAtRef.dirty || answeredAtRef.touched)) {
+            <div>
+              @if (answeredAtRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!answeredAtRef.errors?.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let correctRef = editForm.get('correct')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_correct">Correct</label>
+          <input type="checkbox" class="form-check" name="correct" id="field_correct" data-cy="correct" formControlName="correct" />
+          @if (correctRef.invalid && (correctRef.dirty || correctRef.touched)) {
+            <div>
+              @if (correctRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUserProfile">
+            <option [ngValue]="null"></option>
+            @for (userProfileOption of userProfilesSharedCollection(); track $index) {
+              <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_stage">Stage</label>
+          <select class="form-control" id="field_stage" data-cy="stage" name="stage" formControlName="stage" [compareWith]="compareStage">
+            <option [ngValue]="null"></option>
+            @for (stageOption of stagesSharedCollection(); track $index) {
+              <option [ngValue]="stageOption">{{ stageOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_selectedAnswer">Selected Answer</label>
+          <select
+            class="form-control"
+            id="field_selectedAnswer"
+            data-cy="selectedAnswer"
+            name="selectedAnswer"
+            formControlName="selectedAnswer"
+            [compareWith]="compareAnswer"
+          >
+            <option [ngValue]="null"></option>
+            @for (answerOption of answersSharedCollection(); track $index) {
+              <option [ngValue]="answerOption">{{ answerOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_gameSession">Game Session</label>
+          <select
+            class="form-control"
+            id="field_gameSession"
+            data-cy="gameSession"
+            name="gameSession"
+            formControlName="gameSession"
+            [compareWith]="compareGameSession"
+          >
+            @if (editForm.get(['gameSession'])!.value === null) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (gameSessionOption of gameSessionsSharedCollection(); track $index) {
+              <option [ngValue]="gameSessionOption">{{ gameSessionOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (editForm.get(['gameSession'])!.invalid && (editForm.get(['gameSession'])!.dirty || editForm.get(['gameSession'])!.touched)) {
+          <div>
+            @if (editForm.get(['gameSession'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

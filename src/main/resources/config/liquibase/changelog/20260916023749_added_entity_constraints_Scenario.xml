@@ -10,6 +10,13 @@
     -->
     <changeSet id="20260916023749-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="starting_stage_id"
+                                 baseTableName="scenario"
+                                 constraintName="fk_scenario__starting_stage_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="stage"
+                                 />
+
         <addForeignKeyConstraint baseColumnNames="topic_id"
                                  baseTableName="scenario"
                                  constraintName="fk_scenario__topic_id"

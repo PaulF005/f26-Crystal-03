@@ -1,0 +1,51 @@
+{
+  "annotations": {
+    "changelogDate": "20260916023741"
+  },
+  "applications": ["kip"],
+  "fields": [
+    {
+      "fieldName": "username",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "UserProfile",
+  "relationships": [
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "user",
+      "ownerSide": true,
+      "relationshipName": "dataUser",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "topicProgress",
+      "otherEntityRelationshipName": "userProfile",
+      "relationshipName": "topicProgresses",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "gameProgress",
+      "otherEntityRelationshipName": "userProfile",
+      "relationshipName": "gameProgresses",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "conceptProgress",
+      "otherEntityRelationshipName": "userProfile",
+      "relationshipName": "conceptProgresses",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

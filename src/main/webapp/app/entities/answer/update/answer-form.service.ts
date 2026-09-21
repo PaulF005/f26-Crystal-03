@@ -18,8 +18,10 @@ type AnswerFormDefaults = Pick<NewAnswer, 'id' | 'correct'>;
 
 type AnswerFormGroupContent = {
   id: FormControl<IAnswer['id'] | NewAnswer['id']>;
-  answer: FormControl<IAnswer['answer']>;
+  text: FormControl<IAnswer['text']>;
+  outcomeText: FormControl<IAnswer['outcomeText']>;
   correct: FormControl<IAnswer['correct']>;
+  terminalResolution: FormControl<IAnswer['terminalResolution']>;
   nextStage: FormControl<IAnswer['nextStage']>;
   feedback: FormControl<IAnswer['feedback']>;
   question: FormControl<IAnswer['question']>;
@@ -43,12 +45,12 @@ export class AnswerFormService {
           validators: [Validators.required],
         },
       ),
-      answer: new FormControl(answerRawValue.answer, {
+      text: new FormControl(answerRawValue.text, {
         validators: [Validators.required],
       }),
-      correct: new FormControl(answerRawValue.correct, {
-        validators: [Validators.required],
-      }),
+      outcomeText: new FormControl(answerRawValue.outcomeText),
+      correct: new FormControl(answerRawValue.correct),
+      terminalResolution: new FormControl(answerRawValue.terminalResolution),
       nextStage: new FormControl(answerRawValue.nextStage),
       feedback: new FormControl(answerRawValue.feedback),
       question: new FormControl(answerRawValue.question),

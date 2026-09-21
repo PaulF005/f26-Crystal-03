@@ -8,7 +8,7 @@ export const UI_TEXT = {
     login: 'Log In',
     signup: 'Sign Up',
     username: 'Username',
-    password: 'Password'
+    password: 'Password',
   },
 
   page: {
@@ -38,7 +38,7 @@ export const UI_TEXT = {
     stat: {
       history: {
         label: 'History',
-        
+
         level: {
           new: 'New',
         },
@@ -67,7 +67,7 @@ export const UI_TEXT = {
       answer: {
         fact: 'Fact',
         fiction: 'Fiction',
-        situational: 'Situational'
+        situational: 'Situational',
       },
     },
 

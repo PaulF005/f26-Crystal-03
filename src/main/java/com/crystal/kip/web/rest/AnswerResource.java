@@ -125,7 +125,9 @@ public class AnswerResource {
             .findById(answer.getId())
             .map(existingAnswer -> {
                 updateIfPresent(existingAnswer::setText, answer.getText());
+                updateIfPresent(existingAnswer::setOutcomeText, answer.getOutcomeText());
                 updateIfPresent(existingAnswer::setCorrect, answer.getCorrect());
+                updateIfPresent(existingAnswer::setTerminalResolution, answer.getTerminalResolution());
 
                 return existingAnswer;
             })

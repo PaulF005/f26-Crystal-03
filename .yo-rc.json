@@ -16,8 +16,7 @@
     "enableHibernateCache": true,
     "enableTranslation": false,
     "entities": [
-      "UserDetail",
-      "Progress",
+      "UserProfile",
       "Topic",
       "Concept",
       "Question",
@@ -27,7 +26,12 @@
       "Scenario",
       "Stage",
       "LegalContent",
-      "Source"
+      "Source",
+      "TopicProgress",
+      "GameProgress",
+      "GameSession",
+      "StageAttempt",
+      "ConceptProgress"
     ],
     "feignClient": null,
     "gradleDevelocityHost": null,

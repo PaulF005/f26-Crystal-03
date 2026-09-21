@@ -8,6 +8,8 @@ import { Subject, from, of } from 'rxjs';
 
 import { IGame } from 'app/entities/game/game.model';
 import { GameService } from 'app/entities/game/service/game.service';
+import { StageService } from 'app/entities/stage/service/stage.service';
+import { IStage } from 'app/entities/stage/stage.model';
 import { TopicService } from 'app/entities/topic/service/topic.service';
 import { ITopic } from 'app/entities/topic/topic.model';
 import { IScenario } from '../scenario.model';
@@ -22,6 +24,7 @@ describe('Scenario Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let scenarioFormService: ScenarioFormService;
   let scenarioService: ScenarioService;
+  let stageService: StageService;
   let topicService: TopicService;
   let gameService: GameService;
 
@@ -42,6 +45,7 @@ describe('Scenario Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     scenarioFormService = TestBed.inject(ScenarioFormService);
     scenarioService = TestBed.inject(ScenarioService);
+    stageService = TestBed.inject(StageService);
     topicService = TestBed.inject(TopicService);
     gameService = TestBed.inject(GameService);
 
@@ -49,6 +53,28 @@ describe('Scenario Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
+    it('should call Stage query and add missing value', () => {
+      const scenario: IScenario = { id: 10024 };
+      const startingStage: IStage = { id: 30579 };
+      scenario.startingStage = startingStage;
+
+      const stageCollection: IStage[] = [{ id: 30579 }];
+      vitest.spyOn(stageService, 'query').mockReturnValue(of(new HttpResponse({ body: stageCollection })));
+      const additionalStages = [startingStage];
+      const expectedCollection: IStage[] = [...additionalStages, ...stageCollection];
+      vitest.spyOn(stageService, 'addStageToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ scenario });
+      comp.ngOnInit();
+
+      expect(stageService.query).toHaveBeenCalled();
+      expect(stageService.addStageToCollectionIfMissing).toHaveBeenCalledWith(
+        stageCollection,
+        ...additionalStages.map(i => expect.objectContaining(i) as typeof i),
+      );
+      expect(comp.stagesSharedCollection()).toEqual(expectedCollection);
+    });
+
     it('should call Topic query and add missing value', () => {
       const scenario: IScenario = { id: 10024 };
       const topic: ITopic = { id: 29581 };
@@ -95,6 +121,8 @@ describe('Scenario Management Update Component', () => {
 
     it('should update editForm', () => {
       const scenario: IScenario = { id: 10024 };
+      const startingStage: IStage = { id: 30579 };
+      scenario.startingStage = startingStage;
       const topic: ITopic = { id: 29581 };
       scenario.topic = topic;
       const game: IGame = { id: 7137 };
@@ -103,6 +131,7 @@ describe('Scenario Management Update Component', () => {
       activatedRoute.data = of({ scenario });
       comp.ngOnInit();
 
+      expect(comp.stagesSharedCollection()).toContainEqual(startingStage);
       expect(comp.topicsSharedCollection()).toContainEqual(topic);
       expect(comp.gamesSharedCollection()).toContainEqual(game);
       expect(comp.scenario).toEqual(scenario);
@@ -178,6 +207,16 @@ describe('Scenario Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
+    describe('compareStage', () => {
+      it('should forward to stageService', () => {
+        const entity = { id: 30579 };
+        const entity2 = { id: 6829 };
+        vitest.spyOn(stageService, 'compareStage');
+        comp.compareStage(entity, entity2);
+        expect(stageService.compareStage).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
     describe('compareTopic', () => {
       it('should forward to topicService', () => {
         const entity = { id: 29581 };

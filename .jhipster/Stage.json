@@ -7,12 +7,14 @@
   "name": "Stage",
   "relationships": [
     {
+      "fieldValidateRules": ["required"],
       "otherEntityName": "question",
       "relationshipName": "question",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
+      "fieldValidateRules": ["required"],
       "otherEntityName": "scenario",
       "relationshipName": "scenario",
       "relationshipSide": "right",

@@ -19,6 +19,14 @@
           <dd>
             <span>{{ scenarioRef.name }}</span>
           </dd>
+          <dt><span>Starting Stage</span></dt>
+          <dd>
+            @if (scenario()!.startingStage) {
+              <div>
+                <a [routerLink]="['/stage', scenario()!.startingStage?.id, 'view']">{{ scenarioRef.startingStage?.id }}</a>
+              </div>
+            }
+          </dd>
           <dt><span>Topic</span></dt>
           <dd>
             @if (scenario()!.topic) {

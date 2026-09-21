@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <!--
+        Added the constraints for entity StageAttempt.
+    -->
+    <changeSet id="20260920220840-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="stage_attempt"
+                                 constraintName="fk_stage_attempt__user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_profile"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="stage_id"
+                                 baseTableName="stage_attempt"
+                                 constraintName="fk_stage_attempt__stage_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="stage"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="selected_answer_id"
+                                 baseTableName="stage_attempt"
+                                 constraintName="fk_stage_attempt__selected_answer_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="answer"
+                                 />
+
+        <addForeignKeyConstraint baseColumnNames="game_session_id"
+                                 baseTableName="stage_attempt"
+                                 constraintName="fk_stage_attempt__game_session_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="game_session"
+                                 />
+    </changeSet>
+</databaseChangeLog>

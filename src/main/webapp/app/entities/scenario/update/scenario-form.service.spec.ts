@@ -21,6 +21,7 @@ describe('Scenario Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             name: expect.any(Object),
+            startingStage: expect.any(Object),
             topic: expect.any(Object),
             game: expect.any(Object),
           }),
@@ -34,6 +35,7 @@ describe('Scenario Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             name: expect.any(Object),
+            startingStage: expect.any(Object),
             topic: expect.any(Object),
             game: expect.any(Object),
           }),

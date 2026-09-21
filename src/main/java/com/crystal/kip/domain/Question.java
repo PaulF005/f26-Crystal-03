@@ -37,7 +37,7 @@ public class Question implements Serializable {
     private Set<Answer> answers = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "questions", "legalContent", "topic" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "questions", "legalContent", "topic", "conceptProgresseses" }, allowSetters = true)
     private Concept concept;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

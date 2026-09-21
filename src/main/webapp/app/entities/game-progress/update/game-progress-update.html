@@ -1,0 +1,172 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-game-progress-heading" data-cy="GameProgressCreateUpdateHeading">Create or edit a Game Progress</h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let sessionsPlayedRef = editForm.get('sessionsPlayed')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_sessionsPlayed">Sessions Played</label>
+          <input
+            type="number"
+            class="form-control"
+            name="sessionsPlayed"
+            id="field_sessionsPlayed"
+            data-cy="sessionsPlayed"
+            formControlName="sessionsPlayed"
+          />
+          @if (sessionsPlayedRef.invalid && (sessionsPlayedRef.dirty || sessionsPlayedRef.touched)) {
+            <div>
+              @if (sessionsPlayedRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (sessionsPlayedRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!sessionsPlayedRef.errors?.number">This field should be a number.</small>
+            </div>
+          }
+        </div>
+
+        @let performanceRef = editForm.get('performance')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_performance">Performance</label>
+          <input
+            type="number"
+            class="form-control"
+            name="performance"
+            id="field_performance"
+            data-cy="performance"
+            formControlName="performance"
+          />
+          @if (performanceRef.invalid && (performanceRef.dirty || performanceRef.touched)) {
+            <div>
+              @if (performanceRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (performanceRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              @if (performanceRef.errors?.max) {
+                <small class="form-text text-danger">This field cannot be more than 1.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!performanceRef.errors?.number">This field should be a number.</small>
+            </div>
+          }
+        </div>
+
+        @let evidenceCountRef = editForm.get('evidenceCount')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_evidenceCount">Evidence Count</label>
+          <input
+            type="number"
+            class="form-control"
+            name="evidenceCount"
+            id="field_evidenceCount"
+            data-cy="evidenceCount"
+            formControlName="evidenceCount"
+          />
+          @if (evidenceCountRef.invalid && (evidenceCountRef.dirty || evidenceCountRef.touched)) {
+            <div>
+              @if (evidenceCountRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (evidenceCountRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!evidenceCountRef.errors?.number">This field should be a number.</small>
+            </div>
+          }
+        </div>
+
+        @let lastPlayedAtRef = editForm.get('lastPlayedAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_lastPlayedAt">Last Played At</label>
+          <div class="d-flex">
+            <input
+              id="field_lastPlayedAt"
+              data-cy="lastPlayedAt"
+              type="datetime-local"
+              class="form-control"
+              name="lastPlayedAt"
+              formControlName="lastPlayedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (lastPlayedAtRef.invalid && (lastPlayedAtRef.dirty || lastPlayedAtRef.touched)) {
+            <div>
+              @if (lastPlayedAtRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!lastPlayedAtRef.errors?.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_game">Game</label>
+          <select class="form-control" id="field_game" data-cy="game" name="game" formControlName="game" [compareWith]="compareGame">
+            <option [ngValue]="null"></option>
+            @for (gameOption of gamesSharedCollection(); track $index) {
+              <option [ngValue]="gameOption">{{ gameOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_user">User</label>
+          <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUserProfile">
+            <option [ngValue]="null"></option>
+            @for (userProfileOption of userProfilesSharedCollection(); track $index) {
+              <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_userProfile">User Profile</label>
+          <select
+            class="form-control"
+            id="field_userProfile"
+            data-cy="userProfile"
+            name="userProfile"
+            formControlName="userProfile"
+            [compareWith]="compareUserProfile"
+          >
+            <option [ngValue]="null"></option>
+            @for (userProfileOption of userProfilesSharedCollection(); track $index) {
+              <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

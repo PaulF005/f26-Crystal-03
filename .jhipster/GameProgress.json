@@ -1,0 +1,50 @@
+{
+  "annotations": {
+    "changelogDate": "20260920173901"
+  },
+  "applications": ["kip"],
+  "fields": [
+    {
+      "fieldName": "sessionsPlayed",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "performance",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": 1,
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "evidenceCount",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "lastPlayedAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "GameProgress",
+  "relationships": [
+    {
+      "fieldValidateRules": ["required"],
+      "otherEntityName": "game",
+      "relationshipName": "game",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "fieldValidateRules": ["required"],
+      "otherEntityName": "userProfile",
+      "relationshipName": "user",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

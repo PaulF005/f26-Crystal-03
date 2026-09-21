@@ -1,14 +1,13 @@
 package com.crystal.kip.api;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.crystal.kip.api.dto.RequestStartDTO;
 import com.crystal.kip.domain.User;
 import com.crystal.kip.game.GameEngine;
 import com.crystal.kip.game.SessionManager;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/game")
@@ -24,7 +23,6 @@ public class GameController {
 
     @PostMapping("/start")
     public void /*SessionDTO*/ startGame(@RequestBody RequestStartDTO request, User user) {
-
         // TODO: Hookup to Content Repository
         // Get the content Game from the Content Repository via request.gameId()
         // Get the content Topic from the Content Repository via request.gameId()
@@ -32,5 +30,4 @@ public class GameController {
         // sessionManager.add(session)
         // return SessionTDO.from(session);
     }
-    
 }

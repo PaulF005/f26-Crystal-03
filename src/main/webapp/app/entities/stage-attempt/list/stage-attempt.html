@@ -1,0 +1,144 @@
+<div>
+  <h2 id="page-heading" data-cy="StageAttemptHeading">
+    <span>Stage Attempts</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
+        <fa-icon icon="sync" [animation]="isLoading() ? 'spin' : undefined" />
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-stage-attempt"
+        [routerLink]="['/stage-attempt/new']"
+      >
+        <fa-icon icon="plus" />
+        <span>Create a new Stage Attempt</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (stageAttempts().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span>No Stage Attempts found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>ID</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="answeredAt">
+              <div class="d-flex">
+                <span>Answered At</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="correct">
+              <div class="d-flex">
+                <span>Correct</span>
+
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="user.id">
+              <div class="d-flex">
+                <span>User</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="stage.id">
+              <div class="d-flex">
+                <span>Stage</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="selectedAnswer.id">
+              <div class="d-flex">
+                <span>Selected Answer</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="gameSession.id">
+              <div class="d-flex">
+                <span>Game Session</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (stageAttempt of stageAttempts(); track trackId(stageAttempt)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/stage-attempt', stageAttempt.id, 'view']">{{ stageAttempt.id }}</a>
+              </td>
+              <td>{{ stageAttempt.answeredAt | formatMediumDatetime }}</td>
+              <td>{{ stageAttempt.correct }}</td>
+              <td>
+                @if (stageAttempt.user) {
+                  <div>
+                    <a [routerLink]="['/user-profile', stageAttempt.user.id, 'view']">{{ stageAttempt.user.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (stageAttempt.stage) {
+                  <div>
+                    <a [routerLink]="['/stage', stageAttempt.stage.id, 'view']">{{ stageAttempt.stage.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (stageAttempt.selectedAnswer) {
+                  <div>
+                    <a [routerLink]="['/answer', stageAttempt.selectedAnswer.id, 'view']">{{ stageAttempt.selectedAnswer.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (stageAttempt.gameSession) {
+                  <div>
+                    <a [routerLink]="['/game-session', stageAttempt.gameSession.id, 'view']">{{ stageAttempt.gameSession.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/stage-attempt', stageAttempt.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline">View</span>
+                  </a>
+
+                  <a [routerLink]="['/stage-attempt', stageAttempt.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(stageAttempt)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

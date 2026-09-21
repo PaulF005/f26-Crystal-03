@@ -2,10 +2,10 @@ package com.crystal.kip.game;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import com.crystal.kip.domain.User;
 import com.crystal.kip.domain.Game;
-import com.crystal.kip.domain.Topic;
 import com.crystal.kip.domain.Scenario;
+import com.crystal.kip.domain.Topic;
+import com.crystal.kip.domain.User;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

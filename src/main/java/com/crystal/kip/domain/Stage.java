@@ -29,7 +29,7 @@ public class Stage implements Serializable {
     private Question question;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "stages", "topic", "game" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "stages", "startingStage", "topic", "game" }, allowSetters = true)
     private Scenario scenario;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

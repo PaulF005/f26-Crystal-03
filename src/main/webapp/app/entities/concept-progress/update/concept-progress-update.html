@@ -1,0 +1,166 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-concept-progress-heading" data-cy="ConceptProgressCreateUpdateHeading">Create or edit a Concept Progress</h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let competencyRef = editForm.get('competency')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_competency">Competency</label>
+          <input
+            type="number"
+            class="form-control"
+            name="competency"
+            id="field_competency"
+            data-cy="competency"
+            formControlName="competency"
+          />
+          @if (competencyRef.invalid && (competencyRef.dirty || competencyRef.touched)) {
+            <div>
+              @if (competencyRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (competencyRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              @if (competencyRef.errors?.max) {
+                <small class="form-text text-danger">This field cannot be more than 1.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!competencyRef.errors?.number">This field should be a number.</small>
+            </div>
+          }
+        </div>
+
+        @let improvementRef = editForm.get('improvement')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_improvement">Improvement</label>
+          <input
+            type="number"
+            class="form-control"
+            name="improvement"
+            id="field_improvement"
+            data-cy="improvement"
+            formControlName="improvement"
+          />
+          @if (improvementRef.invalid && (improvementRef.dirty || improvementRef.touched)) {
+            <div>
+              @if (improvementRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!improvementRef.errors?.number">This field should be a number.</small>
+            </div>
+          }
+        </div>
+
+        @let evidenceCountRef = editForm.get('evidenceCount')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_evidenceCount">Evidence Count</label>
+          <input
+            type="number"
+            class="form-control"
+            name="evidenceCount"
+            id="field_evidenceCount"
+            data-cy="evidenceCount"
+            formControlName="evidenceCount"
+          />
+          @if (evidenceCountRef.invalid && (evidenceCountRef.dirty || evidenceCountRef.touched)) {
+            <div>
+              @if (evidenceCountRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (evidenceCountRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!evidenceCountRef.errors?.number">This field should be a number.</small>
+            </div>
+          }
+        </div>
+
+        @let lastPracticedAtRef = editForm.get('lastPracticedAt')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_lastPracticedAt">Last Practiced At</label>
+          <div class="d-flex">
+            <input
+              id="field_lastPracticedAt"
+              data-cy="lastPracticedAt"
+              type="datetime-local"
+              class="form-control"
+              name="lastPracticedAt"
+              formControlName="lastPracticedAt"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (lastPracticedAtRef.invalid && (lastPracticedAtRef.dirty || lastPracticedAtRef.touched)) {
+            <div>
+              @if (lastPracticedAtRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!lastPracticedAtRef.errors?.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_concept">Concept</label>
+          <select
+            class="form-control"
+            id="field_concept"
+            data-cy="concept"
+            name="concept"
+            formControlName="concept"
+            [compareWith]="compareConcept"
+          >
+            <option [ngValue]="null"></option>
+            @for (conceptOption of conceptsSharedCollection(); track $index) {
+              <option [ngValue]="conceptOption">{{ conceptOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_userProfile">User Profile</label>
+          <select
+            class="form-control"
+            id="field_userProfile"
+            data-cy="userProfile"
+            name="userProfile"
+            formControlName="userProfile"
+            [compareWith]="compareUserProfile"
+          >
+            <option [ngValue]="null"></option>
+            @for (userProfileOption of userProfilesSharedCollection(); track $index) {
+              <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban" />&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving()"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save" />&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

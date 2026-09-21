@@ -1,0 +1,49 @@
+{
+  "annotations": {
+    "changelogDate": "20260920173900"
+  },
+  "applications": ["kip"],
+  "fields": [
+    {
+      "fieldName": "competency",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": 1,
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "improvement",
+      "fieldType": "Float",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "evidenceCount",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": 0
+    },
+    {
+      "fieldName": "lastPracticedAt",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "TopicProgress",
+  "relationships": [
+    {
+      "fieldValidateRules": ["required"],
+      "otherEntityName": "topic",
+      "relationshipName": "topic",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "fieldValidateRules": ["required"],
+      "otherEntityName": "userProfile",
+      "relationshipName": "user",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

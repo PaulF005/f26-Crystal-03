@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (gameProgress(); as gameProgressRef) {
+      <div>
+        <h2 data-cy="gameProgressDetailsHeading"><span>Game Progress</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ gameProgressRef.id }}</span>
+          </dd>
+          <dt><span>Sessions Played</span></dt>
+          <dd>
+            <span>{{ gameProgressRef.sessionsPlayed }}</span>
+          </dd>
+          <dt><span>Performance</span></dt>
+          <dd>
+            <span>{{ gameProgressRef.performance }}</span>
+          </dd>
+          <dt><span>Evidence Count</span></dt>
+          <dd>
+            <span>{{ gameProgressRef.evidenceCount }}</span>
+          </dd>
+          <dt><span>Last Played At</span></dt>
+          <dd>
+            <span>{{ gameProgressRef.lastPlayedAt | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span>Game</span></dt>
+          <dd>
+            @if (gameProgress()!.game) {
+              <div>
+                <a [routerLink]="['/game', gameProgress()!.game?.id, 'view']">{{ gameProgressRef.game?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>User</span></dt>
+          <dd>
+            @if (gameProgress()!.user) {
+              <div>
+                <a [routerLink]="['/user-profile', gameProgress()!.user?.id, 'view']">{{ gameProgressRef.user?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>User Profile</span></dt>
+          <dd>
+            @if (gameProgress()!.userProfile) {
+              <div>
+                <a [routerLink]="['/user-profile', gameProgress()!.userProfile?.id, 'view']">{{ gameProgressRef.userProfile?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/game-progress', gameProgressRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

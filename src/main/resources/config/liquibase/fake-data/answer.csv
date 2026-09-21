@@ -1,31 +1,31 @@
-id;answer;correct
-1;at;false
-2;more;true
-3;which until worriedly;true
-4;outside past;true
-5;whereas aside;true
-6;cram;true
-7;um noteworthy scotch;false
-8;gratefully boo;false
-9;lumbering;false
-10;soon rudely evenly;false
-11;where;false
-12;grave;true
-13;list psst before;true
-14;yowza warmly goat;true
-15;nasalise ostrich;false
-16;agreeable unto yet;false
-17;yippee bad;true
-18;before after slowly;true
-19;yuck recklessly bogus;true
-20;wee zowie;false
-21;willfully unless superior;true
-22;profane grouper;true
-23;fond;true
-24;polarisation;true
-25;till;false
-26;boo how phooey;false
-27;well-groomed;false
-28;grim grubby oh;false
-29;so during;true
-30;hearten woot;true
+id;text;outcome_text;correct;terminal_resolution
+1;at;beyond amongst;true;POSITIVE
+2;until worriedly oof;colorful for;true;INCONCLUSIVE
+3;aside scuffle trench;shy oddly;true;INCONCLUSIVE
+4;square gah obnoxiously;jam-packed abnormally;false;INCONCLUSIVE
+5;stiff shush wherever;wound list;false;POSITIVE
+6;phooey atop;very;true;POSITIVE
+7;mmm over exalted;wilt;false;NEGATIVE
+8;nab far;darling between;false;INCONCLUSIVE
+9;concerned;forenenst fit;false;POSITIVE
+10;yuck recklessly bogus;pricey;false;INCONCLUSIVE
+11;pace willfully unless;intelligent;false;NEGATIVE
+12;jeopardise finally fond;overfeed;false;POSITIVE
+13;till;drat gosh for;true;INCONCLUSIVE
+14;well-groomed;sleepy gee gah;true;INCONCLUSIVE
+15;so during;save misfire;true;POSITIVE
+16;in over;until;true;INCONCLUSIVE
+17;dampen ah;runway loftily weight;true;NEGATIVE
+18;barge drat;republican whoa;true;NEGATIVE
+19;citizen handy rubbery;less interchange;false;INCONCLUSIVE
+20;well-worn inasmuch;swanling;true;NEGATIVE
+21;free;perfectly;true;NEGATIVE
+22;requirement;deflect attest how;false;INCONCLUSIVE
+23;rarely while;ha;true;INCONCLUSIVE
+24;drowse;fatally;false;INCONCLUSIVE
+25;inquisitively;like deduce;false;INCONCLUSIVE
+26;individual;briefly ack an;true;NEGATIVE
+27;but scented engender;provision;true;INCONCLUSIVE
+28;dishearten tool worth;how dicker;false;POSITIVE
+29;forager joyfully;aged phooey yum;false;INCONCLUSIVE
+30;traditionalism baggy;boo;false;INCONCLUSIVE

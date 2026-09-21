@@ -37,16 +37,16 @@ public class Scenario implements Serializable {
     private Set<Stage> stages = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "question", "scenario" }, allowSetters = true)
+    private Stage startingStage;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "concepts" }, allowSetters = true)
     private Topic topic;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "scenarios" }, allowSetters = true)
     private Game game;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "question", "scenario" }, allowSetters = true)
-    private Stage startingStage;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -107,6 +107,19 @@ public class Scenario implements Serializable {
         return this;
     }
 
+    public Stage getStartingStage() {
+        return this.startingStage;
+    }
+
+    public void setStartingStage(Stage stage) {
+        this.startingStage = stage;
+    }
+
+    public Scenario startingStage(Stage stage) {
+        this.setStartingStage(stage);
+        return this;
+    }
+
     public Topic getTopic() {
         return this.topic;
     }
@@ -130,19 +143,6 @@ public class Scenario implements Serializable {
 
     public Scenario game(Game game) {
         this.setGame(game);
-        return this;
-    }
-
-    public Stage getStartingStage() {
-    return this.startingStage;
-}
-
-    public void setStartingStage(Stage startingStage) {
-        this.startingStage = startingStage;
-    }
-
-    public Scenario startingStage(Stage startingStage) {
-        this.setStartingStage(startingStage);
         return this;
     }
 

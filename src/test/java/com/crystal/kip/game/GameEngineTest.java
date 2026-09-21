@@ -1,19 +1,17 @@
 package com.crystal.kip.game;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Scenario;
 import com.crystal.kip.domain.Topic;
 import com.crystal.kip.domain.User;
+import com.crystal.kip.repository.ScenarioRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import com.crystal.kip.repository.ScenarioRepository;
-
-import static org.mockito.Mockito.*;
 
 class GameEngineTest {
 
@@ -62,17 +60,9 @@ class GameEngineTest {
     @Test
     @Disabled("Not yet implemented")
     void testStartScenario() {
-        Scenario scenario = new Scenario()
-            .name("Test Scenario")
-            .game(game)
-            .topic(topic);
+        Scenario scenario = new Scenario().name("Test Scenario").game(game).topic(topic);
 
-        when(
-            scenarioRepository.findByGameAndTopic(
-                game.getId(),
-                topic.getId()
-            )
-        ).thenReturn(List.of(scenario));
+        when(scenarioRepository.findByGameAndTopic(game.getId(), topic.getId())).thenReturn(List.of(scenario));
 
         gameEngine.startScenario(session);
 

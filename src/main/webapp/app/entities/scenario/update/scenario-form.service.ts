@@ -19,6 +19,7 @@ type ScenarioFormDefaults = Pick<NewScenario, 'id'>;
 type ScenarioFormGroupContent = {
   id: FormControl<IScenario['id'] | NewScenario['id']>;
   name: FormControl<IScenario['name']>;
+  startingStage: FormControl<IScenario['startingStage']>;
   topic: FormControl<IScenario['topic']>;
   game: FormControl<IScenario['game']>;
 };
@@ -44,6 +45,7 @@ export class ScenarioFormService {
       name: new FormControl(scenarioRawValue.name, {
         validators: [Validators.required],
       }),
+      startingStage: new FormControl(scenarioRawValue.startingStage),
       topic: new FormControl(scenarioRawValue.topic),
       game: new FormControl(scenarioRawValue.game),
     });
