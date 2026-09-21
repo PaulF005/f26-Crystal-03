@@ -1,31 +1,9 @@
-id;text;outcome_text;correct;terminal_resolution
-1;at;beyond amongst;true;POSITIVE
-2;until worriedly oof;colorful for;true;INCONCLUSIVE
-3;aside scuffle trench;shy oddly;true;INCONCLUSIVE
-4;square gah obnoxiously;jam-packed abnormally;false;INCONCLUSIVE
-5;stiff shush wherever;wound list;false;POSITIVE
-6;phooey atop;very;true;POSITIVE
-7;mmm over exalted;wilt;false;NEGATIVE
-8;nab far;darling between;false;INCONCLUSIVE
-9;concerned;forenenst fit;false;POSITIVE
-10;yuck recklessly bogus;pricey;false;INCONCLUSIVE
-11;pace willfully unless;intelligent;false;NEGATIVE
-12;jeopardise finally fond;overfeed;false;POSITIVE
-13;till;drat gosh for;true;INCONCLUSIVE
-14;well-groomed;sleepy gee gah;true;INCONCLUSIVE
-15;so during;save misfire;true;POSITIVE
-16;in over;until;true;INCONCLUSIVE
-17;dampen ah;runway loftily weight;true;NEGATIVE
-18;barge drat;republican whoa;true;NEGATIVE
-19;citizen handy rubbery;less interchange;false;INCONCLUSIVE
-20;well-worn inasmuch;swanling;true;NEGATIVE
-21;free;perfectly;true;NEGATIVE
-22;requirement;deflect attest how;false;INCONCLUSIVE
-23;rarely while;ha;true;INCONCLUSIVE
-24;drowse;fatally;false;INCONCLUSIVE
-25;inquisitively;like deduce;false;INCONCLUSIVE
-26;individual;briefly ack an;true;NEGATIVE
-27;but scented engender;provision;true;INCONCLUSIVE
-28;dishearten tool worth;how dicker;false;POSITIVE
-29;forager joyfully;aged phooey yum;false;INCONCLUSIVE
-30;traditionalism baggy;boo;false;INCONCLUSIVE
+id;text;outcome_text;correct;terminal_resolution;question_id;next_stage_id
+301;Say: 'I was probably speeding, sorry officer. Also my inspection sticker is fake.';Incorrect. Never volunteer violations!;false;NEGATIVE;201;51
+302;Say: 'No officer. Please tell me.';Correct!;true;POSITIVE;201;52
+303;Lock the doors and mouth 'PROBABLE CAUSE?';Incorrect. Don't escalate.;false;NEGATIVE;202;60
+304;Politely state: 'Officer, I do not consent to any searches.';Correct! You have a Fourth Amendment right to refuse a consent search. Keep it professional.;true;POSITIVE;202;61
+305;Hit the door locks and shout: 'Am I being detained or am I free to go?';Incorrect. Pennsylvania v. Mimms says you are legally required to step out if ordered.;false;NEGATIVE;203;70
+306;Exit the vehicle calmly while keeping your hands visible.;Correct. You must comply with orders to exit the vehicle for safety, but you preserve your rights by staying cool.;true;POSITIVE;203;71
+307;Say: 'Can I call my mom?' and reach for your cell phone.;Incorrect. Reaching into your pockets or making sudden movements during an active interrogation is a great way to meet the pavement.;false;NEGATIVE;204;80
+308;State clearly: 'I am invoking my right to remain silent and want a lawyer.';Correct. Explicitly invoking your Miranda rights puts the legal brakes on the interrogation.;true;POSITIVE;204;81
