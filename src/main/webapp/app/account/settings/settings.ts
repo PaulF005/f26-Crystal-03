@@ -4,13 +4,14 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Account } from 'app/core/auth/account.model';
 import { AccountService } from 'app/core/auth/account.service';
 import { AlertError } from 'app/shared/alert/alert-error';
+import { RouterLink } from '@angular/router';
 
 const initialAccount: Account = {} as Account;
 
 @Component({
   selector: 'jhi-settings',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AlertError, ReactiveFormsModule],
+  imports: [AlertError, ReactiveFormsModule, RouterLink],
   templateUrl: './settings.html',
 })
 export default class Settings implements OnInit {

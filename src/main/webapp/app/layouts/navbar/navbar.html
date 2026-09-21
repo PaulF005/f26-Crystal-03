@@ -29,6 +29,7 @@
         </li>
         @if (account() !== null) {
           <li
+            *jhiHasAnyAuthority="'ROLE_ADMIN'"
             ngbDropdown
             class="nav-item dropdown pointer"
             display="dynamic"
@@ -58,7 +59,7 @@
               <li>
                 <a
                   class="dropdown-item"
-                  routerLink="/progress"
+                  routerLink="/admin/progress"
                   routerLinkActive="active"
                   [routerLinkActiveOptions]="{ exact: true }"
                   (click)="collapseNavbar()"
@@ -363,6 +364,12 @@
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
             @if (accountRef !== null) {
               <li>
+                <a class="dropdown-item" routerLink="/progress" routerLinkActive="active" (click)="collapseNavbar()" data-cy="progressItem">
+                  <fa-icon icon="tachometer-alt" [fixedWidth]="true" />
+                  <span>Progress</span>
+                </a>
+              </li>
+              <li>
                 <a
                   class="dropdown-item"
                   routerLink="/account/settings"
@@ -372,18 +379,6 @@
                 >
                   <fa-icon icon="wrench" [fixedWidth]="true" />
                   <span>Settings</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/account/password"
-                  routerLinkActive="active"
-                  (click)="collapseNavbar()"
-                  data-cy="passwordItem"
-                >
-                  <fa-icon icon="lock" [fixedWidth]="true" />
-                  <span>Password</span>
                 </a>
               </li>
               <li>

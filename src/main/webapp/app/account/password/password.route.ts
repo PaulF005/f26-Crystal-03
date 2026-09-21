@@ -7,7 +7,7 @@ import Password from './password';
 const passwordRoute: Route = {
   path: 'password',
   component: Password,
-  title: 'Password',
+  title: 'change-password',
   canActivate: [UserRouteAccessService],
 };
 
