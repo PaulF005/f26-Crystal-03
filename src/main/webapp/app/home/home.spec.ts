@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 
 import { of } from 'rxjs';
 
@@ -17,6 +17,7 @@ describe('Home Component', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        provideRouter([]),
         {
           provide: AccountService,
           useValue: {
@@ -30,6 +31,7 @@ describe('Home Component', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(Home);
     comp = fixture.componentInstance;
+
     mockAccountService = TestBed.inject(AccountService);
     mockAccountService.identity = vitest.fn(() => of(null));
 
