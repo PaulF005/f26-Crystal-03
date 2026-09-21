@@ -1,5 +1,0 @@
-id,questionId,text,correct,nextStageId,feedbackText
-301,201,Say: 'I was probably speeding, sorry officer.',false,51,Incorrect. Admitting fault provides self-incriminating evidence.
-302,201,Say: 'No officer. Please tell me.',true,52,Correct! Moving to the next step of the stop.
-303,202,Refuse to open it and mouth 'probable cause?' through the glass.,false,60,Incorrect. Refusing simple commands can escalate to obstruction.
-304,202,Politely state: 'Officer, I do not consent to any searches.',true,61,Correct! You have a Fourth Amendment right to refuse a consent search.
