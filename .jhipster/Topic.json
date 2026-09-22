@@ -8,6 +8,10 @@
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "explanation",
+      "fieldType": "String"
     }
   ],
   "name": "Topic",
