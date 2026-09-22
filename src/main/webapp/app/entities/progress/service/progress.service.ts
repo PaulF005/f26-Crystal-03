@@ -1,16 +1,15 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { IProgress, NewProgress } from '../progress.model';
 
 export type PartialUpdateProgress = Partial<IProgress> & Pick<IProgress, 'id'>;
 
-@Injectable()
+@Service()
 export class ProgressesService {
   readonly progressesParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -27,11 +26,10 @@ export class ProgressesService {
    * In case of error while fetching the progresses, the signal is set to an empty array.
    */
   readonly progresses = computed(() => (this.progressesResource.hasValue() ? this.progressesResource.value() : []));
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/progresses');
+  protected readonly resourceUrl = `${serverApiUrl}api/progresses`;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ProgressService extends ProgressesService {
   protected readonly http = inject(HttpClient);
 
@@ -72,7 +70,7 @@ export class ProgressService extends ProgressesService {
     progressCollection: Type[],
     ...progressesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const progresses: Type[] = progressesToCheck.filter(isPresent);
+    const progresses: Type[] = progressesToCheck.filter(progressItem => progressItem !== null && progressItem !== undefined);
     if (progresses.length > 0) {
       const progressCollectionIdentifiers = progressCollection.map(progressItem => this.getProgressIdentifier(progressItem));
       const progressesToAdd = progresses.filter(progressItem => {

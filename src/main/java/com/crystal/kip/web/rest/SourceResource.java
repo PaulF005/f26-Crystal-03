@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/sources")
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class SourceResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(SourceResource.class);

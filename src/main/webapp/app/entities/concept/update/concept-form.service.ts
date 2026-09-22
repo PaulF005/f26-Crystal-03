@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IConcept, NewConcept } from '../concept.model';
@@ -26,7 +26,7 @@ type ConceptFormGroupContent = {
 
 export type ConceptFormGroup = FormGroup<ConceptFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ConceptFormService {
   createConceptFormGroup(concept?: ConceptFormGroupInput): ConceptFormGroup {
     const conceptRawValue = {

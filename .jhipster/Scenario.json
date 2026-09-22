@@ -20,21 +20,12 @@
       "relationshipType": "one-to-many"
     },
     {
-      "fieldValidateRules": ["required"],
-      "otherEntityName": "stage",
-      "relationshipName": "startingStage",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "fieldValidateRules": ["required"],
       "otherEntityName": "topic",
       "relationshipName": "topic",
       "relationshipSide": "left",
       "relationshipType": "many-to-one"
     },
     {
-      "fieldValidateRules": ["required"],
       "otherEntityName": "game",
       "relationshipName": "game",
       "relationshipSide": "right",

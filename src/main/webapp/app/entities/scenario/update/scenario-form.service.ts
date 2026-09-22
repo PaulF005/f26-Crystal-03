@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IScenario, NewScenario } from '../scenario.model';
@@ -19,14 +19,13 @@ type ScenarioFormDefaults = Pick<NewScenario, 'id'>;
 type ScenarioFormGroupContent = {
   id: FormControl<IScenario['id'] | NewScenario['id']>;
   name: FormControl<IScenario['name']>;
-  startingStage: FormControl<IScenario['startingStage']>;
   topic: FormControl<IScenario['topic']>;
   game: FormControl<IScenario['game']>;
 };
 
 export type ScenarioFormGroup = FormGroup<ScenarioFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ScenarioFormService {
   createScenarioFormGroup(scenario?: ScenarioFormGroupInput): ScenarioFormGroup {
     const scenarioRawValue = {
@@ -45,7 +44,6 @@ export class ScenarioFormService {
       name: new FormControl(scenarioRawValue.name, {
         validators: [Validators.required],
       }),
-      startingStage: new FormControl(scenarioRawValue.startingStage),
       topic: new FormControl(scenarioRawValue.topic),
       game: new FormControl(scenarioRawValue.game),
     });

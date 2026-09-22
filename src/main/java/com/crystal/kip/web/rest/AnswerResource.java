@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/answers")
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class AnswerResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(AnswerResource.class);
@@ -124,10 +124,8 @@ public class AnswerResource {
         Optional<Answer> result = answerRepository
             .findById(answer.getId())
             .map(existingAnswer -> {
-                updateIfPresent(existingAnswer::setText, answer.getText());
-                updateIfPresent(existingAnswer::setOutcomeText, answer.getOutcomeText());
+                updateIfPresent(existingAnswer::setAnswer, answer.getAnswer());
                 updateIfPresent(existingAnswer::setCorrect, answer.getCorrect());
-                updateIfPresent(existingAnswer::setTerminalResolution, answer.getTerminalResolution());
 
                 return existingAnswer;
             })

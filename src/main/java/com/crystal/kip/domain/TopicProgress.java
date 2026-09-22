@@ -51,10 +51,6 @@ public class TopicProgress implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "dataUser", "topicProgresseses", "gameProgresseses", "conceptProgresseses" }, allowSetters = true)
-    private UserProfile user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "dataUser", "topicProgresseses", "gameProgresseses", "conceptProgresseses" }, allowSetters = true)
     private UserProfile userProfile;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -134,19 +130,6 @@ public class TopicProgress implements Serializable {
 
     public TopicProgress topic(Topic topic) {
         this.setTopic(topic);
-        return this;
-    }
-
-    public UserProfile getUser() {
-        return this.user;
-    }
-
-    public void setUser(UserProfile userProfile) {
-        this.user = userProfile;
-    }
-
-    public TopicProgress user(UserProfile userProfile) {
-        this.setUser(userProfile);
         return this;
     }
 

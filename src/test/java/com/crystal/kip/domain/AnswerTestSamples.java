@@ -10,14 +10,14 @@ public class AnswerTestSamples {
     private static final AtomicLong longCount = new AtomicLong(random.nextInt() + 2L * Integer.MAX_VALUE);
 
     public static Answer getAnswerSample1() {
-        return new Answer().id(1L).text("text1").outcomeText("outcomeText1");
+        return new Answer().id(1L).answer("answer1");
     }
 
     public static Answer getAnswerSample2() {
-        return new Answer().id(2L).text("text2").outcomeText("outcomeText2");
+        return new Answer().id(2L).answer("answer2");
     }
 
     public static Answer getAnswerRandomSampleGenerator() {
-        return new Answer().id(longCount.incrementAndGet()).text(UUID.randomUUID().toString()).outcomeText(UUID.randomUUID().toString());
+        return new Answer().id(longCount.incrementAndGet()).answer(UUID.randomUUID().toString());
     }
 }

@@ -33,7 +33,7 @@ public class Topic implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "topic")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "questions", "legalContent", "topic", "conceptProgresseses" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "questions", "legalContent", "topic" }, allowSetters = true)
     private Set<Concept> concepts = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

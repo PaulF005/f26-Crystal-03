@@ -37,18 +37,6 @@ class GameProgressTest {
     }
 
     @Test
-    void userTest() {
-        GameProgress gameProgress = getGameProgressRandomSampleGenerator();
-        UserProfile userProfileBack = getUserProfileRandomSampleGenerator();
-
-        gameProgress.setUser(userProfileBack);
-        assertThat(gameProgress.getUser()).isEqualTo(userProfileBack);
-
-        gameProgress.user(null);
-        assertThat(gameProgress.getUser()).isNull();
-    }
-
-    @Test
     void userProfileTest() {
         GameProgress gameProgress = getGameProgressRandomSampleGenerator();
         UserProfile userProfileBack = getUserProfileRandomSampleGenerator();

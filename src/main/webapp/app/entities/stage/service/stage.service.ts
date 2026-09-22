@@ -1,16 +1,15 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { IStage, NewStage } from '../stage.model';
 
 export type PartialUpdateStage = Partial<IStage> & Pick<IStage, 'id'>;
 
-@Injectable()
+@Service()
 export class StagesService {
   readonly stagesParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(undefined);
   readonly stagesResource = httpResource<IStage[]>(() => {
@@ -25,11 +24,10 @@ export class StagesService {
    * In case of error while fetching the stages, the signal is set to an empty array.
    */
   readonly stages = computed(() => (this.stagesResource.hasValue() ? this.stagesResource.value() : []));
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/stages');
+  protected readonly resourceUrl = `${serverApiUrl}api/stages`;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class StageService extends StagesService {
   protected readonly http = inject(HttpClient);
 
@@ -70,7 +68,7 @@ export class StageService extends StagesService {
     stageCollection: Type[],
     ...stagesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const stages: Type[] = stagesToCheck.filter(isPresent);
+    const stages: Type[] = stagesToCheck.filter(stageItem => stageItem !== null && stageItem !== undefined);
     if (stages.length > 0) {
       const stageCollectionIdentifiers = stageCollection.map(stageItem => this.getStageIdentifier(stageItem));
       const stagesToAdd = stages.filter(stageItem => {

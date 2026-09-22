@@ -27,23 +27,6 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_startingStage">Starting Stage</label>
-          <select
-            class="form-control"
-            id="field_startingStage"
-            data-cy="startingStage"
-            name="startingStage"
-            formControlName="startingStage"
-            [compareWith]="compareStage"
-          >
-            <option [ngValue]="null"></option>
-            @for (stageOption of stagesSharedCollection(); track $index) {
-              <option [ngValue]="stageOption">{{ stageOption.id }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_topic">Topic</label>
           <select class="form-control" id="field_topic" data-cy="topic" name="topic" formControlName="topic" [compareWith]="compareTopic">
             <option [ngValue]="null"></option>

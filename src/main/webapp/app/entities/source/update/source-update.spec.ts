@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { HttpResponse } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -51,10 +51,10 @@ describe('Source Management Update Component', () => {
       source.legalContent = legalContent;
 
       const legalContentCollection: ILegalContent[] = [{ id: 7620 }];
-      vitest.spyOn(legalContentService, 'query').mockReturnValue(of(new HttpResponse({ body: legalContentCollection })));
+      vi.spyOn(legalContentService, 'query').mockReturnValue(of(new HttpResponse({ body: legalContentCollection })));
       const additionalLegalContents = [legalContent];
       const expectedCollection: ILegalContent[] = [...additionalLegalContents, ...legalContentCollection];
-      vitest.spyOn(legalContentService, 'addLegalContentToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(legalContentService, 'addLegalContentToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ source });
       comp.ngOnInit();
@@ -85,9 +85,9 @@ describe('Source Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ISource>();
       const source = { id: 4722 };
-      vitest.spyOn(sourceFormService, 'getSource').mockReturnValue(source);
-      vitest.spyOn(sourceService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(sourceFormService, 'getSource').mockReturnValue(source);
+      vi.spyOn(sourceService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ source });
       comp.ngOnInit();
 
@@ -108,9 +108,9 @@ describe('Source Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ISource>();
       const source = { id: 4722 };
-      vitest.spyOn(sourceFormService, 'getSource').mockReturnValue({ id: null });
-      vitest.spyOn(sourceService, 'create').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(sourceFormService, 'getSource').mockReturnValue({ id: null });
+      vi.spyOn(sourceService, 'create').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ source: null });
       comp.ngOnInit();
 
@@ -131,8 +131,8 @@ describe('Source Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ISource>();
       const source = { id: 4722 };
-      vitest.spyOn(sourceService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(sourceService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ source });
       comp.ngOnInit();
 
@@ -153,7 +153,7 @@ describe('Source Management Update Component', () => {
       it('should forward to legalContentService', () => {
         const entity = { id: 7620 };
         const entity2 = { id: 29225 };
-        vitest.spyOn(legalContentService, 'compareLegalContent');
+        vi.spyOn(legalContentService, 'compareLegalContent');
         comp.compareLegalContent(entity, entity2);
         expect(legalContentService.compareLegalContent).toHaveBeenCalledWith(entity, entity2);
       });

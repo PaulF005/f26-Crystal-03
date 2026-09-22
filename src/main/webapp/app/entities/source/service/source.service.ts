@@ -1,16 +1,15 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { ISource, NewSource } from '../source.model';
 
 export type PartialUpdateSource = Partial<ISource> & Pick<ISource, 'id'>;
 
-@Injectable()
+@Service()
 export class SourcesService {
   readonly sourcesParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -27,11 +26,10 @@ export class SourcesService {
    * In case of error while fetching the sources, the signal is set to an empty array.
    */
   readonly sources = computed(() => (this.sourcesResource.hasValue() ? this.sourcesResource.value() : []));
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/sources');
+  protected readonly resourceUrl = `${serverApiUrl}api/sources`;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class SourceService extends SourcesService {
   protected readonly http = inject(HttpClient);
 
@@ -72,7 +70,7 @@ export class SourceService extends SourcesService {
     sourceCollection: Type[],
     ...sourcesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const sources: Type[] = sourcesToCheck.filter(isPresent);
+    const sources: Type[] = sourcesToCheck.filter(sourceItem => sourceItem !== null && sourceItem !== undefined);
     if (sources.length > 0) {
       const sourceCollectionIdentifiers = sourceCollection.map(sourceItem => this.getSourceIdentifier(sourceItem));
       const sourcesToAdd = sources.filter(sourceItem => {

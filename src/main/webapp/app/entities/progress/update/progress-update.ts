@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,14 +8,13 @@ import { Observable, finalize, map } from 'rxjs';
 
 import { UserDetailService } from 'app/entities/user-detail/service/user-detail.service';
 import { IUserDetail } from 'app/entities/user-detail/user-detail.model';
-import { AlertError } from 'app/shared/alert/alert-error';
+import { AlertError } from 'app/shared/alert';
 import { IProgress } from '../progress.model';
 import { ProgressService } from '../service/progress.service';
 
 import { ProgressFormGroup, ProgressFormService } from './progress-form.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-progress-update',
   templateUrl: './progress-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

@@ -1,14 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit, effect, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, effect, inject, signal, untracked } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Data, ParamMap, Router, RouterLink } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal';
-import { Subscription, combineLatest, filter, tap } from 'rxjs';
+import { combineLatest, filter, map, tap } from 'rxjs';
 
-import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
-import { Alert } from 'app/shared/alert/alert';
-import { AlertError } from 'app/shared/alert/alert-error';
+import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config';
+import { Alert, AlertError } from 'app/shared/alert';
 import { FormatMediumDatetimePipe } from 'app/shared/date';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
 import { IConceptProgress } from '../concept-progress.model';
@@ -16,13 +15,11 @@ import { ConceptProgressDeleteDialog } from '../delete/concept-progress-delete-d
 import { ConceptProgressService } from '../service/concept-progress.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-concept-progress',
   templateUrl: './concept-progress.html',
-  imports: [RouterLink, FormsModule, FontAwesomeModule, AlertError, Alert, SortDirective, SortByDirective, FormatMediumDatetimePipe],
+  imports: [RouterLink, FontAwesomeModule, AlertError, Alert, SortDirective, SortByDirective, FormatMediumDatetimePipe],
 })
-export class ConceptProgress implements OnInit {
-  subscription: Subscription | null = null;
+export class ConceptProgress {
   readonly conceptProgresses = signal<IConceptProgress[]>([]);
 
   sortState = sortStateSignal({});
@@ -32,6 +29,12 @@ export class ConceptProgress implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   readonly isLoading = this.conceptProgressService.conceptProgressesResource.isLoading;
   protected readonly activatedRoute = inject(ActivatedRoute);
+  protected readonly activatedRouteState = toSignal(
+    combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      map(([queryParamMap, data]) => ({ queryParamMap, data })),
+    ),
+    { initialValue: { queryParamMap: this.activatedRoute.snapshot.queryParamMap, data: this.activatedRoute.snapshot.data } },
+  );
   protected readonly sortService = inject(SortService);
   protected modalService = inject(NgbModal);
 
@@ -39,22 +42,17 @@ export class ConceptProgress implements OnInit {
     effect(() => {
       this.conceptProgresses.set(this.fillComponentAttributesFromResponseBody([...this.conceptProgressService.conceptProgresses()]));
     });
+    effect(() => {
+      const activatedRouteState = this.activatedRouteState();
+      untracked(() => {
+        // Only watch for route changes. Other signals should be ignored.
+        this.fillComponentAttributeFromRoute(activatedRouteState.queryParamMap, activatedRouteState.data);
+        this.load();
+      });
+    });
   }
 
   trackId = (item: IConceptProgress): number => this.conceptProgressService.getConceptProgressIdentifier(item);
-
-  ngOnInit(): void {
-    this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
-      .pipe(
-        tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-        tap(() => {
-          if (this.conceptProgresses().length === 0) {
-            this.load();
-          }
-        }),
-      )
-      .subscribe();
-  }
 
   delete(conceptProgress: IConceptProgress): void {
     const modalRef = this.modalService.open(ConceptProgressDeleteDialog, { size: 'lg', backdrop: 'static' });

@@ -40,9 +40,10 @@ public class CacheConfiguration {
             createCache(cm, com.crystal.kip.domain.User.class.getName());
             createCache(cm, com.crystal.kip.domain.Authority.class.getName());
             createCache(cm, com.crystal.kip.domain.User.class.getName() + ".authorities");
-            createCache(cm, com.crystal.kip.domain.UserDetail.class.getName());
-            createCache(cm, com.crystal.kip.domain.UserDetail.class.getName() + ".progresses");
-            createCache(cm, com.crystal.kip.domain.Progress.class.getName());
+            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName());
+            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName() + ".topicProgresseses");
+            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName() + ".gameProgresseses");
+            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName() + ".conceptProgresseses");
             createCache(cm, com.crystal.kip.domain.Topic.class.getName());
             createCache(cm, com.crystal.kip.domain.Topic.class.getName() + ".concepts");
             createCache(cm, com.crystal.kip.domain.Concept.class.getName());
@@ -58,19 +59,15 @@ public class CacheConfiguration {
             createCache(cm, com.crystal.kip.domain.Stage.class.getName());
             createCache(cm, com.crystal.kip.domain.LegalContent.class.getName());
             createCache(cm, com.crystal.kip.domain.Source.class.getName());
-            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName());
-            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName() + ".topicProgresses");
-            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName() + ".gameProgresses");
             createCache(cm, com.crystal.kip.domain.TopicProgress.class.getName());
             createCache(cm, com.crystal.kip.domain.GameProgress.class.getName());
             createCache(cm, com.crystal.kip.domain.GameSession.class.getName());
             createCache(cm, com.crystal.kip.domain.GameSession.class.getName() + ".stageAttempts");
             createCache(cm, com.crystal.kip.domain.StageAttempt.class.getName());
-            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName() + ".topicProgresseses");
-            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName() + ".gameProgresseses");
-            createCache(cm, com.crystal.kip.domain.UserProfile.class.getName() + ".conceptProgresseses");
-            createCache(cm, com.crystal.kip.domain.Concept.class.getName() + ".conceptProgresseses");
             createCache(cm, com.crystal.kip.domain.ConceptProgress.class.getName());
+            createCache(cm, com.crystal.kip.domain.UserDetail.class.getName());
+            createCache(cm, com.crystal.kip.domain.UserDetail.class.getName() + ".progresses");
+            createCache(cm, com.crystal.kip.domain.Progress.class.getName());
             // jhipster-needle-caffeine-add-entry
         };
     }

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
@@ -55,9 +55,9 @@ describe('LegalContent Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ILegalContent>();
       const legalContent = { id: 7620 };
-      vitest.spyOn(legalContentFormService, 'getLegalContent').mockReturnValue(legalContent);
-      vitest.spyOn(legalContentService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(legalContentFormService, 'getLegalContent').mockReturnValue(legalContent);
+      vi.spyOn(legalContentService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ legalContent });
       comp.ngOnInit();
 
@@ -78,9 +78,9 @@ describe('LegalContent Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ILegalContent>();
       const legalContent = { id: 7620 };
-      vitest.spyOn(legalContentFormService, 'getLegalContent').mockReturnValue({ id: null });
-      vitest.spyOn(legalContentService, 'create').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(legalContentFormService, 'getLegalContent').mockReturnValue({ id: null });
+      vi.spyOn(legalContentService, 'create').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ legalContent: null });
       comp.ngOnInit();
 
@@ -101,8 +101,8 @@ describe('LegalContent Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ILegalContent>();
       const legalContent = { id: 7620 };
-      vitest.spyOn(legalContentService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(legalContentService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ legalContent });
       comp.ngOnInit();
 

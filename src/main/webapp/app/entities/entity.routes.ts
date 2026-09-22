@@ -2,106 +2,106 @@ import { Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: 'user-management',
+    title: 'UserManagements',
+    loadChildren: () => import('./admin/user-management/user-management.routes'),
+  },
+  {
     path: 'authority',
-    data: { pageTitle: 'Authorities' },
+    title: 'Authorities',
     loadChildren: () => import('./admin/authority/authority.routes'),
   },
   {
-    path: 'user-detail',
-    data: { pageTitle: 'UserDetails' },
-    loadChildren: () => import('./user-detail/user-detail.routes'),
-  },
-  {
-    path: 'progress',
-    data: { pageTitle: 'Progresses' },
-    loadChildren: () => import('./progress/progress.routes'),
+    path: 'user-profile',
+    title: 'UserProfiles',
+    loadChildren: () => import('./user-profile/user-profile.routes'),
   },
   {
     path: 'topic',
-    data: { pageTitle: 'Topics' },
+    title: 'Topics',
     loadChildren: () => import('./topic/topic.routes'),
   },
   {
     path: 'concept',
-    data: { pageTitle: 'Concepts' },
+    title: 'Concepts',
     loadChildren: () => import('./concept/concept.routes'),
   },
   {
     path: 'question',
-    data: { pageTitle: 'Questions' },
+    title: 'Questions',
     loadChildren: () => import('./question/question.routes'),
   },
   {
     path: 'answer',
-    data: { pageTitle: 'Answers' },
+    title: 'Answers',
     loadChildren: () => import('./answer/answer.routes'),
   },
   {
     path: 'feedback',
-    data: { pageTitle: 'Feedbacks' },
+    title: 'Feedbacks',
     loadChildren: () => import('./feedback/feedback.routes'),
   },
   {
     path: 'game',
-    data: { pageTitle: 'Games' },
+    title: 'Games',
     loadChildren: () => import('./game/game.routes'),
   },
   {
     path: 'scenario',
-    data: { pageTitle: 'Scenarios' },
+    title: 'Scenarios',
     loadChildren: () => import('./scenario/scenario.routes'),
   },
   {
     path: 'stage',
-    data: { pageTitle: 'Stages' },
+    title: 'Stages',
     loadChildren: () => import('./stage/stage.routes'),
   },
   {
     path: 'legal-content',
-    data: { pageTitle: 'LegalContents' },
+    title: 'LegalContents',
     loadChildren: () => import('./legal-content/legal-content.routes'),
   },
   {
     path: 'source',
-    data: { pageTitle: 'Sources' },
+    title: 'Sources',
     loadChildren: () => import('./source/source.routes'),
   },
   {
-    path: 'user-management',
-    data: { pageTitle: 'UserManagements' },
-    loadChildren: () => import('./admin/user-management/user-management.routes'),
-  },
-  {
-    path: 'user-profile',
-    data: { pageTitle: 'UserProfiles' },
-    loadChildren: () => import('./user-profile/user-profile.routes'),
-  },
-  {
     path: 'topic-progress',
-    data: { pageTitle: 'TopicProgresses' },
+    title: 'TopicProgresses',
     loadChildren: () => import('./topic-progress/topic-progress.routes'),
   },
   {
     path: 'game-progress',
-    data: { pageTitle: 'GameProgresses' },
+    title: 'GameProgresses',
     loadChildren: () => import('./game-progress/game-progress.routes'),
   },
   {
     path: 'game-session',
-    data: { pageTitle: 'GameSessions' },
+    title: 'GameSessions',
     loadChildren: () => import('./game-session/game-session.routes'),
   },
   {
     path: 'stage-attempt',
-    data: { pageTitle: 'StageAttempts' },
+    title: 'StageAttempts',
     loadChildren: () => import('./stage-attempt/stage-attempt.routes'),
   },
   {
     path: 'concept-progress',
-    data: { pageTitle: 'ConceptProgresses' },
+    title: 'ConceptProgresses',
     loadChildren: () => import('./concept-progress/concept-progress.routes'),
   },
-  /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
+  {
+    path: 'user-detail',
+    title: 'UserDetails',
+    loadChildren: () => import('./user-detail/user-detail.routes'),
+  },
+  {
+    path: 'progress',
+    title: 'Progresses',
+    loadChildren: () => import('./progress/progress.routes'),
+  },
+  // jhipster-needle-add-entity-route - JHipster will add entity modules routes here
 ];
 
 export default routes;

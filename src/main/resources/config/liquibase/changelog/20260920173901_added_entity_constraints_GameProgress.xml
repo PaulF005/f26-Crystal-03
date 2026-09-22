@@ -17,13 +17,6 @@
                                  referencedTableName="game"
                                  />
 
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="game_progress"
-                                 constraintName="fk_game_progress__user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="user_profile"
-                                 />
-
         <addForeignKeyConstraint baseColumnNames="user_profile_id"
                                  baseTableName="game_progress"
                                  constraintName="fk_game_progress__user_profile_id"

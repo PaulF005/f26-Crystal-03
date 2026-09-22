@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { HttpResponse } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -51,10 +51,10 @@ describe('Progress Management Update Component', () => {
       progress.user = user;
 
       const userDetailCollection: IUserDetail[] = [{ id: 9537 }];
-      vitest.spyOn(userDetailService, 'query').mockReturnValue(of(new HttpResponse({ body: userDetailCollection })));
+      vi.spyOn(userDetailService, 'query').mockReturnValue(of(new HttpResponse({ body: userDetailCollection })));
       const additionalUserDetails = [user];
       const expectedCollection: IUserDetail[] = [...additionalUserDetails, ...userDetailCollection];
-      vitest.spyOn(userDetailService, 'addUserDetailToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(userDetailService, 'addUserDetailToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ progress });
       comp.ngOnInit();
@@ -85,9 +85,9 @@ describe('Progress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IProgress>();
       const progress = { id: 9991 };
-      vitest.spyOn(progressFormService, 'getProgress').mockReturnValue(progress);
-      vitest.spyOn(progressService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(progressFormService, 'getProgress').mockReturnValue(progress);
+      vi.spyOn(progressService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ progress });
       comp.ngOnInit();
 
@@ -108,9 +108,9 @@ describe('Progress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IProgress>();
       const progress = { id: 9991 };
-      vitest.spyOn(progressFormService, 'getProgress').mockReturnValue({ id: null });
-      vitest.spyOn(progressService, 'create').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(progressFormService, 'getProgress').mockReturnValue({ id: null });
+      vi.spyOn(progressService, 'create').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ progress: null });
       comp.ngOnInit();
 
@@ -131,8 +131,8 @@ describe('Progress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IProgress>();
       const progress = { id: 9991 };
-      vitest.spyOn(progressService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(progressService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ progress });
       comp.ngOnInit();
 
@@ -153,7 +153,7 @@ describe('Progress Management Update Component', () => {
       it('should forward to userDetailService', () => {
         const entity = { id: 9537 };
         const entity2 = { id: 23168 };
-        vitest.spyOn(userDetailService, 'compareUserDetail');
+        vi.spyOn(userDetailService, 'compareUserDetail');
         comp.compareUserDetail(entity, entity2);
         expect(userDetailService.compareUserDetail).toHaveBeenCalledWith(entity, entity2);
       });

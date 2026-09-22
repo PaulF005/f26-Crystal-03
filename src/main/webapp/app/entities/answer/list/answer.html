@@ -36,35 +36,18 @@
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
                 <span>ID</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
-            <th scope="col" jhiSortBy="text">
+            <th scope="col" jhiSortBy="answer">
               <div class="d-flex">
-                <span>Text</span>
-
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="outcomeText">
-              <div class="d-flex">
-                <span>Outcome Text</span>
-
+                <span>Answer</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="correct">
               <div class="d-flex">
                 <span>Correct</span>
-
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="terminalResolution">
-              <div class="d-flex">
-                <span>Terminal Resolution</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
@@ -95,16 +78,8 @@
               <td>
                 <a [routerLink]="['/answer', answer.id, 'view']">{{ answer.id }}</a>
               </td>
-              <td>{{ answer.text }}</td>
-              <td>{{ answer.outcomeText }}</td>
+              <td>{{ answer.answer }}</td>
               <td>{{ answer.correct }}</td>
-              <td>
-                {{
-                  { null: '', POSITIVE: 'POSITIVE', NEGATIVE: 'NEGATIVE', INCONCLUSIVE: 'INCONCLUSIVE' }[
-                    answer.terminalResolution ?? 'null'
-                  ]
-                }}
-              </td>
               <td>
                 @if (answer.nextStage) {
                   <div>

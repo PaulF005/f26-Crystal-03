@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,14 +8,13 @@ import { Observable, finalize, map } from 'rxjs';
 
 import { UserService } from 'app/entities/user/service/user.service';
 import { IUser } from 'app/entities/user/user.model';
-import { AlertError } from 'app/shared/alert/alert-error';
+import { AlertError } from 'app/shared/alert';
 import { UserDetailService } from '../service/user-detail.service';
 import { IUserDetail } from '../user-detail.model';
 
 import { UserDetailFormGroup, UserDetailFormService } from './user-detail-form.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-user-detail-update',
   templateUrl: './user-detail-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

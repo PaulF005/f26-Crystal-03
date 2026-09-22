@@ -15,7 +15,6 @@ import com.crystal.kip.service.dto.AdminUserDTO;
 import com.crystal.kip.service.dto.PasswordChangeDTO;
 import com.crystal.kip.web.rest.vm.KeyAndPasswordVM;
 import com.crystal.kip.web.rest.vm.ManagedUserVM;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.Instant;
 import java.util.*;
 import java.util.stream.Stream;
@@ -32,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Integration tests for the {@link AccountResource} REST controller.

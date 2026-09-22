@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { HttpResponse } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -55,10 +55,10 @@ describe('TopicProgress Management Update Component', () => {
       topicProgress.topic = topic;
 
       const topicCollection: ITopic[] = [{ id: 29581 }];
-      vitest.spyOn(topicService, 'query').mockReturnValue(of(new HttpResponse({ body: topicCollection })));
+      vi.spyOn(topicService, 'query').mockReturnValue(of(new HttpResponse({ body: topicCollection })));
       const additionalTopics = [topic];
       const expectedCollection: ITopic[] = [...additionalTopics, ...topicCollection];
-      vitest.spyOn(topicService, 'addTopicToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(topicService, 'addTopicToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ topicProgress });
       comp.ngOnInit();
@@ -73,16 +73,14 @@ describe('TopicProgress Management Update Component', () => {
 
     it('should call UserProfile query and add missing value', () => {
       const topicProgress: ITopicProgress = { id: 31262 };
-      const user: IUserProfile = { id: 22058 };
-      topicProgress.user = user;
       const userProfile: IUserProfile = { id: 22058 };
       topicProgress.userProfile = userProfile;
 
       const userProfileCollection: IUserProfile[] = [{ id: 22058 }];
-      vitest.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
-      const additionalUserProfiles = [user, userProfile];
+      vi.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
+      const additionalUserProfiles = [userProfile];
       const expectedCollection: IUserProfile[] = [...additionalUserProfiles, ...userProfileCollection];
-      vitest.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ topicProgress });
       comp.ngOnInit();
@@ -99,8 +97,6 @@ describe('TopicProgress Management Update Component', () => {
       const topicProgress: ITopicProgress = { id: 31262 };
       const topic: ITopic = { id: 29581 };
       topicProgress.topic = topic;
-      const user: IUserProfile = { id: 22058 };
-      topicProgress.user = user;
       const userProfile: IUserProfile = { id: 22058 };
       topicProgress.userProfile = userProfile;
 
@@ -108,7 +104,6 @@ describe('TopicProgress Management Update Component', () => {
       comp.ngOnInit();
 
       expect(comp.topicsSharedCollection()).toContainEqual(topic);
-      expect(comp.userProfilesSharedCollection()).toContainEqual(user);
       expect(comp.userProfilesSharedCollection()).toContainEqual(userProfile);
       expect(comp.topicProgress).toEqual(topicProgress);
     });
@@ -119,9 +114,9 @@ describe('TopicProgress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ITopicProgress>();
       const topicProgress = { id: 18198 };
-      vitest.spyOn(topicProgressFormService, 'getTopicProgress').mockReturnValue(topicProgress);
-      vitest.spyOn(topicProgressService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(topicProgressFormService, 'getTopicProgress').mockReturnValue(topicProgress);
+      vi.spyOn(topicProgressService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ topicProgress });
       comp.ngOnInit();
 
@@ -142,9 +137,9 @@ describe('TopicProgress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ITopicProgress>();
       const topicProgress = { id: 18198 };
-      vitest.spyOn(topicProgressFormService, 'getTopicProgress').mockReturnValue({ id: null });
-      vitest.spyOn(topicProgressService, 'create').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(topicProgressFormService, 'getTopicProgress').mockReturnValue({ id: null });
+      vi.spyOn(topicProgressService, 'create').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ topicProgress: null });
       comp.ngOnInit();
 
@@ -165,8 +160,8 @@ describe('TopicProgress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ITopicProgress>();
       const topicProgress = { id: 18198 };
-      vitest.spyOn(topicProgressService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(topicProgressService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ topicProgress });
       comp.ngOnInit();
 
@@ -187,7 +182,7 @@ describe('TopicProgress Management Update Component', () => {
       it('should forward to topicService', () => {
         const entity = { id: 29581 };
         const entity2 = { id: 14122 };
-        vitest.spyOn(topicService, 'compareTopic');
+        vi.spyOn(topicService, 'compareTopic');
         comp.compareTopic(entity, entity2);
         expect(topicService.compareTopic).toHaveBeenCalledWith(entity, entity2);
       });
@@ -197,7 +192,7 @@ describe('TopicProgress Management Update Component', () => {
       it('should forward to userProfileService', () => {
         const entity = { id: 22058 };
         const entity2 = { id: 9009 };
-        vitest.spyOn(userProfileService, 'compareUserProfile');
+        vi.spyOn(userProfileService, 'compareUserProfile');
         comp.compareUserProfile(entity, entity2);
         expect(userProfileService.compareUserProfile).toHaveBeenCalledWith(entity, entity2);
       });

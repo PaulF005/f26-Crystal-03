@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IAnswer, NewAnswer } from '../answer.model';
@@ -18,10 +18,8 @@ type AnswerFormDefaults = Pick<NewAnswer, 'id' | 'correct'>;
 
 type AnswerFormGroupContent = {
   id: FormControl<IAnswer['id'] | NewAnswer['id']>;
-  text: FormControl<IAnswer['text']>;
-  outcomeText: FormControl<IAnswer['outcomeText']>;
+  answer: FormControl<IAnswer['answer']>;
   correct: FormControl<IAnswer['correct']>;
-  terminalResolution: FormControl<IAnswer['terminalResolution']>;
   nextStage: FormControl<IAnswer['nextStage']>;
   feedback: FormControl<IAnswer['feedback']>;
   question: FormControl<IAnswer['question']>;
@@ -29,7 +27,7 @@ type AnswerFormGroupContent = {
 
 export type AnswerFormGroup = FormGroup<AnswerFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class AnswerFormService {
   createAnswerFormGroup(answer?: AnswerFormGroupInput): AnswerFormGroup {
     const answerRawValue = {
@@ -45,12 +43,12 @@ export class AnswerFormService {
           validators: [Validators.required],
         },
       ),
-      text: new FormControl(answerRawValue.text, {
+      answer: new FormControl(answerRawValue.answer, {
         validators: [Validators.required],
       }),
-      outcomeText: new FormControl(answerRawValue.outcomeText),
-      correct: new FormControl(answerRawValue.correct),
-      terminalResolution: new FormControl(answerRawValue.terminalResolution),
+      correct: new FormControl(answerRawValue.correct, {
+        validators: [Validators.required],
+      }),
       nextStage: new FormControl(answerRawValue.nextStage),
       feedback: new FormControl(answerRawValue.feedback),
       question: new FormControl(answerRawValue.question),

@@ -47,12 +47,8 @@ public class AnswerAsserts {
     public static void assertAnswerUpdatableFieldsEquals(Answer expected, Answer actual) {
         assertThat(actual)
             .as("Verify Answer relevant properties")
-            .satisfies(a -> assertThat(a.getText()).as("check text").isEqualTo(expected.getText()))
-            .satisfies(a -> assertThat(a.getOutcomeText()).as("check outcomeText").isEqualTo(expected.getOutcomeText()))
-            .satisfies(a -> assertThat(a.getCorrect()).as("check correct").isEqualTo(expected.getCorrect()))
-            .satisfies(a ->
-                assertThat(a.getTerminalResolution()).as("check terminalResolution").isEqualTo(expected.getTerminalResolution())
-            );
+            .satisfies(a -> assertThat(a.getAnswer()).as("check answer").isEqualTo(expected.getAnswer()))
+            .satisfies(a -> assertThat(a.getCorrect()).as("check correct").isEqualTo(expected.getCorrect()));
     }
 
     /**
