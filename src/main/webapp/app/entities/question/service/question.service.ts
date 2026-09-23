@@ -1,16 +1,15 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { IQuestion, NewQuestion } from '../question.model';
 
 export type PartialUpdateQuestion = Partial<IQuestion> & Pick<IQuestion, 'id'>;
 
-@Injectable()
+@Service()
 export class QuestionsService {
   readonly questionsParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -27,11 +26,10 @@ export class QuestionsService {
    * In case of error while fetching the questions, the signal is set to an empty array.
    */
   readonly questions = computed(() => (this.questionsResource.hasValue() ? this.questionsResource.value() : []));
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/questions');
+  protected readonly resourceUrl = `${serverApiUrl}api/questions`;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class QuestionService extends QuestionsService {
   protected readonly http = inject(HttpClient);
 
@@ -72,7 +70,7 @@ export class QuestionService extends QuestionsService {
     questionCollection: Type[],
     ...questionsToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const questions: Type[] = questionsToCheck.filter(isPresent);
+    const questions: Type[] = questionsToCheck.filter(questionItem => questionItem !== null && questionItem !== undefined);
     if (questions.length > 0) {
       const questionCollectionIdentifiers = questionCollection.map(questionItem => this.getQuestionIdentifier(questionItem));
       const questionsToAdd = questions.filter(questionItem => {

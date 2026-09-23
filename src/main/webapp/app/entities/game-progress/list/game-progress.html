@@ -36,47 +36,36 @@
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
                 <span>ID</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="sessionsPlayed">
               <div class="d-flex">
                 <span>Sessions Played</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="performance">
               <div class="d-flex">
                 <span>Performance</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="evidenceCount">
               <div class="d-flex">
                 <span>Evidence Count</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="lastPlayedAt">
               <div class="d-flex">
                 <span>Last Played At</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="game.id">
               <div class="d-flex">
                 <span>Game</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="user.id">
-              <div class="d-flex">
-                <span>User</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
@@ -103,13 +92,6 @@
                 @if (gameProgress.game) {
                   <div>
                     <a [routerLink]="['/game', gameProgress.game.id, 'view']">{{ gameProgress.game.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (gameProgress.user) {
-                  <div>
-                    <a [routerLink]="['/user-profile', gameProgress.user.id, 'view']">{{ gameProgress.user.id }}</a>
                   </div>
                 }
               </td>

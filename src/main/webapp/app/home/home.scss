@@ -1,42 +1,23 @@
-/* ==============================================================
-KIP Homepage Dashboard
-=============================================================== */
+/* ==========================================================================
+Main page styles
+========================================================================== */
 
-.home-header {
-  background: white;
-  padding: 25px;
-  border-radius: 8px;
-  margin-bottom: 30px;
+.hipster {
+  display: inline-block;
+  width: 347px;
+  height: 497px;
+  background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
+  background-size: contain;
 }
 
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 25px;
-  width: 100%;
-  margin: 0;
-}
-
-.dashboard-box {
-  background: #a7b3be;
-  border: none;
-  border-radius: 10px;
-  padding: 25px;
-  min-height: 180px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-}
-
-.activity-box {
-  grid-column: 1 / -1;
-}
-
-/* makes smaller for mobile */
-@media (max-width: 768px) {
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .activity-box {
-    grid-column: auto;
+/* wait autoprefixer update to allow simple generation of high pixel density media query */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+  only screen and (-moz-min-device-pixel-ratio: 2),
+  only screen and (-o-min-device-pixel-ratio: 2/1),
+  only screen and (min-resolution: 192dpi),
+  only screen and (min-resolution: 2dppx) {
+  .hipster {
+    background: url('../../content/images/jhipster_family_member_2.svg') no-repeat center top;
+    background-size: contain;
   }
 }

@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,14 +10,13 @@ import { IQuestion } from 'app/entities/question/question.model';
 import { QuestionService } from 'app/entities/question/service/question.service';
 import { IScenario } from 'app/entities/scenario/scenario.model';
 import { ScenarioService } from 'app/entities/scenario/service/scenario.service';
-import { AlertError } from 'app/shared/alert/alert-error';
+import { AlertError } from 'app/shared/alert';
 import { StageService } from '../service/stage.service';
 import { IStage } from '../stage.model';
 
 import { StageFormGroup, StageFormService } from './stage-form.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-stage-update',
   templateUrl: './stage-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
@@ -55,9 +55,9 @@ describe('Game Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IGame>();
       const game = { id: 7137 };
-      vitest.spyOn(gameFormService, 'getGame').mockReturnValue(game);
-      vitest.spyOn(gameService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(gameFormService, 'getGame').mockReturnValue(game);
+      vi.spyOn(gameService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ game });
       comp.ngOnInit();
 
@@ -78,9 +78,9 @@ describe('Game Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IGame>();
       const game = { id: 7137 };
-      vitest.spyOn(gameFormService, 'getGame').mockReturnValue({ id: null });
-      vitest.spyOn(gameService, 'create').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(gameFormService, 'getGame').mockReturnValue({ id: null });
+      vi.spyOn(gameService, 'create').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ game: null });
       comp.ngOnInit();
 
@@ -101,8 +101,8 @@ describe('Game Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IGame>();
       const game = { id: 7137 };
-      vitest.spyOn(gameService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(gameService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ game });
       comp.ngOnInit();
 

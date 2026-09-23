@@ -63,7 +63,6 @@ public class GameProgressAsserts {
         assertThat(actual)
             .as("Verify GameProgress relationships")
             .satisfies(a -> assertThat(a.getGame()).as("check game").isEqualTo(expected.getGame()))
-            .satisfies(a -> assertThat(a.getUser()).as("check user").isEqualTo(expected.getUser()))
             .satisfies(a -> assertThat(a.getUserProfile()).as("check userProfile").isEqualTo(expected.getUserProfile()));
     }
 }

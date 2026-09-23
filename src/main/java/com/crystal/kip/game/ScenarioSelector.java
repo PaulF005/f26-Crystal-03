@@ -20,10 +20,9 @@ public class ScenarioSelector {
         Game game = session.getGame();
         Topic topic = session.getTopic();
 
-        List<Scenario> scenarios = scenarioRepository.findByGameAndTopic(game.getId(), topic.getId());
+        List<Scenario> scenarios = scenarioRepository.findByGameIdAndTopicId(game.getId(), topic.getId());
 
         // choose from scenarios that fit some criteria tbd
-
         return null;
     }
 }

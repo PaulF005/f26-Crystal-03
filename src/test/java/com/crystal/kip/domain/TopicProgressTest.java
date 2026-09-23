@@ -37,18 +37,6 @@ class TopicProgressTest {
     }
 
     @Test
-    void userTest() {
-        TopicProgress topicProgress = getTopicProgressRandomSampleGenerator();
-        UserProfile userProfileBack = getUserProfileRandomSampleGenerator();
-
-        topicProgress.setUser(userProfileBack);
-        assertThat(topicProgress.getUser()).isEqualTo(userProfileBack);
-
-        topicProgress.user(null);
-        assertThat(topicProgress.getUser()).isNull();
-    }
-
-    @Test
     void userProfileTest() {
         TopicProgress topicProgress = getTopicProgressRandomSampleGenerator();
         UserProfile userProfileBack = getUserProfileRandomSampleGenerator();

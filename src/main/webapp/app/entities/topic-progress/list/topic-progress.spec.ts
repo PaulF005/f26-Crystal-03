@@ -1,6 +1,6 @@
-import { MockInstance, afterEach, beforeEach, describe, expect, it, vitest } from 'vitest';
+import { MockInstance, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -13,7 +13,7 @@ import { sampleWithRequiredData } from '../topic-progress.test-samples';
 
 import { TopicProgress } from './topic-progress';
 
-vitest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('TopicProgress Management Component', () => {
   let httpMock: HttpTestingController;
@@ -55,7 +55,7 @@ describe('TopicProgress Management Component', () => {
     fixture = TestBed.createComponent(TopicProgress);
     comp = fixture.componentInstance;
     service = TestBed.inject(TopicProgressService);
-    routerNavigateSpy = vitest.spyOn(comp.router, 'navigate');
+    routerNavigateSpy = vi.spyOn(comp.router, 'navigate');
 
     const library = TestBed.inject(FaIconLibrary);
     library.addIcons(faEye, faPencilAlt, faPlus, faSort, faSortDown, faSortUp, faSync, faTimes);
@@ -72,7 +72,7 @@ describe('TopicProgress Management Component', () => {
     TestBed.tick();
     const req = httpMock.expectOne({ method: 'GET' });
     req.flush([{ id: 18198 }], { headers: { link: '<http://localhost/api/foo?page=1&size=20>; rel="next"' } });
-    await vitest.runAllTimersAsync();
+    await vi.runAllTimersAsync();
 
     // THEN
     expect(comp.isLoading()).toEqual(false);
@@ -82,7 +82,7 @@ describe('TopicProgress Management Component', () => {
   describe('trackId', () => {
     it('should forward to topicProgressService', () => {
       const entity = { id: 18198 };
-      vitest.spyOn(service, 'getTopicProgressIdentifier');
+      vi.spyOn(service, 'getTopicProgressIdentifier');
       const id = comp.trackId(entity);
       expect(service.getTopicProgressIdentifier).toHaveBeenCalledWith(entity);
       expect(id).toBe(entity.id);
@@ -110,7 +110,7 @@ describe('TopicProgress Management Component', () => {
     httpMock.expectOne({ method: 'GET' });
 
     // THEN
-    expect(service.topicProgressesParams()).toMatchObject(expect.objectContaining({ sort: ['id,desc'] }));
+    expect(service.topicProgressesParams()).toMatchObject({ sort: ['id,desc'] });
   });
 
   describe('delete', () => {
@@ -121,13 +121,13 @@ describe('TopicProgress Management Component', () => {
       deleteModalMock = { componentInstance: {}, closed: new Subject() };
       // NgbModal is not a singleton using TestBed.inject.
       // ngbModal = TestBed.inject(NgbModal);
-      ngbModal = (comp as any).modalService;
-      vitest.spyOn(ngbModal, 'open').mockReturnValue(deleteModalMock);
+      ngbModal = (comp as unknown as { modalService: NgbModal }).modalService;
+      vi.spyOn(ngbModal, 'open').mockReturnValue(deleteModalMock);
     });
 
-    it('on confirm should call load', inject([], () => {
+    it('on confirm should call load', () => {
       // GIVEN
-      vitest.spyOn(comp, 'load');
+      vi.spyOn(comp, 'load');
 
       // WHEN
       comp.delete(sampleWithRequiredData);
@@ -136,11 +136,11 @@ describe('TopicProgress Management Component', () => {
       // THEN
       expect(ngbModal.open).toHaveBeenCalled();
       expect(comp.load).toHaveBeenCalled();
-    }));
+    });
 
-    it('on dismiss should call load', inject([], () => {
+    it('on dismiss should call load', () => {
       // GIVEN
-      vitest.spyOn(comp, 'load');
+      vi.spyOn(comp, 'load');
 
       // WHEN
       comp.delete(sampleWithRequiredData);
@@ -149,6 +149,6 @@ describe('TopicProgress Management Component', () => {
       // THEN
       expect(ngbModal.open).toHaveBeenCalled();
       expect(comp.load).not.toHaveBeenCalled();
-    }));
+    });
   });
 });

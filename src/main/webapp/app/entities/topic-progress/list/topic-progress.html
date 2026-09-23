@@ -36,47 +36,36 @@
             <th scope="col" jhiSortBy="id">
               <div class="d-flex">
                 <span>ID</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="competency">
               <div class="d-flex">
                 <span>Competency</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="improvement">
               <div class="d-flex">
                 <span>Improvement</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="evidenceCount">
               <div class="d-flex">
                 <span>Evidence Count</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="lastPracticedAt">
               <div class="d-flex">
                 <span>Last Practiced At</span>
-
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
             <th scope="col" jhiSortBy="topic.id">
               <div class="d-flex">
                 <span>Topic</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="user.id">
-              <div class="d-flex">
-                <span>User</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
@@ -103,13 +92,6 @@
                 @if (topicProgress.topic) {
                   <div>
                     <a [routerLink]="['/topic', topicProgress.topic.id, 'view']">{{ topicProgress.topic.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (topicProgress.user) {
-                  <div>
-                    <a [routerLink]="['/user-profile', topicProgress.user.id, 'view']">{{ topicProgress.user.id }}</a>
                   </div>
                 }
               </td>

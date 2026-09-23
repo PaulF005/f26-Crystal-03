@@ -15,23 +15,13 @@
           <dd>
             <span>{{ answerRef.id }}</span>
           </dd>
-          <dt><span>Text</span></dt>
+          <dt><span>Answer</span></dt>
           <dd>
-            <span>{{ answerRef.text }}</span>
-          </dd>
-          <dt><span>Outcome Text</span></dt>
-          <dd>
-            <span>{{ answerRef.outcomeText }}</span>
+            <span>{{ answerRef.answer }}</span>
           </dd>
           <dt><span>Correct</span></dt>
           <dd>
             <span>{{ answerRef.correct }}</span>
-          </dd>
-          <dt><span>Terminal Resolution</span></dt>
-          <dd>
-            <span>{{
-              { null: '', POSITIVE: 'POSITIVE', NEGATIVE: 'NEGATIVE', INCONCLUSIVE: 'INCONCLUSIVE' }[answerRef.terminalResolution ?? 'null']
-            }}</span>
           </dd>
           <dt><span>Next Stage</span></dt>
           <dd>

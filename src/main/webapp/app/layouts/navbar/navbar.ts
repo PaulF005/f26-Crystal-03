@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -6,14 +6,13 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap/collapse';
 import { NgbDropdown, NgbDropdownMenu, NgbDropdownToggle } from '@ng-bootstrap/ng-bootstrap/dropdown';
 import { environment } from 'environments/environment';
 
-import { AccountService } from 'app/core/auth/account.service';
+import { AccountService } from 'app/core/auth';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { LoginService } from 'app/login/login.service';
-import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directive';
+import { HasAnyAuthorityDirective } from 'app/shared/auth';
 
 @Component({
   selector: 'jhi-navbar',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   imports: [
@@ -31,7 +30,6 @@ export default class Navbar implements OnInit {
   readonly inProduction = signal(true);
   readonly isNavbarCollapsed = signal(true);
   readonly openAPIEnabled = signal(false);
-  readonly currentUrl = signal('');
   readonly version: string;
   readonly account = inject(AccountService).account;
 
@@ -49,17 +47,10 @@ export default class Navbar implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentUrl.set(this.router.url);
-    this.router.events.subscribe(() => this.currentUrl.set(this.router.url));
     this.profileService.getProfileInfo().subscribe(profileInfo => {
       this.inProduction.set(profileInfo.inProduction ?? true);
       this.openAPIEnabled.set(profileInfo.openAPIEnabled ?? false);
     });
-  }
-
-  isAccountRouteActive(): boolean {
-    const url = this.currentUrl();
-    return url === '/login' || url.startsWith('/account');
   }
 
   collapseNavbar(): void {

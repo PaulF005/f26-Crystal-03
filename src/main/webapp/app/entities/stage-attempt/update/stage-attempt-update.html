@@ -40,9 +40,9 @@
         </div>
 
         @let correctRef = editForm.get('correct')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_correct">Correct</label>
-          <input type="checkbox" class="form-check" name="correct" id="field_correct" data-cy="correct" formControlName="correct" />
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" name="correct" id="field_correct" data-cy="correct" formControlName="correct" />
+          <label class="form-check-label" for="field_correct">Correct</label>
           @if (correctRef.invalid && (correctRef.dirty || correctRef.touched)) {
             <div>
               @if (correctRef.errors?.required) {

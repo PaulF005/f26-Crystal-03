@@ -82,7 +82,6 @@ describe('Scenario Service', () => {
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush([returnedFromService]);
-      httpMock.verify();
       expect(expectedResult).toMatchObject([expected]);
     });
 
@@ -179,7 +178,7 @@ describe('Scenario Service', () => {
         expect(compareResult2).toEqual(false);
       });
 
-      it('should return false if primaryKey matches', () => {
+      it('should return true if primaryKey matches', () => {
         const entity1 = { id: 10879 };
         const entity2 = { id: 10879 };
 

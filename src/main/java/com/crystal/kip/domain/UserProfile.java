@@ -41,12 +41,12 @@ public class UserProfile implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userProfile")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "topic", "user", "userProfile" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "topic", "userProfile" }, allowSetters = true)
     private Set<TopicProgress> topicProgresseses = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userProfile")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "game", "user", "userProfile" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "game", "userProfile" }, allowSetters = true)
     private Set<GameProgress> gameProgresseses = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userProfile")

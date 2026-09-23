@@ -46,11 +46,6 @@ public class Concept implements Serializable {
     @JsonIgnoreProperties(value = { "concepts" }, allowSetters = true)
     private Topic topic;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "concept")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "concept", "userProfile" }, allowSetters = true)
-    private Set<ConceptProgress> conceptProgresseses = new HashSet<>();
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -146,37 +141,6 @@ public class Concept implements Serializable {
 
     public Concept topic(Topic topic) {
         this.setTopic(topic);
-        return this;
-    }
-
-    public Set<ConceptProgress> getConceptProgresseses() {
-        return this.conceptProgresseses;
-    }
-
-    public void setConceptProgresseses(Set<ConceptProgress> conceptProgresses) {
-        if (this.conceptProgresseses != null) {
-            this.conceptProgresseses.forEach(i -> i.setConcept(null));
-        }
-        if (conceptProgresses != null) {
-            conceptProgresses.forEach(i -> i.setConcept(this));
-        }
-        this.conceptProgresseses = conceptProgresses;
-    }
-
-    public Concept conceptProgresseses(Set<ConceptProgress> conceptProgresses) {
-        this.setConceptProgresseses(conceptProgresses);
-        return this;
-    }
-
-    public Concept addConceptProgresses(ConceptProgress conceptProgress) {
-        this.conceptProgresseses.add(conceptProgress);
-        conceptProgress.setConcept(this);
-        return this;
-    }
-
-    public Concept removeConceptProgresses(ConceptProgress conceptProgress) {
-        this.conceptProgresseses.remove(conceptProgress);
-        conceptProgress.setConcept(null);
         return this;
     }
 

@@ -63,7 +63,6 @@ public class TopicProgressAsserts {
         assertThat(actual)
             .as("Verify TopicProgress relationships")
             .satisfies(a -> assertThat(a.getTopic()).as("check topic").isEqualTo(expected.getTopic()))
-            .satisfies(a -> assertThat(a.getUser()).as("check user").isEqualTo(expected.getUser()))
             .satisfies(a -> assertThat(a.getUserProfile()).as("check userProfile").isEqualTo(expected.getUserProfile()));
     }
 }

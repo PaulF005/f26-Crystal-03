@@ -1,16 +1,15 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { ITopic, NewTopic } from '../topic.model';
 
 export type PartialUpdateTopic = Partial<ITopic> & Pick<ITopic, 'id'>;
 
-@Injectable()
+@Service()
 export class TopicsService {
   readonly topicsParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(undefined);
   readonly topicsResource = httpResource<ITopic[]>(() => {
@@ -25,11 +24,10 @@ export class TopicsService {
    * In case of error while fetching the topics, the signal is set to an empty array.
    */
   readonly topics = computed(() => (this.topicsResource.hasValue() ? this.topicsResource.value() : []));
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/topics');
+  protected readonly resourceUrl = `${serverApiUrl}api/topics`;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class TopicService extends TopicsService {
   protected readonly http = inject(HttpClient);
 
@@ -70,7 +68,7 @@ export class TopicService extends TopicsService {
     topicCollection: Type[],
     ...topicsToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const topics: Type[] = topicsToCheck.filter(isPresent);
+    const topics: Type[] = topicsToCheck.filter(topicItem => topicItem !== null && topicItem !== undefined);
     if (topics.length > 0) {
       const topicCollectionIdentifiers = topicCollection.map(topicItem => this.getTopicIdentifier(topicItem));
       const topicsToAdd = topics.filter(topicItem => {

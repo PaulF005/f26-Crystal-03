@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IGame, NewGame } from '../game.model';
@@ -23,7 +23,7 @@ type GameFormGroupContent = {
 
 export type GameFormGroup = FormGroup<GameFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class GameFormService {
   createGameFormGroup(game?: GameFormGroupInput): GameFormGroup {
     const gameRawValue = {

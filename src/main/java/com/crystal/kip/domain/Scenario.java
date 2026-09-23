@@ -37,10 +37,6 @@ public class Scenario implements Serializable {
     private Set<Stage> stages = new HashSet<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "question", "scenario" }, allowSetters = true)
-    private Stage startingStage;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "concepts" }, allowSetters = true)
     private Topic topic;
 
@@ -104,19 +100,6 @@ public class Scenario implements Serializable {
     public Scenario removeStage(Stage stage) {
         this.stages.remove(stage);
         stage.setScenario(null);
-        return this;
-    }
-
-    public Stage getStartingStage() {
-        return this.startingStage;
-    }
-
-    public void setStartingStage(Stage stage) {
-        this.startingStage = stage;
-    }
-
-    public Scenario startingStage(Stage stage) {
-        this.setStartingStage(stage);
         return this;
     }
 

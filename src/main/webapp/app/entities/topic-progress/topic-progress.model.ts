@@ -10,7 +10,6 @@ export interface ITopicProgress {
   evidenceCount?: number | null;
   lastPracticedAt?: dayjs.Dayjs | null;
   topic?: ITopic | null;
-  user?: IUserProfile | null;
   userProfile?: IUserProfile | null;
 }
 

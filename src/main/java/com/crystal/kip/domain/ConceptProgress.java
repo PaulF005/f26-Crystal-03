@@ -46,7 +46,7 @@ public class ConceptProgress implements Serializable {
     private Instant lastPracticedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "questions", "legalContent", "topic", "conceptProgresseses" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "questions", "legalContent", "topic" }, allowSetters = true)
     private Concept concept;
 
     @ManyToOne(fetch = FetchType.LAZY)

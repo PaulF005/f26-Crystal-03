@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ILegalContent, NewLegalContent } from '../legal-content.model';
@@ -23,7 +23,7 @@ type LegalContentFormGroupContent = {
 
 export type LegalContentFormGroup = FormGroup<LegalContentFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class LegalContentFormService {
   createLegalContentFormGroup(legalContent?: LegalContentFormGroupInput): LegalContentFormGroup {
     const legalContentRawValue = {

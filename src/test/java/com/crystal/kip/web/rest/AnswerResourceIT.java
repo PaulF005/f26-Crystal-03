@@ -9,9 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.crystal.kip.IntegrationTest;
 import com.crystal.kip.domain.Answer;
-import com.crystal.kip.domain.enumeration.ScenarioResolution;
 import com.crystal.kip.repository.AnswerRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -24,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.databind.ObjectMapper;
 
 /**
  * Integration tests for the {@link AnswerResource} REST controller.
@@ -33,17 +32,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class AnswerResourceIT {
 
-    private static final String DEFAULT_TEXT = "AAAAAAAAAA";
-    private static final String UPDATED_TEXT = "BBBBBBBBBB";
-
-    private static final String DEFAULT_OUTCOME_TEXT = "AAAAAAAAAA";
-    private static final String UPDATED_OUTCOME_TEXT = "BBBBBBBBBB";
+    private static final String DEFAULT_ANSWER = "AAAAAAAAAA";
+    private static final String UPDATED_ANSWER = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_CORRECT = false;
     private static final Boolean UPDATED_CORRECT = true;
-
-    private static final ScenarioResolution DEFAULT_TERMINAL_RESOLUTION = ScenarioResolution.POSITIVE;
-    private static final ScenarioResolution UPDATED_TERMINAL_RESOLUTION = ScenarioResolution.NEGATIVE;
 
     private static final String ENTITY_API_URL = "/api/answers";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -74,11 +67,7 @@ class AnswerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Answer createEntity() {
-        return new Answer()
-            .text(DEFAULT_TEXT)
-            .outcomeText(DEFAULT_OUTCOME_TEXT)
-            .correct(DEFAULT_CORRECT)
-            .terminalResolution(DEFAULT_TERMINAL_RESOLUTION);
+        return new Answer().answer(DEFAULT_ANSWER).correct(DEFAULT_CORRECT);
     }
 
     /**
@@ -88,11 +77,7 @@ class AnswerResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Answer createUpdatedEntity() {
-        return new Answer()
-            .text(UPDATED_TEXT)
-            .outcomeText(UPDATED_OUTCOME_TEXT)
-            .correct(UPDATED_CORRECT)
-            .terminalResolution(UPDATED_TERMINAL_RESOLUTION);
+        return new Answer().answer(UPDATED_ANSWER).correct(UPDATED_CORRECT);
     }
 
     @BeforeEach
@@ -149,10 +134,26 @@ class AnswerResourceIT {
 
     @Test
     @Transactional
-    void checkTextIsRequired() throws Exception {
+    void checkAnswerIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        answer.setText(null);
+        answer.setAnswer(null);
+
+        // Create the Answer, which fails.
+
+        restAnswerMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(answer)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCorrectIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        answer.setCorrect(null);
 
         // Create the Answer, which fails.
 
@@ -175,10 +176,8 @@ class AnswerResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(answer.getId().intValue())))
-            .andExpect(jsonPath("$.[*].text").value(hasItem(DEFAULT_TEXT)))
-            .andExpect(jsonPath("$.[*].outcomeText").value(hasItem(DEFAULT_OUTCOME_TEXT)))
-            .andExpect(jsonPath("$.[*].correct").value(hasItem(DEFAULT_CORRECT)))
-            .andExpect(jsonPath("$.[*].terminalResolution").value(hasItem(DEFAULT_TERMINAL_RESOLUTION.toString())));
+            .andExpect(jsonPath("$.[*].answer").value(hasItem(DEFAULT_ANSWER)))
+            .andExpect(jsonPath("$.[*].correct").value(hasItem(DEFAULT_CORRECT)));
     }
 
     @Test
@@ -193,10 +192,8 @@ class AnswerResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(answer.getId().intValue()))
-            .andExpect(jsonPath("$.text").value(DEFAULT_TEXT))
-            .andExpect(jsonPath("$.outcomeText").value(DEFAULT_OUTCOME_TEXT))
-            .andExpect(jsonPath("$.correct").value(DEFAULT_CORRECT))
-            .andExpect(jsonPath("$.terminalResolution").value(DEFAULT_TERMINAL_RESOLUTION.toString()));
+            .andExpect(jsonPath("$.answer").value(DEFAULT_ANSWER))
+            .andExpect(jsonPath("$.correct").value(DEFAULT_CORRECT));
     }
 
     @Test
@@ -218,11 +215,7 @@ class AnswerResourceIT {
         Answer updatedAnswer = answerRepository.findById(answer.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedAnswer are not directly saved in db
         em.detach(updatedAnswer);
-        updatedAnswer
-            .text(UPDATED_TEXT)
-            .outcomeText(UPDATED_OUTCOME_TEXT)
-            .correct(UPDATED_CORRECT)
-            .terminalResolution(UPDATED_TERMINAL_RESOLUTION);
+        updatedAnswer.answer(UPDATED_ANSWER).correct(UPDATED_CORRECT);
 
         restAnswerMockMvc
             .perform(
@@ -298,7 +291,7 @@ class AnswerResourceIT {
         Answer partialUpdatedAnswer = new Answer();
         partialUpdatedAnswer.setId(answer.getId());
 
-        partialUpdatedAnswer.text(UPDATED_TEXT).outcomeText(UPDATED_OUTCOME_TEXT).correct(UPDATED_CORRECT);
+        partialUpdatedAnswer.answer(UPDATED_ANSWER).correct(UPDATED_CORRECT);
 
         restAnswerMockMvc
             .perform(
@@ -326,11 +319,7 @@ class AnswerResourceIT {
         Answer partialUpdatedAnswer = new Answer();
         partialUpdatedAnswer.setId(answer.getId());
 
-        partialUpdatedAnswer
-            .text(UPDATED_TEXT)
-            .outcomeText(UPDATED_OUTCOME_TEXT)
-            .correct(UPDATED_CORRECT)
-            .terminalResolution(UPDATED_TERMINAL_RESOLUTION);
+        partialUpdatedAnswer.answer(UPDATED_ANSWER).correct(UPDATED_CORRECT);
 
         restAnswerMockMvc
             .perform(

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IUserDetail, NewUserDetail } from '../user-detail.model';
@@ -25,7 +25,7 @@ type UserDetailFormGroupContent = {
 
 export type UserDetailFormGroup = FormGroup<UserDetailFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class UserDetailFormService {
   createUserDetailFormGroup(userDetail?: UserDetailFormGroupInput): UserDetailFormGroup {
     const userDetailRawValue = {

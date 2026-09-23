@@ -2,25 +2,25 @@ import { IAnswer, NewAnswer } from './answer.model';
 
 export const sampleWithRequiredData: IAnswer = {
   id: 25973,
-  text: 'whoa anenst refine',
+  answer: 'whoa anenst refine',
+  correct: false,
 };
 
 export const sampleWithPartialData: IAnswer = {
-  id: 28405,
-  text: 'nucleotidase yippee bah',
-  correct: false,
+  id: 23134,
+  answer: 'why midst',
+  correct: true,
 };
 
 export const sampleWithFullData: IAnswer = {
   id: 29585,
-  text: 'yum',
-  outcomeText: 'devastation',
+  answer: 'yum',
   correct: true,
-  terminalResolution: 'POSITIVE',
 };
 
 export const sampleWithNewData: NewAnswer = {
-  text: 'ugh',
+  answer: 'ugh',
+  correct: true,
   id: null,
 };
 

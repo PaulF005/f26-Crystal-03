@@ -25,7 +25,6 @@ describe('TopicProgress Form Service', () => {
             evidenceCount: expect.any(Object),
             lastPracticedAt: expect.any(Object),
             topic: expect.any(Object),
-            user: expect.any(Object),
             userProfile: expect.any(Object),
           }),
         );
@@ -42,7 +41,6 @@ describe('TopicProgress Form Service', () => {
             evidenceCount: expect.any(Object),
             lastPracticedAt: expect.any(Object),
             topic: expect.any(Object),
-            user: expect.any(Object),
             userProfile: expect.any(Object),
           }),
         );

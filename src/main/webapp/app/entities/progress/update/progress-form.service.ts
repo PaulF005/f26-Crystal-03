@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IProgress, NewProgress } from '../progress.model';
@@ -24,7 +24,7 @@ type ProgressFormGroupContent = {
 
 export type ProgressFormGroup = FormGroup<ProgressFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ProgressFormService {
   createProgressFormGroup(progress?: ProgressFormGroupInput): ProgressFormGroup {
     const progressRawValue = {

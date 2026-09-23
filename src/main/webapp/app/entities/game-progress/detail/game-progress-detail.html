@@ -39,14 +39,6 @@
               </div>
             }
           </dd>
-          <dt><span>User</span></dt>
-          <dd>
-            @if (gameProgress()!.user) {
-              <div>
-                <a [routerLink]="['/user-profile', gameProgress()!.user?.id, 'view']">{{ gameProgressRef.user?.id }}</a>
-              </div>
-            }
-          </dd>
           <dt><span>User Profile</span></dt>
           <dd>
             @if (gameProgress()!.userProfile) {

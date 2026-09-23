@@ -10,7 +10,6 @@ export interface IGameProgress {
   evidenceCount?: number | null;
   lastPlayedAt?: dayjs.Dayjs | null;
   game?: IGame | null;
-  user?: IUserProfile | null;
   userProfile?: IUserProfile | null;
 }
 

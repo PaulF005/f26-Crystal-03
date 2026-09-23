@@ -3,8 +3,6 @@
 @import 'bootstrap/scss/variables';
 
 /* ==============================================================
-Background image repeated throughout the page
-===============================================================*/
 body {
   background-image: url('../../content/images/ui/background_iso.png');
   background-repeat: repeat;
@@ -80,7 +78,6 @@ Generic styles
   padding: 1.5%;
   margin-top: 20px;
   border: none;
-  background: transparent;
 }
 
 .error {

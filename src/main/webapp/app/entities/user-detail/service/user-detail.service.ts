@@ -1,16 +1,15 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { IUserDetail, NewUserDetail } from '../user-detail.model';
 
 export type PartialUpdateUserDetail = Partial<IUserDetail> & Pick<IUserDetail, 'id'>;
 
-@Injectable()
+@Service()
 export class UserDetailsService {
   readonly userDetailsParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -27,11 +26,10 @@ export class UserDetailsService {
    * In case of error while fetching the userDetails, the signal is set to an empty array.
    */
   readonly userDetails = computed(() => (this.userDetailsResource.hasValue() ? this.userDetailsResource.value() : []));
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/user-details');
+  protected readonly resourceUrl = `${serverApiUrl}api/user-details`;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class UserDetailService extends UserDetailsService {
   protected readonly http = inject(HttpClient);
 
@@ -72,7 +70,7 @@ export class UserDetailService extends UserDetailsService {
     userDetailCollection: Type[],
     ...userDetailsToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const userDetails: Type[] = userDetailsToCheck.filter(isPresent);
+    const userDetails: Type[] = userDetailsToCheck.filter(userDetailItem => userDetailItem !== null && userDetailItem !== undefined);
     if (userDetails.length > 0) {
       const userDetailCollectionIdentifiers = userDetailCollection.map(userDetailItem => this.getUserDetailIdentifier(userDetailItem));
       const userDetailsToAdd = userDetails.filter(userDetailItem => {

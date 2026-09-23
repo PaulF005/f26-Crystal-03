@@ -25,7 +25,6 @@ describe('GameProgress Form Service', () => {
             evidenceCount: expect.any(Object),
             lastPlayedAt: expect.any(Object),
             game: expect.any(Object),
-            user: expect.any(Object),
             userProfile: expect.any(Object),
           }),
         );
@@ -42,7 +41,6 @@ describe('GameProgress Form Service', () => {
             evidenceCount: expect.any(Object),
             lastPlayedAt: expect.any(Object),
             game: expect.any(Object),
-            user: expect.any(Object),
             userProfile: expect.any(Object),
           }),
         );

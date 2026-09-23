@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/topic-progresses")
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class TopicProgressResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(TopicProgressResource.class);

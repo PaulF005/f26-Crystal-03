@@ -16,12 +16,33 @@ entity UserDetail {
   email String required
 }
 
-entity Progress {
-  moduleCompletion Float required
+entity ConceptProgress {
+  competency Float required min(0) max(1)
+  improvement Float required
+  evidenceCount Integer required min(0)
+  lastPracticedAt Instant required
+}
+
+entity GameProgress {
+  sessionsPlayed Integer required min(0)
+  performance Float required min(0) max(1)
+  evidenceCount Integer required min(0)
+  lastPlayedAt Instant required
+}
+
+entity GameSession {
+  startedAt Instant required
+  completedAt Instant required
+}
+
+entity StageAttempt {
+  startedAt Instant required
+  completedAt Instant required
 }
 
 entity Topic {
   name String required
+  explanation String
 }
 
 entity Concept {
@@ -34,8 +55,16 @@ entity Question {
 }
 
 entity Answer {
-  answer String required
+  text String required
+  outcomeText String
   correct Boolean required
+  terminalResolution ScenarioResolution
+}
+
+enum ScenarioResolution {
+  POSITIVE, 
+  NEGATIVE, 
+  INCONCLUSIVE
 }
 
 entity Feedback {
@@ -69,11 +98,18 @@ relationship OneToOne {
 }
 
 relationship OneToMany {
-  UserDetail to Progress{user}
+  UserDetail to ConceptProgress{userProfile}
+  UserDetail to GameProgress{userProfile}
+  UserDetail to GameSession{user}
+  
   Game to Scenario{game}
+  Game to GameSession{game}
+  GameSession to StageAttempt{gameSession}
+  
   Scenario to Stage{scenario}
   Topic to Concept{topic}
   Concept to Question{concept}
+  Concept to ConceptProgress{concept}
   Question to Answer{question}
 }
 

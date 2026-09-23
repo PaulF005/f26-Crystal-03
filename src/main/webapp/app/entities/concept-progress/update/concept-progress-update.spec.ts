@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { HttpResponse } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -55,10 +55,10 @@ describe('ConceptProgress Management Update Component', () => {
       conceptProgress.concept = concept;
 
       const conceptCollection: IConcept[] = [{ id: 29097 }];
-      vitest.spyOn(conceptService, 'query').mockReturnValue(of(new HttpResponse({ body: conceptCollection })));
+      vi.spyOn(conceptService, 'query').mockReturnValue(of(new HttpResponse({ body: conceptCollection })));
       const additionalConcepts = [concept];
       const expectedCollection: IConcept[] = [...additionalConcepts, ...conceptCollection];
-      vitest.spyOn(conceptService, 'addConceptToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(conceptService, 'addConceptToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ conceptProgress });
       comp.ngOnInit();
@@ -77,10 +77,10 @@ describe('ConceptProgress Management Update Component', () => {
       conceptProgress.userProfile = userProfile;
 
       const userProfileCollection: IUserProfile[] = [{ id: 22058 }];
-      vitest.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
+      vi.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
       const additionalUserProfiles = [userProfile];
       const expectedCollection: IUserProfile[] = [...additionalUserProfiles, ...userProfileCollection];
-      vitest.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ conceptProgress });
       comp.ngOnInit();
@@ -114,9 +114,9 @@ describe('ConceptProgress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IConceptProgress>();
       const conceptProgress = { id: 29965 };
-      vitest.spyOn(conceptProgressFormService, 'getConceptProgress').mockReturnValue(conceptProgress);
-      vitest.spyOn(conceptProgressService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(conceptProgressFormService, 'getConceptProgress').mockReturnValue(conceptProgress);
+      vi.spyOn(conceptProgressService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ conceptProgress });
       comp.ngOnInit();
 
@@ -137,9 +137,9 @@ describe('ConceptProgress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IConceptProgress>();
       const conceptProgress = { id: 29965 };
-      vitest.spyOn(conceptProgressFormService, 'getConceptProgress').mockReturnValue({ id: null });
-      vitest.spyOn(conceptProgressService, 'create').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(conceptProgressFormService, 'getConceptProgress').mockReturnValue({ id: null });
+      vi.spyOn(conceptProgressService, 'create').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ conceptProgress: null });
       comp.ngOnInit();
 
@@ -160,8 +160,8 @@ describe('ConceptProgress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IConceptProgress>();
       const conceptProgress = { id: 29965 };
-      vitest.spyOn(conceptProgressService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(conceptProgressService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ conceptProgress });
       comp.ngOnInit();
 
@@ -182,7 +182,7 @@ describe('ConceptProgress Management Update Component', () => {
       it('should forward to conceptService', () => {
         const entity = { id: 29097 };
         const entity2 = { id: 14426 };
-        vitest.spyOn(conceptService, 'compareConcept');
+        vi.spyOn(conceptService, 'compareConcept');
         comp.compareConcept(entity, entity2);
         expect(conceptService.compareConcept).toHaveBeenCalledWith(entity, entity2);
       });
@@ -192,7 +192,7 @@ describe('ConceptProgress Management Update Component', () => {
       it('should forward to userProfileService', () => {
         const entity = { id: 22058 };
         const entity2 = { id: 9009 };
-        vitest.spyOn(userProfileService, 'compareUserProfile');
+        vi.spyOn(userProfileService, 'compareUserProfile');
         comp.compareUserProfile(entity, entity2);
         expect(userProfileService.compareUserProfile).toHaveBeenCalledWith(entity, entity2);
       });

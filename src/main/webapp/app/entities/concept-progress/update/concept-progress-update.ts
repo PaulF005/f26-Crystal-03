@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,14 +10,13 @@ import { IConcept } from 'app/entities/concept/concept.model';
 import { ConceptService } from 'app/entities/concept/service/concept.service';
 import { UserProfileService } from 'app/entities/user-profile/service/user-profile.service';
 import { IUserProfile } from 'app/entities/user-profile/user-profile.model';
-import { AlertError } from 'app/shared/alert/alert-error';
+import { AlertError } from 'app/shared/alert';
 import { IConceptProgress } from '../concept-progress.model';
 import { ConceptProgressService } from '../service/concept-progress.service';
 
 import { ConceptProgressFormGroup, ConceptProgressFormService } from './concept-progress-form.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-concept-progress-update',
   templateUrl: './concept-progress-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

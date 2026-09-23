@@ -1,14 +1,14 @@
 import { Route } from '@angular/router';
 
-import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
+import { userRouteAccessService } from 'app/core/auth';
 
 import Password from './password';
 
 const passwordRoute: Route = {
   path: 'password',
   component: Password,
-  title: 'change-password',
-  canActivate: [UserRouteAccessService],
+  title: 'Password',
+  canActivate: [userRouteAccessService],
 };
 
 export default passwordRoute;

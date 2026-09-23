@@ -1,26 +1,24 @@
 import { HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, finalize, map } from 'rxjs';
 
-import { ScenarioResolution } from 'app/entities/enumerations/scenario-resolution.model';
 import { IFeedback } from 'app/entities/feedback/feedback.model';
 import { FeedbackService } from 'app/entities/feedback/service/feedback.service';
 import { IQuestion } from 'app/entities/question/question.model';
 import { QuestionService } from 'app/entities/question/service/question.service';
 import { StageService } from 'app/entities/stage/service/stage.service';
 import { IStage } from 'app/entities/stage/stage.model';
-import { AlertError } from 'app/shared/alert/alert-error';
+import { AlertError } from 'app/shared/alert';
 import { IAnswer } from '../answer.model';
 import { AnswerService } from '../service/answer.service';
 
 import { AnswerFormGroup, AnswerFormService } from './answer-form.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-answer-update',
   templateUrl: './answer-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],
@@ -28,7 +26,6 @@ import { AnswerFormGroup, AnswerFormService } from './answer-form.service';
 export class AnswerUpdate implements OnInit {
   readonly isSaving = signal(false);
   answer: IAnswer | null = null;
-  scenarioResolutionValues = Object.keys(ScenarioResolution);
 
   stagesSharedCollection = signal<IStage[]>([]);
   feedbacksSharedCollection = signal<IFeedback[]>([]);

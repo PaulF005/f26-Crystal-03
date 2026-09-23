@@ -13,52 +13,30 @@
           </div>
         }
 
-        @let textRef = editForm.get('text')!;
+        @let answerRef = editForm.get('answer')!;
         <div class="mb-3">
-          <label class="form-label" for="field_text">Text</label>
-          <input type="text" class="form-control" name="text" id="field_text" data-cy="text" formControlName="text" />
-          @if (textRef.invalid && (textRef.dirty || textRef.touched)) {
+          <label class="form-label" for="field_answer">Answer</label>
+          <input type="text" class="form-control" name="answer" id="field_answer" data-cy="answer" formControlName="answer" />
+          @if (answerRef.invalid && (answerRef.dirty || answerRef.touched)) {
             <div>
-              @if (textRef.errors?.required) {
+              @if (answerRef.errors?.required) {
                 <small class="form-text text-danger">This field is required.</small>
               }
             </div>
           }
         </div>
 
-        <div class="mb-3">
-          <label class="form-label" for="field_outcomeText">Outcome Text</label>
-          <input
-            type="text"
-            class="form-control"
-            name="outcomeText"
-            id="field_outcomeText"
-            data-cy="outcomeText"
-            formControlName="outcomeText"
-          />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_correct">Correct</label>
-          <input type="checkbox" class="form-check" name="correct" id="field_correct" data-cy="correct" formControlName="correct" />
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_terminalResolution">Terminal Resolution</label>
-          <select
-            class="form-control"
-            name="terminalResolution"
-            formControlName="terminalResolution"
-            id="field_terminalResolution"
-            data-cy="terminalResolution"
-          >
-            <option [ngValue]="null"></option>
-            @for (scenarioResolution of scenarioResolutionValues; track $index) {
-              <option [value]="scenarioResolution">
-                {{ { null: '', POSITIVE: 'POSITIVE', NEGATIVE: 'NEGATIVE', INCONCLUSIVE: 'INCONCLUSIVE' }[scenarioResolution] }}
-              </option>
-            }
-          </select>
+        @let correctRef = editForm.get('correct')!;
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" name="correct" id="field_correct" data-cy="correct" formControlName="correct" />
+          <label class="form-check-label" for="field_correct">Correct</label>
+          @if (correctRef.invalid && (correctRef.dirty || correctRef.touched)) {
+            <div>
+              @if (correctRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
+          }
         </div>
 
         <div class="mb-3">

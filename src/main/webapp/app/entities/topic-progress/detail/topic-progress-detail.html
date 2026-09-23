@@ -39,14 +39,6 @@
               </div>
             }
           </dd>
-          <dt><span>User</span></dt>
-          <dd>
-            @if (topicProgress()!.user) {
-              <div>
-                <a [routerLink]="['/user-profile', topicProgress()!.user?.id, 'view']">{{ topicProgressRef.user?.id }}</a>
-              </div>
-            }
-          </dd>
           <dt><span>User Profile</span></dt>
           <dd>
             @if (topicProgress()!.userProfile) {

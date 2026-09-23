@@ -40,7 +40,7 @@
     {
       "fieldValidateRules": ["required"],
       "otherEntityName": "userProfile",
-      "relationshipName": "user",
+      "relationshipName": "userProfile",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"
     }

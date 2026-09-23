@@ -1,9 +1,31 @@
-id;text;outcome_text;correct;terminal_resolution;question_id;next_stage_id
-301;Say: 'I was probably speeding, sorry officer. Also my inspection sticker is fake.';Incorrect. Never volunteer violations!;false;NEGATIVE;201;51
-302;Say: 'No officer. Please tell me.';Correct!;true;POSITIVE;201;52
-303;Lock the doors and mouth 'PROBABLE CAUSE?';Incorrect. Don't escalate.;false;NEGATIVE;202;60
-304;Politely state: 'Officer, I do not consent to any searches.';Correct! You have a Fourth Amendment right to refuse a consent search. Keep it professional.;true;POSITIVE;202;61
-305;Hit the door locks and shout: 'Am I being detained or am I free to go?';Incorrect. Pennsylvania v. Mimms says you are legally required to step out if ordered.;false;NEGATIVE;203;70
-306;Exit the vehicle calmly while keeping your hands visible.;Correct. You must comply with orders to exit the vehicle for safety, but you preserve your rights by staying cool.;true;POSITIVE;203;71
-307;Say: 'Can I call my mom?' and reach for your cell phone.;Incorrect. Reaching into your pockets or making sudden movements during an active interrogation is a great way to meet the pavement.;false;NEGATIVE;204;80
-308;State clearly: 'I am invoking my right to remain silent and want a lawyer.';Correct. Explicitly invoking your Miranda rights puts the legal brakes on the interrogation.;true;POSITIVE;204;81
+id;answer;correct
+1;at;false
+2;more;true
+3;which until worriedly;true
+4;outside past;true
+5;whereas aside;true
+6;cram;true
+7;um noteworthy scotch;false
+8;gratefully boo;false
+9;lumbering;false
+10;soon rudely evenly;false
+11;where;false
+12;grave;true
+13;list psst before;true
+14;yowza warmly goat;true
+15;nasalise ostrich;false
+16;agreeable unto yet;false
+17;yippee bad;true
+18;before after slowly;true
+19;yuck recklessly bogus;true
+20;wee zowie;false
+21;willfully unless superior;true
+22;profane grouper;true
+23;fond;true
+24;polarisation;true
+25;till;false
+26;boo how phooey;false
+27;well-groomed;false
+28;grim grubby oh;false
+29;so during;true
+30;hearten woot;true

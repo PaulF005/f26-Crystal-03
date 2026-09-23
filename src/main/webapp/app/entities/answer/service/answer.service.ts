@@ -1,16 +1,15 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { IAnswer, NewAnswer } from '../answer.model';
 
 export type PartialUpdateAnswer = Partial<IAnswer> & Pick<IAnswer, 'id'>;
 
-@Injectable()
+@Service()
 export class AnswersService {
   readonly answersParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -27,11 +26,10 @@ export class AnswersService {
    * In case of error while fetching the answers, the signal is set to an empty array.
    */
   readonly answers = computed(() => (this.answersResource.hasValue() ? this.answersResource.value() : []));
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/answers');
+  protected readonly resourceUrl = `${serverApiUrl}api/answers`;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class AnswerService extends AnswersService {
   protected readonly http = inject(HttpClient);
 
@@ -72,7 +70,7 @@ export class AnswerService extends AnswersService {
     answerCollection: Type[],
     ...answersToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const answers: Type[] = answersToCheck.filter(isPresent);
+    const answers: Type[] = answersToCheck.filter(answerItem => answerItem !== null && answerItem !== undefined);
     if (answers.length > 0) {
       const answerCollectionIdentifiers = answerCollection.map(answerItem => this.getAnswerIdentifier(answerItem));
       const answersToAdd = answers.filter(answerItem => {

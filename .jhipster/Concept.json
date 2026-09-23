@@ -34,13 +34,6 @@
       "relationshipName": "topic",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "conceptProgress",
-      "otherEntityRelationshipName": "concept",
-      "relationshipName": "conceptProgresses",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no"

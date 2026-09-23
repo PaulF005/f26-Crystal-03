@@ -29,9 +29,6 @@
             <column name="topic_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="user_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <column name="user_profile_id" type="bigint">
                 <constraints nullable="true" />
             </column>
