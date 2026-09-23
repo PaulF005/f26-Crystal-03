@@ -17,12 +17,6 @@ const routes: Routes = [
     outlet: 'navbar',
   },
   {
-    path: 'progress',
-    loadComponent: () => import('./home/home'),
-    canActivate: [UserRouteAccessService],
-    title: 'Progress',
-  },
-  {
     path: 'admin',
     data: {
       authorities: [Authority.ADMIN],
@@ -40,11 +34,7 @@ const routes: Routes = [
     title: 'Sign in',
   },
   {
-    path: 'admin',
-    data: {
-      authorities: [Authority.ADMIN],
-    },
-    canActivate: [UserRouteAccessService],
+    path: '',
     loadChildren: () => import('./entities/entity.routes'),
   },
   ...errorRoute,

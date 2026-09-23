@@ -2,7 +2,7 @@ package com.crystal.kip.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-import com.crystal.kip.security.AuthoritiesConstants;
+import com.crystal.kip.security.*;
 import com.crystal.kip.web.filter.SpaWebFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
