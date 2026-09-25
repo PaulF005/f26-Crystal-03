@@ -11,12 +11,19 @@ application {
   entities *
 }
 
-entity UserDetail {
+entity UserProfile {
   username String required
   email String required
 }
 
 entity ConceptProgress {
+  competency Float required min(0) max(1)
+  improvement Float required
+  evidenceCount Integer required min(0)
+  lastPracticedAt Instant required
+}
+
+entity TopicProgress {
   competency Float required min(0) max(1)
   improvement Float required
   evidenceCount Integer required min(0)
@@ -36,8 +43,8 @@ entity GameSession {
 }
 
 entity StageAttempt {
-  startedAt Instant required
-  completedAt Instant required
+  answeredAt Instant required
+  correct Boolean required
 }
 
 entity Topic {
@@ -62,8 +69,8 @@ entity Answer {
 }
 
 enum ScenarioResolution {
-  POSITIVE, 
-  NEGATIVE, 
+  POSITIVE,
+  NEGATIVE,
   INCONCLUSIVE
 }
 
@@ -94,30 +101,43 @@ entity Source {
 }
 
 relationship OneToOne {
-  UserDetail{dataUser} to User with builtInEntity
+  UserProfile{dataUser} to User with builtInEntity
 }
 
 relationship OneToMany {
-  UserDetail to ConceptProgress{userProfile}
-  UserDetail to GameProgress{userProfile}
-  UserDetail to GameSession{user}
-  
-  Game to Scenario{game}
-  Game to GameSession{game}
-  GameSession to StageAttempt{gameSession}
-  
-  Scenario to Stage{scenario}
-  Topic to Concept{topic}
-  Concept to Question{concept}
-  Concept to ConceptProgress{concept}
-  Question to Answer{question}
+  UserProfile{topicProgresses} to TopicProgress{userProfile required}
+  UserProfile{gameProgresses} to GameProgress{userProfile required}
+  UserProfile{conceptProgresses} to ConceptProgress{userProfile}
+
+  GameSession{stageAttempt} to StageAttempt{gameSession required}
+
+  Scenario{stage} to Stage{scenario required}
+  Topic{concept} to Concept{topic}
+  Concept{question} to Question{concept required}
+  Concept{conceptProgresses} to ConceptProgress{concept}
+  Question{answer} to Answer{question}
 }
 
 relationship ManyToOne {
+  GameProgress{game required} to Game
+  TopicProgress{topic required} to Topic
+
+  GameSession{user required} to UserProfile
+  GameSession{game required} to Game
+
+  StageAttempt{user} to UserProfile
+  StageAttempt{stage} to Stage
+  StageAttempt{selectedAnswer} to Answer
+
   Source{legalContent} to LegalContent
   Concept{legalContent} to LegalContent
-  Scenario{topic} to Topic
-  Stage{question} to Question
+
+  Scenario{topic required} to Topic
+  Scenario{startingStage required} to Stage
+  Scenario{game required} to Game
+
+  Stage{question required} to Question
+
   Answer{nextStage} to Stage
   Answer{feedback} to Feedback
 }
