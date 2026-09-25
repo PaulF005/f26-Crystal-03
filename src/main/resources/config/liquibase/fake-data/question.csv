@@ -1,31 +1,4 @@
-id;question
-1;madly vastly
-2;jaggedly
-3;scary inasmuch stealthily
-4;slow
-5;boohoo beneath
-6;caption helplessly
-7;given meh dark
-8;hourly drat dispose
-9;valiantly tragic nor
-10;barring keel
-11;fatal
-12;at before boohoo
-13;between upliftingly gosh
-14;clone vivid
-15;phew yum
-16;victoriously
-17;plagiarise ick
-18;outlaw meal arrogantly
-19;after
-20;duh as
-21;jaggedly oof
-22;after catch
-23;what
-24;including
-25;phooey
-26;meanwhile likable
-27;forenenst
-28;questionably
-29;as
-30;into qualified sans
+id,question,concept_id
+1,"An officer signals you to pull over on a dark, isolated road in Virginia. What is your primary legal obligation?",1
+2,"During a custodial interrogation, you state: 'I might want a lawyer, maybe I should remain silent.' Have you legally invoked your Fifth Amendment protections?",2
+3,"During a traffic stop, an officer orders you out of the vehicle without articulating a specific safety threat. Does this command violate your Fourth Amendment rights?",3
