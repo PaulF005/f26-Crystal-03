@@ -123,6 +123,7 @@ public class TopicResource {
             .findById(topic.getId())
             .map(existingTopic -> {
                 updateIfPresent(existingTopic::setName, topic.getName());
+                updateIfPresent(existingTopic::setExplanation, topic.getExplanation());
 
                 return existingTopic;
             })

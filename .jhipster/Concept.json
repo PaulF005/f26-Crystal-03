@@ -24,6 +24,13 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityName": "conceptProgress",
+      "otherEntityRelationshipName": "concept",
+      "relationshipName": "conceptProgresses",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
       "otherEntityName": "legalContent",
       "relationshipName": "legalContent",
       "relationshipSide": "left",
@@ -31,6 +38,7 @@
     },
     {
       "otherEntityName": "topic",
+      "otherEntityRelationshipName": "concept",
       "relationshipName": "topic",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"

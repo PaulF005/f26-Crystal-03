@@ -63,15 +63,15 @@
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
-            <th scope="col" jhiSortBy="concept.id">
-              <div class="d-flex">
-                <span>Concept</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
             <th scope="col" jhiSortBy="userProfile.id">
               <div class="d-flex">
                 <span>User Profile</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="concept.id">
+              <div class="d-flex">
+                <span>Concept</span>
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
@@ -89,16 +89,16 @@
               <td>{{ conceptProgress.evidenceCount }}</td>
               <td>{{ conceptProgress.lastPracticedAt | formatMediumDatetime }}</td>
               <td>
-                @if (conceptProgress.concept) {
+                @if (conceptProgress.userProfile) {
                   <div>
-                    <a [routerLink]="['/concept', conceptProgress.concept.id, 'view']">{{ conceptProgress.concept.id }}</a>
+                    <a [routerLink]="['/user-profile', conceptProgress.userProfile.id, 'view']">{{ conceptProgress.userProfile.id }}</a>
                   </div>
                 }
               </td>
               <td>
-                @if (conceptProgress.userProfile) {
+                @if (conceptProgress.concept) {
                   <div>
-                    <a [routerLink]="['/user-profile', conceptProgress.userProfile.id, 'view']">{{ conceptProgress.userProfile.id }}</a>
+                    <a [routerLink]="['/concept', conceptProgress.concept.id, 'view']">{{ conceptProgress.concept.id }}</a>
                   </div>
                 }
               </td>

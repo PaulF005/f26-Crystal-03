@@ -46,12 +46,12 @@ public class ConceptProgress implements Serializable {
     private Instant lastPracticedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "questions", "legalContent", "topic" }, allowSetters = true)
-    private Concept concept;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "dataUser", "topicProgresseses", "gameProgresseses", "conceptProgresseses" }, allowSetters = true)
     private UserProfile userProfile;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "questions", "conceptProgresseses", "legalContent", "topic" }, allowSetters = true)
+    private Concept concept;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -120,19 +120,6 @@ public class ConceptProgress implements Serializable {
         this.lastPracticedAt = lastPracticedAt;
     }
 
-    public Concept getConcept() {
-        return this.concept;
-    }
-
-    public void setConcept(Concept concept) {
-        this.concept = concept;
-    }
-
-    public ConceptProgress concept(Concept concept) {
-        this.setConcept(concept);
-        return this;
-    }
-
     public UserProfile getUserProfile() {
         return this.userProfile;
     }
@@ -143,6 +130,19 @@ public class ConceptProgress implements Serializable {
 
     public ConceptProgress userProfile(UserProfile userProfile) {
         this.setUserProfile(userProfile);
+        return this;
+    }
+
+    public Concept getConcept() {
+        return this.concept;
+    }
+
+    public void setConcept(Concept concept) {
+        this.concept = concept;
+    }
+
+    public ConceptProgress concept(Concept concept) {
+        this.setConcept(concept);
         return this;
     }
 

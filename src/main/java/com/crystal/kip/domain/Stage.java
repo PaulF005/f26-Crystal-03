@@ -2,6 +2,7 @@ package com.crystal.kip.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import java.io.Serial;
 import java.io.Serializable;
 import org.hibernate.annotations.Cache;
@@ -24,12 +25,14 @@ public class Stage implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "answers", "concept" }, allowSetters = true)
     private Question question;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "stages", "topic", "game" }, allowSetters = true)
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "stages", "topic", "startingStage", "game" }, allowSetters = true)
     private Scenario scenario;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

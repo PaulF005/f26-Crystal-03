@@ -91,16 +91,6 @@ const routes: Routes = [
     title: 'ConceptProgresses',
     loadChildren: () => import('./concept-progress/concept-progress.routes'),
   },
-  {
-    path: 'user-detail',
-    title: 'UserDetails',
-    loadChildren: () => import('./user-detail/user-detail.routes'),
-  },
-  {
-    path: 'progress',
-    title: 'Progresses',
-    loadChildren: () => import('./progress/progress.routes'),
-  },
   // jhipster-needle-add-entity-route - JHipster will add entity modules routes here
 ];
 

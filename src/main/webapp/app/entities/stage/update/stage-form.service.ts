@@ -40,8 +40,12 @@ export class StageFormService {
           validators: [Validators.required],
         },
       ),
-      question: new FormControl(stageRawValue.question),
-      scenario: new FormControl(stageRawValue.scenario),
+      question: new FormControl(stageRawValue.question, {
+        validators: [Validators.required],
+      }),
+      scenario: new FormControl(stageRawValue.scenario, {
+        validators: [Validators.required],
+      }),
     });
   }
 

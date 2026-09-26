@@ -31,9 +31,12 @@ public class Topic implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "explanation")
+    private String explanation;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "topic")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "questions", "legalContent", "topic" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "questions", "conceptProgresseses", "legalContent", "topic" }, allowSetters = true)
     private Set<Concept> concepts = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -62,6 +65,19 @@ public class Topic implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getExplanation() {
+        return this.explanation;
+    }
+
+    public Topic explanation(String explanation) {
+        this.setExplanation(explanation);
+        return this;
+    }
+
+    public void setExplanation(String explanation) {
+        this.explanation = explanation;
     }
 
     public Set<Concept> getConcepts() {
@@ -120,6 +136,7 @@ public class Topic implements Serializable {
         return "Topic{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", explanation='" + getExplanation() + "'" +
             "}";
     }
 }

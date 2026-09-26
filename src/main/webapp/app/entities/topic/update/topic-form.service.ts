@@ -19,6 +19,7 @@ type TopicFormDefaults = Pick<NewTopic, 'id'>;
 type TopicFormGroupContent = {
   id: FormControl<ITopic['id'] | NewTopic['id']>;
   name: FormControl<ITopic['name']>;
+  explanation: FormControl<ITopic['explanation']>;
 };
 
 export type TopicFormGroup = FormGroup<TopicFormGroupContent>;
@@ -42,6 +43,7 @@ export class TopicFormService {
       name: new FormControl(topicRawValue.name, {
         validators: [Validators.required],
       }),
+      explanation: new FormControl(topicRawValue.explanation),
     });
   }
 

@@ -1,5 +1,6 @@
 package com.crystal.kip.domain;
 
+import com.crystal.kip.domain.enumeration.ScenarioResolution;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -26,12 +27,19 @@ public class Answer implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "answer", nullable = false)
-    private String answer;
+    @Column(name = "text", nullable = false)
+    private String text;
+
+    @Column(name = "outcome_text")
+    private String outcomeText;
 
     @NotNull
     @Column(name = "correct", nullable = false)
     private Boolean correct;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "terminal_resolution")
+    private ScenarioResolution terminalResolution;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "question", "scenario" }, allowSetters = true)
@@ -59,17 +67,30 @@ public class Answer implements Serializable {
         this.id = id;
     }
 
-    public String getAnswer() {
-        return this.answer;
+    public String getText() {
+        return this.text;
     }
 
-    public Answer answer(String answer) {
-        this.setAnswer(answer);
+    public Answer text(String text) {
+        this.setText(text);
         return this;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getOutcomeText() {
+        return this.outcomeText;
+    }
+
+    public Answer outcomeText(String outcomeText) {
+        this.setOutcomeText(outcomeText);
+        return this;
+    }
+
+    public void setOutcomeText(String outcomeText) {
+        this.outcomeText = outcomeText;
     }
 
     public Boolean getCorrect() {
@@ -83,6 +104,19 @@ public class Answer implements Serializable {
 
     public void setCorrect(Boolean correct) {
         this.correct = correct;
+    }
+
+    public ScenarioResolution getTerminalResolution() {
+        return this.terminalResolution;
+    }
+
+    public Answer terminalResolution(ScenarioResolution terminalResolution) {
+        this.setTerminalResolution(terminalResolution);
+        return this;
+    }
+
+    public void setTerminalResolution(ScenarioResolution terminalResolution) {
+        this.terminalResolution = terminalResolution;
     }
 
     public Stage getNextStage() {
@@ -148,8 +182,10 @@ public class Answer implements Serializable {
     public String toString() {
         return "Answer{" +
             "id=" + getId() +
-            ", answer='" + getAnswer() + "'" +
+            ", text='" + getText() + "'" +
+            ", outcomeText='" + getOutcomeText() + "'" +
             ", correct='" + getCorrect() + "'" +
+            ", terminalResolution='" + getTerminalResolution() + "'" +
             "}";
     }
 }

@@ -23,13 +23,22 @@
       "otherEntityName": "topic",
       "relationshipName": "topic",
       "relationshipSide": "left",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "stage",
+      "relationshipName": "startingStage",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     },
     {
       "otherEntityName": "game",
       "relationshipName": "game",
-      "relationshipSide": "right",
-      "relationshipType": "many-to-one"
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "searchEngine": "no"

@@ -70,8 +70,12 @@ export class GameProgressFormService {
       lastPlayedAt: new FormControl(gameProgressRawValue.lastPlayedAt, {
         validators: [Validators.required],
       }),
-      game: new FormControl(gameProgressRawValue.game),
-      userProfile: new FormControl(gameProgressRawValue.userProfile),
+      game: new FormControl(gameProgressRawValue.game, {
+        validators: [Validators.required],
+      }),
+      userProfile: new FormControl(gameProgressRawValue.userProfile, {
+        validators: [Validators.required],
+      }),
     });
   }
 

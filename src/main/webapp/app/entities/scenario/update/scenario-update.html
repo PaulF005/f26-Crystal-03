@@ -29,22 +29,68 @@
         <div class="mb-3">
           <label class="form-label" for="field_topic">Topic</label>
           <select class="form-control" id="field_topic" data-cy="topic" name="topic" formControlName="topic" [compareWith]="compareTopic">
-            <option [ngValue]="null"></option>
+            @if (!editForm.get('topic')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
             @for (topicOption of topicsSharedCollection(); track $index) {
               <option [ngValue]="topicOption">{{ topicOption.id }}</option>
             }
           </select>
         </div>
+        @if (editForm.get(['topic'])!.invalid && (editForm.get(['topic'])!.dirty || editForm.get(['topic'])!.touched)) {
+          <div>
+            @if (editForm.get(['topic'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label" for="field_startingStage">Starting Stage</label>
+          <select
+            class="form-control"
+            id="field_startingStage"
+            data-cy="startingStage"
+            name="startingStage"
+            formControlName="startingStage"
+            [compareWith]="compareStage"
+          >
+            @if (!editForm.get('startingStage')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
+            @for (stageOption of stagesSharedCollection(); track $index) {
+              <option [ngValue]="stageOption">{{ stageOption.id }}</option>
+            }
+          </select>
+        </div>
+        @if (
+          editForm.get(['startingStage'])!.invalid && (editForm.get(['startingStage'])!.dirty || editForm.get(['startingStage'])!.touched)
+        ) {
+          <div>
+            @if (editForm.get(['startingStage'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
 
         <div class="mb-3">
           <label class="form-label" for="field_game">Game</label>
           <select class="form-control" id="field_game" data-cy="game" name="game" formControlName="game" [compareWith]="compareGame">
-            <option [ngValue]="null"></option>
+            @if (!editForm.get('game')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
             @for (gameOption of gamesSharedCollection(); track $index) {
               <option [ngValue]="gameOption">{{ gameOption.id }}</option>
             }
           </select>
         </div>
+        @if (editForm.get(['game'])!.invalid && (editForm.get(['game'])!.dirty || editForm.get(['game'])!.touched)) {
+          <div>
+            @if (editForm.get(['game'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
       </div>
 
       <div>

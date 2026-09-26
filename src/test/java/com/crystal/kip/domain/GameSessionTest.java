@@ -28,6 +28,28 @@ class GameSessionTest {
     }
 
     @Test
+    void stageAttemptTest() {
+        GameSession gameSession = getGameSessionRandomSampleGenerator();
+        StageAttempt stageAttemptBack = getStageAttemptRandomSampleGenerator();
+
+        gameSession.addStageAttempt(stageAttemptBack);
+        assertThat(gameSession.getStageAttempts()).containsOnly(stageAttemptBack);
+        assertThat(stageAttemptBack.getGameSession()).isEqualTo(gameSession);
+
+        gameSession.removeStageAttempt(stageAttemptBack);
+        assertThat(gameSession.getStageAttempts()).doesNotContain(stageAttemptBack);
+        assertThat(stageAttemptBack.getGameSession()).isNull();
+
+        gameSession.stageAttempts(new HashSet<>(Set.of(stageAttemptBack)));
+        assertThat(gameSession.getStageAttempts()).containsOnly(stageAttemptBack);
+        assertThat(stageAttemptBack.getGameSession()).isEqualTo(gameSession);
+
+        gameSession.setStageAttempts(new HashSet<>());
+        assertThat(gameSession.getStageAttempts()).doesNotContain(stageAttemptBack);
+        assertThat(stageAttemptBack.getGameSession()).isNull();
+    }
+
+    @Test
     void userTest() {
         GameSession gameSession = getGameSessionRandomSampleGenerator();
         UserProfile userProfileBack = getUserProfileRandomSampleGenerator();
@@ -49,27 +71,5 @@ class GameSessionTest {
 
         gameSession.game(null);
         assertThat(gameSession.getGame()).isNull();
-    }
-
-    @Test
-    void stageAttemptTest() {
-        GameSession gameSession = getGameSessionRandomSampleGenerator();
-        StageAttempt stageAttemptBack = getStageAttemptRandomSampleGenerator();
-
-        gameSession.addStageAttempt(stageAttemptBack);
-        assertThat(gameSession.getStageAttempts()).containsOnly(stageAttemptBack);
-        assertThat(stageAttemptBack.getGameSession()).isEqualTo(gameSession);
-
-        gameSession.removeStageAttempt(stageAttemptBack);
-        assertThat(gameSession.getStageAttempts()).doesNotContain(stageAttemptBack);
-        assertThat(stageAttemptBack.getGameSession()).isNull();
-
-        gameSession.stageAttempts(new HashSet<>(Set.of(stageAttemptBack)));
-        assertThat(gameSession.getStageAttempts()).containsOnly(stageAttemptBack);
-        assertThat(stageAttemptBack.getGameSession()).isEqualTo(gameSession);
-
-        gameSession.setStageAttempts(new HashSet<>());
-        assertThat(gameSession.getStageAttempts()).doesNotContain(stageAttemptBack);
-        assertThat(stageAttemptBack.getGameSession()).isNull();
     }
 }

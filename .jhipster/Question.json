@@ -21,9 +21,11 @@
     },
     {
       "otherEntityName": "concept",
+      "otherEntityRelationshipName": "question",
       "relationshipName": "concept",
       "relationshipSide": "right",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "searchEngine": "no"

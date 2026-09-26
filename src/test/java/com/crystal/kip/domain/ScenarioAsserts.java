@@ -60,6 +60,7 @@ public class ScenarioAsserts {
         assertThat(actual)
             .as("Verify Scenario relationships")
             .satisfies(a -> assertThat(a.getTopic()).as("check topic").isEqualTo(expected.getTopic()))
+            .satisfies(a -> assertThat(a.getStartingStage()).as("check startingStage").isEqualTo(expected.getStartingStage()))
             .satisfies(a -> assertThat(a.getGame()).as("check game").isEqualTo(expected.getGame()));
     }
 }

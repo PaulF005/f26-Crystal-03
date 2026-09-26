@@ -31,9 +31,7 @@
       "GameProgress",
       "GameSession",
       "StageAttempt",
-      "ConceptProgress",
-      "UserDetail",
-      "Progress"
+      "ConceptProgress"
     ],
     "feignClient": null,
     "gradleDevelocityHost": null,
@@ -47,6 +45,7 @@
     "reactive": false,
     "serverPort": null,
     "serviceDiscoveryType": null,
+    "skipFakeData": true,
     "syncUserWithIdp": null,
     "testFrameworks": [],
     "withAdminUi": true

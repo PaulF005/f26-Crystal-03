@@ -25,18 +25,6 @@ class ConceptProgressTest {
     }
 
     @Test
-    void conceptTest() {
-        ConceptProgress conceptProgress = getConceptProgressRandomSampleGenerator();
-        Concept conceptBack = getConceptRandomSampleGenerator();
-
-        conceptProgress.setConcept(conceptBack);
-        assertThat(conceptProgress.getConcept()).isEqualTo(conceptBack);
-
-        conceptProgress.concept(null);
-        assertThat(conceptProgress.getConcept()).isNull();
-    }
-
-    @Test
     void userProfileTest() {
         ConceptProgress conceptProgress = getConceptProgressRandomSampleGenerator();
         UserProfile userProfileBack = getUserProfileRandomSampleGenerator();
@@ -46,5 +34,17 @@ class ConceptProgressTest {
 
         conceptProgress.userProfile(null);
         assertThat(conceptProgress.getUserProfile()).isNull();
+    }
+
+    @Test
+    void conceptTest() {
+        ConceptProgress conceptProgress = getConceptProgressRandomSampleGenerator();
+        Concept conceptBack = getConceptRandomSampleGenerator();
+
+        conceptProgress.setConcept(conceptBack);
+        assertThat(conceptProgress.getConcept()).isEqualTo(conceptBack);
+
+        conceptProgress.concept(null);
+        assertThat(conceptProgress.getConcept()).isNull();
     }
 }

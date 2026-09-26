@@ -3,6 +3,8 @@ package com.crystal.kip.web.rest;
 import com.crystal.kip.domain.Stage;
 import com.crystal.kip.repository.StageRepository;
 import com.crystal.kip.web.rest.errors.BadRequestAlertException;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -46,7 +48,7 @@ public class StageResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
-    public ResponseEntity<Stage> createStage(@RequestBody Stage stage) throws URISyntaxException {
+    public ResponseEntity<Stage> createStage(@Valid @RequestBody Stage stage) throws URISyntaxException {
         LOG.debug("REST request to save Stage : {}", stage);
         if (stage.getId() != null) {
             throw new BadRequestAlertException("A new stage cannot already have an ID", ENTITY_NAME, "idexists");
@@ -68,7 +70,7 @@ public class StageResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/{id}")
-    public ResponseEntity<Stage> updateStage(@PathVariable(value = "id", required = false) final Long id, @RequestBody Stage stage)
+    public ResponseEntity<Stage> updateStage(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Stage stage)
         throws URISyntaxException {
         LOG.debug("REST request to update Stage : {}, {}", id, stage);
         if (stage.getId() == null) {
@@ -100,8 +102,10 @@ public class StageResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Stage> partialUpdateStage(@PathVariable(value = "id", required = false) final Long id, @RequestBody Stage stage)
-        throws URISyntaxException {
+    public ResponseEntity<Stage> partialUpdateStage(
+        @PathVariable(value = "id", required = false) final Long id,
+        @NotNull @RequestBody Stage stage
+    ) throws URISyntaxException {
         LOG.debug("REST request to partial update Stage partially : {}, {}", id, stage);
         if (stage.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

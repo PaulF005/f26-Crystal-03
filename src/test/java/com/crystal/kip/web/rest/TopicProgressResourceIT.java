@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.crystal.kip.IntegrationTest;
+import com.crystal.kip.domain.Topic;
 import com.crystal.kip.domain.TopicProgress;
+import com.crystal.kip.domain.UserProfile;
 import com.crystal.kip.repository.TopicProgressRepository;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
@@ -73,12 +75,33 @@ class TopicProgressResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static TopicProgress createEntity() {
-        return new TopicProgress()
+    public static TopicProgress createEntity(EntityManager em) {
+        TopicProgress topicProgress = new TopicProgress()
             .competency(DEFAULT_COMPETENCY)
             .improvement(DEFAULT_IMPROVEMENT)
             .evidenceCount(DEFAULT_EVIDENCE_COUNT)
             .lastPracticedAt(DEFAULT_LAST_PRACTICED_AT);
+        // Add required entity
+        Topic topic;
+        if (TestUtil.findAll(em, Topic.class).isEmpty()) {
+            topic = TopicResourceIT.createEntity();
+            em.persist(topic);
+            em.flush();
+        } else {
+            topic = TestUtil.findAll(em, Topic.class).get(0);
+        }
+        topicProgress.setTopic(topic);
+        // Add required entity
+        UserProfile userProfile;
+        if (TestUtil.findAll(em, UserProfile.class).isEmpty()) {
+            userProfile = UserProfileResourceIT.createEntity();
+            em.persist(userProfile);
+            em.flush();
+        } else {
+            userProfile = TestUtil.findAll(em, UserProfile.class).get(0);
+        }
+        topicProgress.setUserProfile(userProfile);
+        return topicProgress;
     }
 
     /**
@@ -87,17 +110,38 @@ class TopicProgressResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static TopicProgress createUpdatedEntity() {
-        return new TopicProgress()
+    public static TopicProgress createUpdatedEntity(EntityManager em) {
+        TopicProgress updatedTopicProgress = new TopicProgress()
             .competency(UPDATED_COMPETENCY)
             .improvement(UPDATED_IMPROVEMENT)
             .evidenceCount(UPDATED_EVIDENCE_COUNT)
             .lastPracticedAt(UPDATED_LAST_PRACTICED_AT);
+        // Add required entity
+        Topic topic;
+        if (TestUtil.findAll(em, Topic.class).isEmpty()) {
+            topic = TopicResourceIT.createUpdatedEntity();
+            em.persist(topic);
+            em.flush();
+        } else {
+            topic = TestUtil.findAll(em, Topic.class).get(0);
+        }
+        updatedTopicProgress.setTopic(topic);
+        // Add required entity
+        UserProfile userProfile;
+        if (TestUtil.findAll(em, UserProfile.class).isEmpty()) {
+            userProfile = UserProfileResourceIT.createUpdatedEntity();
+            em.persist(userProfile);
+            em.flush();
+        } else {
+            userProfile = TestUtil.findAll(em, UserProfile.class).get(0);
+        }
+        updatedTopicProgress.setUserProfile(userProfile);
+        return updatedTopicProgress;
     }
 
     @BeforeEach
     void initTest() {
-        topicProgress = createEntity();
+        topicProgress = createEntity(em);
     }
 
     @AfterEach

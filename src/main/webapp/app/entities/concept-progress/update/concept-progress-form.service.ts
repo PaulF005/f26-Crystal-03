@@ -36,8 +36,8 @@ type ConceptProgressFormGroupContent = {
   improvement: FormControl<ConceptProgressFormRawValue['improvement']>;
   evidenceCount: FormControl<ConceptProgressFormRawValue['evidenceCount']>;
   lastPracticedAt: FormControl<ConceptProgressFormRawValue['lastPracticedAt']>;
-  concept: FormControl<ConceptProgressFormRawValue['concept']>;
   userProfile: FormControl<ConceptProgressFormRawValue['userProfile']>;
+  concept: FormControl<ConceptProgressFormRawValue['concept']>;
 };
 
 export type ConceptProgressFormGroup = FormGroup<ConceptProgressFormGroupContent>;
@@ -70,8 +70,8 @@ export class ConceptProgressFormService {
       lastPracticedAt: new FormControl(conceptProgressRawValue.lastPracticedAt, {
         validators: [Validators.required],
       }),
-      concept: new FormControl(conceptProgressRawValue.concept),
       userProfile: new FormControl(conceptProgressRawValue.userProfile),
+      concept: new FormControl(conceptProgressRawValue.concept),
     });
   }
 

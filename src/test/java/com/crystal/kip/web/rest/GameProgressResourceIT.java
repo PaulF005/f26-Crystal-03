@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.crystal.kip.IntegrationTest;
+import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.GameProgress;
+import com.crystal.kip.domain.UserProfile;
 import com.crystal.kip.repository.GameProgressRepository;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
@@ -73,12 +75,33 @@ class GameProgressResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static GameProgress createEntity() {
-        return new GameProgress()
+    public static GameProgress createEntity(EntityManager em) {
+        GameProgress gameProgress = new GameProgress()
             .sessionsPlayed(DEFAULT_SESSIONS_PLAYED)
             .performance(DEFAULT_PERFORMANCE)
             .evidenceCount(DEFAULT_EVIDENCE_COUNT)
             .lastPlayedAt(DEFAULT_LAST_PLAYED_AT);
+        // Add required entity
+        Game game;
+        if (TestUtil.findAll(em, Game.class).isEmpty()) {
+            game = GameResourceIT.createEntity();
+            em.persist(game);
+            em.flush();
+        } else {
+            game = TestUtil.findAll(em, Game.class).get(0);
+        }
+        gameProgress.setGame(game);
+        // Add required entity
+        UserProfile userProfile;
+        if (TestUtil.findAll(em, UserProfile.class).isEmpty()) {
+            userProfile = UserProfileResourceIT.createEntity();
+            em.persist(userProfile);
+            em.flush();
+        } else {
+            userProfile = TestUtil.findAll(em, UserProfile.class).get(0);
+        }
+        gameProgress.setUserProfile(userProfile);
+        return gameProgress;
     }
 
     /**
@@ -87,17 +110,38 @@ class GameProgressResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static GameProgress createUpdatedEntity() {
-        return new GameProgress()
+    public static GameProgress createUpdatedEntity(EntityManager em) {
+        GameProgress updatedGameProgress = new GameProgress()
             .sessionsPlayed(UPDATED_SESSIONS_PLAYED)
             .performance(UPDATED_PERFORMANCE)
             .evidenceCount(UPDATED_EVIDENCE_COUNT)
             .lastPlayedAt(UPDATED_LAST_PLAYED_AT);
+        // Add required entity
+        Game game;
+        if (TestUtil.findAll(em, Game.class).isEmpty()) {
+            game = GameResourceIT.createUpdatedEntity();
+            em.persist(game);
+            em.flush();
+        } else {
+            game = TestUtil.findAll(em, Game.class).get(0);
+        }
+        updatedGameProgress.setGame(game);
+        // Add required entity
+        UserProfile userProfile;
+        if (TestUtil.findAll(em, UserProfile.class).isEmpty()) {
+            userProfile = UserProfileResourceIT.createUpdatedEntity();
+            em.persist(userProfile);
+            em.flush();
+        } else {
+            userProfile = TestUtil.findAll(em, UserProfile.class).get(0);
+        }
+        updatedGameProgress.setUserProfile(userProfile);
+        return updatedGameProgress;
     }
 
     @BeforeEach
     void initTest() {
-        gameProgress = createEntity();
+        gameProgress = createEntity(em);
     }
 
     @AfterEach

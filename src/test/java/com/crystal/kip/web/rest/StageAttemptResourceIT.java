@@ -73,7 +73,7 @@ class StageAttemptResourceIT {
         // Add required entity
         GameSession gameSession;
         if (TestUtil.findAll(em, GameSession.class).isEmpty()) {
-            gameSession = GameSessionResourceIT.createEntity();
+            gameSession = GameSessionResourceIT.createEntity(em);
             em.persist(gameSession);
             em.flush();
         } else {
@@ -94,7 +94,7 @@ class StageAttemptResourceIT {
         // Add required entity
         GameSession gameSession;
         if (TestUtil.findAll(em, GameSession.class).isEmpty()) {
-            gameSession = GameSessionResourceIT.createUpdatedEntity();
+            gameSession = GameSessionResourceIT.createUpdatedEntity(em);
             em.persist(gameSession);
             em.flush();
         } else {

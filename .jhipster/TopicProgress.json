@@ -8,8 +8,8 @@
       "fieldName": "competency",
       "fieldType": "Float",
       "fieldValidateRules": ["required", "min", "max"],
-      "fieldValidateRulesMax": 1,
-      "fieldValidateRulesMin": 0
+      "fieldValidateRulesMax": "1",
+      "fieldValidateRulesMin": "0"
     },
     {
       "fieldName": "improvement",
@@ -20,7 +20,7 @@
       "fieldName": "evidenceCount",
       "fieldType": "Integer",
       "fieldValidateRules": ["required", "min"],
-      "fieldValidateRulesMin": 0
+      "fieldValidateRulesMin": "0"
     },
     {
       "fieldName": "lastPracticedAt",
@@ -31,18 +31,19 @@
   "name": "TopicProgress",
   "relationships": [
     {
-      "fieldValidateRules": ["required"],
       "otherEntityName": "topic",
       "relationshipName": "topic",
       "relationshipSide": "left",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     },
     {
-      "fieldValidateRules": ["required"],
       "otherEntityName": "userProfile",
+      "otherEntityRelationshipName": "topicProgresses",
       "relationshipName": "userProfile",
       "relationshipSide": "right",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "searchEngine": "no"

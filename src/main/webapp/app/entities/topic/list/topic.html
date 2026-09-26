@@ -45,6 +45,12 @@
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
+            <th scope="col" jhiSortBy="explanation">
+              <div class="d-flex">
+                <span>Explanation</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
             <th scope="col"></th>
           </tr>
         </thead>
@@ -55,6 +61,7 @@
                 <a [routerLink]="['/topic', topic.id, 'view']">{{ topic.id }}</a>
               </td>
               <td>{{ topic.name }}</td>
+              <td>{{ topic.explanation }}</td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/topic', topic.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

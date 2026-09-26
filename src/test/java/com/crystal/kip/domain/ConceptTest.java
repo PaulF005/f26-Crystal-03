@@ -1,5 +1,6 @@
 package com.crystal.kip.domain;
 
+import static com.crystal.kip.domain.ConceptProgressTestSamples.*;
 import static com.crystal.kip.domain.ConceptTestSamples.*;
 import static com.crystal.kip.domain.LegalContentTestSamples.*;
 import static com.crystal.kip.domain.QuestionTestSamples.*;
@@ -47,6 +48,28 @@ class ConceptTest {
         concept.setQuestions(new HashSet<>());
         assertThat(concept.getQuestions()).doesNotContain(questionBack);
         assertThat(questionBack.getConcept()).isNull();
+    }
+
+    @Test
+    void conceptProgressesTest() {
+        Concept concept = getConceptRandomSampleGenerator();
+        ConceptProgress conceptProgressBack = getConceptProgressRandomSampleGenerator();
+
+        concept.addConceptProgresses(conceptProgressBack);
+        assertThat(concept.getConceptProgresseses()).containsOnly(conceptProgressBack);
+        assertThat(conceptProgressBack.getConcept()).isEqualTo(concept);
+
+        concept.removeConceptProgresses(conceptProgressBack);
+        assertThat(concept.getConceptProgresseses()).doesNotContain(conceptProgressBack);
+        assertThat(conceptProgressBack.getConcept()).isNull();
+
+        concept.conceptProgresseses(new HashSet<>(Set.of(conceptProgressBack)));
+        assertThat(concept.getConceptProgresseses()).containsOnly(conceptProgressBack);
+        assertThat(conceptProgressBack.getConcept()).isEqualTo(concept);
+
+        concept.setConceptProgresseses(new HashSet<>());
+        assertThat(concept.getConceptProgresseses()).doesNotContain(conceptProgressBack);
+        assertThat(conceptProgressBack.getConcept()).isNull();
     }
 
     @Test

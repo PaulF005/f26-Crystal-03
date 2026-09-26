@@ -40,17 +40,17 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "id",
-      "otherEntityName": "concept",
-      "relationshipName": "concept",
-      "relationshipSide": "left",
+      "otherEntityName": "userProfile",
+      "otherEntityRelationshipName": "conceptProgresses",
+      "relationshipName": "userProfile",
+      "relationshipSide": "right",
       "relationshipType": "many-to-one"
     },
     {
-      "otherEntityField": "id",
-      "otherEntityName": "userProfile",
-      "relationshipName": "userProfile",
-      "relationshipSide": "left",
+      "otherEntityName": "concept",
+      "otherEntityRelationshipName": "conceptProgresses",
+      "relationshipName": "concept",
+      "relationshipSide": "right",
       "relationshipType": "many-to-one"
     }
   ],

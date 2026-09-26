@@ -51,6 +51,12 @@
                 <fa-icon class="p-1" icon="sort" />
               </div>
             </th>
+            <th scope="col" jhiSortBy="startingStage.id">
+              <div class="d-flex">
+                <span>Starting Stage</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
             <th scope="col" jhiSortBy="game.id">
               <div class="d-flex">
                 <span>Game</span>
@@ -71,6 +77,13 @@
                 @if (scenario.topic) {
                   <div>
                     <a [routerLink]="['/topic', scenario.topic.id, 'view']">{{ scenario.topic.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (scenario.startingStage) {
+                  <div>
+                    <a [routerLink]="['/stage', scenario.startingStage.id, 'view']">{{ scenario.startingStage.id }}</a>
                   </div>
                 }
               </td>

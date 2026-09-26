@@ -62,6 +62,18 @@ class ScenarioTest {
     }
 
     @Test
+    void startingStageTest() {
+        Scenario scenario = getScenarioRandomSampleGenerator();
+        Stage stageBack = getStageRandomSampleGenerator();
+
+        scenario.setStartingStage(stageBack);
+        assertThat(scenario.getStartingStage()).isEqualTo(stageBack);
+
+        scenario.startingStage(null);
+        assertThat(scenario.getStartingStage()).isNull();
+    }
+
+    @Test
     void gameTest() {
         Scenario scenario = getScenarioRandomSampleGenerator();
         Game gameBack = getGameRandomSampleGenerator();

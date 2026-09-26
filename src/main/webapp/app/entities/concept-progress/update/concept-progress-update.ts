@@ -25,21 +25,21 @@ export class ConceptProgressUpdate implements OnInit {
   readonly isSaving = signal(false);
   conceptProgress: IConceptProgress | null = null;
 
-  conceptsSharedCollection = signal<IConcept[]>([]);
   userProfilesSharedCollection = signal<IUserProfile[]>([]);
+  conceptsSharedCollection = signal<IConcept[]>([]);
 
   protected conceptProgressService = inject(ConceptProgressService);
   protected conceptProgressFormService = inject(ConceptProgressFormService);
-  protected conceptService = inject(ConceptService);
   protected userProfileService = inject(UserProfileService);
+  protected conceptService = inject(ConceptService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: ConceptProgressFormGroup = this.conceptProgressFormService.createConceptProgressFormGroup();
 
-  compareConcept = (o1: IConcept | null, o2: IConcept | null): boolean => this.conceptService.compareConcept(o1, o2);
-
   compareUserProfile = (o1: IUserProfile | null, o2: IUserProfile | null): boolean => this.userProfileService.compareUserProfile(o1, o2);
+
+  compareConcept = (o1: IConcept | null, o2: IConcept | null): boolean => this.conceptService.compareConcept(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ conceptProgress }) => {
@@ -89,25 +89,15 @@ export class ConceptProgressUpdate implements OnInit {
     this.conceptProgress = conceptProgress;
     this.conceptProgressFormService.resetForm(this.editForm, conceptProgress);
 
-    this.conceptsSharedCollection.update(concepts =>
-      this.conceptService.addConceptToCollectionIfMissing<IConcept>(concepts, conceptProgress.concept),
-    );
     this.userProfilesSharedCollection.update(userProfiles =>
       this.userProfileService.addUserProfileToCollectionIfMissing<IUserProfile>(userProfiles, conceptProgress.userProfile),
+    );
+    this.conceptsSharedCollection.update(concepts =>
+      this.conceptService.addConceptToCollectionIfMissing<IConcept>(concepts, conceptProgress.concept),
     );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.conceptService
-      .query()
-      .pipe(map((res: HttpResponse<IConcept[]>) => res.body ?? []))
-      .pipe(
-        map((concepts: IConcept[]) =>
-          this.conceptService.addConceptToCollectionIfMissing<IConcept>(concepts, this.conceptProgress?.concept),
-        ),
-      )
-      .subscribe((concepts: IConcept[]) => this.conceptsSharedCollection.set(concepts));
-
     this.userProfileService
       .query()
       .pipe(map((res: HttpResponse<IUserProfile[]>) => res.body ?? []))
@@ -117,5 +107,15 @@ export class ConceptProgressUpdate implements OnInit {
         ),
       )
       .subscribe((userProfiles: IUserProfile[]) => this.userProfilesSharedCollection.set(userProfiles));
+
+    this.conceptService
+      .query()
+      .pipe(map((res: HttpResponse<IConcept[]>) => res.body ?? []))
+      .pipe(
+        map((concepts: IConcept[]) =>
+          this.conceptService.addConceptToCollectionIfMissing<IConcept>(concepts, this.conceptProgress?.concept),
+        ),
+      )
+      .subscribe((concepts: IConcept[]) => this.conceptsSharedCollection.set(concepts));
   }
 }

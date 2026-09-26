@@ -10,13 +10,16 @@
       "otherEntityName": "question",
       "relationshipName": "question",
       "relationshipSide": "left",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     },
     {
       "otherEntityName": "scenario",
+      "otherEntityRelationshipName": "stage",
       "relationshipName": "scenario",
       "relationshipSide": "right",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "searchEngine": "no"

@@ -45,11 +45,13 @@ public class TopicProgress implements Serializable {
     @Column(name = "last_practiced_at", nullable = false)
     private Instant lastPracticedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "concepts" }, allowSetters = true)
     private Topic topic;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "dataUser", "topicProgresseses", "gameProgresseses", "conceptProgresseses" }, allowSetters = true)
     private UserProfile userProfile;
 

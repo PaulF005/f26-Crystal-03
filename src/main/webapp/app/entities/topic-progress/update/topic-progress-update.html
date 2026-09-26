@@ -114,12 +114,21 @@
         <div class="mb-3">
           <label class="form-label" for="field_topic">Topic</label>
           <select class="form-control" id="field_topic" data-cy="topic" name="topic" formControlName="topic" [compareWith]="compareTopic">
-            <option [ngValue]="null"></option>
+            @if (!editForm.get('topic')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
             @for (topicOption of topicsSharedCollection(); track $index) {
               <option [ngValue]="topicOption">{{ topicOption.id }}</option>
             }
           </select>
         </div>
+        @if (editForm.get(['topic'])!.invalid && (editForm.get(['topic'])!.dirty || editForm.get(['topic'])!.touched)) {
+          <div>
+            @if (editForm.get(['topic'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
 
         <div class="mb-3">
           <label class="form-label" for="field_userProfile">User Profile</label>
@@ -131,12 +140,21 @@
             formControlName="userProfile"
             [compareWith]="compareUserProfile"
           >
-            <option [ngValue]="null"></option>
+            @if (editForm.get(['userProfile'])!.value === null) {
+              <option [ngValue]="null" selected></option>
+            }
             @for (userProfileOption of userProfilesSharedCollection(); track $index) {
               <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
             }
           </select>
         </div>
+        @if (editForm.get(['userProfile'])!.invalid && (editForm.get(['userProfile'])!.dirty || editForm.get(['userProfile'])!.touched)) {
+          <div>
+            @if (editForm.get(['userProfile'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
       </div>
 
       <div>

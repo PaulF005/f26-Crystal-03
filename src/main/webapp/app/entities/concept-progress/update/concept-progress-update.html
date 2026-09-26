@@ -112,23 +112,6 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_concept">Concept</label>
-          <select
-            class="form-control"
-            id="field_concept"
-            data-cy="concept"
-            name="concept"
-            formControlName="concept"
-            [compareWith]="compareConcept"
-          >
-            <option [ngValue]="null"></option>
-            @for (conceptOption of conceptsSharedCollection(); track $index) {
-              <option [ngValue]="conceptOption">{{ conceptOption.id }}</option>
-            }
-          </select>
-        </div>
-
-        <div class="mb-3">
           <label class="form-label" for="field_userProfile">User Profile</label>
           <select
             class="form-control"
@@ -141,6 +124,23 @@
             <option [ngValue]="null"></option>
             @for (userProfileOption of userProfilesSharedCollection(); track $index) {
               <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_concept">Concept</label>
+          <select
+            class="form-control"
+            id="field_concept"
+            data-cy="concept"
+            name="concept"
+            formControlName="concept"
+            [compareWith]="compareConcept"
+          >
+            <option [ngValue]="null"></option>
+            @for (conceptOption of conceptsSharedCollection(); track $index) {
+              <option [ngValue]="conceptOption">{{ conceptOption.id }}</option>
             }
           </select>
         </div>

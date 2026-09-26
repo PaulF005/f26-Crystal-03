@@ -13,17 +13,29 @@
           </div>
         }
 
-        @let answerRef = editForm.get('answer')!;
+        @let textRef = editForm.get('text')!;
         <div class="mb-3">
-          <label class="form-label" for="field_answer">Answer</label>
-          <input type="text" class="form-control" name="answer" id="field_answer" data-cy="answer" formControlName="answer" />
-          @if (answerRef.invalid && (answerRef.dirty || answerRef.touched)) {
+          <label class="form-label" for="field_text">Text</label>
+          <input type="text" class="form-control" name="text" id="field_text" data-cy="text" formControlName="text" />
+          @if (textRef.invalid && (textRef.dirty || textRef.touched)) {
             <div>
-              @if (answerRef.errors?.required) {
+              @if (textRef.errors?.required) {
                 <small class="form-text text-danger">This field is required.</small>
               }
             </div>
           }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_outcomeText">Outcome Text</label>
+          <input
+            type="text"
+            class="form-control"
+            name="outcomeText"
+            id="field_outcomeText"
+            data-cy="outcomeText"
+            formControlName="outcomeText"
+          />
         </div>
 
         @let correctRef = editForm.get('correct')!;
@@ -37,6 +49,24 @@
               }
             </div>
           }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_terminalResolution">Terminal Resolution</label>
+          <select
+            class="form-control"
+            name="terminalResolution"
+            formControlName="terminalResolution"
+            id="field_terminalResolution"
+            data-cy="terminalResolution"
+          >
+            <option [ngValue]="null"></option>
+            @for (scenarioResolution of scenarioResolutionValues; track $index) {
+              <option [value]="scenarioResolution">
+                {{ { null: '', POSITIVE: 'POSITIVE', NEGATIVE: 'NEGATIVE', INCONCLUSIVE: 'INCONCLUSIVE' }[scenarioResolution] }}
+              </option>
+            }
+          </select>
         </div>
 
         <div class="mb-3">

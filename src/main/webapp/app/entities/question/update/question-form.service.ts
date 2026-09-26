@@ -43,7 +43,9 @@ export class QuestionFormService {
       question: new FormControl(questionRawValue.question, {
         validators: [Validators.required],
       }),
-      concept: new FormControl(questionRawValue.concept),
+      concept: new FormControl(questionRawValue.concept, {
+        validators: [Validators.required],
+      }),
     });
   }
 

@@ -9,8 +9,8 @@ export interface IConceptProgress {
   improvement?: number | null;
   evidenceCount?: number | null;
   lastPracticedAt?: dayjs.Dayjs | null;
-  concept?: IConcept | null;
   userProfile?: IUserProfile | null;
+  concept?: IConcept | null;
 }
 
 export type NewConceptProgress = Omit<IConceptProgress, 'id'> & { id: null };

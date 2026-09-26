@@ -51,7 +51,7 @@ public class UserProfile implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userProfile")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "concept", "userProfile" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "userProfile", "concept" }, allowSetters = true)
     private Set<ConceptProgress> conceptProgresseses = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

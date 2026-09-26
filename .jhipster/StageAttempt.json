@@ -2,6 +2,7 @@
   "annotations": {
     "changelogDate": "20260920220840"
   },
+  "applications": ["kip"],
   "fields": [
     {
       "fieldName": "answeredAt",
@@ -36,10 +37,11 @@
     },
     {
       "otherEntityName": "gameSession",
+      "otherEntityRelationshipName": "stageAttempt",
       "relationshipName": "gameSession",
       "relationshipSide": "right",
       "relationshipType": "many-to-one",
-      "relationshipValidateRules": ["required"]
+      "relationshipValidateRules": "required"
     }
   ],
   "searchEngine": "no"
