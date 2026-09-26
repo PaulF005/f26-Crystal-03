@@ -7,7 +7,6 @@ application {
     prodDatabaseType mysql
     devDatabaseType mysql
     clientFramework angular
-    skipFakeData true
   }
   entities *
 }

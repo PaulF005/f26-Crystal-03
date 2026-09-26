@@ -4,9 +4,9 @@
 
 # KIP
 
- This application was generated using JHipster 9.2.0. You can find documentation and help in the [JHipster 9.2.0 documentation archive](<https://www.jhipster.tech/documentation-archive/v9.2.0>).
+ This application was generated using JHipster 9.3.0. You can find documentation and help in the JHipster 9.3.0 documentation archive.
 
- KIP uses JHipster for application scaffolding and entity generation. The project's domain data is maintained separately using our team's manually maintained CSV files rather than JHipster-generated fake development data.
+KIP uses JHipster for application scaffolding and entity generation. The project's domain data is maintained separately using our team's manually maintained CSV files rather than JHipster-generated fake development data.
 
  ## Project Structure
 
@@ -182,69 +182,58 @@ legal_content.csv
 - Modify custom services or controllers.
 - Pull a teammate's already-generated JHipster changes.
 
- ## 🔄 JHipster Regeneration Workflow
+ ### JHipster Regeneration Workflow
 
- When the JDL itself changes, use the following workflow.
+When the JDL changes and JHipster-generated Java/JSON files need to be updated:
 
- ### 1\. Pull the Latest Changes
+1. Update `jhipster-jdl.jdl`.
+2. Regenerate the JHipster-managed files:
 
- Before making regeneration changes:
+```bash
+jhipster import-jdl jhipster-jdl.jdl --force --skip-fake-data
 
-```
-git pull
-```
+This updates the generated Java code, .jhipster/*.json entity configurations, Liquibase structure, repositories, REST resources, Angular entity code, and other JHipster-generated files.
 
- Make sure you have the latest `jhipster-jdl.jdl` and generated project files.
+Review the generated files and verify that the team's manually maintained CSV files in src/main/resources/config/liquibase/fake-data/ are still correct.
 
- ### 2\. Check the Existing CSV Data
+Reset the local database:
 
- Go to:
+./gradlew liquibaseDropAll
 
-```
-src/main/resources/config/liquibase/fake-data/
-```
+Start the application:
 
- Check the CSV files before regeneration.
+./gradlew
 
  If they contain the expected KIP-specific, human-readable data, make sure you have it backed up or committed before proceeding.
 
  If JHipster has replaced the files with generated fake data, restore the team's intended CSV data.
 
- ### 3\. Wipe Existing JHipster Metadata
-
- If a clean JHipster regeneration is required, remove the existing JHipster metadata.
-
- #### Windows PowerShell
-
-```
-Remove-Item -Recurse -Force -ErrorAction SilentlyContinue .jhipster, .jhipster-blueprint, .yo-rc.json
-```
-
- #### Mac/Linux
-
-```
-rm -rf .jhipster/ .jhipster-blueprint/ .yo-rc.json
-```
-
- ### 4\. Clear the Gradle Build
-
-```
-./gradlew clean
-```
-
- ### 5\. Regenerate From the JDL
+  ### 3\. Regenerate JHipster
 
  Run:
 
 ```
-jhipster import-jdl jhipster-jdl.jdl
+jhipster import-jdl jhipster-jdl.jdl --force --skip-fake-data
 ```
+
+ This regenerates the JHipster-managed application structure, including generated Java code, `.jhipster/*.json` entity configurations, Liquibase structure, repositories, REST resources, Angular entity code, and other generated files.
 
  If JHipster asks whether existing files should be overwritten, select **Yes** when the overwrite is expected.
 
- After regeneration, inspect the generated files and restore/preserve the team's manually maintained CSV data as necessary.
+ ### 4\. Verify the Generated Files
 
- ### 6\. Verify the CSV Files
+ Check:
+
+```
+.jhipster/
+src/main/java/
+src/main/resources/config/liquibase/
+src/main/webapp/
+```
+
+ Make sure the generated Java and `.jhipster/*.json` files match the updated JDL.
+
+ ### 5\. Verify and Restore KIP CSV Data
 
  Check:
 
@@ -256,13 +245,15 @@ src/main/resources/config/liquibase/fake-data/
 
  - The files use `;` as the delimiter.
 - Required columns are present.
-- Relationship columns use the expected IDs.
+- Relationship columns contain valid IDs.
 - Required fields are populated.
-- Validation constraints are satisfied.
+- Values satisfy JDL validation constraints.
 - KIP's human-readable data is present.
-- JHipster-generated fake records have not replaced the team's data.
+- JHipster-generated fake records have not replaced KIP's data.
 
- ### 7\. Reset and Start the Application
+ Restore the team's CSV files if regeneration replaced them with generated data.
+
+ ### 6\. Reset the Local Database
 
  Once the generated structure and CSV data are correct:
 
@@ -270,113 +261,95 @@ src/main/resources/config/liquibase/fake-data/
 ./gradlew liquibaseDropAll
 ```
 
- Then:
+ Then start the application:
 
 ```
 ./gradlew
 ```
 
- This gives you a clean local database using the current generated schema and CSV data.
+ This creates a clean local database using the newly generated schema and the current KIP CSV data.
 
- ## 👥 Pulling Teammate JHipster Changes
+ > **If you already ran `./gradlew liquibaseDropAll` before completing regeneration, you do not need to run it again just because JHipster was regenerated.** Once the generated files and CSV data are correct, start the application with `./gradlew`.
 
- If a teammate changes the JDL and regenerates the application, you generally **do not need to regenerate JHipster again after pulling their changes**.
+ ### 7\. Verify the Application
 
- Pull their committed generated files:
+ Verify that:
+
+ - The application starts successfully.
+- Liquibase completes without errors.
+- The expected tables are created.
+- KIP CSV records are loaded.
+- Relationships resolve correctly.
+- No JHipster fake records appear.
+- The application behaves correctly with the updated schema.
+
+ ### 8\. Commit the Changes
+
+ When everything is verified, commit the JDL, generated configuration/code, Liquibase changes, and CSV data together as appropriate:
+
+```
+git add .
+git commit -m "update JHipster schema and KIP data"
+```
+
+ Push only after the local regeneration and database verification succeeds:
+
+```
+git push
+```
+
+ ## Pulling Teammate JHipster Changes
+
+ If a teammate changes the JDL and regenerates the application, you generally **do not need to run JHipster yourself after pulling their generated changes**.
+
+ Pull their committed changes:
 
 ```
 git pull
 ```
 
- Then reset your local database if their changes affect the schema or development data:
+ If their changes affect the database schema or development data, reset your local database:
 
 ```
 ./gradlew liquibaseDropAll
 ./gradlew
 ```
 
- Only run JHipster yourself if you are making a new JDL or application-generation change.
+ Do not regenerate JHipster again unless you are making your own JDL or application-generation change.
 
- ## Updating the JDL and CSV Data Together
+ ## Quick Reference
 
- When an entity structure changes, update both the JDL and the corresponding CSV data.
+ | Change | Run JHipster? | Run `liquibaseDropAll`? |
+| --- | --- | --- |
+| Change CSV values | No | Yes |
+| Add/remove CSV rows | No | Yes |
+| Change JDL entity | Yes | Yes |
+| Change JDL field | Yes | Yes |
+| Change JDL relationship | Yes | Yes |
+| Change JDL validation | Yes | Yes |
+| Pull teammate's generated changes | No | If schema/data changed |
+| Change custom Java logic | No | Usually no |
+| Change custom Angular code | No | No |
 
- Recommended sequence:
-
- 1. Update `jhipster-jdl.jdl`.
-2. Regenerate the JHipster application.
-3. Inspect the generated entity and Liquibase files.
-4. Update the corresponding CSV files.
-5. Verify relationships and required fields.
-6. Reset the local database with `./gradlew liquibaseDropAll`.
-7. Start the application with `./gradlew`.
-8. Verify the application and database.
-9. Commit the JDL, generated configuration/code, Liquibase changes, and CSV data together.
-
- ## Required Action for Existing Local Environments
-
- If you ran an older version of KIP locally and your database contains old JHipster-generated mock data, reset your local database before testing the current data:
+The basic rules are:
 
 ```
-./gradlew liquibaseDropAll
+CSV-only change
+    → do NOT run JHipster
+    → liquibaseDropAll
+    → ./gradlew
+
+JDL/schema change
+    → regenerate JHipster
+    → verify/restore KIP CSVs
+    → liquibaseDropAll
+    → ./gradlew
+
+Pulled teammate's generated JHipster changes
+    → do NOT regenerate JHipster
+    → liquibaseDropAll if needed
+    → ./gradlew
 ```
-
- Then:
-
-```
-./gradlew
-```
-
- This ensures your local database is rebuilt from the current schema and current development data.
-
- > **Do not run JHipster simply to refresh CSV data.** Only regenerate when the JDL or JHipster application structure has changed.
-
- ## Troubleshooting
-
- ### Liquibase Database Lock Error
-
- If the application previously crashed, Liquibase may have left a database lock.
-
- If you see:
-
-```
-Waiting for changelog lock...
-```
-
- connect to the database and release the lock:
-
-```
-UPDATE DATABASECHANGELOGLOCK
-SET LOCKED = 0,
-    LOCKGRANTED = NULL,
-    LOCKEDBY = NULL
-WHERE ID = 1;
-```
-
- ### Liquibase DropAll Fails
-
- Depending on the SQL dialect and existing foreign-key constraints, `liquibaseDropAll` may fail.
-
- For MySQL/MariaDB, if necessary, manually recreate the development database:
-
-```
-DROP DATABASE IF EXISTS `knowledge_is_power`;
-CREATE DATABASE `knowledge_is_power`;
-```
-
- Then restart the application.
-
- ### Git Conflicts in `.jhipster/*.json`
-
- If you have local entity changes and encounter conflicts after pulling teammate changes:
-
-```
-git stash
-git pull origin <branch-name>
-git stash pop
-```
-
- Resolve conflicts carefully and make sure the resulting `.jhipster/*.json` files agree with `jhipster-jdl.jdl`.
 
  ## Building for Production
 
@@ -570,18 +543,18 @@ sonar.password=admin
 jhipster ci-cd
 ```
 
- See the [JHipster 9.2.0 CI/CD documentation](<https://www.jhipster.tech/documentation-archive/v9.2.0/setting-up-ci/>) for details.
+ See the [JHipster 9.3.0 CI/CD documentation](<https://www.jhipster.tech/documentation-archive/v9.3.0/setting-up-ci/>) for details.
 
  ## References
 
  - [JHipster Homepage](<https://www.jhipster.tech/>)
-- [JHipster 9.2.0 Documentation](<https://www.jhipster.tech/documentation-archive/v9.2.0>)
-- [JHipster Development](<https://www.jhipster.tech/documentation-archive/v9.2.0/development/>)
-- [JHipster Docker Compose](<https://www.jhipster.tech/documentation-archive/v9.2.0/docker-compose>)
-- [JHipster Production](<https://www.jhipster.tech/documentation-archive/v9.2.0/production/>)
-- [JHipster Testing](<https://www.jhipster.tech/documentation-archive/v9.2.0/running-tests/>)
-- [JHipster Code Quality](<https://www.jhipster.tech/documentation-archive/v9.2.0/code-quality/>)
-- [JHipster CI/CD](<https://www.jhipster.tech/documentation-archive/v9.2.0/setting-up-ci/>)
+- [JHipster 9.3.0 Documentation](<https://www.jhipster.tech/documentation-archive/v9.3.0>)
+- [JHipster Development](<https://www.jhipster.tech/documentation-archive/v9.3.0/development/>)
+- [JHipster Docker Compose](<https://www.jhipster.tech/documentation-archive/v9.3.0/docker-compose>)
+- [JHipster Production](<https://www.jhipster.tech/documentation-archive/v9.3.0/production/>)
+- [JHipster Testing](<https://www.jhipster.tech/documentation-archive/v9.3.0/running-tests/>)
+- [JHipster Code Quality](<https://www.jhipster.tech/documentation-archive/v9.3.0/code-quality/>)
+- [JHipster CI/CD](<https://www.jhipster.tech/documentation-archive/v9.3.0/setting-up-ci/>)
 - [Node.js](<https://nodejs.org/>)
 - [NPM](<https://www.npmjs.com/>)
 - [Angular](<https://angular.dev/>)
