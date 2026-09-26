@@ -8,7 +8,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.crystal.kip.IntegrationTest;
+import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.GameSession;
+import com.crystal.kip.domain.UserProfile;
 import com.crystal.kip.repository.GameSessionRepository;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
@@ -67,8 +69,29 @@ class GameSessionResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static GameSession createEntity() {
-        return new GameSession().startedAt(DEFAULT_STARTED_AT).completedAt(DEFAULT_COMPLETED_AT);
+    public static GameSession createEntity(EntityManager em) {
+        GameSession gameSession = new GameSession().startedAt(DEFAULT_STARTED_AT).completedAt(DEFAULT_COMPLETED_AT);
+        // Add required entity
+        UserProfile userProfile;
+        if (TestUtil.findAll(em, UserProfile.class).isEmpty()) {
+            userProfile = UserProfileResourceIT.createEntity();
+            em.persist(userProfile);
+            em.flush();
+        } else {
+            userProfile = TestUtil.findAll(em, UserProfile.class).get(0);
+        }
+        gameSession.setUser(userProfile);
+        // Add required entity
+        Game game;
+        if (TestUtil.findAll(em, Game.class).isEmpty()) {
+            game = GameResourceIT.createEntity();
+            em.persist(game);
+            em.flush();
+        } else {
+            game = TestUtil.findAll(em, Game.class).get(0);
+        }
+        gameSession.setGame(game);
+        return gameSession;
     }
 
     /**
@@ -77,13 +100,34 @@ class GameSessionResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static GameSession createUpdatedEntity() {
-        return new GameSession().startedAt(UPDATED_STARTED_AT).completedAt(UPDATED_COMPLETED_AT);
+    public static GameSession createUpdatedEntity(EntityManager em) {
+        GameSession updatedGameSession = new GameSession().startedAt(UPDATED_STARTED_AT).completedAt(UPDATED_COMPLETED_AT);
+        // Add required entity
+        UserProfile userProfile;
+        if (TestUtil.findAll(em, UserProfile.class).isEmpty()) {
+            userProfile = UserProfileResourceIT.createUpdatedEntity();
+            em.persist(userProfile);
+            em.flush();
+        } else {
+            userProfile = TestUtil.findAll(em, UserProfile.class).get(0);
+        }
+        updatedGameSession.setUser(userProfile);
+        // Add required entity
+        Game game;
+        if (TestUtil.findAll(em, Game.class).isEmpty()) {
+            game = GameResourceIT.createUpdatedEntity();
+            em.persist(game);
+            em.flush();
+        } else {
+            game = TestUtil.findAll(em, Game.class).get(0);
+        }
+        updatedGameSession.setGame(game);
+        return updatedGameSession;
     }
 
     @BeforeEach
     void initTest() {
-        gameSession = createEntity();
+        gameSession = createEntity(em);
     }
 
     @AfterEach

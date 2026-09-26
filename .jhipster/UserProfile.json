@@ -18,12 +18,11 @@
   "name": "UserProfile",
   "relationships": [
     {
-      "otherEntityField": "id",
       "otherEntityName": "user",
-      "ownerSide": true,
       "relationshipName": "dataUser",
       "relationshipSide": "left",
-      "relationshipType": "one-to-one"
+      "relationshipType": "one-to-one",
+      "relationshipWithBuiltInEntity": true
     },
     {
       "otherEntityName": "topicProgress",

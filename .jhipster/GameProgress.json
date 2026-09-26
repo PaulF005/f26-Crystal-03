@@ -8,20 +8,20 @@
       "fieldName": "sessionsPlayed",
       "fieldType": "Integer",
       "fieldValidateRules": ["required", "min"],
-      "fieldValidateRulesMin": 0
+      "fieldValidateRulesMin": "0"
     },
     {
       "fieldName": "performance",
       "fieldType": "Float",
       "fieldValidateRules": ["required", "min", "max"],
-      "fieldValidateRulesMax": 1,
-      "fieldValidateRulesMin": 0
+      "fieldValidateRulesMax": "1",
+      "fieldValidateRulesMin": "0"
     },
     {
       "fieldName": "evidenceCount",
       "fieldType": "Integer",
       "fieldValidateRules": ["required", "min"],
-      "fieldValidateRulesMin": 0
+      "fieldValidateRulesMin": "0"
     },
     {
       "fieldName": "lastPlayedAt",
@@ -32,18 +32,19 @@
   "name": "GameProgress",
   "relationships": [
     {
-      "fieldValidateRules": ["required"],
       "otherEntityName": "game",
       "relationshipName": "game",
       "relationshipSide": "left",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     },
     {
-      "fieldValidateRules": ["required"],
       "otherEntityName": "userProfile",
+      "otherEntityRelationshipName": "gameProgresses",
       "relationshipName": "userProfile",
       "relationshipSide": "right",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "searchEngine": "no"

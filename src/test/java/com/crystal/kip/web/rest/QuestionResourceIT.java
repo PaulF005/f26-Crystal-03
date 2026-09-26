@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.crystal.kip.IntegrationTest;
+import com.crystal.kip.domain.Concept;
 import com.crystal.kip.domain.Question;
 import com.crystal.kip.repository.QuestionRepository;
 import jakarta.persistence.EntityManager;
@@ -63,8 +64,19 @@ class QuestionResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Question createEntity() {
-        return new Question().question(DEFAULT_QUESTION);
+    public static Question createEntity(EntityManager em) {
+        Question question = new Question().question(DEFAULT_QUESTION);
+        // Add required entity
+        Concept concept;
+        if (TestUtil.findAll(em, Concept.class).isEmpty()) {
+            concept = ConceptResourceIT.createEntity();
+            em.persist(concept);
+            em.flush();
+        } else {
+            concept = TestUtil.findAll(em, Concept.class).get(0);
+        }
+        question.setConcept(concept);
+        return question;
     }
 
     /**
@@ -73,13 +85,24 @@ class QuestionResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Question createUpdatedEntity() {
-        return new Question().question(UPDATED_QUESTION);
+    public static Question createUpdatedEntity(EntityManager em) {
+        Question updatedQuestion = new Question().question(UPDATED_QUESTION);
+        // Add required entity
+        Concept concept;
+        if (TestUtil.findAll(em, Concept.class).isEmpty()) {
+            concept = ConceptResourceIT.createUpdatedEntity();
+            em.persist(concept);
+            em.flush();
+        } else {
+            concept = TestUtil.findAll(em, Concept.class).get(0);
+        }
+        updatedQuestion.setConcept(concept);
+        return updatedQuestion;
     }
 
     @BeforeEach
     void initTest() {
-        question = createEntity();
+        question = createEntity(em);
     }
 
     @AfterEach

@@ -39,6 +39,11 @@ public class Concept implements Serializable {
     @JsonIgnoreProperties(value = { "answers", "concept" }, allowSetters = true)
     private Set<Question> questions = new HashSet<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "concept")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "userProfile", "concept" }, allowSetters = true)
+    private Set<ConceptProgress> conceptProgresseses = new HashSet<>();
+
     @ManyToOne(fetch = FetchType.LAZY)
     private LegalContent legalContent;
 
@@ -115,6 +120,37 @@ public class Concept implements Serializable {
     public Concept removeQuestion(Question question) {
         this.questions.remove(question);
         question.setConcept(null);
+        return this;
+    }
+
+    public Set<ConceptProgress> getConceptProgresseses() {
+        return this.conceptProgresseses;
+    }
+
+    public void setConceptProgresseses(Set<ConceptProgress> conceptProgresses) {
+        if (this.conceptProgresseses != null) {
+            this.conceptProgresseses.forEach(i -> i.setConcept(null));
+        }
+        if (conceptProgresses != null) {
+            conceptProgresses.forEach(i -> i.setConcept(this));
+        }
+        this.conceptProgresseses = conceptProgresses;
+    }
+
+    public Concept conceptProgresseses(Set<ConceptProgress> conceptProgresses) {
+        this.setConceptProgresseses(conceptProgresses);
+        return this;
+    }
+
+    public Concept addConceptProgresses(ConceptProgress conceptProgress) {
+        this.conceptProgresseses.add(conceptProgress);
+        conceptProgress.setConcept(this);
+        return this;
+    }
+
+    public Concept removeConceptProgresses(ConceptProgress conceptProgress) {
+        this.conceptProgresseses.remove(conceptProgress);
+        conceptProgress.setConcept(null);
         return this;
     }
 

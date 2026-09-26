@@ -62,7 +62,7 @@ public class ConceptProgressAsserts {
     public static void assertConceptProgressUpdatableRelationshipsEquals(ConceptProgress expected, ConceptProgress actual) {
         assertThat(actual)
             .as("Verify ConceptProgress relationships")
-            .satisfies(a -> assertThat(a.getConcept()).as("check concept").isEqualTo(expected.getConcept()))
-            .satisfies(a -> assertThat(a.getUserProfile()).as("check userProfile").isEqualTo(expected.getUserProfile()));
+            .satisfies(a -> assertThat(a.getUserProfile()).as("check userProfile").isEqualTo(expected.getUserProfile()))
+            .satisfies(a -> assertThat(a.getConcept()).as("check concept").isEqualTo(expected.getConcept()));
     }
 }

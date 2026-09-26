@@ -11,14 +11,6 @@
     }
   ],
   "name": "Game",
-  "relationships": [
-    {
-      "otherEntityName": "scenario",
-      "otherEntityRelationshipName": "game",
-      "relationshipName": "scenario",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-many"
-    }
-  ],
+  "relationships": [],
   "searchEngine": "no"
 }

@@ -20,8 +20,10 @@ describe('Answer Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            answer: expect.any(Object),
+            text: expect.any(Object),
+            outcomeText: expect.any(Object),
             correct: expect.any(Object),
+            terminalResolution: expect.any(Object),
             nextStage: expect.any(Object),
             feedback: expect.any(Object),
             question: expect.any(Object),
@@ -35,8 +37,10 @@ describe('Answer Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            answer: expect.any(Object),
+            text: expect.any(Object),
+            outcomeText: expect.any(Object),
             correct: expect.any(Object),
+            terminalResolution: expect.any(Object),
             nextStage: expect.any(Object),
             feedback: expect.any(Object),
             question: expect.any(Object),

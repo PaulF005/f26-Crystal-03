@@ -22,8 +22,8 @@ describe('ConceptProgress Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let conceptProgressFormService: ConceptProgressFormService;
   let conceptProgressService: ConceptProgressService;
-  let conceptService: ConceptService;
   let userProfileService: UserProfileService;
+  let conceptService: ConceptService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,35 +42,13 @@ describe('ConceptProgress Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     conceptProgressFormService = TestBed.inject(ConceptProgressFormService);
     conceptProgressService = TestBed.inject(ConceptProgressService);
-    conceptService = TestBed.inject(ConceptService);
     userProfileService = TestBed.inject(UserProfileService);
+    conceptService = TestBed.inject(ConceptService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('should call Concept query and add missing value', () => {
-      const conceptProgress: IConceptProgress = { id: 24782 };
-      const concept: IConcept = { id: 29097 };
-      conceptProgress.concept = concept;
-
-      const conceptCollection: IConcept[] = [{ id: 29097 }];
-      vi.spyOn(conceptService, 'query').mockReturnValue(of(new HttpResponse({ body: conceptCollection })));
-      const additionalConcepts = [concept];
-      const expectedCollection: IConcept[] = [...additionalConcepts, ...conceptCollection];
-      vi.spyOn(conceptService, 'addConceptToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ conceptProgress });
-      comp.ngOnInit();
-
-      expect(conceptService.query).toHaveBeenCalled();
-      expect(conceptService.addConceptToCollectionIfMissing).toHaveBeenCalledWith(
-        conceptCollection,
-        ...additionalConcepts.map(i => expect.objectContaining(i) as typeof i),
-      );
-      expect(comp.conceptsSharedCollection()).toEqual(expectedCollection);
-    });
-
     it('should call UserProfile query and add missing value', () => {
       const conceptProgress: IConceptProgress = { id: 24782 };
       const userProfile: IUserProfile = { id: 22058 };
@@ -93,18 +71,40 @@ describe('ConceptProgress Management Update Component', () => {
       expect(comp.userProfilesSharedCollection()).toEqual(expectedCollection);
     });
 
-    it('should update editForm', () => {
+    it('should call Concept query and add missing value', () => {
       const conceptProgress: IConceptProgress = { id: 24782 };
       const concept: IConcept = { id: 29097 };
       conceptProgress.concept = concept;
-      const userProfile: IUserProfile = { id: 22058 };
-      conceptProgress.userProfile = userProfile;
+
+      const conceptCollection: IConcept[] = [{ id: 29097 }];
+      vi.spyOn(conceptService, 'query').mockReturnValue(of(new HttpResponse({ body: conceptCollection })));
+      const additionalConcepts = [concept];
+      const expectedCollection: IConcept[] = [...additionalConcepts, ...conceptCollection];
+      vi.spyOn(conceptService, 'addConceptToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ conceptProgress });
       comp.ngOnInit();
 
-      expect(comp.conceptsSharedCollection()).toContainEqual(concept);
+      expect(conceptService.query).toHaveBeenCalled();
+      expect(conceptService.addConceptToCollectionIfMissing).toHaveBeenCalledWith(
+        conceptCollection,
+        ...additionalConcepts.map(i => expect.objectContaining(i) as typeof i),
+      );
+      expect(comp.conceptsSharedCollection()).toEqual(expectedCollection);
+    });
+
+    it('should update editForm', () => {
+      const conceptProgress: IConceptProgress = { id: 24782 };
+      const userProfile: IUserProfile = { id: 22058 };
+      conceptProgress.userProfile = userProfile;
+      const concept: IConcept = { id: 29097 };
+      conceptProgress.concept = concept;
+
+      activatedRoute.data = of({ conceptProgress });
+      comp.ngOnInit();
+
       expect(comp.userProfilesSharedCollection()).toContainEqual(userProfile);
+      expect(comp.conceptsSharedCollection()).toContainEqual(concept);
       expect(comp.conceptProgress).toEqual(conceptProgress);
     });
   });
@@ -178,16 +178,6 @@ describe('ConceptProgress Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareConcept', () => {
-      it('should forward to conceptService', () => {
-        const entity = { id: 29097 };
-        const entity2 = { id: 14426 };
-        vi.spyOn(conceptService, 'compareConcept');
-        comp.compareConcept(entity, entity2);
-        expect(conceptService.compareConcept).toHaveBeenCalledWith(entity, entity2);
-      });
-    });
-
     describe('compareUserProfile', () => {
       it('should forward to userProfileService', () => {
         const entity = { id: 22058 };
@@ -195,6 +185,16 @@ describe('ConceptProgress Management Update Component', () => {
         vi.spyOn(userProfileService, 'compareUserProfile');
         comp.compareUserProfile(entity, entity2);
         expect(userProfileService.compareUserProfile).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+
+    describe('compareConcept', () => {
+      it('should forward to conceptService', () => {
+        const entity = { id: 29097 };
+        const entity2 = { id: 14426 };
+        vi.spyOn(conceptService, 'compareConcept');
+        comp.compareConcept(entity, entity2);
+        expect(conceptService.compareConcept).toHaveBeenCalledWith(entity, entity2);
       });
     });
   });

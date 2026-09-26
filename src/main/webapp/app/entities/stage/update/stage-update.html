@@ -23,12 +23,21 @@
             formControlName="question"
             [compareWith]="compareQuestion"
           >
-            <option [ngValue]="null"></option>
+            @if (!editForm.get('question')!.value) {
+              <option [ngValue]="null" selected></option>
+            }
             @for (questionOption of questionsSharedCollection(); track $index) {
               <option [ngValue]="questionOption">{{ questionOption.id }}</option>
             }
           </select>
         </div>
+        @if (editForm.get(['question'])!.invalid && (editForm.get(['question'])!.dirty || editForm.get(['question'])!.touched)) {
+          <div>
+            @if (editForm.get(['question'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
 
         <div class="mb-3">
           <label class="form-label" for="field_scenario">Scenario</label>
@@ -40,12 +49,21 @@
             formControlName="scenario"
             [compareWith]="compareScenario"
           >
-            <option [ngValue]="null"></option>
+            @if (editForm.get(['scenario'])!.value === null) {
+              <option [ngValue]="null" selected></option>
+            }
             @for (scenarioOption of scenariosSharedCollection(); track $index) {
               <option [ngValue]="scenarioOption">{{ scenarioOption.id }}</option>
             }
           </select>
         </div>
+        @if (editForm.get(['scenario'])!.invalid && (editForm.get(['scenario'])!.dirty || editForm.get(['scenario'])!.touched)) {
+          <div>
+            @if (editForm.get(['scenario'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
       </div>
 
       <div>

@@ -63,8 +63,12 @@ export class GameSessionFormService {
       completedAt: new FormControl(gameSessionRawValue.completedAt, {
         validators: [Validators.required],
       }),
-      user: new FormControl(gameSessionRawValue.user),
-      game: new FormControl(gameSessionRawValue.game),
+      user: new FormControl(gameSessionRawValue.user, {
+        validators: [Validators.required],
+      }),
+      game: new FormControl(gameSessionRawValue.game, {
+        validators: [Validators.required],
+      }),
     });
   }
 

@@ -8,6 +8,8 @@ import { Observable, finalize, map } from 'rxjs';
 
 import { IGame } from 'app/entities/game/game.model';
 import { GameService } from 'app/entities/game/service/game.service';
+import { StageService } from 'app/entities/stage/service/stage.service';
+import { IStage } from 'app/entities/stage/stage.model';
 import { TopicService } from 'app/entities/topic/service/topic.service';
 import { ITopic } from 'app/entities/topic/topic.model';
 import { AlertError } from 'app/shared/alert';
@@ -25,17 +27,21 @@ export class ScenarioUpdate implements OnInit {
   readonly isSaving = signal(false);
   scenario: IScenario | null = null;
 
+  stagesSharedCollection = signal<IStage[]>([]);
   topicsSharedCollection = signal<ITopic[]>([]);
   gamesSharedCollection = signal<IGame[]>([]);
 
   protected scenarioService = inject(ScenarioService);
   protected scenarioFormService = inject(ScenarioFormService);
+  protected stageService = inject(StageService);
   protected topicService = inject(TopicService);
   protected gameService = inject(GameService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: ScenarioFormGroup = this.scenarioFormService.createScenarioFormGroup();
+
+  compareStage = (o1: IStage | null, o2: IStage | null): boolean => this.stageService.compareStage(o1, o2);
 
   compareTopic = (o1: ITopic | null, o2: ITopic | null): boolean => this.topicService.compareTopic(o1, o2);
 
@@ -89,11 +95,18 @@ export class ScenarioUpdate implements OnInit {
     this.scenario = scenario;
     this.scenarioFormService.resetForm(this.editForm, scenario);
 
+    this.stagesSharedCollection.update(stages => this.stageService.addStageToCollectionIfMissing<IStage>(stages, scenario.startingStage));
     this.topicsSharedCollection.update(topics => this.topicService.addTopicToCollectionIfMissing<ITopic>(topics, scenario.topic));
     this.gamesSharedCollection.update(games => this.gameService.addGameToCollectionIfMissing<IGame>(games, scenario.game));
   }
 
   protected loadRelationshipsOptions(): void {
+    this.stageService
+      .query()
+      .pipe(map((res: HttpResponse<IStage[]>) => res.body ?? []))
+      .pipe(map((stages: IStage[]) => this.stageService.addStageToCollectionIfMissing<IStage>(stages, this.scenario?.startingStage)))
+      .subscribe((stages: IStage[]) => this.stagesSharedCollection.set(stages));
+
     this.topicService
       .query()
       .pipe(map((res: HttpResponse<ITopic[]>) => res.body ?? []))

@@ -36,12 +36,21 @@
             formControlName="concept"
             [compareWith]="compareConcept"
           >
-            <option [ngValue]="null"></option>
+            @if (editForm.get(['concept'])!.value === null) {
+              <option [ngValue]="null" selected></option>
+            }
             @for (conceptOption of conceptsSharedCollection(); track $index) {
               <option [ngValue]="conceptOption">{{ conceptOption.id }}</option>
             }
           </select>
         </div>
+        @if (editForm.get(['concept'])!.invalid && (editForm.get(['concept'])!.dirty || editForm.get(['concept'])!.touched)) {
+          <div>
+            @if (editForm.get(['concept'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
+        }
       </div>
 
       <div>

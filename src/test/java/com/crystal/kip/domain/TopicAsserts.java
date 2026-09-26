@@ -47,7 +47,8 @@ public class TopicAsserts {
     public static void assertTopicUpdatableFieldsEquals(Topic expected, Topic actual) {
         assertThat(actual)
             .as("Verify Topic relevant properties")
-            .satisfies(a -> assertThat(a.getName()).as("check name").isEqualTo(expected.getName()));
+            .satisfies(a -> assertThat(a.getName()).as("check name").isEqualTo(expected.getName()))
+            .satisfies(a -> assertThat(a.getExplanation()).as("check explanation").isEqualTo(expected.getExplanation()));
     }
 
     /**

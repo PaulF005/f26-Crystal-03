@@ -36,18 +36,19 @@ public class GameSession implements Serializable {
     @Column(name = "completed_at", nullable = false)
     private Instant completedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "dataUser", "topicProgresseses", "gameProgresseses", "conceptProgresseses" }, allowSetters = true)
-    private UserProfile user;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "scenarios" }, allowSetters = true)
-    private Game game;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "gameSession")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "user", "stage", "selectedAnswer", "gameSession" }, allowSetters = true)
     private Set<StageAttempt> stageAttempts = new HashSet<>();
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties(value = { "dataUser", "topicProgresseses", "gameProgresseses", "conceptProgresseses" }, allowSetters = true)
+    private UserProfile user;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    private Game game;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -90,32 +91,6 @@ public class GameSession implements Serializable {
         this.completedAt = completedAt;
     }
 
-    public UserProfile getUser() {
-        return this.user;
-    }
-
-    public void setUser(UserProfile userProfile) {
-        this.user = userProfile;
-    }
-
-    public GameSession user(UserProfile userProfile) {
-        this.setUser(userProfile);
-        return this;
-    }
-
-    public Game getGame() {
-        return this.game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public GameSession game(Game game) {
-        this.setGame(game);
-        return this;
-    }
-
     public Set<StageAttempt> getStageAttempts() {
         return this.stageAttempts;
     }
@@ -144,6 +119,32 @@ public class GameSession implements Serializable {
     public GameSession removeStageAttempt(StageAttempt stageAttempt) {
         this.stageAttempts.remove(stageAttempt);
         stageAttempt.setGameSession(null);
+        return this;
+    }
+
+    public UserProfile getUser() {
+        return this.user;
+    }
+
+    public void setUser(UserProfile userProfile) {
+        this.user = userProfile;
+    }
+
+    public GameSession user(UserProfile userProfile) {
+        this.setUser(userProfile);
+        return this;
+    }
+
+    public Game getGame() {
+        return this.game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public GameSession game(Game game) {
+        this.setGame(game);
         return this;
     }
 

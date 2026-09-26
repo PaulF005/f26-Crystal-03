@@ -70,8 +70,12 @@ export class TopicProgressFormService {
       lastPracticedAt: new FormControl(topicProgressRawValue.lastPracticedAt, {
         validators: [Validators.required],
       }),
-      topic: new FormControl(topicProgressRawValue.topic),
-      userProfile: new FormControl(topicProgressRawValue.userProfile),
+      topic: new FormControl(topicProgressRawValue.topic, {
+        validators: [Validators.required],
+      }),
+      userProfile: new FormControl(topicProgressRawValue.userProfile, {
+        validators: [Validators.required],
+      }),
     });
   }
 

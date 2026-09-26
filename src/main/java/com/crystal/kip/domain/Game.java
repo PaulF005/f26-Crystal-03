@@ -1,12 +1,9 @@
 package com.crystal.kip.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -30,11 +27,6 @@ public class Game implements Serializable {
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "game")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "stages", "topic", "game" }, allowSetters = true)
-    private Set<Scenario> scenarios = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -62,37 +54,6 @@ public class Game implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<Scenario> getScenarios() {
-        return this.scenarios;
-    }
-
-    public void setScenarios(Set<Scenario> scenarios) {
-        if (this.scenarios != null) {
-            this.scenarios.forEach(i -> i.setGame(null));
-        }
-        if (scenarios != null) {
-            scenarios.forEach(i -> i.setGame(this));
-        }
-        this.scenarios = scenarios;
-    }
-
-    public Game scenarios(Set<Scenario> scenarios) {
-        this.setScenarios(scenarios);
-        return this;
-    }
-
-    public Game addScenario(Scenario scenario) {
-        this.scenarios.add(scenario);
-        scenario.setGame(this);
-        return this;
-    }
-
-    public Game removeScenario(Scenario scenario) {
-        this.scenarios.remove(scenario);
-        scenario.setGame(null);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

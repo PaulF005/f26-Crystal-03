@@ -46,11 +46,12 @@ public class GameProgress implements Serializable {
     @Column(name = "last_played_at", nullable = false)
     private Instant lastPlayedAt;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnoreProperties(value = { "scenarios" }, allowSetters = true)
+    @ManyToOne(optional = false)
+    @NotNull
     private Game game;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "dataUser", "topicProgresseses", "gameProgresseses", "conceptProgresseses" }, allowSetters = true)
     private UserProfile userProfile;
 

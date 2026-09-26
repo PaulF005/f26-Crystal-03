@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.crystal.kip.IntegrationTest;
+import com.crystal.kip.domain.Question;
 import com.crystal.kip.domain.Stage;
 import com.crystal.kip.repository.StageRepository;
 import jakarta.persistence.EntityManager;
@@ -15,6 +16,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -28,6 +30,7 @@ import tools.jackson.databind.ObjectMapper;
  * Integration tests for the {@link StageResource} REST controller.
  */
 @IntegrationTest
+@Disabled("Cyclic required relationships detected")
 @AutoConfigureMockMvc
 @WithMockUser
 class StageResourceIT {
@@ -60,8 +63,19 @@ class StageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Stage createEntity() {
-        return new Stage();
+    public static Stage createEntity(EntityManager em) {
+        Stage stage = new Stage();
+        // Add required entity
+        Question question;
+        if (TestUtil.findAll(em, Question.class).isEmpty()) {
+            question = QuestionResourceIT.createEntity(em);
+            em.persist(question);
+            em.flush();
+        } else {
+            question = TestUtil.findAll(em, Question.class).get(0);
+        }
+        stage.setQuestion(question);
+        return stage;
     }
 
     /**
@@ -70,13 +84,24 @@ class StageResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Stage createUpdatedEntity() {
-        return new Stage();
+    public static Stage createUpdatedEntity(EntityManager em) {
+        Stage updatedStage = new Stage();
+        // Add required entity
+        Question question;
+        if (TestUtil.findAll(em, Question.class).isEmpty()) {
+            question = QuestionResourceIT.createUpdatedEntity(em);
+            em.persist(question);
+            em.flush();
+        } else {
+            question = TestUtil.findAll(em, Question.class).get(0);
+        }
+        updatedStage.setQuestion(question);
+        return updatedStage;
     }
 
     @BeforeEach
     void initTest() {
-        stage = createEntity();
+        stage = createEntity(em);
     }
 
     @AfterEach

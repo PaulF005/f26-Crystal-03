@@ -35,6 +35,9 @@ class TopicResourceIT {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_EXPLANATION = "AAAAAAAAAA";
+    private static final String UPDATED_EXPLANATION = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/topics";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -64,7 +67,7 @@ class TopicResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Topic createEntity() {
-        return new Topic().name(DEFAULT_NAME);
+        return new Topic().name(DEFAULT_NAME).explanation(DEFAULT_EXPLANATION);
     }
 
     /**
@@ -74,7 +77,7 @@ class TopicResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Topic createUpdatedEntity() {
-        return new Topic().name(UPDATED_NAME);
+        return new Topic().name(UPDATED_NAME).explanation(UPDATED_EXPLANATION);
     }
 
     @BeforeEach
@@ -157,7 +160,8 @@ class TopicResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(topic.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].explanation").value(hasItem(DEFAULT_EXPLANATION)));
     }
 
     @Test
@@ -172,7 +176,8 @@ class TopicResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(topic.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
+            .andExpect(jsonPath("$.explanation").value(DEFAULT_EXPLANATION));
     }
 
     @Test
@@ -194,7 +199,7 @@ class TopicResourceIT {
         Topic updatedTopic = topicRepository.findById(topic.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedTopic are not directly saved in db
         em.detach(updatedTopic);
-        updatedTopic.name(UPDATED_NAME);
+        updatedTopic.name(UPDATED_NAME).explanation(UPDATED_EXPLANATION);
 
         restTopicMockMvc
             .perform(
@@ -270,7 +275,7 @@ class TopicResourceIT {
         Topic partialUpdatedTopic = new Topic();
         partialUpdatedTopic.setId(topic.getId());
 
-        partialUpdatedTopic.name(UPDATED_NAME);
+        partialUpdatedTopic.name(UPDATED_NAME).explanation(UPDATED_EXPLANATION);
 
         restTopicMockMvc
             .perform(
@@ -298,7 +303,7 @@ class TopicResourceIT {
         Topic partialUpdatedTopic = new Topic();
         partialUpdatedTopic.setId(topic.getId());
 
-        partialUpdatedTopic.name(UPDATED_NAME);
+        partialUpdatedTopic.name(UPDATED_NAME).explanation(UPDATED_EXPLANATION);
 
         restTopicMockMvc
             .perform(

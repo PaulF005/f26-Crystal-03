@@ -24,8 +24,8 @@ describe('ConceptProgress Form Service', () => {
             improvement: expect.any(Object),
             evidenceCount: expect.any(Object),
             lastPracticedAt: expect.any(Object),
-            concept: expect.any(Object),
             userProfile: expect.any(Object),
+            concept: expect.any(Object),
           }),
         );
       });
@@ -40,8 +40,8 @@ describe('ConceptProgress Form Service', () => {
             improvement: expect.any(Object),
             evidenceCount: expect.any(Object),
             lastPracticedAt: expect.any(Object),
-            concept: expect.any(Object),
             userProfile: expect.any(Object),
+            concept: expect.any(Object),
           }),
         );
       });

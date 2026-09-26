@@ -2,6 +2,7 @@
   "annotations": {
     "changelogDate": "20260920220839"
   },
+  "applications": ["kip"],
   "fields": [
     {
       "fieldName": "startedAt",
@@ -17,25 +18,25 @@
   "name": "GameSession",
   "relationships": [
     {
-      "fieldValidateRules": ["required"],
-      "otherEntityName": "userProfile",
-      "relationshipName": "user",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
-    {
-      "fieldValidateRules": ["required"],
-      "otherEntityName": "game",
-      "relationshipName": "game",
-      "relationshipSide": "left",
-      "relationshipType": "many-to-one"
-    },
-    {
       "otherEntityName": "stageAttempt",
       "otherEntityRelationshipName": "gameSession",
       "relationshipName": "stageAttempt",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "userProfile",
+      "relationshipName": "user",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "game",
+      "relationshipName": "game",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "searchEngine": "no"

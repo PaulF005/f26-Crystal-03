@@ -48,7 +48,7 @@ public class StageAttempt implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "user", "game", "stageAttempts" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "stageAttempts", "user", "game" }, allowSetters = true)
     private GameSession gameSession;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

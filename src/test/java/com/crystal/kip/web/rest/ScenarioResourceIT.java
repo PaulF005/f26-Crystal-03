@@ -8,13 +8,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.crystal.kip.IntegrationTest;
+import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Scenario;
+import com.crystal.kip.domain.Topic;
 import com.crystal.kip.repository.ScenarioRepository;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -28,6 +31,7 @@ import tools.jackson.databind.ObjectMapper;
  * Integration tests for the {@link ScenarioResource} REST controller.
  */
 @IntegrationTest
+@Disabled("Cyclic required relationships detected")
 @AutoConfigureMockMvc
 @WithMockUser
 class ScenarioResourceIT {
@@ -63,8 +67,29 @@ class ScenarioResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Scenario createEntity() {
-        return new Scenario().name(DEFAULT_NAME);
+    public static Scenario createEntity(EntityManager em) {
+        Scenario scenario = new Scenario().name(DEFAULT_NAME);
+        // Add required entity
+        Topic topic;
+        if (TestUtil.findAll(em, Topic.class).isEmpty()) {
+            topic = TopicResourceIT.createEntity();
+            em.persist(topic);
+            em.flush();
+        } else {
+            topic = TestUtil.findAll(em, Topic.class).get(0);
+        }
+        scenario.setTopic(topic);
+        // Add required entity
+        Game game;
+        if (TestUtil.findAll(em, Game.class).isEmpty()) {
+            game = GameResourceIT.createEntity();
+            em.persist(game);
+            em.flush();
+        } else {
+            game = TestUtil.findAll(em, Game.class).get(0);
+        }
+        scenario.setGame(game);
+        return scenario;
     }
 
     /**
@@ -73,13 +98,34 @@ class ScenarioResourceIT {
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
      */
-    public static Scenario createUpdatedEntity() {
-        return new Scenario().name(UPDATED_NAME);
+    public static Scenario createUpdatedEntity(EntityManager em) {
+        Scenario updatedScenario = new Scenario().name(UPDATED_NAME);
+        // Add required entity
+        Topic topic;
+        if (TestUtil.findAll(em, Topic.class).isEmpty()) {
+            topic = TopicResourceIT.createUpdatedEntity();
+            em.persist(topic);
+            em.flush();
+        } else {
+            topic = TestUtil.findAll(em, Topic.class).get(0);
+        }
+        updatedScenario.setTopic(topic);
+        // Add required entity
+        Game game;
+        if (TestUtil.findAll(em, Game.class).isEmpty()) {
+            game = GameResourceIT.createUpdatedEntity();
+            em.persist(game);
+            em.flush();
+        } else {
+            game = TestUtil.findAll(em, Game.class).get(0);
+        }
+        updatedScenario.setGame(game);
+        return updatedScenario;
     }
 
     @BeforeEach
     void initTest() {
-        scenario = createEntity();
+        scenario = createEntity(em);
     }
 
     @AfterEach

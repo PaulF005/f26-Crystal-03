@@ -22,6 +22,7 @@ describe('Scenario Form Service', () => {
             id: expect.any(Object),
             name: expect.any(Object),
             topic: expect.any(Object),
+            startingStage: expect.any(Object),
             game: expect.any(Object),
           }),
         );
@@ -35,6 +36,7 @@ describe('Scenario Form Service', () => {
             id: expect.any(Object),
             name: expect.any(Object),
             topic: expect.any(Object),
+            startingStage: expect.any(Object),
             game: expect.any(Object),
           }),
         );

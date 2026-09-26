@@ -31,19 +31,19 @@
           <dd>
             <span>{{ conceptProgressRef.lastPracticedAt | formatMediumDatetime }}</span>
           </dd>
-          <dt><span>Concept</span></dt>
-          <dd>
-            @if (conceptProgress()!.concept) {
-              <div>
-                <a [routerLink]="['/concept', conceptProgress()!.concept?.id, 'view']">{{ conceptProgressRef.concept?.id }}</a>
-              </div>
-            }
-          </dd>
           <dt><span>User Profile</span></dt>
           <dd>
             @if (conceptProgress()!.userProfile) {
               <div>
                 <a [routerLink]="['/user-profile', conceptProgress()!.userProfile?.id, 'view']">{{ conceptProgressRef.userProfile?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span>Concept</span></dt>
+          <dd>
+            @if (conceptProgress()!.concept) {
+              <div>
+                <a [routerLink]="['/concept', conceptProgress()!.concept?.id, 'view']">{{ conceptProgressRef.concept?.id }}</a>
               </div>
             }
           </dd>
