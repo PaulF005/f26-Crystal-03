@@ -1,4 +1,4 @@
 id;name;explanation;topic_id;legal_content_id
-301;Duties During a Traffic Stop;In Virginia, drivers are legally required to stop safely, provide identification, and comply with lawful orders, but you retain constitutional protections against unlawful searches.;101;502
-302;Invoking Silence;The Fifth Amendment protects your right to refuse to answer self-incriminating questions during custody, but you must invoke it clearly and explicitly.;103;501
-303;Exiting the Vehicle;Under Pennsylvania v. Mimms, an officer has absolute authority to order a driver out of a vehicle during a lawful stop for roadside safety reasons.;101;503
+101;"Traffic Stop Duties";"In Virginia, drivers are legally required to stop safely, provide identification, and comply with lawful orders, but you retain constitutional protections against unlawful searches.";101;301
+102;"Invoking Silence";"The Fifth Amendment protects your right to refuse to answer self-incriminating questions during custody, but you must invoke it clearly and explicitly.";103;302
+103;"Exiting the Vehicle";"Under Pennsylvania v. Mimms, an officer has absolute authority to order a driver out of a vehicle during a lawful stop for roadside safety reasons.";101;303

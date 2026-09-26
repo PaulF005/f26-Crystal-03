@@ -1,4 +1,4 @@
-id,name,url,date,data,legal_content_id
-1,"Cornell Law Legal Information Institute","https://cornell.edu","2026-01-15","Supreme Court annotations for custodial interrogation and the explicit invocation requirements under the Fifth Amendment.",501
-2,"Virginia Legislative Information System","https://virginia.gov","2025-07-01","Full text of statutory mandates detailing vehicle operational duties when signaled by law enforcement emergency lights.",502
-3,"Oyez Supreme Court Archive","https://oyez.org","1977-12-05","Syllabus and majority opinion details for Pennsylvania v. Mimms establishing officer vehicle egress control during traffic stops.",503
+id;name;url;date;data;legal_content_id
+1;"Cornell Law Legal Information Institute";"https://www.law.cornell.edu";"2026-01-15";"Supreme Court annotations for custodial interrogation and the explicit invocation requirements under the Fifth Amendment.";
+2;"Virginia Legislative Information System";"https://lis.virginia.gov";"2025-07-01";"Full text of statutory mandates detailing vehicle operational duties when signaled by law enforcement emergency lights.";
+3;"Oyez Supreme Court Archive";"https://www.oyez.org";"1977-12-05";"Syllabus and majority opinion details for Pennsylvania v. Mimms establishing officer vehicle egress control during traffic stops.";

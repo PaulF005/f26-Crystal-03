@@ -1,4 +1,4 @@
-id,name,game_id,topic_id
-301,"Duties During a Traffic Stop",1,101
-302,"Invoking Silence",1,103
-303,"Exiting the Vehicle",1,101
+id;name;game_id;topic_id;starting_stage_id
+301;"Duties During a Traffic Stop";1;101;501
+302;"Invoking Silence";1;103;502
+303;"Exiting the Vehicle";1;101;503

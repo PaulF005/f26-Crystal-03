@@ -1,4 +1,4 @@
-id,question,concept_id
-1,"An officer signals you to pull over on a dark, isolated road in Virginia. What is your primary legal obligation?",1
-2,"During a custodial interrogation, you state: 'I might want a lawyer, maybe I should remain silent.' Have you legally invoked your Fifth Amendment protections?",2
-3,"During a traffic stop, an officer orders you out of the vehicle without articulating a specific safety threat. Does this command violate your Fourth Amendment rights?",3
+id;question;concept_id
+1;"An officer signals you to pull over on a dark, isolated road in Virginia. What is your primary legal obligation?";1
+2;"During a custodial interrogation, you state: 'I might want a lawyer, maybe I should remain silent.' Have you legally invoked your Fifth Amendment protections?";1
+3;"During a traffic stop, an officer orders you out of the vehicle without articulating a specific safety threat. Does this command violate your Fourth Amendment rights?";1

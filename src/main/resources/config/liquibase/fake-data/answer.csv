@@ -1,5 +1,5 @@
-id,text,outcome_text,correct,terminal_resolution,question_id,next_stage_id,feedback_id
-1,"Pull over immediately to the right shoulder safely.","Correct. Virginia law requires compliance with signaling emergency vehicles.",true,"POSITIVE",1,2,1
-2,"Accelerate to find a more brightly lit area down the road.","Incorrect. Failing to pull over promptly can be interpreted as eluding.",false,"NEGATIVE",1,1,2
-3,"Clearly state: I am remaining silent and exercising my 5th Amendment right.","Correct. The Supreme Court requires an explicit statement to invoke silence.",true,"POSITIVE",2,3,1
-4,"Say nothing at all and stare blankly at the officer.","Incorrect. Berghuis v. Thompkins established that remaining completely passive does not invoke your rights.",false,"INCONCLUSIVE",2,2,2
+id;text;outcome_text;correct;terminal_resolution;question_id;next_stage_id;feedback_id
+1;"Pull over immediately to the right shoulder safely.";"Correct. Virginia law requires compliance with signaling emergency vehicles.";1;POSITIVE;1;2;1
+2;"Accelerate to find a more brightly lit area down the road.";"Incorrect. Failing to pull over promptly can be interpreted as eluding.";0;NEGATIVE;1;1;2
+3;"Clearly state: I am remaining silent and exercising my 5th Amendment right.";"Correct. The Supreme Court requires an explicit statement to invoke silence.";1;POSITIVE;2;3;1
+4;"Say nothing at all and stare blankly at the officer.";"Incorrect. Berghuis v. Thompkins established that remaining completely passive does not invoke your rights.";0;INCONCLUSIVE;2;2;2

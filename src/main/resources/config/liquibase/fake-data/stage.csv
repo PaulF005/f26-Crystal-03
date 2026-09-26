@@ -1,4 +1,4 @@
-id,scenario_id,question_id
-1,301,1
-2,302,2
-3,303,3
+id;scenario_id;question_id
+1;301;1
+2;302;2
+3;303;3

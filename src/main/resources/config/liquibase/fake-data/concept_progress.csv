@@ -1,5 +1,5 @@
-id,competency,improvement,evidence_count,last_practiced_at,user_profile_id,concept_id
-1,0.85,0.15,6,"2026-09-25T12:00:00Z",1,1
-2,0.45,0.02,2,"2026-09-25T14:30:00Z",1,2
-3,0.95,0.10,8,"2026-09-25T15:15:00Z",2,1
-4,0.30,0.00,1,"2026-09-25T16:00:00Z",2,3
+id;competency;improvement;evidence_count;last_practiced_at;user_profile_id;concept_id
+1;0.85;0.15;6;"2026-09-25T12:00:00Z";1;1
+2;0.45;0.02;2;"2026-09-25T14:30:00Z";1;2
+3;0.95;0.10;8;"2026-09-25T15:15:00Z";2;1
+4;0.30;0.00;1;"2026-09-25T16:00:00Z";2;3
