@@ -1,56 +1,62 @@
-<div class="row">
-  <div class="col-md-3">
-    <span class="hipster img-fluid rounded"></span>
-  </div>
+<div class="home-header">
+  <h1 class="display-4"><span>Welcome to KIP</span></h1>
+  <p class="lead">This is your homepage</p>
 
-  <div class="col-md-9">
-    <h1 class="display-4"><span>Welcome, Java Hipster!</span> (Kip)</h1>
-
-    <p class="lead">This is your homepage</p>
-
-    <div>
-      @if (account(); as accountRef) {
-        <div class="alert alert-success">
+  <div>
+    @if (account() !== null) {
+      <div class="alert alert-success">
+        @if (account(); as accountRef) {
           <span id="home-logged-message">You are logged in as user &quot;{{ accountRef.login }}&quot;.</span>
-        </div>
-      } @else {
-        <div class="alert alert-warning">
-          <span>If you want to </span>
-          <a class="alert-link" (click)="login()">sign in</a
-          ><span
-            >, you can try the default accounts:<br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;) <br />- User
-            (login=&quot;user&quot; and password=&quot;user&quot;).</span
-          >
-        </div>
-
-        <div class="alert alert-warning">
-          <span>You don&apos;t have an account yet?</span>&nbsp;
-          <a class="alert-link" routerLink="/account/register">Register a new account</a>
-        </div>
-      }
-    </div>
-
-    <p>If you have any questions on JHipster:</p>
-
-    <ul>
-      <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">JHipster homepage</a></li>
-      <li>
-        <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster on Stack Overflow</a>
-      </li>
-      <li>
-        <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
-          >JHipster bug tracker</a
+        }
+      </div>
+    } @else {
+      <div class="alert alert-warning">
+        <span>If you want to </span>
+        <a class="alert-link" (click)="login()">sign in</a
+        ><span
+          >, you can try the default accounts:<br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;) <br />- User
+          (login=&quot;user&quot; and password=&quot;user&quot;).</span
         >
-      </li>
-      <li>
-        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">JHipster public chat room</a>
-      </li>
-      <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">follow &#64;jhipster on Twitter</a></li>
-    </ul>
+      </div>
 
-    <p>
-      <span>If you like JHipster, don&apos;t forget to give us a star on</span>
-      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
-    </p>
+      <div class="alert alert-warning">
+        <span>You don&apos;t have an account yet?</span>&nbsp;
+        <a class="alert-link" routerLink="/account/register">Register a new account</a>
+      </div>
+    }
   </div>
+</div>
+
+<!-- Dashboard Boxes -->
+<div class="dashboard-grid">
+  <!-- Box 1 -->
+  <div class="dashboard-box recommendation-box">
+    <h2>Today's Recommendation</h2>
+    <p>Try today's recommended game or activity.</p>
+
+    <a class="btn btn-primary" routerLink="/game"> Start Playing </a>
+  </div>
+
+  <!-- Box 2 -->
+  <div class="dashboard-box profile-box">
+    <h2>Profile Summary</h2>
+
+    @if (account(); as accountRef) {
+      <p>Welcome back, {{ accountRef.login }}!</p>
+      <p>Keep going to improve your progress.</p>
+    } @else {
+      <p>Sign in to see your profile and progress.</p>
+
+      <button class="btn btn-primary" (click)="login()">Sign In</button>
+    }
+  </div>
+
+  <!-- Box 3: logged-in users only -->
+  @if (account() !== null) {
+    <div class="dashboard-box activity-box">
+      <h2>Recent Activity</h2>
+
+      <p>Your recent games and activities will appear here.</p>
+    </div>
+  }
 </div>
