@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="TopicHeading">
-    <span>Topics</span>
+    <span>Browse Topics</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
@@ -19,7 +19,7 @@
       </button>
     </div>
   </h2>
-
+  <p class="text-muted">Select a legal topic to learn more.</p>
   <jhi-alert-error />
 
   <jhi-alert />
@@ -60,7 +60,9 @@
               <td>
                 <a [routerLink]="['/topic', topic.id, 'view']">{{ topic.id }}</a>
               </td>
-              <td>{{ topic.name }}</td>
+              <td>
+                <a [routerLink]="['/topic', topic.id, 'view']">{{ topic.name }}</a>
+              </td>
               <td>{{ topic.explanation }}</td>
               <td class="text-end">
                 <div class="btn-group">
