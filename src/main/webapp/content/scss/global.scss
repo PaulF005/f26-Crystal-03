@@ -2,6 +2,22 @@
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
 
+@font-face {
+  font-family: 'ClassicShit';
+  src: url('../../content/fonts/ClassicShit.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea {
+  font-family: 'ClassicShit', sans-serif;
+}
+
 /* ==============================================================
 Background image repeated throughout the page
 ===============================================================*/
@@ -78,7 +94,8 @@ Generic styles
 .jh-card {
   padding: 1.5%;
   margin-top: 20px;
-  border: none;
+  border: 2px solid #a2843c;
+  background-color: #9eacb4;
 }
 
 .error {
@@ -243,3 +260,33 @@ angular-cli removes postcss-rtl processed inline css, processed rules must be ad
   }
 }
 /* jhipster-needle-scss-add-main JHipster will add new css style */
+
+/* ==========================================================================
+sidebar layout
+========================================================================== */
+
+.app-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app-navbar {
+  flex: 0 0 16rem;
+  width: 16rem;
+}
+
+.app-content {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+@media (max-width: 767.98px) {
+  .app-layout {
+    display: block;
+  }
+
+  .app-navbar {
+    width: 100%;
+  }
+}
