@@ -1,10 +1,11 @@
-import { Component, effect, inject, signal, untracked } from '@angular/core';
+import { Component, effect, inject, signal, untracked, computed } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Data, ParamMap, Router, RouterLink } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal';
 import { combineLatest, filter, map, tap } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 
 import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config';
 import { Alert, AlertError } from 'app/shared/alert';
@@ -13,6 +14,13 @@ import { GameDeleteDialog } from '../delete/game-delete-dialog';
 import { IGame } from '../game.model';
 import { GameService } from '../service/game.service';
 
+// --- CUSTOM MODIFICATION START: Added relational imports ---
+import { TopicService } from 'app/entities/topic/service/topic.service';
+import { ITopic } from 'app/entities/topic/topic.model';
+import { ScenarioService } from 'app/entities/scenario/service/scenario.service';
+import { IScenario } from 'app/entities/scenario/scenario.model';
+// --- CUSTOM MODIFICATION END ---
+
 @Component({
   selector: 'jhi-game',
   templateUrl: './game.html',
@@ -20,11 +28,23 @@ import { GameService } from '../service/game.service';
 })
 export class Game {
   readonly games = signal<IGame[]>([]);
+  
+  // --- CUSTOM MODIFICATION START: Added filter tracking signals ---
+  readonly topics = signal<ITopic[]>([]);
+  readonly scenarios = signal<IScenario[]>([]);
+  readonly selectedTopicId = signal<string>('');
+  // --- CUSTOM MODIFICATION END ---
 
   sortState = sortStateSignal({});
 
   readonly router = inject(Router);
   protected readonly gameService = inject(GameService);
+  
+  // --- CUSTOM MODIFICATION START: Injected custom relational services ---
+  protected readonly topicService = inject(TopicService);
+  protected readonly scenarioService = inject(ScenarioService);
+  // --- CUSTOM MODIFICATION END ---
+
   // eslint-disable-next-line @typescript-eslint/member-ordering
   readonly isLoading = this.gameService.gamesResource.isLoading;
   protected readonly activatedRoute = inject(ActivatedRoute);
@@ -37,6 +57,24 @@ export class Game {
   protected readonly sortService = inject(SortService);
   protected modalService = inject(NgbModal);
 
+  // --- CUSTOM MODIFICATION START: Added reactive computed property for filtered list ---
+  readonly filteredGames = computed(() => {
+    const activeTopicId = this.selectedTopicId();
+    const currentGamesList = this.games();
+    const currentScenariosList = this.scenarios();
+
+    if (!activeTopicId) {
+      return currentGamesList;
+    }
+
+    const matchingGameIds = currentScenariosList
+      .filter(scenario => scenario.topic?.id?.toString() === activeTopicId)
+      .map(scenario => scenario.game?.id);
+
+    return currentGamesList.filter(game => matchingGameIds.includes(game.id));
+  });
+  // --- CUSTOM MODIFICATION END ---
+
   constructor() {
     effect(() => {
       this.games.set(this.fillComponentAttributesFromResponseBody([...this.gameService.games()]));
@@ -44,7 +82,6 @@ export class Game {
     effect(() => {
       const activatedRouteState = this.activatedRouteState();
       untracked(() => {
-        // Only watch for route changes. Other signals should be ignored.
         this.fillComponentAttributeFromRoute(activatedRouteState.queryParamMap, activatedRouteState.data);
         this.load();
       });
@@ -56,7 +93,6 @@ export class Game {
   delete(game: IGame): void {
     const modalRef = this.modalService.open(GameDeleteDialog, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.game = game;
-    // unsubscribe not needed because closed completes on modal close
     modalRef.closed
       .pipe(
         filter(reason => reason === ITEM_DELETED_EVENT),
@@ -67,7 +103,27 @@ export class Game {
 
   load(): void {
     this.queryBackend();
+    // --- CUSTOM MODIFICATION START: Trigger database lookups for topics and scenarios ---
+    this.loadFilterRelations();
+    // --- CUSTOM MODIFICATION END ---
   }
+
+  // --- CUSTOM MODIFICATION START: Added methods to query backend relations and handle change events ---
+  protected loadFilterRelations(): void {
+    this.topicService.query().subscribe((res: HttpResponse<ITopic[]>) => {
+      this.topics.set(res.body ?? []);
+    });
+
+    this.scenarioService.query().subscribe((res: HttpResponse<IScenario[]>) => {
+      this.scenarios.set(res.body ?? []);
+    });
+  }
+
+  onTopicChange(event: Event): void {
+    const element = event.target as HTMLSelectElement;
+    this.selectedTopicId.set(element.value);
+  }
+  // --- CUSTOM MODIFICATION END ---
 
   navigateToWithComponentValues(event: SortState): void {
     this.handleNavigation(event);
