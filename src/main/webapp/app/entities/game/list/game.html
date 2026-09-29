@@ -23,8 +23,16 @@
   <jhi-alert-error />
 
   <jhi-alert />
-
-  @if (games().length === 0) {
+  <div class="mb-3">
+    <label for="topic-filter" class="form-label">Filter by topic</label>
+    <select id="topic-filter" class="form-select" (change)="onTopicChange($event)">
+      <option value="">All topics</option>
+      @for (topic of topics(); track topic.id) {
+        <option [value]="topic.id">{{ topic.name }}</option>
+      }
+    </select>
+  </div>
+  @if (filteredGames().length === 0) {
     <div class="alert alert-warning" id="no-result">
       <span>No Games found</span>
     </div>
@@ -49,7 +57,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (game of games(); track trackId(game)) {
+          @for (game of filteredGames(); track trackId(game)) {
             <tr data-cy="entityTable">
               <td>
                 <a [routerLink]="['/game', game.id, 'view']">{{ game.id }}</a>
