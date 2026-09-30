@@ -290,3 +290,25 @@ sidebar layout
     width: 100%;
   }
 }
+
+/* ==========================================================================
+Dashboard boxes (aka boxes with a gold bar on top)
+========================================================================== */
+.dashboard-box {
+  background: #adb5bb;
+  border: 2px solid #a2843c;
+  padding: 25px;
+  min-height: 180px;
+  box-shadow: 0 6px 0px rgba(0, 0, 0, 1);
+}
+
+.dashboard-box h2 {
+  background: #a2843c;
+  color: white;
+  margin: -25px -25px 20px -25px;
+  padding: 4px 25px;
+  font-size: 1.5rem; // padding goes above and below text no matter font size
+  /*Gives header2 text black outline*/
+  -webkit-text-stroke: 2px black;
+  paint-order: stroke fill;
+}

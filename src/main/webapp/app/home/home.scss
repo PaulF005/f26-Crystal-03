@@ -17,14 +17,6 @@ KIP Homepage Styles
   margin: 0;
 }
 
-.dashboard-box {
-  background: #adb5bb;
-  border: 2px solid #a2843c;
-  padding: 25px;
-  min-height: 180px;
-  box-shadow: 0 6px 0px rgba(0, 0, 0, 1);
-}
-
 .activity-box {
   grid-column: 1 / -1;
 }
@@ -38,4 +30,33 @@ KIP Homepage Styles
   .activity-box {
     grid-column: auto;
   }
+}
+
+/* ==========================================================================
+Formatting for recent activity dashboard
+========================================================================== */
+.activity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #a2843c;
+}
+
+.activity-row:last-child {
+  border-bottom: none;
+}
+
+.activity-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.activity-meta {
+  font-size: 0.9rem;
+}
+
+.activity-score {
+  font-size: 1.75rem;
+  font-weight: bold;
 }
