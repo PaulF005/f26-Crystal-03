@@ -1,4 +1,6 @@
-import { Component, effect, inject, signal, untracked } from '@angular/core';
+import { Component, computed, effect, inject, signal, untracked } from '@angular/core';
+import { ScenarioService } from '../../scenario/service/scenario.service';
+import { ITopic } from '../../topic/topic.model';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Data, ParamMap, Router, RouterLink } from '@angular/router';
 
@@ -17,10 +19,41 @@ import { GameService } from '../service/game.service';
   selector: 'jhi-game',
   templateUrl: './game.html',
   imports: [RouterLink, FontAwesomeModule, AlertError, Alert, SortDirective, SortByDirective],
+  providers: [ScenarioService],
 })
 export class Game {
   readonly games = signal<IGame[]>([]);
+  readonly selectedTopicId = signal<number | null>(null);
+  readonly scenarioService = inject(ScenarioService);
 
+  readonly topics = computed<ITopic[]>(() => {
+    const topicsById = new Map<number, ITopic>();
+
+    for (const scenario of this.scenarioService.scenarios()) {
+      if (scenario.topic) {
+        topicsById.set(scenario.topic.id, scenario.topic);
+      }
+    }
+
+    return [...topicsById.values()].sort((a, b) => (a.name ?? '').localeCompare(b.name ?? ''));
+  });
+
+  readonly filteredGames = computed(() => {
+    const topicId = this.selectedTopicId();
+
+    if (topicId === null) {
+      return this.games();
+    }
+
+    const gameIds = new Set(
+      this.scenarioService
+        .scenarios()
+        .filter(scenario => scenario.topic?.id === topicId && scenario.game)
+        .map(scenario => scenario.game!.id),
+    );
+
+    return this.games().filter(game => gameIds.has(game.id));
+  });
   sortState = sortStateSignal({});
 
   readonly router = inject(Router);
@@ -38,6 +71,7 @@ export class Game {
   protected modalService = inject(NgbModal);
 
   constructor() {
+    this.scenarioService.scenariosParams.set({});
     effect(() => {
       this.games.set(this.fillComponentAttributesFromResponseBody([...this.gameService.games()]));
     });
@@ -52,7 +86,10 @@ export class Game {
   }
 
   trackId = (item: IGame): number => this.gameService.getGameIdentifier(item);
-
+  onTopicChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value;
+    this.selectedTopicId.set(value ? Number(value) : null);
+  }
   delete(game: IGame): void {
     const modalRef = this.modalService.open(GameDeleteDialog, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.game = game;
