@@ -28,6 +28,7 @@ entity TopicProgress {
   improvement Float required
   evidenceCount Integer required min(0)
   lastPracticedAt Instant required
+  maxQuestions Integer required min(10)
 }
 
 entity GameProgress {

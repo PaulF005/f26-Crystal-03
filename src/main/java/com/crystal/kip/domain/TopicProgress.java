@@ -45,6 +45,11 @@ public class TopicProgress implements Serializable {
     @Column(name = "last_practiced_at", nullable = false)
     private Instant lastPracticedAt;
 
+    @NotNull
+    @Min(value = 10)
+    @Column(name = "max_questions", nullable = false)
+    private Integer maxQuestions;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(value = { "concepts" }, allowSetters = true)
@@ -120,6 +125,14 @@ public class TopicProgress implements Serializable {
 
     public void setLastPracticedAt(Instant lastPracticedAt) {
         this.lastPracticedAt = lastPracticedAt;
+    }
+
+    public Integer getMaxQuestions() {
+        return this.maxQuestions;
+    }
+
+    public void setMaxQuestions(Integer maxQuestions) {
+        this.maxQuestions = maxQuestions;
     }
 
     public Topic getTopic() {
