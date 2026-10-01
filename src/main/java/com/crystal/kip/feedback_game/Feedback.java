@@ -1,5 +1,7 @@
 package com.crystal.kip.feedback_game;
 
+import com.crystal.kip.progress_update.ProgressUpdaterTopic;
+
 /**
  * Used to return question if it is correct or wrong and an explanation.
  * Also keeps track of number of questions ansered and correct to send to progress tracker
@@ -7,26 +9,21 @@ package com.crystal.kip.feedback_game;
  */
 public class Feedback {
 
-    public String topicName;
-    public String scenario;
-    public int numberOfQuestions;
-    public int numberOfAnswed;
-    public int numberOfRight;
-    public String userId;
+    private final ProgressUpdaterTopic progressUpdaterTopic;
+    private int numberOfQuestions;
+    private int numberOfAnswed;
+    private int numberOfRight;
 
     /**
      *
-     * @param topicName Name of the topic
      * @param numberOfQuestions Number of questions for given scenario
-     * @param userId Name of userId
+     * @param progressUpdaterTopic
      */
-    public Feedback(String topicName, String scenario, int numberOfQuestions, String userId) {
-        this.topicName = topicName;
-        this.scenario = scenario;
+    public Feedback(int numberOfQuestions, ProgressUpdaterTopic progressUpdaterTopic) {
         this.numberOfQuestions = numberOfQuestions;
         this.numberOfAnswed = 0;
         this.numberOfRight = 0;
-        this.userId = userId;
+        this.progressUpdaterTopic = progressUpdaterTopic;
     }
 
     /**
@@ -56,7 +53,7 @@ public class Feedback {
      * TODO Need to cordinate what progress tracker and db will need for update
      */
     private void sendToProgressTracker() {
-        throw new UnsupportedOperationException("Unimplemented method 'sendToProgressTracker'");
+        this.progressUpdaterTopic.updateTopicProgress(this.numberOfRight);
     }
 
     private String questionRight(String explano) {
