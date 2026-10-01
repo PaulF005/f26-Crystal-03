@@ -56,7 +56,22 @@
     <div class="dashboard-box activity-box">
       <h2>Recent Activity</h2>
 
-      <p>Your recent games and activities will appear here.</p>
+      @for (item of recentActivity; track $index) {
+        <div class="activity-row">
+          <div>
+            <div class="activity-title">{{ item.title }}</div>
+            <div class="activity-meta">
+              <span class="activity-topic">{{ item.topic }}</span> - {{ item.recency }}
+            </div>
+          </div>
+          <div class="activity-score" [style.color]="scoreColor(item.score)">{{ item.score }}%</div>
+        </div>
+      } @empty {
+        <!-- shows if no games have been played -->
+        <div class="no-activity-message">
+          <p>Your recent games and activities will appear here.</p>
+        </div>
+      }
     </div>
   }
 </div>
