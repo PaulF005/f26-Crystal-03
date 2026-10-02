@@ -2,7 +2,7 @@
 // Always reference this when constructing any sort of .css component that should respect the pixel scaling
 // Example: "calc(var(--scale) * 16)" results in 16x16 pixels relative to the current global pixel scale
 :root {
-  --scale: 4;
+  --scale: 3;
   --pixel: calc(1px * var(--scale));
 }
 

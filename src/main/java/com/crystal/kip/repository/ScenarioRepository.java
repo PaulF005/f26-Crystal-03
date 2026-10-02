@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ScenarioRepository extends JpaRepository<Scenario, Long> {
-    List<Scenario> findByGameIdAndTopicId(Long gameId, Long topicId);
+    List<Scenario> findByGameAndTopic(Long gameId, Long topicId);
 }
