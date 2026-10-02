@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA repository for the Scenario entity.
  */
 @Repository
-public interface ScenarioRepository extends JpaRepository<Scenario, Long> {}
+public interface ACustomScenarioRepository extends JpaRepository<Scenario, Long> {
+    List<Scenario> findByGameIdAndTopicId(Long gameId, Long topicId);
+}

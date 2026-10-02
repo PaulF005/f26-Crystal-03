@@ -3,16 +3,16 @@ package com.crystal.kip.game;
 import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Scenario;
 import com.crystal.kip.domain.Topic;
-import com.crystal.kip.repository.ScenarioRepository;
+import com.crystal.kip.repository.LinkScenarioRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ScenarioSelector {
 
-    private final ScenarioRepository scenarioRepository;
+    private final LinkScenarioRepository scenarioRepository;
 
-    public ScenarioSelector(ScenarioRepository scenarioRepository) {
+    public ScenarioSelector(LinkScenarioRepository scenarioRepository) {
         this.scenarioRepository = scenarioRepository;
     }
 
