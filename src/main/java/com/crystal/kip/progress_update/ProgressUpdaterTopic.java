@@ -1,6 +1,6 @@
 package com.crystal.kip.progress_update;
 
-import com.crystal.kip.repository.TopicProgressRepository;
+import com.crystal.kip.repository.LinkTopicProgressRepository;
 import com.crystal.kip.security.SecurityUtils;
 import java.time.Instant;
 import org.slf4j.Logger;
@@ -12,10 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class ProgressUpdaterTopic {
 
-    private final TopicProgressRepository topicProgressRepository;
+    private final LinkTopicProgressRepository topicProgressRepository;
     private static final Logger log = LoggerFactory.getLogger(ProgressUpdaterTopic.class);
 
-    public ProgressUpdaterTopic(TopicProgressRepository topicProgressRepository) {
+    public ProgressUpdaterTopic(LinkTopicProgressRepository topicProgressRepository) {
         this.topicProgressRepository = topicProgressRepository;
     }
 
