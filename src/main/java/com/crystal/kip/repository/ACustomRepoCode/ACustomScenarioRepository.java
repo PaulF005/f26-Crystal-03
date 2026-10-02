@@ -1,4 +1,4 @@
-package com.crystal.kip.repository;
+package com.crystal.kip.repository.ACustomRepoCode;
 
 import com.crystal.kip.domain.Scenario;
 import java.util.List;

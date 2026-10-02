@@ -1,4 +1,4 @@
-package com.crystal.kip.repository;
+package com.crystal.kip.repository.ACustomRepoCode;
 
 import com.crystal.kip.domain.TopicProgress;
 import java.time.Instant;
@@ -19,22 +19,24 @@ public interface ACustomTopicProgressRepository extends JpaRepository<TopicProgr
             "INNER JOIN up.dataUser u " +
             "WHERE u.login = :username"
     )
-    Optional<Float> getCompantencyDB(@Param("username") String username);
+    Optional<Float> getCompantencyDBTP(@Param("username") String username);
 
-    default double getCurCompantency(String username) {
-        return getCompantencyDB(username).map(Float::doubleValue).orElse(-1.0);
+    default double getCurCompantencyTP(String username) {
+        return getCompantencyDBTP(username).map(Float::doubleValue).orElse(-1.0);
     }
 
     @Query(
-        "SELECT tp.maxQuestions FROM TopicProgress tp " +
-            "INNER JOIN tp.userProfile up " +
-            "INNER JOIN up.dataUser u " +
+        "SELECT COUNT(c) FROM Concept c " +
+            "JOIN c.topic t " +
+            "JOIN TopicProgress tp ON tp.topic = t " +
+            "JOIN tp.userProfile up " +
+            "JOIN up.dataUser u " +
             "WHERE u.login = :username"
     )
-    Optional<Integer> getmaxQuestionsDB(@Param("username") String username);
+    Optional<Integer> getAllTopicNumDB(@Param("username") String username);
 
-    default int getMaxQuestionsForRepo(String username) {
-        return getmaxQuestionsDB(username).map(Integer::intValue).orElse(-1);
+    default int getAllTopicNum(String username) {
+        return getAllTopicNumDB(username).map(Integer::intValue).orElse(-1);
     }
 
     //UPDATE functions

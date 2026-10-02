@@ -1,52 +1,46 @@
 package com.crystal.kip.progress_update;
 
-import com.crystal.kip.repository.LinkTopicProgressRepository;
+import com.crystal.kip.repository.LinkRepo.LinkTopicProgressRepository;
 import com.crystal.kip.security.SecurityUtils;
 import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Service
-@Transactional
 public class ProgressUpdaterTopic {
 
-    private final LinkTopicProgressRepository topicProgressRepository;
+    private final LinkTopicProgressRepository linkTopicProgressRepository;
     private static final Logger log = LoggerFactory.getLogger(ProgressUpdaterTopic.class);
 
-    public ProgressUpdaterTopic(LinkTopicProgressRepository topicProgressRepository) {
-        this.topicProgressRepository = topicProgressRepository;
+    public ProgressUpdaterTopic(LinkTopicProgressRepository linkTopicProgressRepository) {
+        this.linkTopicProgressRepository = linkTopicProgressRepository;
     }
 
-    public void updateTopicProgress(int questionsRight) {
+    public void updateTopicProgress(float improvementToAdd) {
         String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
-        int totalQuestions = this.topicProgressRepository.getMaxQuestionsForRepo(username);
-        if (totalQuestions < 0) {
-            log.error("Failed to read total questions from repo!");
+
+        double currentCompantency = this.linkTopicProgressRepository.getCurCompantencyTP(username);
+        if (currentCompantency < 0) {
+            log.error("Failed to read current compantency from repo!");
+            throw new IllegalArgumentException("Concept Progress has an error in its Current Compantency!");
+        }
+
+        int maxConcepts = this.linkTopicProgressRepository.getAllTopicNum(username);
+        if (maxConcepts < 0) {
+            log.error("Failed to read max concepts from repo!");
+            throw new IllegalArgumentException("Topic Progress has an error in its Max Questions!");
+        }
+        if (maxConcepts == 0) {
+            log.error("Failed to have any concepts from repo!");
             throw new IllegalArgumentException("Topic Progress has an error in its Max Questions!");
         }
 
-        double currentCompantency = this.topicProgressRepository.getCurCompantency(username);
-        if (currentCompantency < 0) {
-            log.error("Failed to read current compantency from repo!");
-            throw new IllegalArgumentException("Topic Progress has an error in its Current Compantency!");
-        }
-
-        if (currentCompantency >= 0.99) {
-            log.debug("Update skipped, at max compantency!");
-            return;
-        }
-
-        double percentDone = (double) questionsRight / totalQuestions;
-        currentCompantency += percentDone;
-
-        //Close enough!!
         if (currentCompantency >= 0.99) {
             currentCompantency = 1.0;
         }
 
+        double percentDone = (double) improvementToAdd / (double) maxConcepts;
+        currentCompantency += percentDone;
         Instant now = Instant.now();
-        this.topicProgressRepository.updateTopicProgressToDB((float) currentCompantency, now);
+        this.linkTopicProgressRepository.updateTopicProgressToDB((float) currentCompantency, now);
     }
 }
