@@ -35,6 +35,10 @@ const routes: Routes = [
   },
   {
     path: '',
+    data: {
+      authorities: [Authority.ADMIN],
+    },
+    canActivate: [userRouteAccessService],
     loadChildren: () => import('./entities/entity.routes'),
   },
   ...errorRoute,
