@@ -5,11 +5,7 @@ import com.crystal.kip.security.SecurityUtils;
 import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@Service
-@Transactional
 public class ProgressUpdaterConcept {
 
     private final LinkConcpetProgressRepository linkConcpetProgressRepository;
