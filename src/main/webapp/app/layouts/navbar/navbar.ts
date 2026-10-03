@@ -31,7 +31,8 @@ export default class Navbar implements OnInit {
   readonly isNavbarCollapsed = signal(true);
   readonly openAPIEnabled = signal(false);
   readonly version: string;
-  readonly account = inject(AccountService).account;
+  readonly accountService = inject(AccountService);
+  readonly account = this.accountService.account;
 
   private readonly loginService = inject(LoginService);
   private readonly profileService = inject(ProfileService);

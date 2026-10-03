@@ -21,11 +21,33 @@
           <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
             <span>
               <fa-icon icon="home" />
-              <span>Home</span>
+              @if (accountService.hasAnyAuthority('ROLE_ADMIN')) {
+                <span>Home</span>
+              } @else {
+                <span>Dashboard</span>
+              }
             </span>
           </a>
         </li>
         @if (account() !== null) {
+          <!-- User navbar -->
+          <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/games" (click)="collapseNavbar()">
+              <span>
+                <fa-icon icon="th-list" />
+                <span>Games</span>
+              </span>
+            </a>
+          </li>
+          <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active">
+            <a class="nav-link" routerLink="/my-progress" (click)="collapseNavbar()">
+              <span>
+                <fa-icon icon="tasks" />
+                <span>Progress</span>
+              </span>
+            </a>
+          </li>
+          <!-- Admin navbar -->
           <li
             *jhiHasAnyAuthority="'ROLE_ADMIN'"
             ngbDropdown
