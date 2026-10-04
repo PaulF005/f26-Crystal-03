@@ -2,6 +2,7 @@ package com.crystal.kip.progress_update;
 
 import com.crystal.kip.repository.LinkRepo.LinkGameProgressRepository;
 import com.crystal.kip.security.SecurityUtils;
+import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,5 +36,8 @@ public class ProgressUpdaterGame {
         } else {
             performanceOut = (dbPerformance * (float) sessionsPlayed + performance) / (float) (sessionsPlayed + 1);
         }
+
+        Instant now = Instant.now();
+        this.linkGameProgressRepository.updateGameProgressToDb(sessionsPlayed + 1, (float) performanceOut, now);
     }
 }

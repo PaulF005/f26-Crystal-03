@@ -1,6 +1,8 @@
 package com.crystal.kip.repository.ACustomRepoCode;
 
+import java.time.Instant;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -33,4 +35,16 @@ public interface ACustomGameProgressRepository {
     }
 
     //UPDATE functions
+    @Modifying
+    @Query(
+        "UPDATE GameProgress gp SET gp.sessionPlayed = :sessionsPlayed, gp.performance = :performance, gp.lastPlayedAt = lastPlayedAt " +
+            "WHERE gp.userProfile IN (" +
+            " SELECT up From UserProfile up JOIN up.datauser u WHERE u.login = ?#{principal.username}" +
+            ")"
+    )
+    void updateGameProgressToDb(
+        @Param("sessionsPlayed") int sessionsPlayed,
+        @Param("performance") Float performance,
+        @Param("lastPlayedAt") Instant lastPlayedAt
+    );
 }
