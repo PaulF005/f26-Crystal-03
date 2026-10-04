@@ -1,7 +1,6 @@
 package com.crystal.kip.web.rest;
 
 import com.crystal.kip.domain.TopicProgress;
-import com.crystal.kip.repository.TopicProgressRepository;
 import com.crystal.kip.repository.LinkRepo.LinkTopicProgressRepository;
 import com.crystal.kip.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
@@ -11,7 +10,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +27,6 @@ import tech.jhipster.web.util.ResponseUtil;
 @Transactional(rollbackFor = Exception.class)
 public class TopicProgressResource {
 
-    
     private static final Logger LOG = LoggerFactory.getLogger(TopicProgressResource.class);
 
     private static final String ENTITY_NAME = "topicProgress";
@@ -37,16 +34,10 @@ public class TopicProgressResource {
     @Value("${jhipster.clientApp.name:kip}")
     private String applicationName;
 
-    //Primary link interface to inject and reference primary repository layer
+    // Single reference pointer to inject primary repository layer
     private final LinkTopicProgressRepository topicProgressRepository;
 
     public TopicProgressResource(LinkTopicProgressRepository topicProgressRepository) {
-        this.topicProgressRepository = topicProgressRepository;
-    }
-
-    private final TopicProgressRepository topicProgressRepository;
-
-    public TopicProgressResource(TopicProgressRepository topicProgressRepository) {
         this.topicProgressRepository = topicProgressRepository;
     }
 
@@ -133,23 +124,24 @@ public class TopicProgressResource {
         Optional<TopicProgress> result = topicProgressRepository
             .findById(topicProgress.getId())
             .map(existingTopicProgress -> {
-                updateIfPresent(existingTopicProgress::setCompetency, topicProgress.getCompetency());
-                updateIfPresent(existingTopicProgress::setImprovement, topicProgress.getImprovement());
-                updateIfPresent(existingTopicProgress::setEvidenceCount, topicProgress.getEvidenceCount());
-                updateIfPresent(existingTopicProgress::setLastPracticedAt, topicProgress.getLastPracticedAt());
-            }
-            
-            /* Compiler through a fit because existingTopicProgress::setMaxQuestions looks in TopicProgress
-                and did not exist. Instead of using JHipster's default updateIfPresent: when a user updates 
-                their progress in the app, a Patch request sends only the specific fields that changed 
-                (ie updating competency). The if (... != null) check guarantees that 
-                we only overwrite the value in the database if the user actually passed 
-                a new number. If it is null, Java skips it, preserving your existing 
-                database data instead of accidentally wiping it out.
-            */
+                if (topicProgress.getCompetency() != null) {
+                    existingTopicProgress.setCompetency(topicProgress.getCompetency());
+                }
+                if (topicProgress.getImprovement() != null) {
+                    existingTopicProgress.setImprovement(topicProgress.getImprovement());
+                }
+                if (topicProgress.getEvidenceCount() != null) {
+                    existingTopicProgress.setEvidenceCount(topicProgress.getEvidenceCount());
+                }
+                if (topicProgress.getLastPracticedAt() != null) {
+                    existingTopicProgress.setLastPracticedAt(topicProgress.getLastPracticedAt());
+                }
 
-            if (topicProgress.getMaxQuestions() != null) {
-                existingTopicProgress.setMaxQuestions(topicProgress.getMaxQuestions());
+                // lambda pipeline handles null-safe parameter mappings properly
+                if (topicProgress.getMaxQuestions() != null) {
+                    existingTopicProgress.setMaxQuestions(topicProgress.getMaxQuestions());
+                }
+
                 return existingTopicProgress;
             })
             .map(topicProgressRepository::save);
@@ -197,11 +189,5 @@ public class TopicProgressResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
-    }
-
-    private <T> void updateIfPresent(Consumer<T> setter, T value) {
-        if (value != null) {
-            setter.accept(value);
-        }
     }
 }
