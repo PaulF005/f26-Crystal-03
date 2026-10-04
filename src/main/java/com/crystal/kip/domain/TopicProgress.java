@@ -55,6 +55,11 @@ public class TopicProgress implements Serializable {
     @JsonIgnoreProperties(value = { "dataUser", "topicProgresseses", "gameProgresseses", "conceptProgresseses" }, allowSetters = true)
     private UserProfile userProfile;
 
+    @NotNull
+    @Min(value = 0)
+    @Column(name = "max_questions", nullable = false)
+    private Integer maxQuestions;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -149,6 +154,19 @@ public class TopicProgress implements Serializable {
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+
+    public Integer getMaxQuestions() {
+        return this.maxQuestions;
+    }
+
+    public TopicProgress maxQuestions(Integer maxQuestions) {
+        this.setMaxQuestions(maxQuestions);
+        return this;
+    }
+
+    public void setMaxQuestions(Integer maxQuestions) {
+        this.maxQuestions = maxQuestions;
+    }
 
     @Override
     public boolean equals(Object o) {

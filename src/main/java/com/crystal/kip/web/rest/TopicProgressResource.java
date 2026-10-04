@@ -2,6 +2,7 @@ package com.crystal.kip.web.rest;
 
 import com.crystal.kip.domain.TopicProgress;
 import com.crystal.kip.repository.TopicProgressRepository;
+import com.crystal.kip.repository.LinkRepo.LinkTopicProgressRepository;
 import com.crystal.kip.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -28,12 +29,20 @@ import tech.jhipster.web.util.ResponseUtil;
 @Transactional(rollbackFor = Exception.class)
 public class TopicProgressResource {
 
+    
     private static final Logger LOG = LoggerFactory.getLogger(TopicProgressResource.class);
 
     private static final String ENTITY_NAME = "topicProgress";
 
     @Value("${jhipster.clientApp.name:kip}")
     private String applicationName;
+
+    //Primary link interface to inject and reference primary repository layer
+    private final LinkTopicProgressRepository topicProgressRepository;
+
+    public TopicProgressResource(LinkTopicProgressRepository topicProgressRepository) {
+        this.topicProgressRepository = topicProgressRepository;
+    }
 
     private final TopicProgressRepository topicProgressRepository;
 
@@ -128,7 +137,19 @@ public class TopicProgressResource {
                 updateIfPresent(existingTopicProgress::setImprovement, topicProgress.getImprovement());
                 updateIfPresent(existingTopicProgress::setEvidenceCount, topicProgress.getEvidenceCount());
                 updateIfPresent(existingTopicProgress::setLastPracticedAt, topicProgress.getLastPracticedAt());
+            }
+            
+            /* Compiler through a fit because existingTopicProgress::setMaxQuestions looks in TopicProgress
+                and did not exist. Instead of using JHipster's default updateIfPresent: when a user updates 
+                their progress in the app, a Patch request sends only the specific fields that changed 
+                (ie updating competency). The if (... != null) check guarantees that 
+                we only overwrite the value in the database if the user actually passed 
+                a new number. If it is null, Java skips it, preserving your existing 
+                database data instead of accidentally wiping it out.
+            */
 
+            if (topicProgress.getMaxQuestions() != null) {
+                existingTopicProgress.setMaxQuestions(topicProgress.getMaxQuestions());
                 return existingTopicProgress;
             })
             .map(topicProgressRepository::save);
