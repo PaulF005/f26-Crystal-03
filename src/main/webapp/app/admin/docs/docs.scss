@@ -1,6 +1,4 @@
-@use 'bootstrap/scss/functions' as *; 
-@use 'bootstrap/scss/variables' as *;
-// new keyword
+@import 'src/main/webapp/content/scss/vendor.scss';
 
 iframe {
   background: white;
