@@ -46,8 +46,8 @@ export default class App implements OnInit {
   }
 
   private updatePixelScale(): void {
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+    const screenWidth = window.screen.width;
+    const screenHeight = window.screen.height;
 
     const portrait = screenHeight > screenWidth;
 
