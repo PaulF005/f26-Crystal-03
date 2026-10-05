@@ -9,19 +9,22 @@
 /* ==========================================================================
 Navbar
 ========================================================================== */
-
+:host {
+  display: block;
+  width: 100%;
+}
 .navbar {
   align-items: stretch;
 
   min-height: 100vh;
-  width: calc(64 * var(--pixel));
+  width: 100%;
 
   padding: calc(5 * var(--pixel)) calc(4 * var(--pixel));
 
   background: transparent !important;
 
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
+  font-family: 'fancy', sans-serif;
+  font-size: var(--font-fancy-size);
 
   a.nav-link {
     font-weight: normal;
@@ -71,7 +74,7 @@ Navbar
 }
 
 .nav-link {
-  padding: calc(3 * var(--pixel)) calc(3 * var(--pixel));
+  padding: calc(0 * var(--pixel)) calc(3 * var(--pixel));
 
   border-radius: calc(2 * var(--pixel));
 }
@@ -166,10 +169,10 @@ Logo
 .logo-img {
   display: inline-block;
   vertical-align: middle;
-  width: calc(12 * var(--pixel));
-  aspect-ratio: 1;
+  width: calc(96 * var(--pixel));
+  height: calc(32 * var(--pixel));
 
-  background: url('/content/images/ui/logo_kip.png') no-repeat center;
+  background: url('/content/images/ui/logo_kip_dev.png') no-repeat center;
 
   background-size: contain;
 

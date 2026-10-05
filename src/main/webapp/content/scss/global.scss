@@ -323,8 +323,8 @@ Sidebar layout
 }
 
 .app-navbar {
-  flex: 0 0 16rem;
-  width: 16rem;
+  flex: none;
+  width: calc(116 * var(--pixel));
 }
 
 .app-content {
@@ -347,14 +347,14 @@ Dashboard boxes
 ========================================================================== */
 
 .dashboard-box {
-  background: var(--ui-window-background-dim);
+  background: var(--ui-window-background);
 
   border: var(--pixel) solid var(--ui-kip-gold);
 
-  padding: calc(1 * var(--pixel));
+  padding: calc(0 * var(--pixel));
   min-height: calc(45 * var(--pixel));
 
-  box-shadow: 0 calc(2 * var(--pixel)) 0 var(--ui-window-shadow);
+  box-shadow: 0 calc(3 * var(--pixel)) 0 var(--ui-window-shadow);
 
   font-family: 'body', sans-serif;
   font-size: var(--font-body-size);
@@ -364,14 +364,16 @@ Dashboard boxes
   background: var(--ui-kip-gold);
   color: var(--ui-button-highlight);
 
-  margin: calc(-1 * var(--pixel)) calc(-1 * var(--pixel)) calc(4 * var(--pixel)) calc(-2 * var(--pixel));
+  margin: calc(-1 * var(--pixel)) calc(0 * var(--pixel)) calc(0 * var(--pixel)) calc(0 * var(--pixel));
 
-  padding-block: var(--pixel);
   padding-inline: calc(2 * var(--pixel));
 
   font-family: 'title', sans-serif;
   font-size: var(--font-title-size);
   font-weight: normal;
+}
+.dashboard-box p {
+  padding: calc(4 * var(--pixel));
 }
 
 .activity-title {
@@ -387,4 +389,52 @@ Dashboard boxes
 .activity-score {
   font-family: 'field', monospace;
   font-size: var(--font-field-size);
+}
+
+.form-label,
+.form-check-label {
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
+  font-weight: normal;
+}
+
+.form-control,
+.form-select {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+  font-weight: normal;
+
+  background-color: var(--ui-button-highlight);
+  color: var(--ui-window-shadow);
+
+  border: var(--pixel) solid var(--ui-window-shadow);
+  border-radius: 0;
+
+  padding: calc(0 * var(--pixel)) calc(3 * var(--pixel));
+}
+
+.form-control::placeholder {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+}
+
+.form-check {
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
+}
+
+.btn {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+  font-weight: normal;
+
+  border-width: var(--pixel);
+  border-radius: 0;
+
+  padding: calc(2 * var(--pixel)) calc(3 * var(--pixel));
+}
+
+.alert {
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
 }
