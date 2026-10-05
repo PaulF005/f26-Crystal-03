@@ -1,0 +1,22 @@
+@import 'pixel';
+
+// EXAMPLE USE
+
+/*
+<img
+  class="pixel-image"
+  src="content/images/ui/logo_kip.png"
+  style="--image-width: 16; --image-height: 16"
+/>
+*/
+
+.pixel-image {
+  image-rendering: pixelated;
+  width: calc(var(--image-width) * var(--pixel));
+  height: auto;
+}
+
+@mixin pixel-background($native-width) {
+  background-size: calc(#{$native-width} * var(--pixel)) auto;
+  image-rendering: pixelated;
+}

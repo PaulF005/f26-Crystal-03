@@ -1,0 +1,124 @@
+@import 'pixel';
+
+// EXAMPLE USES
+
+/*
+<p class="font-body">Dense paragraph text...</p>
+
+<h1 class="font-title">Knowledge Is Power</h1>
+
+<label class="font-field">Username</label>
+*/
+
+@font-face {
+  font-family: 'body';
+  src: url('../../content/fonts/aseprite.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-size: calc(7 * var(--pixel));
+}
+
+@font-face {
+  font-family: 'field';
+  src: url('../../content/fonts/c64esque.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-size: calc(16 * var(--pixel));
+}
+
+@font-face {
+  font-family: 'title';
+  src: url('../../content/fonts/BIOSfontII_.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-size: calc(16 * var(--pixel));
+}
+
+@font-face {
+  font-family: 'fancy';
+  src: url('../../content/fonts/ClassicShit.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-size: calc(16 * var(--pixel));
+}
+
+@font-face {
+  font-family: 'fine';
+  src: url('../../content/fonts/MyHandwriting.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-size: calc(16 * var(--pixel));
+}
+
+@font-face {
+  font-family: 'hand';
+  src: url('../../content/fonts/NameHereCondensed.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-size: calc(16 * var(--pixel));
+}
+
+:root {
+  --font-body-size: calc(7 * var(--pixel));
+  --font-field-size: calc(16 * var(--pixel));
+  --font-title-size: calc(16 * var(--pixel));
+  --font-fancy-size: calc(16 * var(--pixel));
+  --font-fine-size: calc(16 * var(--pixel));
+  --font-hand-size: calc(16 * var(--pixel));
+}
+
+.font-body {
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-synthesis: none;
+}
+
+.font-field {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-synthesis: none;
+}
+
+.font-title {
+  font-family: 'title', sans-serif;
+  font-size: var(--font-title-size);
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-synthesis: none;
+}
+
+.font-fancy {
+  font-family: 'fancy', sans-serif;
+  font-size: var(--font-fancy-size);
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-synthesis: none;
+}
+
+.font-fine {
+  font-family: 'fine', sans-serif;
+  font-size: var(--font-fine-size);
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-synthesis: none;
+}
+
+.font-hand {
+  font-family: 'hand', cursive;
+  font-size: var(--font-hand-size);
+  font-kerning: none;
+  font-variant-ligatures: none;
+  font-synthesis: none;
+}
+
+.pixel-outline {
+  text-shadow:
+    calc(-1 * var(--pixel)) 0 var(--ui-window-shadow),
+    var(--pixel) 0 var(--ui-window-shadow),
+    0 calc(-1 * var(--pixel)) var(--ui-window-shadow),
+    0 var(--pixel) var(--ui-window-shadow);
+}
