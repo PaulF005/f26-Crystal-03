@@ -24,13 +24,23 @@
 
   <jhi-alert />
   <div class="mb-3">
-    <label for="topic-filter" class="form-label">Filter by topic</label>
-    <select id="topic-filter" class="form-select" (change)="onTopicChange($event)">
-      <option value="">All topics</option>
+    <p class="form-label">Browse by Topic</p>
+    <div class="d-flex flex-wrap gap-2">
+      <button type="button" class="btn btn-outline-primary" [class.active]="selectedTopicId() === null" (click)="selectTopic(null)">
+        All Topics
+      </button>
+
       @for (topic of topics(); track topic.id) {
-        <option [value]="topic.id">{{ topic.name }}</option>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          [class.active]="selectedTopicId() === topic.id"
+          (click)="selectTopic(topic.id)"
+        >
+          {{ topic.name }}
+        </button>
       }
-    </select>
+    </div>
   </div>
   @if (filteredGames().length === 0) {
     <div class="alert alert-warning" id="no-result">
