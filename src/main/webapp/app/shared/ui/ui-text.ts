@@ -19,9 +19,9 @@ export const UI_TEXT = {
   },
 
   dashboard: {
-    dailyChallenge: 'Daily Challenge',
+    dailyRecommendation: 'Daily Recommendation',
     recentActivity: 'Recent Activity',
-    profileStats: 'Profile Stats',
+    profileSummary: 'Profile Summary',
 
     momentum: {
       currentStreak: 'Current Streak',

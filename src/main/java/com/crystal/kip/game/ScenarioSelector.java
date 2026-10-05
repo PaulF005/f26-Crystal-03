@@ -4,7 +4,6 @@ import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Scenario;
 import com.crystal.kip.domain.Topic;
 import com.crystal.kip.repository.ScenarioRepository;
-import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,7 +19,7 @@ public class ScenarioSelector {
         Game game = session.getGame();
         Topic topic = session.getTopic();
 
-        List<Scenario> scenarios = scenarioRepository.findByGameAndTopic(game.getId(), topic.getId());
+        // List<Scenario> scenarios = scenarioRepository.findByGameAndTopic(game.getId(), topic.getId());
 
         // choose from scenarios that fit some criteria tbd
         return null;
