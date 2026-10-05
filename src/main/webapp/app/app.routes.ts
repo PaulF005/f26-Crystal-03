@@ -41,6 +41,16 @@ const routes: Routes = [
     canActivate: [userRouteAccessService],
     loadChildren: () => import('./entities/entity.routes'),
   },
+  {
+    path: 'games',
+    loadComponent: () => import('./games/games'),
+    title: 'Games',
+  },
+  {
+    path: 'my-progress',
+    loadComponent: () => import('./progress/progress'),
+    title: 'Progress',
+  },
   ...errorRoute,
 ];
 
