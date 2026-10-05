@@ -3,6 +3,8 @@ import { Router, RouterLink } from '@angular/router';
 
 import { AccountService } from 'app/core/auth';
 
+import { UI_TEXT } from 'app/shared/ui/ui-text';
+
 @Component({
   selector: 'jhi-home',
   templateUrl: './home.html',
@@ -10,6 +12,8 @@ import { AccountService } from 'app/core/auth';
   imports: [RouterLink],
 })
 export default class Home {
+  readonly uiText = UI_TEXT;
+
   public readonly account = inject(AccountService).account;
 
   private readonly router = inject(Router);
