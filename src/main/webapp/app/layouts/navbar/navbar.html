@@ -2,8 +2,6 @@
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
-      <span class="navbar-title">KIP</span>
-      <span class="navbar-version">{{ version }}</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
@@ -20,12 +18,8 @@
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
             <span>
-              <fa-icon icon="home" />
-              @if (accountService.hasAnyAuthority('ROLE_ADMIN')) {
-                <span>Home</span>
-              } @else {
-                <span>Dashboard</span>
-              }
+              <img src="/content/images/ui/icon_dashboard.png" class="pixel-image pixel-art" style="--image-width: 16" alt="" />
+              <span>Dashboard</span>
             </span>
           </a>
         </li>
@@ -371,7 +365,7 @@
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
             @if (!accountRef?.imageUrl) {
               <span>
-                <fa-icon icon="user" />
+                <img src="/content/images/ui/icon_user.png" class="pixel-image pixel-art" style="--image-width: 16" alt="" />
                 <span>Account</span>
               </span>
             } @else {

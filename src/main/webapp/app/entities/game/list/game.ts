@@ -86,10 +86,11 @@ export class Game {
   }
 
   trackId = (item: IGame): number => this.gameService.getGameIdentifier(item);
-  onTopicChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement).value;
-    this.selectedTopicId.set(value ? Number(value) : null);
+
+  selectTopic(topicId: number | null): void {
+    this.selectedTopicId.set(topicId);
   }
+
   delete(game: IGame): void {
     const modalRef = this.modalService.open(GameDeleteDialog, { size: 'lg', backdrop: 'static' });
     modalRef.componentInstance.game = game;
