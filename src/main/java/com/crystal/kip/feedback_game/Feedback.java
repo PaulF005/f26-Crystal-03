@@ -1,6 +1,6 @@
 package com.crystal.kip.feedback_game;
 
-import com.crystal.kip.progress_update.ProgressUpdaterTopic;
+import com.crystal.kip.progress_update.ProgressUpdaterConcept;
 
 /**
  * Used to return question if it is correct or wrong and an explanation.
@@ -9,7 +9,7 @@ import com.crystal.kip.progress_update.ProgressUpdaterTopic;
  */
 public class Feedback {
 
-    private final ProgressUpdaterTopic progressUpdaterTopic;
+    private final ProgressUpdaterConcept progressUpdaterTopic;
     private int numberOfQuestions;
     private int numberOfAnswed;
     private int numberOfRight;
@@ -19,7 +19,7 @@ public class Feedback {
      * @param numberOfQuestions Number of questions for given scenario
      * @param progressUpdaterTopic
      */
-    public Feedback(int numberOfQuestions, ProgressUpdaterTopic progressUpdaterTopic) {
+    public Feedback(int numberOfQuestions, ProgressUpdaterConcept progressUpdaterTopic) {
         this.numberOfQuestions = numberOfQuestions;
         this.numberOfAnswed = 0;
         this.numberOfRight = 0;

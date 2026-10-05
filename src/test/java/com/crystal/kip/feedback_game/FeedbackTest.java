@@ -4,13 +4,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-import com.crystal.kip.progress_update.ProgressUpdaterTopic;
+import com.crystal.kip.progress_update.ProgressUpdaterConcept;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class FeedbackTest {
 
-    private ProgressUpdaterTopic progressUpdaterTopicTest;
+    private ProgressUpdaterConcept progressUpdaterTopicTest;
     private Feedback feedbackTest;
 
     /**
@@ -18,7 +18,7 @@ public class FeedbackTest {
      */
     @BeforeEach
     void setUp() {
-        progressUpdaterTopicTest = mock(ProgressUpdaterTopic.class);
+        progressUpdaterTopicTest = mock(ProgressUpdaterConcept.class);
         feedbackTest = new Feedback(4, progressUpdaterTopicTest);
     }
 

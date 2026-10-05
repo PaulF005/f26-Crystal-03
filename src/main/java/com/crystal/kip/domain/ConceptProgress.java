@@ -45,6 +45,11 @@ public class ConceptProgress implements Serializable {
     @Column(name = "last_practiced_at", nullable = false)
     private Instant lastPracticedAt;
 
+    @NotNull
+    @Min(value = 5)
+    @Column(name = "max_questions", nullable = false)
+    private Integer maxQuestions;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "dataUser", "topicProgresseses", "gameProgresseses", "conceptProgresseses" }, allowSetters = true)
     private UserProfile userProfile;
@@ -118,6 +123,14 @@ public class ConceptProgress implements Serializable {
 
     public void setLastPracticedAt(Instant lastPracticedAt) {
         this.lastPracticedAt = lastPracticedAt;
+    }
+
+    public Integer getMaxQuestions() {
+        return this.maxQuestions;
+    }
+
+    public void setMaxQuestions(Integer maxQuestions) {
+        this.maxQuestions = maxQuestions;
     }
 
     public UserProfile getUserProfile() {

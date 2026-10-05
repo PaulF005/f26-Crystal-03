@@ -25,6 +25,7 @@
         </li>
         @if (account() !== null) {
           <li
+            *jhiHasAnyAuthority="'ROLE_ADMIN'"
             ngbDropdown
             class="nav-item dropdown pointer"
             display="static"
@@ -367,18 +368,6 @@
                 >
                   <fa-icon icon="wrench" [fixedWidth]="true" />
                   <span>Settings</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/account/password"
-                  routerLinkActive="active"
-                  (click)="collapseNavbar()"
-                  data-cy="passwordItem"
-                >
-                  <fa-icon icon="lock" [fixedWidth]="true" />
-                  <span>Password</span>
                 </a>
               </li>
               <li>

@@ -1,5 +1,6 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 
 import { Account, AccountService } from 'app/core/auth';
 import { AlertError } from 'app/shared/alert';
@@ -8,7 +9,7 @@ const initialAccount: Account = {} as Account;
 
 @Component({
   selector: 'jhi-settings',
-  imports: [AlertError, ReactiveFormsModule],
+  imports: [AlertError, ReactiveFormsModule, RouterLink],
   templateUrl: './settings.html',
 })
 export default class Settings implements OnInit {
