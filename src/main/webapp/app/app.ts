@@ -26,7 +26,9 @@ export default class App implements OnInit {
 
   constructor() {
     registerLocaleData(locale);
+
     this.iconLibrary.addIcons(...fontAwesomeIcons);
+
     this.dpConfig.minDate = {
       year: dayjs().subtract(100, 'year').year(),
       month: 1,
@@ -44,14 +46,14 @@ export default class App implements OnInit {
   }
 
   private updatePixelScale(): void {
-    const screenWidth = window.screen.width * window.devicePixelRatio;
-
-    const screenHeight = window.screen.height * window.devicePixelRatio;
+    const screenWidth = window.innerWidth;
+    const screenHeight = window.innerHeight;
 
     const portrait = screenHeight > screenWidth;
 
-    const baseWidth = portrait ? 450 : 800;
-    const baseHeight = portrait ? 800 : 450;
+    const baseWidth = portrait ? this.PORTRAIT_BASE_WIDTH : this.LANDSCAPE_BASE_WIDTH;
+
+    const baseHeight = portrait ? this.PORTRAIT_BASE_HEIGHT : this.LANDSCAPE_BASE_HEIGHT;
 
     const scale = Math.max(1, Math.floor(Math.min(screenWidth / baseWidth, screenHeight / baseHeight)));
 
