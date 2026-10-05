@@ -3,6 +3,7 @@ package com.crystal.kip.game;
 import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Scenario;
 import com.crystal.kip.domain.Topic;
+import com.crystal.kip.repository.LinkRepo.LinkScenarioRepository;
 import org.springframework.stereotype.Service;
 
 @Service
