@@ -1,0 +1,51 @@
+<div class="home-header">
+  <h1 class="font-title">
+    <span>Platform Settings</span>
+  </h1>
+  <p class="font-body">Adjust game configurations, audio parameters, or visual scale adjustments.</p>
+</div>
+
+<div class="dashboard-grid">
+  <!-- Audio Settings Panel -->
+  <div class="dashboard-box settings-panel-box">
+    <h2 class="pixel-outline">Audio Configuration</h2>
+    <p>Fine-tune environmental sound effects and volume thresholds.</p>
+    
+    <div class="mb-3">
+      <label class="form-label font-body d-block">Master Volume</label>
+      <input type="range" class="form-range" min="0" max="100" value="80">
+    </div>
+
+    <div class="form-check form-switch mb-3">
+      <input class="form-check-input" type="checkbox" role="switch" id="muteSound" checked>
+      <label class="form-check-label font-body" for="muteSound">Enable Sound Effects</label>
+    </div>
+  </div>
+
+  <!-- Visual Scale Panel -->
+  <div class="dashboard-box settings-panel-box">
+    <h2 class="pixel-outline">Display & Scale</h2>
+    <p>Modify display ratios and toggle visual interface optimizations.</p>
+
+    <div class="mb-3">
+      <label class="form-label font-body">Interface Resolution Mode</label>
+      <select class="form-select">
+        <option value="normal" selected>Standard Pixel Ratio (1x)</option>
+        <option value="crisp">Crisp Upscaled Pixel-Art (2x)</option>
+        <option value="hd">High Definition Smoothing</option>
+      </select>
+    </div>
+
+    <div class="form-check form-switch mb-3">
+      <input class="form-check-input" type="checkbox" role="switch" id="fullscreenToggle">
+      <label class="form-check-label font-body" for="fullscreenToggle">Fullscreen Mode</label>
+    </div>
+  </div>
+</div>
+
+<!-- Navigation Controls Footer -->
+<div class="mt-4 text-start">
+  <a class="btn btn-secondary" routerLink="/">
+    Back to Dashboard
+  </a>
+</div>
