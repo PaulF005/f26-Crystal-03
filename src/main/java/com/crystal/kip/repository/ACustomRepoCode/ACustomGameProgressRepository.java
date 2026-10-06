@@ -37,9 +37,9 @@ public interface ACustomGameProgressRepository {
     //UPDATE functions
     @Modifying
     @Query(
-        "UPDATE GameProgress gp SET gp.sessionPlayed = :sessionsPlayed, gp.performance = :performance, gp.lastPlayedAt = lastPlayedAt " +
+        "UPDATE GameProgress gp SET gp.sessionsPlayed = :sessionsPlayed, gp.performance = :performance, gp.lastPlayedAt = lastPlayedAt " +
             "WHERE gp.userProfile IN (" +
-            " SELECT up From UserProfile up JOIN up.datauser u WHERE u.login = ?#{principal.username}" +
+            " SELECT up From UserProfile up JOIN up.dataUser u WHERE u.login = ?#{principal.username}" +
             ")"
     )
     void updateGameProgressToDb(

@@ -5,7 +5,9 @@ import com.crystal.kip.security.SecurityUtils;
 import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProgressUpdaterTopic {
 
     private final LinkTopicProgressRepository linkTopicProgressRepository;
