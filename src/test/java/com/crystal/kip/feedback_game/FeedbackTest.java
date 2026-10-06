@@ -29,19 +29,19 @@ public class FeedbackTest {
     void testFeedback() {
         String correct1 = feedbackTest.questionDecider(1, 1, "Explanation");
         assertThat(correct1).isEqualTo("Corrrect || Explanation");
-        verify(progressUpdaterTopicTest, never()).updateTopicProgress(anyInt());
+        verify(progressUpdaterTopicTest, never()).updateConceptProgress(anyInt());
 
         String incorrect1 = feedbackTest.questionDecider(3, 2, "Wrong");
         assertThat(incorrect1).isEqualTo("Incorrect  || Wrong");
-        verify(progressUpdaterTopicTest, never()).updateTopicProgress(anyInt());
+        verify(progressUpdaterTopicTest, never()).updateConceptProgress(anyInt());
 
         String correct2 = feedbackTest.questionDecider(3, 3, "Explanation 1");
         assertThat(correct2).isEqualTo("Corrrect || Explanation 1");
-        verify(progressUpdaterTopicTest, never()).updateTopicProgress(anyInt());
+        verify(progressUpdaterTopicTest, never()).updateConceptProgress(anyInt());
 
         String incorrect3 = feedbackTest.questionDecider(4, 2, "Wrong 1");
         assertThat(incorrect3).isEqualTo("Incorrect  || Wrong 1");
 
-        verify(progressUpdaterTopicTest, times(1)).updateTopicProgress(2);
+        verify(progressUpdaterTopicTest, times(1)).updateConceptProgress(2);
     }
 }

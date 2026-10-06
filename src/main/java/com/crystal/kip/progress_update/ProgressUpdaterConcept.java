@@ -6,10 +6,8 @@ import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class ProgressUpdaterConcept {
 
     private final LinkConcpetProgressRepository linkConcpetProgressRepository;
@@ -19,7 +17,7 @@ public class ProgressUpdaterConcept {
         this.linkConcpetProgressRepository = linkConcpetProgressRepository;
     }
 
-    public void updateTopicProgress(int questionsRight) {
+    public void updateConceptProgress(int questionsRight) {
         String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
 
         int totalQuestions = this.linkConcpetProgressRepository.getMaxQuestionsForRepo(username);
@@ -44,5 +42,17 @@ public class ProgressUpdaterConcept {
 
         Instant now = Instant.now();
         this.linkConcpetProgressRepository.updateConceptProgressToDB((float) currentCompantency, now);
+    }
+
+    public float getImprovement() {
+        String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
+
+        double improvementToAdd = this.linkConcpetProgressRepository.getImprovement(username);
+        if (improvementToAdd < 0) {
+            log.error("Failed to read current imporvement from repo!");
+            throw new IllegalArgumentException("Concept Progress has an error in its current imporvement!");
+        }
+
+        return (float) improvementToAdd;
     }
 }
