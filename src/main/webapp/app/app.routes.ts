@@ -34,6 +34,15 @@ const routes: Routes = [
     title: 'Sign in',
   },
   {
+    path: 'settings',
+    loadComponent: () => import('./settings/settings'),
+    data: {
+      authorities: [Authority.USER],
+    },
+    canActivate: [userRouteAccessService],
+    title: 'Settings',
+  },
+  {
     path: '',
     data: {
       authorities: [Authority.ADMIN],
