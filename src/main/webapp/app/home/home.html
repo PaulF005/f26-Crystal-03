@@ -44,7 +44,7 @@
 
     <p>Try today's recommended game or activity.</p>
 
-    <a class="btn btn-primary" routerLink="/game"> Start Playing </a>
+    <a class="btn btn-primary" routerLink="/games"> Start Playing </a>
   </div>
 
   <div class="dashboard-box profile-box">
@@ -64,7 +64,7 @@
 
   @if (account() !== null) {
     <div class="dashboard-box activity-box">
-      <h2>{{ uiText.dashboard.recentActivity }}</h2>
+      <h2 class="pixel-outline">{{ uiText.dashboard.recentActivity }}</h2>
 
       @for (item of recentActivity; track $index) {
         <div class="activity-row">
