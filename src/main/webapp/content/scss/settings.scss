@@ -1,0 +1,70 @@
+/* ==========================================================================
+Dashboard Grid & Form Alignment Fixing
+========================================================================== */
+
+/* 1. Force the dashboard grid structural column split */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(80 * var(--pixel)), 1fr));
+  gap: calc(4 * var(--pixel));
+  margin-top: calc(4 * var(--pixel));
+  align-items: start;
+}
+
+/* 2. Re-establish standard structural padding context inside the boxes */
+.dashboard-box {
+  display: flex;
+  flex-direction: column;
+  
+  /* Give the body copy inner contents a structured stacking context */
+  .mb-3 {
+    display: flex;
+    flex-direction: column;
+    gap: var(--pixel);
+    padding: 0 calc(4 * var(--pixel)) calc(2 * var(--pixel)) calc(4 * var(--pixel));
+  }
+}
+
+/* 3. Match form selection menus and sliders with your font frameworks */
+input[type="range"].form-range {
+  width: 100%;
+  margin: var(--pixel) 0;
+}
+
+select.form-select {
+  width: 100%;
+  padding: calc(1 * var(--pixel)) calc(4 * var(--pixel));
+  background-color: var(--ui-button-highlight);
+  border: var(--pixel) solid var(--ui-button-center);
+  color: inherit;
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+}
+
+/* 4. Fix floating bootstrap switches overlap */
+.form-check.form-switch {
+  display: flex;
+  align-items: center;
+  gap: calc(3 * var(--pixel));
+  padding-left: calc(4 * var(--pixel)); /* Align cleanly inside container padding */
+  margin-bottom: calc(3 * var(--pixel));
+
+  input.form-check-input {
+    margin-left: 0;
+    float: none;
+    cursor: pointer;
+    width: calc(10 * var(--pixel));
+    height: calc(5 * var(--pixel));
+  }
+
+  label.form-check-label {
+    margin-bottom: 0;
+    cursor: pointer;
+  }
+}
+
+/* 5. Clean footer dashboard navigation controls margin metrics */
+.mt-4 {
+  margin-top: calc(6 * var(--pixel)) !important;
+  padding-left: calc(2 * var(--pixel));
+}
