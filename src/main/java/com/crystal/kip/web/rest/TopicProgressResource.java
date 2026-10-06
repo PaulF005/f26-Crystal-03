@@ -1,7 +1,7 @@
 package com.crystal.kip.web.rest;
 
 import com.crystal.kip.domain.TopicProgress;
-import com.crystal.kip.repository.TopicProgressRepository;
+import com.crystal.kip.repository.LinkRepo.LinkTopicProgressRepository;
 import com.crystal.kip.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +10,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,9 +34,10 @@ public class TopicProgressResource {
     @Value("${jhipster.clientApp.name:kip}")
     private String applicationName;
 
-    private final TopicProgressRepository topicProgressRepository;
+    // Single reference pointer to inject primary repository layer
+    private final LinkTopicProgressRepository topicProgressRepository;
 
-    public TopicProgressResource(TopicProgressRepository topicProgressRepository) {
+    public TopicProgressResource(LinkTopicProgressRepository topicProgressRepository) {
         this.topicProgressRepository = topicProgressRepository;
     }
 
@@ -124,10 +124,23 @@ public class TopicProgressResource {
         Optional<TopicProgress> result = topicProgressRepository
             .findById(topicProgress.getId())
             .map(existingTopicProgress -> {
-                updateIfPresent(existingTopicProgress::setCompetency, topicProgress.getCompetency());
-                updateIfPresent(existingTopicProgress::setImprovement, topicProgress.getImprovement());
-                updateIfPresent(existingTopicProgress::setEvidenceCount, topicProgress.getEvidenceCount());
-                updateIfPresent(existingTopicProgress::setLastPracticedAt, topicProgress.getLastPracticedAt());
+                if (topicProgress.getCompetency() != null) {
+                    existingTopicProgress.setCompetency(topicProgress.getCompetency());
+                }
+                if (topicProgress.getImprovement() != null) {
+                    existingTopicProgress.setImprovement(topicProgress.getImprovement());
+                }
+                if (topicProgress.getEvidenceCount() != null) {
+                    existingTopicProgress.setEvidenceCount(topicProgress.getEvidenceCount());
+                }
+                if (topicProgress.getLastPracticedAt() != null) {
+                    existingTopicProgress.setLastPracticedAt(topicProgress.getLastPracticedAt());
+                }
+
+                // lambda pipeline handles null-safe parameter mappings properly
+                if (topicProgress.getMaxQuestions() != null) {
+                    existingTopicProgress.setMaxQuestions(topicProgress.getMaxQuestions());
+                }
 
                 return existingTopicProgress;
             })
@@ -176,11 +189,5 @@ public class TopicProgressResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
-    }
-
-    private <T> void updateIfPresent(Consumer<T> setter, T value) {
-        if (value != null) {
-            setter.accept(value);
-        }
     }
 }
