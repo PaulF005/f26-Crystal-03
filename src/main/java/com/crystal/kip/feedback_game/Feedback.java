@@ -1,5 +1,6 @@
 package com.crystal.kip.feedback_game;
 
+import com.crystal.kip.progress_update.ProgressUpdater;
 import com.crystal.kip.progress_update.ProgressUpdaterConcept;
 
 /**
@@ -9,7 +10,7 @@ import com.crystal.kip.progress_update.ProgressUpdaterConcept;
  */
 public class Feedback {
 
-    private final ProgressUpdaterConcept progressUpdaterTopic;
+    private final ProgressUpdater progressUpdater;
     private int numberOfQuestions;
     private int numberOfAnswed;
     private int numberOfRight;
@@ -19,11 +20,11 @@ public class Feedback {
      * @param numberOfQuestions Number of questions for given scenario
      * @param progressUpdaterTopic
      */
-    public Feedback(int numberOfQuestions, ProgressUpdaterConcept progressUpdaterTopic) {
+    public Feedback(int numberOfQuestions, ProgressUpdater progressUpdater) {
         this.numberOfQuestions = numberOfQuestions;
         this.numberOfAnswed = 0;
         this.numberOfRight = 0;
-        this.progressUpdaterTopic = progressUpdaterTopic;
+        this.progressUpdater = progressUpdater;
     }
 
     /**
@@ -49,11 +50,9 @@ public class Feedback {
         }
     }
 
-    /**
-     * TODO Need to cordinate what progress tracker and db will need for update
-     */
     private void sendToProgressTracker() {
-        this.progressUpdaterTopic.updateTopicProgress(this.numberOfRight);
+        float performance = (float) numberOfRight / (float) numberOfQuestions;
+        this.progressUpdater.updateAllProgress(numberOfRight, performance);
     }
 
     private String questionRight(String explano) {

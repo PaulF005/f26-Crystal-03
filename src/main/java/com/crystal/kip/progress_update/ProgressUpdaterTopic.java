@@ -5,7 +5,9 @@ import com.crystal.kip.security.SecurityUtils;
 import java.time.Instant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProgressUpdaterTopic {
 
     private final LinkTopicProgressRepository linkTopicProgressRepository;
@@ -19,7 +21,7 @@ public class ProgressUpdaterTopic {
         String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
 
         double currentCompantency = this.linkTopicProgressRepository.getCurCompantencyTP(username);
-        if (currentCompantency < 0) {
+        if (currentCompantency < 0.0) {
             log.error("Failed to read current compantency from repo!");
             throw new IllegalArgumentException("Concept Progress has an error in its Current Compantency!");
         }
