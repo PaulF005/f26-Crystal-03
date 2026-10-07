@@ -7,6 +7,7 @@ import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Scenario;
 import com.crystal.kip.domain.Topic;
 import com.crystal.kip.domain.User;
+import com.crystal.kip.repository.LinkRepo.LinkScenarioRepository;
 import com.crystal.kip.repository.ScenarioRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,7 @@ class GameEngineTest {
 
     private GameEngine gameEngine;
     private ScenarioSelector scenarioSelector;
-    private ScenarioRepository scenarioRepository;
+    private LinkScenarioRepository linkScenarioRepository;
     private GameSession session;
 
     private User user;
@@ -26,9 +27,9 @@ class GameEngineTest {
 
     @BeforeEach
     void setUp() {
-        scenarioRepository = mock(ScenarioRepository.class);
+        linkScenarioRepository = mock(LinkScenarioRepository.class);
 
-        scenarioSelector = new ScenarioSelector(scenarioRepository);
+        scenarioSelector = new ScenarioSelector(linkScenarioRepository);
         gameEngine = new GameEngine(scenarioSelector);
 
         user = new User();
@@ -62,7 +63,7 @@ class GameEngineTest {
     void testStartScenario() {
         Scenario scenario = new Scenario().name("Test Scenario").game(game).topic(topic);
 
-        when(scenarioRepository.findByGameAndTopic(game.getId(), topic.getId())).thenReturn(List.of(scenario));
+        when(linkScenarioRepository.findByGameIdAndTopicId(game.getId(), topic.getId())).thenReturn(List.of(scenario));
 
         gameEngine.startScenario(session);
 
