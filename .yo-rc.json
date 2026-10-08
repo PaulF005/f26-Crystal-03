@@ -17,6 +17,11 @@
     "enableTranslation": false,
     "entities": [
       "UserProfile",
+      "ConceptProgress",
+      "TopicProgress",
+      "GameProgress",
+      "GameSession",
+      "StageAttempt",
       "Topic",
       "Concept",
       "Question",
@@ -26,12 +31,7 @@
       "Scenario",
       "Stage",
       "LegalContent",
-      "Source",
-      "TopicProgress",
-      "GameProgress",
-      "GameSession",
-      "StageAttempt",
-      "ConceptProgress"
+      "Source"
     ],
     "feignClient": null,
     "gradleDevelocityHost": null,
