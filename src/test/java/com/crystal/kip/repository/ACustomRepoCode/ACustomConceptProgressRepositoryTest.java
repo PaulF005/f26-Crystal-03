@@ -15,6 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * SHOULD HAVE DOCKER ENGINE ON TO TEST
+ * ACustomConceptProgressRepositoryTest
+ */
 @IntegrationTest
 @Transactional
 public class ACustomConceptProgressRepositoryTest {
@@ -57,6 +61,6 @@ public class ACustomConceptProgressRepositoryTest {
     @Test
     void getCompantencyDBCPTest() {
         Optional<Float> competency = aCustomConceptProgressRepository.getCompantencyDBCP(TESTUSERNAME);
-        assertEquals(competency, 0.3f);
+        assertEquals(0.3f, competency.orElseThrow(() -> new AssertionError("Record not found for user")), 0.001f);
     }
 }
