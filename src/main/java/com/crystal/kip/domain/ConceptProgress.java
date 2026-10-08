@@ -129,6 +129,11 @@ public class ConceptProgress implements Serializable {
         return this.maxQuestions;
     }
 
+    public ConceptProgress maxQuestions(Integer maxQuestions) {
+        this.setMaxQuestions(maxQuestions);
+        return this;
+    }
+
     public void setMaxQuestions(Integer maxQuestions) {
         this.maxQuestions = maxQuestions;
     }

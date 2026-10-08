@@ -26,7 +26,7 @@ public class ProgressUpdaterConcept {
             throw new IllegalArgumentException("Concept Progress has an error in its Max Questions!");
         }
 
-        double currentCompantency = this.linkConcpetProgressRepository.getCurCompantencyCP(username);
+        double currentCompantency = this.linkConcpetProgressRepository.getCurCompentencyCP(username);
         if (currentCompantency < 0) {
             log.error("Failed to read current compantency from repo!");
             throw new IllegalArgumentException("Concept Progress has an error in its Current Compantency!");
@@ -49,7 +49,7 @@ public class ProgressUpdaterConcept {
 
         double improvementToAdd = this.linkConcpetProgressRepository.getImprovement(username);
         if (improvementToAdd < 0) {
-            log.error("Failed to read current imporvement from repo!");
+            log.error("Failed to read current improvement from repo!");
             throw new IllegalArgumentException("Concept Progress has an error in its current imporvement!");
         }
 

@@ -1,6 +1,5 @@
 package com.crystal.kip.repository.ACustomRepoCode;
 
-import jakarta.xml.bind.annotation.XmlElement.DEFAULT;
 import java.time.Instant;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,7 +18,7 @@ public interface ACustomConceptProgressRepository {
     )
     Optional<Float> getCompantencyDBCP(@Param("username") String username);
 
-    default double getCurCompantencyCP(String username) {
+    default double getCurCompentencyCP(String username) {
         return getCompantencyDBCP(username).map(Float::doubleValue).orElse(-1.0);
     }
 
