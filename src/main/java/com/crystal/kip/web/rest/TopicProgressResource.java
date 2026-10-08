@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -136,12 +137,6 @@ public class TopicProgressResource {
                 if (topicProgress.getLastPracticedAt() != null) {
                     existingTopicProgress.setLastPracticedAt(topicProgress.getLastPracticedAt());
                 }
-
-                // lambda pipeline handles null-safe parameter mappings properly
-                if (topicProgress.getMaxQuestions() != null) {
-                    existingTopicProgress.setMaxQuestions(topicProgress.getMaxQuestions());
-                }
-
                 return existingTopicProgress;
             })
             .map(topicProgressRepository::save);
@@ -189,5 +184,11 @@ public class TopicProgressResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    private <T> void updateIfPresent(Consumer<T> setter, T value) {
+        if (value != null) {
+            setter.accept(value);
+        }
     }
 }

@@ -11,14 +11,17 @@ public class ConceptProgressTestSamples {
     private static final AtomicInteger intCount = new AtomicInteger(random.nextInt() + 2 * Short.MAX_VALUE);
 
     public static ConceptProgress getConceptProgressSample1() {
-        return new ConceptProgress().id(1L).evidenceCount(1);
+        return new ConceptProgress().id(1L).evidenceCount(1).maxQuestions(1);
     }
 
     public static ConceptProgress getConceptProgressSample2() {
-        return new ConceptProgress().id(2L).evidenceCount(2);
+        return new ConceptProgress().id(2L).evidenceCount(2).maxQuestions(2);
     }
 
     public static ConceptProgress getConceptProgressRandomSampleGenerator() {
-        return new ConceptProgress().id(longCount.incrementAndGet()).evidenceCount(intCount.incrementAndGet());
+        return new ConceptProgress()
+            .id(longCount.incrementAndGet())
+            .evidenceCount(intCount.incrementAndGet())
+            .maxQuestions(intCount.incrementAndGet());
     }
 }

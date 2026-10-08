@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.crystal.kip.IntegrationTest;
 import com.crystal.kip.domain.ConceptProgress;
 import com.crystal.kip.repository.ConceptProgressRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.util.Random;
@@ -23,7 +24,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import tools.jackson.databind.ObjectMapper;
 
 /**
  * Integration tests for the {@link ConceptProgressResource} REST controller.
@@ -44,6 +44,9 @@ class ConceptProgressResourceIT {
 
     private static final Instant DEFAULT_LAST_PRACTICED_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_PRACTICED_AT = Instant.ofEpochMilli(1787767274668L);
+
+    private static final Integer DEFAULT_MAX_QUESTIONS = 5;
+    private static final Integer UPDATED_MAX_QUESTIONS = 6;
 
     private static final String ENTITY_API_URL = "/api/concept-progresses";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -78,7 +81,8 @@ class ConceptProgressResourceIT {
             .competency(DEFAULT_COMPETENCY)
             .improvement(DEFAULT_IMPROVEMENT)
             .evidenceCount(DEFAULT_EVIDENCE_COUNT)
-            .lastPracticedAt(DEFAULT_LAST_PRACTICED_AT);
+            .lastPracticedAt(DEFAULT_LAST_PRACTICED_AT)
+            .maxQuestions(DEFAULT_MAX_QUESTIONS);
     }
 
     /**
@@ -92,7 +96,8 @@ class ConceptProgressResourceIT {
             .competency(UPDATED_COMPETENCY)
             .improvement(UPDATED_IMPROVEMENT)
             .evidenceCount(UPDATED_EVIDENCE_COUNT)
-            .lastPracticedAt(UPDATED_LAST_PRACTICED_AT);
+            .lastPracticedAt(UPDATED_LAST_PRACTICED_AT)
+            .maxQuestions(UPDATED_MAX_QUESTIONS);
     }
 
     @BeforeEach
@@ -213,6 +218,22 @@ class ConceptProgressResourceIT {
 
     @Test
     @Transactional
+    void checkMaxQuestionsIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        conceptProgress.setMaxQuestions(null);
+
+        // Create the ConceptProgress, which fails.
+
+        restConceptProgressMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(conceptProgress)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllConceptProgresses() throws Exception {
         // Initialize the database
         insertedConceptProgress = conceptProgressRepository.saveAndFlush(conceptProgress);
@@ -226,7 +247,8 @@ class ConceptProgressResourceIT {
             .andExpect(jsonPath("$.[*].competency").value(hasItem(DEFAULT_COMPETENCY.doubleValue())))
             .andExpect(jsonPath("$.[*].improvement").value(hasItem(DEFAULT_IMPROVEMENT.doubleValue())))
             .andExpect(jsonPath("$.[*].evidenceCount").value(hasItem(DEFAULT_EVIDENCE_COUNT)))
-            .andExpect(jsonPath("$.[*].lastPracticedAt").value(hasItem(DEFAULT_LAST_PRACTICED_AT.toString())));
+            .andExpect(jsonPath("$.[*].lastPracticedAt").value(hasItem(DEFAULT_LAST_PRACTICED_AT.toString())))
+            .andExpect(jsonPath("$.[*].maxQuestions").value(hasItem(DEFAULT_MAX_QUESTIONS)));
     }
 
     @Test
@@ -244,7 +266,8 @@ class ConceptProgressResourceIT {
             .andExpect(jsonPath("$.competency").value(DEFAULT_COMPETENCY.doubleValue()))
             .andExpect(jsonPath("$.improvement").value(DEFAULT_IMPROVEMENT.doubleValue()))
             .andExpect(jsonPath("$.evidenceCount").value(DEFAULT_EVIDENCE_COUNT))
-            .andExpect(jsonPath("$.lastPracticedAt").value(DEFAULT_LAST_PRACTICED_AT.toString()));
+            .andExpect(jsonPath("$.lastPracticedAt").value(DEFAULT_LAST_PRACTICED_AT.toString()))
+            .andExpect(jsonPath("$.maxQuestions").value(DEFAULT_MAX_QUESTIONS));
     }
 
     @Test
@@ -270,7 +293,8 @@ class ConceptProgressResourceIT {
             .competency(UPDATED_COMPETENCY)
             .improvement(UPDATED_IMPROVEMENT)
             .evidenceCount(UPDATED_EVIDENCE_COUNT)
-            .lastPracticedAt(UPDATED_LAST_PRACTICED_AT);
+            .lastPracticedAt(UPDATED_LAST_PRACTICED_AT)
+            .maxQuestions(UPDATED_MAX_QUESTIONS);
 
         restConceptProgressMockMvc
             .perform(
@@ -350,7 +374,7 @@ class ConceptProgressResourceIT {
         ConceptProgress partialUpdatedConceptProgress = new ConceptProgress();
         partialUpdatedConceptProgress.setId(conceptProgress.getId());
 
-        partialUpdatedConceptProgress.competency(UPDATED_COMPETENCY);
+        partialUpdatedConceptProgress.competency(UPDATED_COMPETENCY).maxQuestions(UPDATED_MAX_QUESTIONS);
 
         restConceptProgressMockMvc
             .perform(
@@ -385,7 +409,8 @@ class ConceptProgressResourceIT {
             .competency(UPDATED_COMPETENCY)
             .improvement(UPDATED_IMPROVEMENT)
             .evidenceCount(UPDATED_EVIDENCE_COUNT)
-            .lastPracticedAt(UPDATED_LAST_PRACTICED_AT);
+            .lastPracticedAt(UPDATED_LAST_PRACTICED_AT)
+            .maxQuestions(UPDATED_MAX_QUESTIONS);
 
         restConceptProgressMockMvc
             .perform(
