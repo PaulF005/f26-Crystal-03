@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,14 +10,13 @@ import { ILegalContent } from 'app/entities/legal-content/legal-content.model';
 import { LegalContentService } from 'app/entities/legal-content/service/legal-content.service';
 import { TopicService } from 'app/entities/topic/service/topic.service';
 import { ITopic } from 'app/entities/topic/topic.model';
-import { AlertError } from 'app/shared/alert/alert-error';
+import { AlertError } from 'app/shared/alert';
 import { IConcept } from '../concept.model';
 import { ConceptService } from '../service/concept.service';
 
 import { ConceptFormGroup, ConceptFormService } from './concept-form.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-concept-update',
   templateUrl: './concept-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

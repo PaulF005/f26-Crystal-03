@@ -1,27 +1,24 @@
-import { ChangeDetectionStrategy, Component, OnInit, effect, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, effect, inject, signal, untracked } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Data, ParamMap, Router, RouterLink } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal';
-import { Subscription, combineLatest, filter, tap } from 'rxjs';
+import { combineLatest, filter, map, tap } from 'rxjs';
 
-import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
-import { Alert } from 'app/shared/alert/alert';
-import { AlertError } from 'app/shared/alert/alert-error';
+import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config';
+import { Alert, AlertError } from 'app/shared/alert';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
 import { LegalContentDeleteDialog } from '../delete/legal-content-delete-dialog';
 import { ILegalContent } from '../legal-content.model';
 import { LegalContentService } from '../service/legal-content.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-legal-content',
   templateUrl: './legal-content.html',
-  imports: [RouterLink, FormsModule, FontAwesomeModule, AlertError, Alert, SortDirective, SortByDirective],
+  imports: [RouterLink, FontAwesomeModule, AlertError, Alert, SortDirective, SortByDirective],
 })
-export class LegalContent implements OnInit {
-  subscription: Subscription | null = null;
+export class LegalContent {
   readonly legalContents = signal<ILegalContent[]>([]);
 
   sortState = sortStateSignal({});
@@ -31,6 +28,12 @@ export class LegalContent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   readonly isLoading = this.legalContentService.legalContentsResource.isLoading;
   protected readonly activatedRoute = inject(ActivatedRoute);
+  protected readonly activatedRouteState = toSignal(
+    combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
+      map(([queryParamMap, data]) => ({ queryParamMap, data })),
+    ),
+    { initialValue: { queryParamMap: this.activatedRoute.snapshot.queryParamMap, data: this.activatedRoute.snapshot.data } },
+  );
   protected readonly sortService = inject(SortService);
   protected modalService = inject(NgbModal);
 
@@ -38,22 +41,17 @@ export class LegalContent implements OnInit {
     effect(() => {
       this.legalContents.set(this.fillComponentAttributesFromResponseBody([...this.legalContentService.legalContents()]));
     });
+    effect(() => {
+      const activatedRouteState = this.activatedRouteState();
+      untracked(() => {
+        // Only watch for route changes. Other signals should be ignored.
+        this.fillComponentAttributeFromRoute(activatedRouteState.queryParamMap, activatedRouteState.data);
+        this.load();
+      });
+    });
   }
 
   trackId = (item: ILegalContent): number => this.legalContentService.getLegalContentIdentifier(item);
-
-  ngOnInit(): void {
-    this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
-      .pipe(
-        tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
-        tap(() => {
-          if (this.legalContents().length === 0) {
-            this.load();
-          }
-        }),
-      )
-      .subscribe();
-  }
 
   delete(legalContent: ILegalContent): void {
     const modalRef = this.modalService.open(LegalContentDeleteDialog, { size: 'lg', backdrop: 'static' });

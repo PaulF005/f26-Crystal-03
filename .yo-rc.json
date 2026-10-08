@@ -35,7 +35,7 @@
     ],
     "feignClient": null,
     "gradleDevelocityHost": null,
-    "jhipsterVersion": "9.2.0",
+    "jhipsterVersion": "9.3.0",
     "jwtSecretKey": "ZjI3MjhiZWE1NDQzZTZhYTZkMDYxMTg4YTliODAwMTUwYjBiMDk4MTZkYWQ5MDIyYmJkZjRiY2NjYWU1Y2RmY2U0YTk1MTRlNWRhZGIxZDk3MDEwNTMzOTI5ZGI3MTYyZjMwOGQ5Njc5ODNmYTU4MDk4MGNjOGE0ZDhiMDFhMTQ=",
     "lastLiquibaseTimestamp": 1790048489000,
     "microfrontend": null,

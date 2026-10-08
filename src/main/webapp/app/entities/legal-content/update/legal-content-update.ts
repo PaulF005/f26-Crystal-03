@@ -1,18 +1,17 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, finalize } from 'rxjs';
 
-import { AlertError } from 'app/shared/alert/alert-error';
+import { AlertError } from 'app/shared/alert';
 import { ILegalContent } from '../legal-content.model';
 import { LegalContentService } from '../service/legal-content.service';
 
 import { LegalContentFormGroup, LegalContentFormService } from './legal-content-form.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-legal-content-update',
   templateUrl: './legal-content-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

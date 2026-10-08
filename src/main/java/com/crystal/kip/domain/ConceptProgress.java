@@ -192,7 +192,6 @@ public class ConceptProgress implements Serializable {
             ", improvement=" + getImprovement() +
             ", evidenceCount=" + getEvidenceCount() +
             ", lastPracticedAt='" + getLastPracticedAt() + "'" +
-            ", maxQuestions=" + getMaxQuestions() +
             "}";
     }
 }

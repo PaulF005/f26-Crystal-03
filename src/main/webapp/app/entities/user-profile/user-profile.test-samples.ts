@@ -3,24 +3,24 @@ import { IUserProfile, NewUserProfile } from './user-profile.model';
 export const sampleWithRequiredData: IUserProfile = {
   id: 4033,
   username: 'deselect ravioli fervently',
-  email: 'Douglas.Medhurst64@yahoo.com',
+  email: 'Domenico.Medhurst64@yahoo.com',
 };
 
 export const sampleWithPartialData: IUserProfile = {
   id: 2358,
   username: 'intrepid',
-  email: 'Consuelo_Schimmel97@gmail.com',
+  email: 'Claudia_Schimmel97@gmail.com',
 };
 
 export const sampleWithFullData: IUserProfile = {
   id: 9570,
   username: 'folklore glisten cuddly',
-  email: 'Marianne.Ortiz@hotmail.com',
+  email: 'Madelynn.Ortiz@hotmail.com',
 };
 
 export const sampleWithNewData: NewUserProfile = {
   username: 'ick astride awesome',
-  email: 'Susanna.Fay@gmail.com',
+  email: 'Shea.Fay@gmail.com',
   id: null,
 };
 

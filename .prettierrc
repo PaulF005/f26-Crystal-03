@@ -1,3 +1,4 @@
+endOfLine: auto
 printWidth: 140
 singleQuote: true
 tabWidth: 2
@@ -11,6 +12,6 @@ overrides:
   - files: "*.java"
     options:
       tabWidth: 4
-  - files: src\main\webapp\**\*.html
+  - files: src/main/webapp/**/*.html
     options:
       parser: angular

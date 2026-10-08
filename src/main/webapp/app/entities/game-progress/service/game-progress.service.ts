@@ -1,12 +1,11 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import dayjs from 'dayjs/esm';
 import { Observable, map } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { IGameProgress, NewGameProgress } from '../game-progress.model';
 
 export type PartialUpdateGameProgress = Partial<IGameProgress> & Pick<IGameProgress, 'id'>;
@@ -21,7 +20,7 @@ export type NewRestGameProgress = RestOf<NewGameProgress>;
 
 export type PartialUpdateRestGameProgress = RestOf<PartialUpdateGameProgress>;
 
-@Injectable()
+@Service()
 export class GameProgressesService {
   readonly gameProgressesParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -40,8 +39,7 @@ export class GameProgressesService {
   readonly gameProgresses = computed(() =>
     (this.gameProgressesResource.hasValue() ? this.gameProgressesResource.value() : []).map(item => this.convertValueFromServer(item)),
   );
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/game-progresses');
+  protected readonly resourceUrl = `${serverApiUrl}api/game-progresses`;
 
   protected convertValueFromServer(restGameProgress: RestGameProgress): IGameProgress {
     return {
@@ -51,7 +49,7 @@ export class GameProgressesService {
   }
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class GameProgressService extends GameProgressesService {
   protected readonly http = inject(HttpClient);
 
@@ -103,7 +101,9 @@ export class GameProgressService extends GameProgressesService {
     gameProgressCollection: Type[],
     ...gameProgressesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const gameProgresses: Type[] = gameProgressesToCheck.filter(isPresent);
+    const gameProgresses: Type[] = gameProgressesToCheck.filter(
+      gameProgressItem => gameProgressItem !== null && gameProgressItem !== undefined,
+    );
     if (gameProgresses.length > 0) {
       const gameProgressCollectionIdentifiers = gameProgressCollection.map(gameProgressItem =>
         this.getGameProgressIdentifier(gameProgressItem),

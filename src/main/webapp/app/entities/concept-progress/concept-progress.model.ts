@@ -9,7 +9,6 @@ export interface IConceptProgress {
   improvement?: number | null;
   evidenceCount?: number | null;
   lastPracticedAt?: dayjs.Dayjs | null;
-  maxQuestions?: number | null;
   userProfile?: IUserProfile | null;
   concept?: IConcept | null;
 }

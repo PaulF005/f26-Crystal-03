@@ -26,9 +26,6 @@
             <column name="last_practiced_at" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="max_questions" type="integer">
-                <constraints nullable="false" />
-            </column>
             <column name="user_profile_id" type="bigint">
                 <constraints nullable="true" />
             </column>

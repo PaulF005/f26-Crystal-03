@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IFeedback, NewFeedback } from '../feedback.model';
@@ -24,7 +24,7 @@ type FeedbackFormGroupContent = {
 
 export type FeedbackFormGroup = FormGroup<FeedbackFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class FeedbackFormService {
   createFeedbackFormGroup(feedback?: FeedbackFormGroupInput): FeedbackFormGroup {
     const feedbackRawValue = {

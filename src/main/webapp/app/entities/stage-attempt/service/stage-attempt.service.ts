@@ -1,12 +1,11 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import dayjs from 'dayjs/esm';
 import { Observable, map } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { IStageAttempt, NewStageAttempt } from '../stage-attempt.model';
 
 export type PartialUpdateStageAttempt = Partial<IStageAttempt> & Pick<IStageAttempt, 'id'>;
@@ -21,7 +20,7 @@ export type NewRestStageAttempt = RestOf<NewStageAttempt>;
 
 export type PartialUpdateRestStageAttempt = RestOf<PartialUpdateStageAttempt>;
 
-@Injectable()
+@Service()
 export class StageAttemptsService {
   readonly stageAttemptsParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -40,8 +39,7 @@ export class StageAttemptsService {
   readonly stageAttempts = computed(() =>
     (this.stageAttemptsResource.hasValue() ? this.stageAttemptsResource.value() : []).map(item => this.convertValueFromServer(item)),
   );
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/stage-attempts');
+  protected readonly resourceUrl = `${serverApiUrl}api/stage-attempts`;
 
   protected convertValueFromServer(restStageAttempt: RestStageAttempt): IStageAttempt {
     return {
@@ -51,7 +49,7 @@ export class StageAttemptsService {
   }
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class StageAttemptService extends StageAttemptsService {
   protected readonly http = inject(HttpClient);
 
@@ -103,7 +101,9 @@ export class StageAttemptService extends StageAttemptsService {
     stageAttemptCollection: Type[],
     ...stageAttemptsToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const stageAttempts: Type[] = stageAttemptsToCheck.filter(isPresent);
+    const stageAttempts: Type[] = stageAttemptsToCheck.filter(
+      stageAttemptItem => stageAttemptItem !== null && stageAttemptItem !== undefined,
+    );
     if (stageAttempts.length > 0) {
       const stageAttemptCollectionIdentifiers = stageAttemptCollection.map(stageAttemptItem =>
         this.getStageAttemptIdentifier(stageAttemptItem),

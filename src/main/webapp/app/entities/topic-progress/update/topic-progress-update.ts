@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,14 +10,13 @@ import { TopicService } from 'app/entities/topic/service/topic.service';
 import { ITopic } from 'app/entities/topic/topic.model';
 import { UserProfileService } from 'app/entities/user-profile/service/user-profile.service';
 import { IUserProfile } from 'app/entities/user-profile/user-profile.model';
-import { AlertError } from 'app/shared/alert/alert-error';
+import { AlertError } from 'app/shared/alert';
 import { TopicProgressService } from '../service/topic-progress.service';
 import { ITopicProgress } from '../topic-progress.model';
 
 import { TopicProgressFormGroup, TopicProgressFormService } from './topic-progress-form.service';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-topic-progress-update',
   templateUrl: './topic-progress-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

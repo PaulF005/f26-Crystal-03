@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { HttpResponse } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -63,10 +63,10 @@ describe('StageAttempt Management Update Component', () => {
       stageAttempt.user = user;
 
       const userProfileCollection: IUserProfile[] = [{ id: 22058 }];
-      vitest.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
+      vi.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
       const additionalUserProfiles = [user];
       const expectedCollection: IUserProfile[] = [...additionalUserProfiles, ...userProfileCollection];
-      vitest.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ stageAttempt });
       comp.ngOnInit();
@@ -85,10 +85,10 @@ describe('StageAttempt Management Update Component', () => {
       stageAttempt.stage = stage;
 
       const stageCollection: IStage[] = [{ id: 30579 }];
-      vitest.spyOn(stageService, 'query').mockReturnValue(of(new HttpResponse({ body: stageCollection })));
+      vi.spyOn(stageService, 'query').mockReturnValue(of(new HttpResponse({ body: stageCollection })));
       const additionalStages = [stage];
       const expectedCollection: IStage[] = [...additionalStages, ...stageCollection];
-      vitest.spyOn(stageService, 'addStageToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(stageService, 'addStageToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ stageAttempt });
       comp.ngOnInit();
@@ -107,10 +107,10 @@ describe('StageAttempt Management Update Component', () => {
       stageAttempt.selectedAnswer = selectedAnswer;
 
       const answerCollection: IAnswer[] = [{ id: 19540 }];
-      vitest.spyOn(answerService, 'query').mockReturnValue(of(new HttpResponse({ body: answerCollection })));
+      vi.spyOn(answerService, 'query').mockReturnValue(of(new HttpResponse({ body: answerCollection })));
       const additionalAnswers = [selectedAnswer];
       const expectedCollection: IAnswer[] = [...additionalAnswers, ...answerCollection];
-      vitest.spyOn(answerService, 'addAnswerToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(answerService, 'addAnswerToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ stageAttempt });
       comp.ngOnInit();
@@ -129,10 +129,10 @@ describe('StageAttempt Management Update Component', () => {
       stageAttempt.gameSession = gameSession;
 
       const gameSessionCollection: IGameSession[] = [{ id: 30007 }];
-      vitest.spyOn(gameSessionService, 'query').mockReturnValue(of(new HttpResponse({ body: gameSessionCollection })));
+      vi.spyOn(gameSessionService, 'query').mockReturnValue(of(new HttpResponse({ body: gameSessionCollection })));
       const additionalGameSessions = [gameSession];
       const expectedCollection: IGameSession[] = [...additionalGameSessions, ...gameSessionCollection];
-      vitest.spyOn(gameSessionService, 'addGameSessionToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vi.spyOn(gameSessionService, 'addGameSessionToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ stageAttempt });
       comp.ngOnInit();
@@ -172,9 +172,9 @@ describe('StageAttempt Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IStageAttempt>();
       const stageAttempt = { id: 23225 };
-      vitest.spyOn(stageAttemptFormService, 'getStageAttempt').mockReturnValue(stageAttempt);
-      vitest.spyOn(stageAttemptService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(stageAttemptFormService, 'getStageAttempt').mockReturnValue(stageAttempt);
+      vi.spyOn(stageAttemptService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ stageAttempt });
       comp.ngOnInit();
 
@@ -195,9 +195,9 @@ describe('StageAttempt Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IStageAttempt>();
       const stageAttempt = { id: 23225 };
-      vitest.spyOn(stageAttemptFormService, 'getStageAttempt').mockReturnValue({ id: null });
-      vitest.spyOn(stageAttemptService, 'create').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(stageAttemptFormService, 'getStageAttempt').mockReturnValue({ id: null });
+      vi.spyOn(stageAttemptService, 'create').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ stageAttempt: null });
       comp.ngOnInit();
 
@@ -218,8 +218,8 @@ describe('StageAttempt Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IStageAttempt>();
       const stageAttempt = { id: 23225 };
-      vitest.spyOn(stageAttemptService, 'update').mockReturnValue(saveSubject);
-      vitest.spyOn(comp, 'previousState');
+      vi.spyOn(stageAttemptService, 'update').mockReturnValue(saveSubject);
+      vi.spyOn(comp, 'previousState');
       activatedRoute.data = of({ stageAttempt });
       comp.ngOnInit();
 
@@ -240,7 +240,7 @@ describe('StageAttempt Management Update Component', () => {
       it('should forward to userProfileService', () => {
         const entity = { id: 22058 };
         const entity2 = { id: 9009 };
-        vitest.spyOn(userProfileService, 'compareUserProfile');
+        vi.spyOn(userProfileService, 'compareUserProfile');
         comp.compareUserProfile(entity, entity2);
         expect(userProfileService.compareUserProfile).toHaveBeenCalledWith(entity, entity2);
       });
@@ -250,7 +250,7 @@ describe('StageAttempt Management Update Component', () => {
       it('should forward to stageService', () => {
         const entity = { id: 30579 };
         const entity2 = { id: 6829 };
-        vitest.spyOn(stageService, 'compareStage');
+        vi.spyOn(stageService, 'compareStage');
         comp.compareStage(entity, entity2);
         expect(stageService.compareStage).toHaveBeenCalledWith(entity, entity2);
       });
@@ -260,7 +260,7 @@ describe('StageAttempt Management Update Component', () => {
       it('should forward to answerService', () => {
         const entity = { id: 19540 };
         const entity2 = { id: 25690 };
-        vitest.spyOn(answerService, 'compareAnswer');
+        vi.spyOn(answerService, 'compareAnswer');
         comp.compareAnswer(entity, entity2);
         expect(answerService.compareAnswer).toHaveBeenCalledWith(entity, entity2);
       });
@@ -270,7 +270,7 @@ describe('StageAttempt Management Update Component', () => {
       it('should forward to gameSessionService', () => {
         const entity = { id: 30007 };
         const entity2 = { id: 5692 };
-        vitest.spyOn(gameSessionService, 'compareGameSession');
+        vi.spyOn(gameSessionService, 'compareGameSession');
         comp.compareGameSession(entity, entity2);
         expect(gameSessionService.compareGameSession).toHaveBeenCalledWith(entity, entity2);
       });

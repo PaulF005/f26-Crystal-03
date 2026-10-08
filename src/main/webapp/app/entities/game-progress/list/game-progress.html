@@ -25,108 +25,105 @@
   <jhi-alert />
 
   @if (gameProgresses().length === 0) {
-  <div class="alert alert-warning" id="no-result">
-    <span>No Game Progresses found</span>
-  </div>
+    <div class="alert alert-warning" id="no-result">
+      <span>No Game Progresses found</span>
+    </div>
   } @else {
-  <div class="table-responsive table-entities" id="entities">
-    <table class="table table-striped" aria-describedby="page-heading">
-      <thead>
-        <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-          <th scope="col" jhiSortBy="id">
-            <div class="d-flex">
-              <span>ID</span>
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span>ID</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="sessionsPlayed">
+              <div class="d-flex">
+                <span>Sessions Played</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="performance">
+              <div class="d-flex">
+                <span>Performance</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="evidenceCount">
+              <div class="d-flex">
+                <span>Evidence Count</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lastPlayedAt">
+              <div class="d-flex">
+                <span>Last Played At</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="game.id">
+              <div class="d-flex">
+                <span>Game</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="userProfile.id">
+              <div class="d-flex">
+                <span>User Profile</span>
+                <fa-icon class="p-1" icon="sort" />
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (gameProgress of gameProgresses(); track trackId(gameProgress)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/game-progress', gameProgress.id, 'view']">{{ gameProgress.id }}</a>
+              </td>
+              <td>{{ gameProgress.sessionsPlayed }}</td>
+              <td>{{ gameProgress.performance }}</td>
+              <td>{{ gameProgress.evidenceCount }}</td>
+              <td>{{ gameProgress.lastPlayedAt | formatMediumDatetime }}</td>
+              <td>
+                @if (gameProgress.game) {
+                  <div>
+                    <a [routerLink]="['/game', gameProgress.game.id, 'view']">{{ gameProgress.game.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (gameProgress.userProfile) {
+                  <div>
+                    <a [routerLink]="['/user-profile', gameProgress.userProfile.id, 'view']">{{ gameProgress.userProfile.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/game-progress', gameProgress.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye" />
+                    <span class="d-none d-md-inline">View</span>
+                  </a>
 
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="sessionsPlayed">
-            <div class="d-flex">
-              <span>Sessions Played</span>
+                  <a [routerLink]="['/game-progress', gameProgress.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt" />
+                    <span class="d-none d-md-inline">Edit</span>
+                  </a>
 
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="performance">
-            <div class="d-flex">
-              <span>Performance</span>
-
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="evidenceCount">
-            <div class="d-flex">
-              <span>Evidence Count</span>
-
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="lastPlayedAt">
-            <div class="d-flex">
-              <span>Last Played At</span>
-
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="game.id">
-            <div class="d-flex">
-              <span>Game</span>
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="userProfile.id">
-            <div class="d-flex">
-              <span>User Profile</span>
-              <fa-icon class="p-1" icon="sort" />
-            </div>
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (gameProgress of gameProgresses(); track trackId(gameProgress)) {
-        <tr data-cy="entityTable">
-          <td><a [routerLink]="['/game-progress', gameProgress.id, 'view']">{{ gameProgress.id }}</a></td>
-          <td>{{ gameProgress.sessionsPlayed }}</td>
-          <td>{{ gameProgress.performance }}</td>
-          <td>{{ gameProgress.evidenceCount }}</td>
-          <td>{{ gameProgress.lastPlayedAt | formatMediumDatetime }}</td>
-          <td>
-            @if (gameProgress.game) {
-            <div>
-              <a [routerLink]="['/game', gameProgress.game.id, 'view']">{{ gameProgress.game.id }}</a>
-            </div>
-            }
-          </td>
-          <td>
-            @if (gameProgress.userProfile) {
-            <div>
-              <a [routerLink]="['/user-profile', gameProgress.userProfile.id, 'view']">{{ gameProgress.userProfile.id }}</a>
-            </div>
-            }
-          </td>
-          <td class="text-end">
-            <div class="btn-group">
-              <a [routerLink]="['/game-progress', gameProgress.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                <fa-icon icon="eye" />
-                <span class="d-none d-md-inline">View</span>
-              </a>
-
-              <a [routerLink]="['/game-progress', gameProgress.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                <fa-icon icon="pencil-alt" />
-                <span class="d-none d-md-inline">Edit</span>
-              </a>
-
-              <button type="submit" (click)="delete(gameProgress)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                <fa-icon icon="times" />
-                <span class="d-none d-md-inline">Delete</span>
-              </button>
-            </div>
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
-  </div>
+                  <button type="submit" (click)="delete(gameProgress)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times" />
+                    <span class="d-none d-md-inline">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
   }
 </div>

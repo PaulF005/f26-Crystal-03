@@ -7,12 +7,13 @@
         <jhi-alert-error />
 
         @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
 
-        <div class="mb-3">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-        } @let competencyRef = editForm.get('competency')!;
+        @let competencyRef = editForm.get('competency')!;
         <div class="mb-3">
           <label class="form-label" for="field_competency">Competency</label>
           <input
@@ -24,16 +25,18 @@
             formControlName="competency"
           />
           @if (competencyRef.invalid && (competencyRef.dirty || competencyRef.touched)) {
-          <div>
-            @if (competencyRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            } @if (competencyRef.errors?.min) {
-            <small class="form-text text-danger">This field should be at least 0.</small>
-            } @if (competencyRef.errors?.max) {
-            <small class="form-text text-danger">This field cannot be more than 1.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!competencyRef.errors?.number">This field should be a number.</small>
-          </div>
+            <div>
+              @if (competencyRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (competencyRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              @if (competencyRef.errors?.max) {
+                <small class="form-text text-danger">This field cannot be more than 1.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!competencyRef.errors?.number">This field should be a number.</small>
+            </div>
           }
         </div>
 
@@ -49,12 +52,12 @@
             formControlName="improvement"
           />
           @if (improvementRef.invalid && (improvementRef.dirty || improvementRef.touched)) {
-          <div>
-            @if (improvementRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!improvementRef.errors?.number">This field should be a number.</small>
-          </div>
+            <div>
+              @if (improvementRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!improvementRef.errors?.number">This field should be a number.</small>
+            </div>
           }
         </div>
 
@@ -70,14 +73,15 @@
             formControlName="evidenceCount"
           />
           @if (evidenceCountRef.invalid && (evidenceCountRef.dirty || evidenceCountRef.touched)) {
-          <div>
-            @if (evidenceCountRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            } @if (evidenceCountRef.errors?.min) {
-            <small class="form-text text-danger">This field should be at least 0.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!evidenceCountRef.errors?.number">This field should be a number.</small>
-          </div>
+            <div>
+              @if (evidenceCountRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (evidenceCountRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!evidenceCountRef.errors?.number">This field should be a number.</small>
+            </div>
           }
         </div>
 
@@ -96,37 +100,14 @@
             />
           </div>
           @if (lastPracticedAtRef.invalid && (lastPracticedAtRef.dirty || lastPracticedAtRef.touched)) {
-          <div>
-            @if (lastPracticedAtRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!lastPracticedAtRef.errors?.datetimelocal"
-              >This field should be a date and time.</small
-            >
-          </div>
-          }
-        </div>
-
-        @let maxQuestionsRef = editForm.get('maxQuestions')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_maxQuestions">Max Questions</label>
-          <input
-            type="number"
-            class="form-control"
-            name="maxQuestions"
-            id="field_maxQuestions"
-            data-cy="maxQuestions"
-            formControlName="maxQuestions"
-          />
-          @if (maxQuestionsRef.invalid && (maxQuestionsRef.dirty || maxQuestionsRef.touched)) {
-          <div>
-            @if (maxQuestionsRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            } @if (maxQuestionsRef.errors?.min) {
-            <small class="form-text text-danger">This field should be at least 5.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!maxQuestionsRef.errors?.number">This field should be a number.</small>
-          </div>
+            <div>
+              @if (lastPracticedAtRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!lastPracticedAtRef.errors?.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
           }
         </div>
 
@@ -142,7 +123,7 @@
           >
             <option [ngValue]="null"></option>
             @for (userProfileOption of userProfilesSharedCollection(); track $index) {
-            <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
+              <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
             }
           </select>
         </div>
@@ -159,7 +140,7 @@
           >
             <option [ngValue]="null"></option>
             @for (conceptOption of conceptsSharedCollection(); track $index) {
-            <option [ngValue]="conceptOption">{{ conceptOption.id }}</option>
+              <option [ngValue]="conceptOption">{{ conceptOption.id }}</option>
             }
           </select>
         </div>

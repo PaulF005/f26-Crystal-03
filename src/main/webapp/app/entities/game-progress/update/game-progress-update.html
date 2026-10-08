@@ -7,12 +7,13 @@
         <jhi-alert-error />
 
         @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
 
-        <div class="mb-3">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-        } @let sessionsPlayedRef = editForm.get('sessionsPlayed')!;
+        @let sessionsPlayedRef = editForm.get('sessionsPlayed')!;
         <div class="mb-3">
           <label class="form-label" for="field_sessionsPlayed">Sessions Played</label>
           <input
@@ -24,14 +25,15 @@
             formControlName="sessionsPlayed"
           />
           @if (sessionsPlayedRef.invalid && (sessionsPlayedRef.dirty || sessionsPlayedRef.touched)) {
-          <div>
-            @if (sessionsPlayedRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            } @if (sessionsPlayedRef.errors?.min) {
-            <small class="form-text text-danger">This field should be at least 0.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!sessionsPlayedRef.errors?.number">This field should be a number.</small>
-          </div>
+            <div>
+              @if (sessionsPlayedRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (sessionsPlayedRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!sessionsPlayedRef.errors?.number">This field should be a number.</small>
+            </div>
           }
         </div>
 
@@ -47,16 +49,18 @@
             formControlName="performance"
           />
           @if (performanceRef.invalid && (performanceRef.dirty || performanceRef.touched)) {
-          <div>
-            @if (performanceRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            } @if (performanceRef.errors?.min) {
-            <small class="form-text text-danger">This field should be at least 0.</small>
-            } @if (performanceRef.errors?.max) {
-            <small class="form-text text-danger">This field cannot be more than 1.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!performanceRef.errors?.number">This field should be a number.</small>
-          </div>
+            <div>
+              @if (performanceRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (performanceRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              @if (performanceRef.errors?.max) {
+                <small class="form-text text-danger">This field cannot be more than 1.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!performanceRef.errors?.number">This field should be a number.</small>
+            </div>
           }
         </div>
 
@@ -72,14 +76,15 @@
             formControlName="evidenceCount"
           />
           @if (evidenceCountRef.invalid && (evidenceCountRef.dirty || evidenceCountRef.touched)) {
-          <div>
-            @if (evidenceCountRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            } @if (evidenceCountRef.errors?.min) {
-            <small class="form-text text-danger">This field should be at least 0.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!evidenceCountRef.errors?.number">This field should be a number.</small>
-          </div>
+            <div>
+              @if (evidenceCountRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              @if (evidenceCountRef.errors?.min) {
+                <small class="form-text text-danger">This field should be at least 0.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!evidenceCountRef.errors?.number">This field should be a number.</small>
+            </div>
           }
         </div>
 
@@ -98,14 +103,14 @@
             />
           </div>
           @if (lastPlayedAtRef.invalid && (lastPlayedAtRef.dirty || lastPlayedAtRef.touched)) {
-          <div>
-            @if (lastPlayedAtRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!lastPlayedAtRef.errors?.datetimelocal"
-              >This field should be a date and time.</small
-            >
-          </div>
+            <div>
+              @if (lastPlayedAtRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!lastPlayedAtRef.errors?.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
           }
         </div>
 
@@ -113,18 +118,19 @@
           <label class="form-label" for="field_game">Game</label>
           <select class="form-control" id="field_game" data-cy="game" name="game" formControlName="game" [compareWith]="compareGame">
             @if (!editForm.get('game')!.value) {
-            <option [ngValue]="null" selected></option>
-            } @for (gameOption of gamesSharedCollection(); track $index) {
-            <option [ngValue]="gameOption">{{ gameOption.id }}</option>
+              <option [ngValue]="null" selected></option>
+            }
+            @for (gameOption of gamesSharedCollection(); track $index) {
+              <option [ngValue]="gameOption">{{ gameOption.id }}</option>
             }
           </select>
         </div>
         @if (editForm.get(['game'])!.invalid && (editForm.get(['game'])!.dirty || editForm.get(['game'])!.touched)) {
-        <div>
-          @if (editForm.get(['game'])?.errors?.required) {
-          <small class="form-text text-danger">This field is required.</small>
-          }
-        </div>
+          <div>
+            @if (editForm.get(['game'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
         }
 
         <div class="mb-3">
@@ -138,18 +144,19 @@
             [compareWith]="compareUserProfile"
           >
             @if (editForm.get(['userProfile'])!.value === null) {
-            <option [ngValue]="null" selected></option>
-            } @for (userProfileOption of userProfilesSharedCollection(); track $index) {
-            <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
+              <option [ngValue]="null" selected></option>
+            }
+            @for (userProfileOption of userProfilesSharedCollection(); track $index) {
+              <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
             }
           </select>
         </div>
         @if (editForm.get(['userProfile'])!.invalid && (editForm.get(['userProfile'])!.dirty || editForm.get(['userProfile'])!.touched)) {
-        <div>
-          @if (editForm.get(['userProfile'])?.errors?.required) {
-          <small class="form-text text-danger">This field is required.</small>
-          }
-        </div>
+          <div>
+            @if (editForm.get(['userProfile'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
         }
       </div>
 

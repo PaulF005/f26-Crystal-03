@@ -22,7 +22,7 @@
           "options": {
             "plugins": ["build-plugins/define-esbuild.ts"],
             "outputPath": {
-              "base": "build/resources/main/static/",
+              "base": "build/generated/webapp/",
               "browser": "",
               "server": "node-server",
               "media": "resources"
@@ -119,6 +119,7 @@
       "path": "./build/angular/",
       "environment": "all"
     },
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": false
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IScenario, NewScenario } from '../scenario.model';
@@ -26,7 +26,7 @@ type ScenarioFormGroupContent = {
 
 export type ScenarioFormGroup = FormGroup<ScenarioFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ScenarioFormService {
   createScenarioFormGroup(scenario?: ScenarioFormGroupInput): ScenarioFormGroup {
     const scenarioRawValue = {

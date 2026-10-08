@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/concept-progresses")
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public class ConceptProgressResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConceptProgressResource.class);
@@ -129,7 +129,6 @@ public class ConceptProgressResource {
                 updateIfPresent(existingConceptProgress::setImprovement, conceptProgress.getImprovement());
                 updateIfPresent(existingConceptProgress::setEvidenceCount, conceptProgress.getEvidenceCount());
                 updateIfPresent(existingConceptProgress::setLastPracticedAt, conceptProgress.getLastPracticedAt());
-                updateIfPresent(existingConceptProgress::setMaxQuestions, conceptProgress.getMaxQuestions());
 
                 return existingConceptProgress;
             })

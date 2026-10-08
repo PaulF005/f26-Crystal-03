@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IAnswer, NewAnswer } from '../answer.model';
@@ -29,7 +29,7 @@ type AnswerFormGroupContent = {
 
 export type AnswerFormGroup = FormGroup<AnswerFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class AnswerFormService {
   createAnswerFormGroup(answer?: AnswerFormGroupInput): AnswerFormGroup {
     const answerRawValue = {

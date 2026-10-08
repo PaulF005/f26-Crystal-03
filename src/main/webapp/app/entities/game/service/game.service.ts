@@ -1,16 +1,15 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { IGame, NewGame } from '../game.model';
 
 export type PartialUpdateGame = Partial<IGame> & Pick<IGame, 'id'>;
 
-@Injectable()
+@Service()
 export class GamesService {
   readonly gamesParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(undefined);
   readonly gamesResource = httpResource<IGame[]>(() => {
@@ -25,11 +24,10 @@ export class GamesService {
    * In case of error while fetching the games, the signal is set to an empty array.
    */
   readonly games = computed(() => (this.gamesResource.hasValue() ? this.gamesResource.value() : []));
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/games');
+  protected readonly resourceUrl = `${serverApiUrl}api/games`;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class GameService extends GamesService {
   protected readonly http = inject(HttpClient);
 
@@ -70,7 +68,7 @@ export class GameService extends GamesService {
     gameCollection: Type[],
     ...gamesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const games: Type[] = gamesToCheck.filter(isPresent);
+    const games: Type[] = gamesToCheck.filter(gameItem => gameItem !== null && gameItem !== undefined);
     if (games.length > 0) {
       const gameCollectionIdentifiers = gameCollection.map(gameItem => this.getGameIdentifier(gameItem));
       const gamesToAdd = games.filter(gameItem => {

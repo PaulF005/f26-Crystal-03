@@ -31,12 +31,6 @@
       "fieldName": "lastPracticedAt",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "maxQuestions",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required", "min"],
-      "fieldValidateRulesMin": "5"
     }
   ],
   "fluentMethods": true,

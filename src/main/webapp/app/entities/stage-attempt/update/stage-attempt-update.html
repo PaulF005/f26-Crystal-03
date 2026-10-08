@@ -7,12 +7,13 @@
         <jhi-alert-error />
 
         @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
 
-        <div class="mb-3">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-        } @let answeredAtRef = editForm.get('answeredAt')!;
+        @let answeredAtRef = editForm.get('answeredAt')!;
         <div class="mb-3">
           <label class="form-label" for="field_answeredAt">Answered At</label>
           <div class="d-flex">
@@ -27,27 +28,27 @@
             />
           </div>
           @if (answeredAtRef.invalid && (answeredAtRef.dirty || answeredAtRef.touched)) {
-          <div>
-            @if (answeredAtRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            }
-            <small class="form-text text-danger" [hidden]="!answeredAtRef.errors?.datetimelocal"
-              >This field should be a date and time.</small
-            >
-          </div>
+            <div>
+              @if (answeredAtRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+              <small class="form-text text-danger" [hidden]="!answeredAtRef.errors?.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
           }
         </div>
 
         @let correctRef = editForm.get('correct')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_correct">Correct</label>
-          <input type="checkbox" class="form-check" name="correct" id="field_correct" data-cy="correct" formControlName="correct" />
+        <div class="mb-3 form-check">
+          <input type="checkbox" class="form-check-input" name="correct" id="field_correct" data-cy="correct" formControlName="correct" />
+          <label class="form-check-label" for="field_correct">Correct</label>
           @if (correctRef.invalid && (correctRef.dirty || correctRef.touched)) {
-          <div>
-            @if (correctRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            }
-          </div>
+            <div>
+              @if (correctRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
           }
         </div>
 
@@ -56,7 +57,7 @@
           <select class="form-control" id="field_user" data-cy="user" name="user" formControlName="user" [compareWith]="compareUserProfile">
             <option [ngValue]="null"></option>
             @for (userProfileOption of userProfilesSharedCollection(); track $index) {
-            <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
+              <option [ngValue]="userProfileOption">{{ userProfileOption.id }}</option>
             }
           </select>
         </div>
@@ -66,7 +67,7 @@
           <select class="form-control" id="field_stage" data-cy="stage" name="stage" formControlName="stage" [compareWith]="compareStage">
             <option [ngValue]="null"></option>
             @for (stageOption of stagesSharedCollection(); track $index) {
-            <option [ngValue]="stageOption">{{ stageOption.id }}</option>
+              <option [ngValue]="stageOption">{{ stageOption.id }}</option>
             }
           </select>
         </div>
@@ -83,7 +84,7 @@
           >
             <option [ngValue]="null"></option>
             @for (answerOption of answersSharedCollection(); track $index) {
-            <option [ngValue]="answerOption">{{ answerOption.id }}</option>
+              <option [ngValue]="answerOption">{{ answerOption.id }}</option>
             }
           </select>
         </div>
@@ -99,18 +100,19 @@
             [compareWith]="compareGameSession"
           >
             @if (editForm.get(['gameSession'])!.value === null) {
-            <option [ngValue]="null" selected></option>
-            } @for (gameSessionOption of gameSessionsSharedCollection(); track $index) {
-            <option [ngValue]="gameSessionOption">{{ gameSessionOption.id }}</option>
+              <option [ngValue]="null" selected></option>
+            }
+            @for (gameSessionOption of gameSessionsSharedCollection(); track $index) {
+              <option [ngValue]="gameSessionOption">{{ gameSessionOption.id }}</option>
             }
           </select>
         </div>
         @if (editForm.get(['gameSession'])!.invalid && (editForm.get(['gameSession'])!.dirty || editForm.get(['gameSession'])!.touched)) {
-        <div>
-          @if (editForm.get(['gameSession'])?.errors?.required) {
-          <small class="form-text text-danger">This field is required.</small>
-          }
-        </div>
+          <div>
+            @if (editForm.get(['gameSession'])?.errors?.required) {
+              <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
         }
       </div>
 

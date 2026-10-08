@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Service } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IStage, NewStage } from '../stage.model';
@@ -24,7 +24,7 @@ type StageFormGroupContent = {
 
 export type StageFormGroup = FormGroup<StageFormGroupContent>;
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class StageFormService {
   createStageFormGroup(stage?: StageFormGroupInput): StageFormGroup {
     const stageRawValue = {

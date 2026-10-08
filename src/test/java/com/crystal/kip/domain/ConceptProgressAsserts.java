@@ -50,8 +50,7 @@ public class ConceptProgressAsserts {
             .satisfies(a -> assertThat(a.getCompetency()).as("check competency").isEqualTo(expected.getCompetency()))
             .satisfies(a -> assertThat(a.getImprovement()).as("check improvement").isEqualTo(expected.getImprovement()))
             .satisfies(a -> assertThat(a.getEvidenceCount()).as("check evidenceCount").isEqualTo(expected.getEvidenceCount()))
-            .satisfies(a -> assertThat(a.getLastPracticedAt()).as("check lastPracticedAt").isEqualTo(expected.getLastPracticedAt()))
-            .satisfies(a -> assertThat(a.getMaxQuestions()).as("check maxQuestions").isEqualTo(expected.getMaxQuestions()));
+            .satisfies(a -> assertThat(a.getLastPracticedAt()).as("check lastPracticedAt").isEqualTo(expected.getLastPracticedAt()));
     }
 
     /**

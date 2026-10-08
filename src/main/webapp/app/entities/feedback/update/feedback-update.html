@@ -7,21 +7,22 @@
         <jhi-alert-error />
 
         @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
 
-        <div class="mb-3">
-          <label class="form-label" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-        } @let feedbackRef = editForm.get('feedback')!;
+        @let feedbackRef = editForm.get('feedback')!;
         <div class="mb-3">
           <label class="form-label" for="field_feedback">Feedback</label>
           <input type="text" class="form-control" name="feedback" id="field_feedback" data-cy="feedback" formControlName="feedback" />
           @if (feedbackRef.invalid && (feedbackRef.dirty || feedbackRef.touched)) {
-          <div>
-            @if (feedbackRef.errors?.required) {
-            <small class="form-text text-danger">This field is required.</small>
-            }
-          </div>
+            <div>
+              @if (feedbackRef.errors?.required) {
+                <small class="form-text text-danger">This field is required.</small>
+              }
+            </div>
           }
         </div>
 

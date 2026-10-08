@@ -1,42 +1,42 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     @if (userProfile(); as userProfileRef) {
-    <div>
-      <h2 data-cy="userProfileDetailsHeading"><span>User Profile</span></h2>
+      <div>
+        <h2 data-cy="userProfileDetailsHeading"><span>User Profile</span></h2>
 
-      <hr />
+        <hr />
 
-      <jhi-alert-error />
+        <jhi-alert-error />
 
-      <jhi-alert />
+        <jhi-alert />
 
-      <dl class="row-md jh-entity-details">
-        <dt><span>ID</span></dt>
-        <dd>
-          <span>{{ userProfileRef.id }}</span>
-        </dd>
-        <dt><span>Username</span></dt>
-        <dd>
-          <span>{{ userProfileRef.username }}</span>
-        </dd>
-        <dt><span>Email</span></dt>
-        <dd>
-          <span>{{ userProfileRef.email }}</span>
-        </dd>
-        <dt><span>Data User</span></dt>
-        <dd>
-          <span>{{ userProfileRef.dataUser?.id }}</span>
-        </dd>
-      </dl>
+        <dl class="row-md jh-entity-details">
+          <dt><span>ID</span></dt>
+          <dd>
+            <span>{{ userProfileRef.id }}</span>
+          </dd>
+          <dt><span>Username</span></dt>
+          <dd>
+            <span>{{ userProfileRef.username }}</span>
+          </dd>
+          <dt><span>Email</span></dt>
+          <dd>
+            <span>{{ userProfileRef.email }}</span>
+          </dd>
+          <dt><span>Data User</span></dt>
+          <dd>
+            <span>{{ userProfileRef.dataUser?.id }}</span>
+          </dd>
+        </dl>
 
-      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-        <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
-      </button>
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
+        </button>
 
-      <button type="button" [routerLink]="['/user-profile', userProfileRef.id, 'edit']" class="btn btn-primary">
-        <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
-      </button>
-    </div>
+        <button type="button" [routerLink]="['/user-profile', userProfileRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
+        </button>
+      </div>
     }
   </div>
 </div>
