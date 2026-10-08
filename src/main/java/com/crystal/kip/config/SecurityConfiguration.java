@@ -2,7 +2,7 @@ package com.crystal.kip.config;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-import com.crystal.kip.security.*;
+import com.crystal.kip.security.AuthoritiesConstants;
 import com.crystal.kip.web.filter.SpaWebFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -66,6 +66,28 @@ public class SecurityConfiguration {
                     .requestMatchers("/api/account/reset-password/init").permitAll()
                     .requestMatchers("/api/account/reset-password/finish").permitAll()
                     .requestMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
+                    .requestMatchers(
+                        "/api/answers/**",
+                        "/api/authorities/**",
+                        "/api/concept-progresses/**",
+                        "/api/concepts/**",
+                        "/api/feedbacks/**",
+                        "/api/game-progresses/**",
+                        "/api/games/**",
+                        "/api/game-sessions/**",
+                        "/api/legal-contents/**",
+                        "/api/progresses/**",
+                        "/api/questions/**",
+                        "/api/scenarios/**",
+                        "/api/sources/**",
+                        "/api/stage-attempts/**",
+                        "/api/stages/**",
+                        "/api/topic-progresses/**",
+                        "/api/topics/**",
+                        "/api/user-details/**",
+                        "/api/user-profiles/**"
+                    )
+                    .hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers("/api/**").authenticated()
                     .requestMatchers("/v3/api-docs/**").hasAuthority(AuthoritiesConstants.ADMIN)
                     .requestMatchers("/management/health").permitAll()

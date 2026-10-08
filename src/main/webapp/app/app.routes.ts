@@ -34,8 +34,31 @@ const routes: Routes = [
     title: 'Sign in',
   },
   {
+    path: 'settings',
+    loadComponent: () => import('./settings/settings'),
+    data: {
+      authorities: [Authority.USER],
+    },
+    canActivate: [userRouteAccessService],
+    title: 'Settings',
+  },
+  {
     path: '',
+    data: {
+      authorities: [Authority.ADMIN],
+    },
+    canActivate: [userRouteAccessService],
     loadChildren: () => import('./entities/entity.routes'),
+  },
+  {
+    path: 'games',
+    loadComponent: () => import('./games/games'),
+    title: 'Games',
+  },
+  {
+    path: 'my-progress',
+    loadComponent: () => import('./progress/progress'),
+    title: 'Progress',
   },
   ...errorRoute,
 ];

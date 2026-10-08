@@ -4,32 +4,30 @@ KIP Homepage Styles
 
 .home-header {
   background: transparent;
-  padding: 25px;
-  border-radius: 8px;
-  margin-bottom: 30px;
+
+  padding: calc(0 * var(--pixel));
+  border-radius: calc(2 * var(--pixel));
+  margin-bottom: calc(8 * var(--pixel));
 }
 
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 25px;
+
+  gap: calc(8 * var(--pixel));
+
   width: 100%;
   margin: 0;
-}
-
-.dashboard-box {
-  background: #adb5bb;
-  border: 2px solid #a2843c;
-  padding: 25px;
-  min-height: 180px;
-  box-shadow: 0 6px 0px rgba(0, 0, 0, 1);
 }
 
 .activity-box {
   grid-column: 1 / -1;
 }
 
-/* makes smaller for mobile */
+/*
+ * Breakpoints describe the real viewport, not the logical pixel grid,
+ * so this remains ordinary CSS pixels.
+ */
 @media (max-width: 768px) {
   .dashboard-grid {
     grid-template-columns: 1fr;
@@ -38,4 +36,51 @@ KIP Homepage Styles
   .activity-box {
     grid-column: auto;
   }
+}
+
+/* ==========================================================================
+Recent Activity
+========================================================================== */
+
+.activity-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: calc(3 * var(--pixel)) 0;
+
+  border-bottom: var(--pixel) solid var(--ui-kip-gold);
+}
+
+.activity-row:last-child {
+  border-bottom: none;
+}
+
+/*
+ * Short identifying text.
+ * Uses the 16-pixel field font.
+ */
+.activity-title {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+  font-weight: normal;
+}
+
+/*
+ * Dense supporting text.
+ * Uses Aseprite's 7-pixel body font.
+ */
+.activity-meta {
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
+  font-weight: normal;
+}
+
+/*
+ * Scores are short, prominent data, so the field font makes sense here too.
+ */
+.activity-score {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+  font-weight: normal;
 }
