@@ -20,6 +20,14 @@ KIP Homepage Styles
   margin: 0;
 }
 
+.dashboard-grid > .dashboard-box > :not(h2) {
+  margin-left: calc(4 * var(--pixel));
+}
+
+.recommendation-box > .btn {
+  margin-bottom: calc(4 * var(--pixel));
+}
+
 .activity-box {
   grid-column: 1 / -1;
 }
@@ -48,6 +56,7 @@ Recent Activity
   align-items: center;
 
   padding: calc(3 * var(--pixel)) 0;
+  padding-right: calc(4 * var(--pixel));
 
   border-bottom: var(--pixel) solid var(--ui-kip-gold);
 }
