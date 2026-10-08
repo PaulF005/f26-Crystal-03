@@ -1,4 +1,23 @@
-<div class="dashboard-box">
-  <h2 class="pixel-outline">Games</h2>
-  <p>Games will appear here.</p>
+<div class="games-grid">
+  @for (game of games; track game.id) {
+    <div class="dashboard-box game-box">
+      <h2 class="pixel-outline">{{ game.name }}</h2>
+
+      <div class="game-content">
+        <p class="game-description">{{ game.description }}</p>
+
+        <div class="game-meta">
+          <div>
+            <span class="game-meta-label">Status:</span>
+            {{ game.status }}
+          </div>
+
+          <div>
+            <span class="game-meta-label">Experience:</span>
+            {{ game.experience }}
+          </div>
+        </div>
+      </div>
+    </div>
+  }
 </div>
