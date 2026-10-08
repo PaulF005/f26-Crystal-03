@@ -1,4 +1,4 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { Observable, Observer, Subscription, filter, share } from 'rxjs';
 
@@ -12,13 +12,15 @@ export class EventWithContent<T> {
 /**
  * A utility class to manage RX events
  */
-@Service()
+@Injectable({
+  providedIn: 'root',
+})
 export class EventManager {
-  observable: Observable<EventWithContent<unknown>>;
-  observer?: Observer<EventWithContent<unknown>>;
+  observable: Observable<EventWithContent<unknown> | string>;
+  observer?: Observer<EventWithContent<unknown> | string>;
 
   constructor() {
-    this.observable = new Observable((observer: Observer<EventWithContent<unknown>>) => {
+    this.observable = new Observable((observer: Observer<EventWithContent<unknown> | string>) => {
       this.observer = observer;
     }).pipe(share());
   }
@@ -26,7 +28,7 @@ export class EventManager {
   /**
    * Method to broadcast the event to observer
    */
-  broadcast(event: EventWithContent<unknown>): void {
+  broadcast(event: EventWithContent<unknown> | string): void {
     if (this.observer) {
       this.observer.next(event);
     }
@@ -37,11 +39,13 @@ export class EventManager {
    * @param eventNames  Single event name or array of event names to what subscribe
    * @param callback    Callback to run when the event occurs
    */
-  subscribe(eventNames: string | string[], callback: (event: EventWithContent<unknown>) => void): Subscription {
+  subscribe(eventNames: string | string[], callback: (event: EventWithContent<unknown> | string) => void): Subscription {
     if (typeof eventNames === 'string') {
       eventNames = [eventNames];
     }
-    return this.observable.pipe(filter((event: EventWithContent<unknown>) => eventNames.includes(event.name))).subscribe(callback);
+    return this.observable
+      .pipe(filter((event: EventWithContent<unknown> | string) => eventNames.includes(typeof event === 'string' ? event : event.name)))
+      .subscribe(callback);
   }
 
   /**

@@ -1,140 +1,84 @@
-@import 'font';
-@import 'pixel';
-@import 'palette';
-@import 'image';
-
 @import 'bootstrap-variables';
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
 
-/* ==========================================================================
-Global sizing
-========================================================================== */
+/* ==============================================================
+Bootstrap tweaks
+===============================================================*/
 
-:root {
-  /*
-   * Bootstrap/rem-based layout still follows the global pixel scale.
-   * 1rem = 4 logical pixels.
-   */
-  font-size: calc(4 * var(--pixel));
-
-  --bs-border-width: var(--pixel);
-}
-
-/* ==========================================================================
-Global typography
-========================================================================== */
-
-html,
-body {
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
-  font-kerning: none;
-  font-variant-ligatures: none;
-  font-synthesis: none;
-}
-
-button,
-input,
-select,
-textarea {
-  font-family: 'field', monospace;
-  font-size: var(--font-field-size);
-}
-
+body,
 h1,
 h2,
 h3,
 h4 {
-  font-family: 'title', sans-serif;
-  font-size: var(--font-title-size);
-  font-weight: normal;
+  font-weight: 300;
 }
 
-/* ==========================================================================
-Background
-========================================================================== */
-
-body {
-  background-image: url('../../content/images/ui/background_iso.png');
-  background-repeat: repeat;
-  background-position: top left;
-
-  background-size: calc(64 * var(--pixel)) auto;
-
-  image-rendering: pixelated;
-}
-
-/* ==========================================================================
-Bootstrap tweaks
-========================================================================== */
-
+/* Increase contrast of links to get 100% on Lighthouse Accessibility Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
 a {
-  color: var(--ui-kip-gold);
+  color: #533f03;
   font-weight: bold;
 }
 
-a:hover {
-  color: var(--ui-kip-gold);
-  cursor: pointer;
-}
-
+/* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
 a:not([href]):not([tabindex]):hover.dropdown-item {
   color: $dropdown-link-hover-color;
+}
+
+/* override .dropdown-item.active background-color on hover */
+.dropdown-item.active:hover {
+  background-color: mix($dropdown-link-hover-bg, $dropdown-link-active-bg, 50%);
+}
+
+a:hover {
+  color: #533f03;
+  /* make sure browsers use the pointer cursor for anchors, even with no href */
+  cursor: pointer;
 }
 
 .dropdown-item:hover {
   color: $dropdown-link-hover-color;
 }
 
-.dropdown-item.active:hover {
-  background-color: mix($dropdown-link-hover-bg, $dropdown-link-active-bg, 50%);
-}
-
 /* ==========================================================================
 Browser Upgrade Prompt
 ========================================================================== */
-
 .browserupgrade {
-  margin: var(--pixel) 0;
-  padding: var(--pixel) 0;
-
-  background: var(--ui-button-center);
-  color: var(--ui-window-shadow);
-
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
 }
 
 /* ==========================================================================
 Generic styles
 ========================================================================== */
 
+/* Error highlight on input fields */
 .ng-valid[required],
 .ng-valid.required {
-  border-left: var(--pixel) solid var(--ui-answer-correct);
+  border-left: 5px solid green;
 }
 
 .ng-invalid:not(form) {
-  border-left: var(--pixel) solid var(--ui-answer-incorrect);
+  border-left: 5px solid red;
 }
+
+/* other generic styles */
 
 .jh-card {
   padding: 1.5%;
-  margin-top: calc(5 * var(--pixel));
-
-  border: var(--pixel) solid var(--ui-kip-gold);
-
-  background-color: var(--ui-window-background-dim);
+  margin-top: 20px;
+  border: none;
 }
 
 .error {
-  color: var(--ui-button-highlight);
-  background-color: var(--ui-answer-incorrect);
+  color: white;
+  background-color: red;
 }
 
 .pad {
-  padding: calc(3 * var(--pixel));
+  padding: 10px;
 }
 
 .w-40 {
@@ -151,16 +95,16 @@ Generic styles
 }
 
 .form-control {
-  background-color: var(--ui-button-highlight);
+  background-color: #fff;
 }
 
 .readonly {
-  background-color: var(--ui-button-center);
+  background-color: #eee;
   opacity: 1;
 }
 
 .footer {
-  border-top: var(--pixel) solid color-mix(in srgb, var(--ui-window-shadow) 12.5%, transparent);
+  border-top: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .hand,
@@ -169,13 +113,11 @@ Generic styles
 }
 
 /* ==========================================================================
-Alerts
+Custom alerts for notification
 ========================================================================== */
-
 .alerts {
   .alert {
     text-overflow: ellipsis;
-
     pre {
       background: none;
       border: none;
@@ -184,31 +126,24 @@ Alerts
       padding: 0;
       margin: 0;
     }
-
     .popover pre {
-      font-family: 'body', sans-serif;
-      font-size: var(--font-body-size);
+      font-size: 10px;
     }
   }
-
   .jhi-toast {
     position: fixed;
     width: 100%;
-
     &.left {
-      left: var(--pixel);
+      left: 5px;
     }
-
     &.right {
-      right: var(--pixel);
+      right: 5px;
     }
-
     &.top {
-      top: calc(14 * var(--pixel));
+      top: 55px;
     }
-
     &.bottom {
-      bottom: calc(14 * var(--pixel));
+      bottom: 55px;
     }
   }
 }
@@ -220,7 +155,7 @@ Alerts
 }
 
 /* ==========================================================================
-Entity list
+entity list page css
 ========================================================================== */
 
 .table-entities thead th .d-flex > * {
@@ -228,15 +163,12 @@ Entity list
 }
 
 /* ==========================================================================
-Entity details
+entity detail page css
 ========================================================================== */
-
 .row-md.jh-entity-details {
   display: grid;
   grid-template-columns: auto 1fr;
-
-  column-gap: calc(3 * var(--pixel));
-
+  column-gap: 10px;
   line-height: 1.5;
 }
 
@@ -246,33 +178,22 @@ Entity details
       float: left;
       overflow: hidden;
       clear: left;
-
       text-align: right;
       text-overflow: ellipsis;
       white-space: nowrap;
-
-      padding: calc(2 * var(--pixel)) 0;
-
-      font-family: 'field', monospace;
-      font-size: var(--font-field-size);
+      padding: 0.5em 0;
     }
-
     dd {
-      border-bottom: var(--pixel) solid var(--ui-button-center);
-
-      padding: calc(2 * var(--pixel)) 0;
+      border-bottom: 1px solid #eee;
+      padding: 0.5em 0;
       margin-left: 0;
-
-      font-family: 'body', sans-serif;
-      font-size: var(--font-body-size);
     }
   }
 }
 
 /* ==========================================================================
-UI Bootstrap tweaks
+ui bootstrap tweaks
 ========================================================================== */
-
 .nav,
 .pagination,
 .carousel,
@@ -281,8 +202,7 @@ UI Bootstrap tweaks
 }
 
 .thread-dump-modal-lock {
-  max-width: calc(113 * var(--pixel));
-
+  max-width: 450px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -293,148 +213,24 @@ UI Bootstrap tweaks
 }
 
 /* ==========================================================================
-Angular CLI RTL overrides
+angular-cli removes postcss-rtl processed inline css, processed rules must be added here instead
 ========================================================================== */
-
+/* page-ribbon.scss */
 .ribbon {
-  left: calc(-14 * var(--pixel));
-
+  left: -3.5em;
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
 
+/* navbar.scss */
 .navbar {
   ul.navbar-nav {
     .nav-item {
-      margin-left: calc(2 * var(--pixel));
+      margin-left: 0.5em;
     }
   }
 }
-
 /* jhipster-needle-scss-add-main JHipster will add new css style */
-
-/* ==========================================================================
-Sidebar layout
-========================================================================== */
-
-.app-layout {
-  display: flex;
-  min-height: 100vh;
-  width: 100%;
-}
-
-.app-navbar {
-  flex: none;
-  width: calc(116 * var(--pixel));
-}
-
-.app-content {
-  flex: 1 1 auto;
-  min-width: 0;
-}
-
-@media (max-width: 767.98px) {
-  .app-layout {
-    display: block;
-  }
-
-  .app-navbar {
-    width: 100%;
-  }
-}
-
-/* ==========================================================================
-Dashboard boxes
-========================================================================== */
-
-.dashboard-box {
-  background: var(--ui-window-background);
-
-  border: var(--pixel) solid var(--ui-kip-gold);
-
-  padding: calc(0 * var(--pixel));
-  min-height: calc(45 * var(--pixel));
-
-  box-shadow: 0 calc(3 * var(--pixel)) 0 var(--ui-window-shadow);
-
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
-}
-
-.dashboard-box h2 {
-  background: var(--ui-kip-gold);
-  color: var(--ui-button-highlight);
-
-  margin: calc(-1 * var(--pixel)) calc(0 * var(--pixel)) calc(0 * var(--pixel)) calc(0 * var(--pixel));
-
-  padding-inline: calc(2 * var(--pixel));
-
-  font-family: 'title', sans-serif;
-  font-size: var(--font-title-size);
-  font-weight: normal;
-}
-.dashboard-box p {
-  padding: calc(4 * var(--pixel));
-}
-
-.activity-title {
-  font-family: 'field', monospace;
-  font-size: var(--font-field-size);
-}
-
-.activity-meta {
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
-}
-
-.activity-score {
-  font-family: 'field', monospace;
-  font-size: var(--font-field-size);
-}
-
-.form-label,
-.form-check-label {
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
-  font-weight: normal;
-}
-
-.form-control,
-.form-select {
-  font-family: 'field', monospace;
-  font-size: var(--font-field-size);
-  font-weight: normal;
-
-  background-color: var(--ui-button-highlight);
-  color: var(--ui-window-shadow);
-
-  border: var(--pixel) solid var(--ui-window-shadow);
-  border-radius: 0;
-
-  padding: calc(0 * var(--pixel)) calc(3 * var(--pixel));
-}
-
-.form-control::placeholder {
-  font-family: 'field', monospace;
-  font-size: var(--font-field-size);
-}
-
-.form-check {
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
-}
-
-.btn {
-  font-family: 'field', monospace;
-  font-size: var(--font-field-size);
-  font-weight: normal;
-
-  border-width: var(--pixel);
-  border-radius: 0;
-
-  padding: calc(2 * var(--pixel)) calc(3 * var(--pixel));
-}
-
-.alert {
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
-}

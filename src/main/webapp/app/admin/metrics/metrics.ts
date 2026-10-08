@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { combineLatest } from 'rxjs';
@@ -17,6 +17,7 @@ import { MetricsService } from './metrics.service';
 @Component({
   selector: 'jhi-metrics',
   templateUrl: './metrics.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     FontAwesomeModule,
     JvmMemory,
@@ -50,7 +51,6 @@ export default class Metrics implements OnInit {
   }
 
   metricsKeyExistsAndObjectNotEmpty(key: keyof MetricsModel): boolean {
-    const value = this.metrics()?.[key];
-    return Boolean(value && Object.keys(value).length > 0);
+    return Boolean(this.metrics()?.[key] && JSON.stringify(this.metrics()?.[key]) !== '{}');
   }
 }

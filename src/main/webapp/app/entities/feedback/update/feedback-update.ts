@@ -1,17 +1,18 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, finalize } from 'rxjs';
 
-import { AlertError } from 'app/shared/alert';
+import { AlertError } from 'app/shared/alert/alert-error';
 import { IFeedback } from '../feedback.model';
 import { FeedbackService } from '../service/feedback.service';
 
 import { FeedbackFormGroup, FeedbackFormService } from './feedback-form.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-feedback-update',
   templateUrl: './feedback-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

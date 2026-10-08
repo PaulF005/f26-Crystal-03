@@ -1,11 +1,13 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { getPageNumberFromLinkHeader, parseLinkHeader } from 'app/shared/jhipster/link-header';
 
 /**
  * A utility service for link parsing.
  */
-@Service()
+@Injectable({
+  providedIn: 'root',
+})
 export class ParseLinks {
   /**
    * Method to parse the links

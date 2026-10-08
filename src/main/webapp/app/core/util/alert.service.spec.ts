@@ -1,17 +1,16 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { WritableSignal, signal } from '@angular/core';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 
 import { AlertModel, AlertService } from './alert.service';
 
 describe('Alert Service Test', () => {
-  let extAlerts: WritableSignal<AlertModel[]>;
+  let extAlerts: AlertModel[];
   let service: AlertService;
 
   beforeEach(() => {
     service = TestBed.inject(AlertService);
-    vi.useFakeTimers();
-    extAlerts = signal([]);
+    vitest.useFakeTimers();
+    extAlerts = [];
   });
 
   it('should produce a proper alert object and fetch it', () => {
@@ -70,8 +69,8 @@ describe('Alert Service Test', () => {
       }),
     );
 
-    expect(extAlerts()).toHaveLength(1);
-    expect(extAlerts()[0]).toEqual(
+    expect(extAlerts).toHaveLength(1);
+    expect(extAlerts[0]).toEqual(
       expect.objectContaining({
         type: 'success',
         message: 'Hello Jhipster',
@@ -81,8 +80,6 @@ describe('Alert Service Test', () => {
         position: 'top left',
       }),
     );
-    extAlerts()[0].close?.();
-    expect(extAlerts()).toHaveLength(0);
   });
 
   it('should produce an alert object with correct id', () => {
@@ -118,7 +115,7 @@ describe('Alert Service Test', () => {
     );
 
     expect(service.get()).toHaveLength(3);
-    alert1.close?.();
+    alert1.close?.(service.get());
     expect(service.get()).toHaveLength(2);
     expect(service.get()[1]).not.toEqual(
       expect.objectContaining({
@@ -127,7 +124,7 @@ describe('Alert Service Test', () => {
         id: 1,
       }),
     );
-    alert2.close?.();
+    alert2.close?.(service.get());
     expect(service.get()).toHaveLength(1);
     expect(service.get()[0]).not.toEqual(
       expect.objectContaining({
@@ -136,7 +133,7 @@ describe('Alert Service Test', () => {
         id: 2,
       }),
     );
-    alert0.close?.();
+    alert0.close?.(service.get());
     expect(service.get()).toHaveLength(0);
   });
 
@@ -145,7 +142,7 @@ describe('Alert Service Test', () => {
 
     expect(service.get()).toHaveLength(1);
 
-    vi.advanceTimersByTime(6000);
+    vitest.advanceTimersByTime(6000);
 
     expect(service.get()).toHaveLength(0);
   });
@@ -169,7 +166,7 @@ describe('Alert Service Test', () => {
           toast: true,
           position: 'top left',
         },
-        signal([]),
+        [],
       ),
     ).toEqual(
       expect.objectContaining({
@@ -222,7 +219,7 @@ describe('Alert Service Test', () => {
     );
   });
 
-  it('should produce an info message', () => {
+  it('should produce a info message', () => {
     expect(service.addAlert({ type: 'info', message: 'Hello Jhipster' })).toEqual(
       expect.objectContaining({
         type: 'info',

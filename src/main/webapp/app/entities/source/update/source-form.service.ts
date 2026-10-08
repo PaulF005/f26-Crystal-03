@@ -1,4 +1,4 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ISource, NewSource } from '../source.model';
@@ -27,7 +27,7 @@ type SourceFormGroupContent = {
 
 export type SourceFormGroup = FormGroup<SourceFormGroupContent>;
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class SourceFormService {
   createSourceFormGroup(source?: SourceFormGroupInput): SourceFormGroup {
     const sourceRawValue = {

@@ -1,8 +1,7 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { WritableSignal, signal } from '@angular/core';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AlertModel, AlertService } from 'app/core/util';
+import { AlertService } from 'app/core/util/alert.service';
 
 import { Alert } from './alert';
 
@@ -17,8 +16,8 @@ describe('Alert Component', () => {
         {
           provide: AlertService,
           useValue: {
-            alerts: signal([]),
-            clear: vi.fn(),
+            clear: vitest.fn(),
+            get: vitest.fn(),
           },
         },
       ],
@@ -31,17 +30,12 @@ describe('Alert Component', () => {
     mockAlertService = TestBed.inject(AlertService);
   });
 
-  it('should render alerts added after init', () => {
-    // GIVEN
-    fixture.detectChanges();
-
+  it('should call alertService.get on init', () => {
     // WHEN
-    const alerts = mockAlertService.alerts as WritableSignal<AlertModel[]>;
-    alerts.set([{ id: 0, type: 'success', message: 'Hello' }]);
-    fixture.detectChanges();
+    comp.ngOnInit();
 
     // THEN
-    expect(fixture.nativeElement.querySelectorAll('ngb-alert')).toHaveLength(1);
+    expect(mockAlertService.get).toHaveBeenCalled();
   });
 
   it('should call alertService.clear on destroy', () => {

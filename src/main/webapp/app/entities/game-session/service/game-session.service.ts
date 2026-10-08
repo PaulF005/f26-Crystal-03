@@ -1,11 +1,12 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Service, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import dayjs from 'dayjs/esm';
 import { Observable, map } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
-import { createRequestOption } from 'app/core/request';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
 import { IGameSession, NewGameSession } from '../game-session.model';
 
 export type PartialUpdateGameSession = Partial<IGameSession> & Pick<IGameSession, 'id'>;
@@ -21,7 +22,7 @@ export type NewRestGameSession = RestOf<NewGameSession>;
 
 export type PartialUpdateRestGameSession = RestOf<PartialUpdateGameSession>;
 
-@Service()
+@Injectable()
 export class GameSessionsService {
   readonly gameSessionsParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -40,7 +41,8 @@ export class GameSessionsService {
   readonly gameSessions = computed(() =>
     (this.gameSessionsResource.hasValue() ? this.gameSessionsResource.value() : []).map(item => this.convertValueFromServer(item)),
   );
-  protected readonly resourceUrl = `${serverApiUrl}api/game-sessions`;
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
+  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/game-sessions');
 
   protected convertValueFromServer(restGameSession: RestGameSession): IGameSession {
     return {
@@ -51,7 +53,7 @@ export class GameSessionsService {
   }
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class GameSessionService extends GameSessionsService {
   protected readonly http = inject(HttpClient);
 
@@ -103,7 +105,7 @@ export class GameSessionService extends GameSessionsService {
     gameSessionCollection: Type[],
     ...gameSessionsToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const gameSessions: Type[] = gameSessionsToCheck.filter(gameSessionItem => gameSessionItem !== null && gameSessionItem !== undefined);
+    const gameSessions: Type[] = gameSessionsToCheck.filter(isPresent);
     if (gameSessions.length > 0) {
       const gameSessionCollectionIdentifiers = gameSessionCollection.map(gameSessionItem => this.getGameSessionIdentifier(gameSessionItem));
       const gameSessionsToAdd = gameSessions.filter(gameSessionItem => {

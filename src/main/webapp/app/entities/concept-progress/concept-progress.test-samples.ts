@@ -8,6 +8,7 @@ export const sampleWithRequiredData: IConceptProgress = {
   improvement: 4330.5,
   evidenceCount: 8353,
   lastPracticedAt: dayjs('2026-09-20T09:40'),
+  maxQuestions: 2905,
 };
 
 export const sampleWithPartialData: IConceptProgress = {
@@ -16,6 +17,7 @@ export const sampleWithPartialData: IConceptProgress = {
   improvement: 29755.34,
   evidenceCount: 3958,
   lastPracticedAt: dayjs('2026-09-20T10:25'),
+  maxQuestions: 10838,
 };
 
 export const sampleWithFullData: IConceptProgress = {
@@ -24,6 +26,7 @@ export const sampleWithFullData: IConceptProgress = {
   improvement: 4169.12,
   evidenceCount: 23310,
   lastPracticedAt: dayjs('2026-09-20T09:52'),
+  maxQuestions: 28665,
 };
 
 export const sampleWithNewData: NewConceptProgress = {
@@ -31,6 +34,7 @@ export const sampleWithNewData: NewConceptProgress = {
   improvement: 19919.96,
   evidenceCount: 3797,
   lastPracticedAt: dayjs('2026-09-20T00:44'),
+  maxQuestions: 12107,
   id: null,
 };
 

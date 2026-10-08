@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,13 +8,14 @@ import { Observable, finalize, map } from 'rxjs';
 
 import { IConcept } from 'app/entities/concept/concept.model';
 import { ConceptService } from 'app/entities/concept/service/concept.service';
-import { AlertError } from 'app/shared/alert';
+import { AlertError } from 'app/shared/alert/alert-error';
 import { IQuestion } from '../question.model';
 import { QuestionService } from '../service/question.service';
 
 import { QuestionFormGroup, QuestionFormService } from './question-form.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-question-update',
   templateUrl: './question-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

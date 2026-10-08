@@ -1,58 +1,58 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     @if (scenario(); as scenarioRef) {
-      <div>
-        <h2 data-cy="scenarioDetailsHeading"><span>Scenario</span></h2>
+    <div>
+      <h2 data-cy="scenarioDetailsHeading"><span>Scenario</span></h2>
 
-        <hr />
+      <hr />
 
-        <jhi-alert-error />
+      <jhi-alert-error />
 
-        <jhi-alert />
+      <jhi-alert />
 
-        <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ scenarioRef.id }}</span>
-          </dd>
-          <dt><span>Name</span></dt>
-          <dd>
-            <span>{{ scenarioRef.name }}</span>
-          </dd>
-          <dt><span>Topic</span></dt>
-          <dd>
-            @if (scenario()!.topic) {
-              <div>
-                <a [routerLink]="['/topic', scenario()!.topic?.id, 'view']">{{ scenarioRef.topic?.id }}</a>
-              </div>
-            }
-          </dd>
-          <dt><span>Starting Stage</span></dt>
-          <dd>
-            @if (scenario()!.startingStage) {
-              <div>
-                <a [routerLink]="['/stage', scenario()!.startingStage?.id, 'view']">{{ scenarioRef.startingStage?.id }}</a>
-              </div>
-            }
-          </dd>
-          <dt><span>Game</span></dt>
-          <dd>
-            @if (scenario()!.game) {
-              <div>
-                <a [routerLink]="['/game', scenario()!.game?.id, 'view']">{{ scenarioRef.game?.id }}</a>
-              </div>
-            }
-          </dd>
-        </dl>
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ scenarioRef.id }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ scenarioRef.name }}</span>
+        </dd>
+        <dt><span>Topic</span></dt>
+        <dd>
+          @if (scenario()!.topic) {
+          <div>
+            <a [routerLink]="['/topic', scenario()!.topic?.id, 'view']">{{ scenarioRef.topic?.id }}</a>
+          </div>
+          }
+        </dd>
+        <dt><span>Starting Stage</span></dt>
+        <dd>
+          @if (scenario()!.startingStage) {
+          <div>
+            <a [routerLink]="['/stage', scenario()!.startingStage?.id, 'view']">{{ scenarioRef.startingStage?.id }}</a>
+          </div>
+          }
+        </dd>
+        <dt><span>Game</span></dt>
+        <dd>
+          @if (scenario()!.game) {
+          <div>
+            <a [routerLink]="['/game', scenario()!.game?.id, 'view']">{{ scenarioRef.game?.id }}</a>
+          </div>
+          }
+        </dd>
+      </dl>
 
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
-        </button>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
+      </button>
 
-        <button type="button" [routerLink]="['/scenario', scenarioRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
-        </button>
-      </div>
+      <button type="button" [routerLink]="['/scenario', scenarioRef.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
+      </button>
+    </div>
     }
   </div>
 </div>

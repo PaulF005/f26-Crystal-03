@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -14,13 +14,14 @@ import { StageService } from 'app/entities/stage/service/stage.service';
 import { IStage } from 'app/entities/stage/stage.model';
 import { UserProfileService } from 'app/entities/user-profile/service/user-profile.service';
 import { IUserProfile } from 'app/entities/user-profile/user-profile.model';
-import { AlertError } from 'app/shared/alert';
+import { AlertError } from 'app/shared/alert/alert-error';
 import { StageAttemptService } from '../service/stage-attempt.service';
 import { IStageAttempt } from '../stage-attempt.model';
 
 import { StageAttemptFormGroup, StageAttemptFormService } from './stage-attempt-form.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-stage-attempt-update',
   templateUrl: './stage-attempt-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

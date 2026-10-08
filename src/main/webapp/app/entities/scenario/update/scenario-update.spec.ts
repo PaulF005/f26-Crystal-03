@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { HttpResponse } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -59,10 +59,10 @@ describe('Scenario Management Update Component', () => {
       scenario.startingStage = startingStage;
 
       const stageCollection: IStage[] = [{ id: 30579 }];
-      vi.spyOn(stageService, 'query').mockReturnValue(of(new HttpResponse({ body: stageCollection })));
+      vitest.spyOn(stageService, 'query').mockReturnValue(of(new HttpResponse({ body: stageCollection })));
       const additionalStages = [startingStage];
       const expectedCollection: IStage[] = [...additionalStages, ...stageCollection];
-      vi.spyOn(stageService, 'addStageToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vitest.spyOn(stageService, 'addStageToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ scenario });
       comp.ngOnInit();
@@ -81,10 +81,10 @@ describe('Scenario Management Update Component', () => {
       scenario.topic = topic;
 
       const topicCollection: ITopic[] = [{ id: 29581 }];
-      vi.spyOn(topicService, 'query').mockReturnValue(of(new HttpResponse({ body: topicCollection })));
+      vitest.spyOn(topicService, 'query').mockReturnValue(of(new HttpResponse({ body: topicCollection })));
       const additionalTopics = [topic];
       const expectedCollection: ITopic[] = [...additionalTopics, ...topicCollection];
-      vi.spyOn(topicService, 'addTopicToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vitest.spyOn(topicService, 'addTopicToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ scenario });
       comp.ngOnInit();
@@ -103,10 +103,10 @@ describe('Scenario Management Update Component', () => {
       scenario.game = game;
 
       const gameCollection: IGame[] = [{ id: 7137 }];
-      vi.spyOn(gameService, 'query').mockReturnValue(of(new HttpResponse({ body: gameCollection })));
+      vitest.spyOn(gameService, 'query').mockReturnValue(of(new HttpResponse({ body: gameCollection })));
       const additionalGames = [game];
       const expectedCollection: IGame[] = [...additionalGames, ...gameCollection];
-      vi.spyOn(gameService, 'addGameToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vitest.spyOn(gameService, 'addGameToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ scenario });
       comp.ngOnInit();
@@ -143,9 +143,9 @@ describe('Scenario Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IScenario>();
       const scenario = { id: 10879 };
-      vi.spyOn(scenarioFormService, 'getScenario').mockReturnValue(scenario);
-      vi.spyOn(scenarioService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(scenarioFormService, 'getScenario').mockReturnValue(scenario);
+      vitest.spyOn(scenarioService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ scenario });
       comp.ngOnInit();
 
@@ -166,9 +166,9 @@ describe('Scenario Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IScenario>();
       const scenario = { id: 10879 };
-      vi.spyOn(scenarioFormService, 'getScenario').mockReturnValue({ id: null });
-      vi.spyOn(scenarioService, 'create').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(scenarioFormService, 'getScenario').mockReturnValue({ id: null });
+      vitest.spyOn(scenarioService, 'create').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ scenario: null });
       comp.ngOnInit();
 
@@ -189,8 +189,8 @@ describe('Scenario Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IScenario>();
       const scenario = { id: 10879 };
-      vi.spyOn(scenarioService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(scenarioService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ scenario });
       comp.ngOnInit();
 
@@ -211,7 +211,7 @@ describe('Scenario Management Update Component', () => {
       it('should forward to stageService', () => {
         const entity = { id: 30579 };
         const entity2 = { id: 6829 };
-        vi.spyOn(stageService, 'compareStage');
+        vitest.spyOn(stageService, 'compareStage');
         comp.compareStage(entity, entity2);
         expect(stageService.compareStage).toHaveBeenCalledWith(entity, entity2);
       });
@@ -221,7 +221,7 @@ describe('Scenario Management Update Component', () => {
       it('should forward to topicService', () => {
         const entity = { id: 29581 };
         const entity2 = { id: 14122 };
-        vi.spyOn(topicService, 'compareTopic');
+        vitest.spyOn(topicService, 'compareTopic');
         comp.compareTopic(entity, entity2);
         expect(topicService.compareTopic).toHaveBeenCalledWith(entity, entity2);
       });
@@ -231,7 +231,7 @@ describe('Scenario Management Update Component', () => {
       it('should forward to gameService', () => {
         const entity = { id: 7137 };
         const entity2 = { id: 5760 };
-        vi.spyOn(gameService, 'compareGame');
+        vitest.spyOn(gameService, 'compareGame');
         comp.compareGame(entity, entity2);
         expect(gameService.compareGame).toHaveBeenCalledWith(entity, entity2);
       });

@@ -1,5 +1,5 @@
 import { JsonPipe, KeyValuePipe } from '@angular/common';
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -11,6 +11,7 @@ import { ConfigurationService } from './configuration.service';
 
 @Component({
   selector: 'jhi-configuration',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './configuration.html',
   imports: [FontAwesomeModule, FormsModule, SortDirective, SortByDirective, KeyValuePipe, JsonPipe],
 })

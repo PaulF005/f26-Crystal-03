@@ -1,17 +1,18 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, finalize } from 'rxjs';
 
-import { AlertError } from 'app/shared/alert';
+import { AlertError } from 'app/shared/alert/alert-error';
 import { IGame } from '../game.model';
 import { GameService } from '../service/game.service';
 
 import { GameFormGroup, GameFormService } from './game-form.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-game-update',
   templateUrl: './game-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

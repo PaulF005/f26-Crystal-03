@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { mergeMap } from 'rxjs';
@@ -7,6 +7,7 @@ import { ActivateService } from './activate.service';
 
 @Component({
   selector: 'jhi-activate',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink],
   templateUrl: './activate.html',
 })

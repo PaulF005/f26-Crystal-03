@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,13 +8,14 @@ import { Observable, finalize, map } from 'rxjs';
 
 import { UserService } from 'app/entities/user/service/user.service';
 import { IUser } from 'app/entities/user/user.model';
-import { AlertError } from 'app/shared/alert';
+import { AlertError } from 'app/shared/alert/alert-error';
 import { UserProfileService } from '../service/user-profile.service';
 import { IUserProfile } from '../user-profile.model';
 
 import { UserProfileFormGroup, UserProfileFormService } from './user-profile-form.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-user-profile-update',
   templateUrl: './user-profile-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

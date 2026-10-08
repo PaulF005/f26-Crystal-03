@@ -1,54 +1,54 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     @if (source(); as sourceRef) {
-      <div>
-        <h2 data-cy="sourceDetailsHeading"><span>Source</span></h2>
+    <div>
+      <h2 data-cy="sourceDetailsHeading"><span>Source</span></h2>
 
-        <hr />
+      <hr />
 
-        <jhi-alert-error />
+      <jhi-alert-error />
 
-        <jhi-alert />
+      <jhi-alert />
 
-        <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ sourceRef.id }}</span>
-          </dd>
-          <dt><span>Name</span></dt>
-          <dd>
-            <span>{{ sourceRef.name }}</span>
-          </dd>
-          <dt><span>Url</span></dt>
-          <dd>
-            <span>{{ sourceRef.url }}</span>
-          </dd>
-          <dt><span>Date</span></dt>
-          <dd>
-            <span>{{ sourceRef.date }}</span>
-          </dd>
-          <dt><span>Data</span></dt>
-          <dd>
-            <span>{{ sourceRef.data }}</span>
-          </dd>
-          <dt><span>Legal Content</span></dt>
-          <dd>
-            @if (source()!.legalContent) {
-              <div>
-                <a [routerLink]="['/legal-content', source()!.legalContent?.id, 'view']">{{ sourceRef.legalContent?.id }}</a>
-              </div>
-            }
-          </dd>
-        </dl>
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ sourceRef.id }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ sourceRef.name }}</span>
+        </dd>
+        <dt><span>Url</span></dt>
+        <dd>
+          <span>{{ sourceRef.url }}</span>
+        </dd>
+        <dt><span>Date</span></dt>
+        <dd>
+          <span>{{ sourceRef.date }}</span>
+        </dd>
+        <dt><span>Data</span></dt>
+        <dd>
+          <span>{{ sourceRef.data }}</span>
+        </dd>
+        <dt><span>Legal Content</span></dt>
+        <dd>
+          @if (source()!.legalContent) {
+          <div>
+            <a [routerLink]="['/legal-content', source()!.legalContent?.id, 'view']">{{ sourceRef.legalContent?.id }}</a>
+          </div>
+          }
+        </dd>
+      </dl>
 
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
-        </button>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
+      </button>
 
-        <button type="button" [routerLink]="['/source', sourceRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
-        </button>
-      </div>
+      <button type="button" [routerLink]="['/source', sourceRef.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
+      </button>
+    </div>
     }
   </div>
 </div>

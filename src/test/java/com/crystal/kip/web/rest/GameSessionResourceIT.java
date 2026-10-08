@@ -12,6 +12,7 @@ import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.GameSession;
 import com.crystal.kip.domain.UserProfile;
 import com.crystal.kip.repository.GameSessionRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.util.Random;
@@ -25,7 +26,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import tools.jackson.databind.ObjectMapper;
 
 /**
  * Integration tests for the {@link GameSessionResource} REST controller.

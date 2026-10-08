@@ -1,9 +1,9 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import dayjs from 'dayjs/esm';
 
-import { DATE_TIME_FORMAT } from 'app/config';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { IGameSession, NewGameSession } from '../game-session.model';
 
 /**
@@ -41,7 +41,7 @@ type GameSessionFormGroupContent = {
 
 export type GameSessionFormGroup = FormGroup<GameSessionFormGroupContent>;
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class GameSessionFormService {
   createGameSessionFormGroup(gameSession?: GameSessionFormGroupInput): GameSessionFormGroup {
     const gameSessionRawValue = this.convertGameSessionToGameSessionRawValue({

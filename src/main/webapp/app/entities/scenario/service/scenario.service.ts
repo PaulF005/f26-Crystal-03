@@ -1,15 +1,16 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Service, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
-import { createRequestOption } from 'app/core/request';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
 import { IScenario, NewScenario } from '../scenario.model';
 
 export type PartialUpdateScenario = Partial<IScenario> & Pick<IScenario, 'id'>;
 
-@Service()
+@Injectable()
 export class ScenariosService {
   readonly scenariosParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -26,10 +27,11 @@ export class ScenariosService {
    * In case of error while fetching the scenarios, the signal is set to an empty array.
    */
   readonly scenarios = computed(() => (this.scenariosResource.hasValue() ? this.scenariosResource.value() : []));
-  protected readonly resourceUrl = `${serverApiUrl}api/scenarios`;
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
+  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/scenarios');
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class ScenarioService extends ScenariosService {
   protected readonly http = inject(HttpClient);
 
@@ -70,7 +72,7 @@ export class ScenarioService extends ScenariosService {
     scenarioCollection: Type[],
     ...scenariosToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const scenarios: Type[] = scenariosToCheck.filter(scenarioItem => scenarioItem !== null && scenarioItem !== undefined);
+    const scenarios: Type[] = scenariosToCheck.filter(isPresent);
     if (scenarios.length > 0) {
       const scenarioCollectionIdentifiers = scenarioCollection.map(scenarioItem => this.getScenarioIdentifier(scenarioItem));
       const scenariosToAdd = scenarios.filter(scenarioItem => {

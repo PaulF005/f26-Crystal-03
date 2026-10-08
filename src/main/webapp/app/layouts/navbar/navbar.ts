@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -6,13 +6,14 @@ import { NgbCollapse } from '@ng-bootstrap/ng-bootstrap/collapse';
 import { NgbDropdown, NgbDropdownMenu, NgbDropdownToggle } from '@ng-bootstrap/ng-bootstrap/dropdown';
 import { environment } from 'environments/environment';
 
-import { AccountService } from 'app/core/auth';
+import { AccountService } from 'app/core/auth/account.service';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { LoginService } from 'app/login/login.service';
-import { HasAnyAuthorityDirective } from 'app/shared/auth';
+import HasAnyAuthorityDirective from 'app/shared/auth/has-any-authority.directive';
 
 @Component({
   selector: 'jhi-navbar',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
   imports: [
@@ -31,8 +32,7 @@ export default class Navbar implements OnInit {
   readonly isNavbarCollapsed = signal(true);
   readonly openAPIEnabled = signal(false);
   readonly version: string;
-  readonly accountService = inject(AccountService);
-  readonly account = this.accountService.account;
+  readonly account = inject(AccountService).account;
 
   private readonly loginService = inject(LoginService);
   private readonly profileService = inject(ProfileService);

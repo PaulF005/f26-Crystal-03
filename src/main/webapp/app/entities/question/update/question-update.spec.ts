@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { HttpResponse } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -51,10 +51,10 @@ describe('Question Management Update Component', () => {
       question.concept = concept;
 
       const conceptCollection: IConcept[] = [{ id: 29097 }];
-      vi.spyOn(conceptService, 'query').mockReturnValue(of(new HttpResponse({ body: conceptCollection })));
+      vitest.spyOn(conceptService, 'query').mockReturnValue(of(new HttpResponse({ body: conceptCollection })));
       const additionalConcepts = [concept];
       const expectedCollection: IConcept[] = [...additionalConcepts, ...conceptCollection];
-      vi.spyOn(conceptService, 'addConceptToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vitest.spyOn(conceptService, 'addConceptToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ question });
       comp.ngOnInit();
@@ -85,9 +85,9 @@ describe('Question Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IQuestion>();
       const question = { id: 16375 };
-      vi.spyOn(questionFormService, 'getQuestion').mockReturnValue(question);
-      vi.spyOn(questionService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(questionFormService, 'getQuestion').mockReturnValue(question);
+      vitest.spyOn(questionService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ question });
       comp.ngOnInit();
 
@@ -108,9 +108,9 @@ describe('Question Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IQuestion>();
       const question = { id: 16375 };
-      vi.spyOn(questionFormService, 'getQuestion').mockReturnValue({ id: null });
-      vi.spyOn(questionService, 'create').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(questionFormService, 'getQuestion').mockReturnValue({ id: null });
+      vitest.spyOn(questionService, 'create').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ question: null });
       comp.ngOnInit();
 
@@ -131,8 +131,8 @@ describe('Question Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IQuestion>();
       const question = { id: 16375 };
-      vi.spyOn(questionService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(questionService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ question });
       comp.ngOnInit();
 
@@ -153,7 +153,7 @@ describe('Question Management Update Component', () => {
       it('should forward to conceptService', () => {
         const entity = { id: 29097 };
         const entity2 = { id: 14426 };
-        vi.spyOn(conceptService, 'compareConcept');
+        vitest.spyOn(conceptService, 'compareConcept');
         comp.compareConcept(entity, entity2);
         expect(conceptService.compareConcept).toHaveBeenCalledWith(entity, entity2);
       });

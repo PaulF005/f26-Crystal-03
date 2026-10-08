@@ -1,13 +1,14 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Service, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
-import { createRequestOption } from 'app/core/request';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
 import { IUser } from '../user.model';
 
-@Service()
+@Injectable()
 export class UsersService {
   readonly usersParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(undefined);
   readonly usersResource = httpResource<IUser[]>(() => {
@@ -22,10 +23,11 @@ export class UsersService {
    * In case of error while fetching the users, the signal is set to an empty array.
    */
   readonly users = computed(() => (this.usersResource.hasValue() ? this.usersResource.value() : []));
-  protected readonly resourceUrl = `${serverApiUrl}api/users`;
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
+  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/users');
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class UserService extends UsersService {
   protected readonly http = inject(HttpClient);
 
@@ -50,7 +52,7 @@ export class UserService extends UsersService {
     userCollection: Type[],
     ...usersToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const users: Type[] = usersToCheck.filter(userItem => userItem !== null && userItem !== undefined);
+    const users: Type[] = usersToCheck.filter(isPresent);
     if (users.length > 0) {
       const userCollectionIdentifiers = userCollection.map(userItem => this.getUserIdentifier(userItem));
       const usersToAdd = users.filter(userItem => {

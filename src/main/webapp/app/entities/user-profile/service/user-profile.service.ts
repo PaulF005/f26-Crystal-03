@@ -1,15 +1,16 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Service, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
-import { createRequestOption } from 'app/core/request';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
 import { IUserProfile, NewUserProfile } from '../user-profile.model';
 
 export type PartialUpdateUserProfile = Partial<IUserProfile> & Pick<IUserProfile, 'id'>;
 
-@Service()
+@Injectable()
 export class UserProfilesService {
   readonly userProfilesParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -26,10 +27,11 @@ export class UserProfilesService {
    * In case of error while fetching the userProfiles, the signal is set to an empty array.
    */
   readonly userProfiles = computed(() => (this.userProfilesResource.hasValue() ? this.userProfilesResource.value() : []));
-  protected readonly resourceUrl = `${serverApiUrl}api/user-profiles`;
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
+  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/user-profiles');
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class UserProfileService extends UserProfilesService {
   protected readonly http = inject(HttpClient);
 
@@ -76,7 +78,7 @@ export class UserProfileService extends UserProfilesService {
     userProfileCollection: Type[],
     ...userProfilesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const userProfiles: Type[] = userProfilesToCheck.filter(userProfileItem => userProfileItem !== null && userProfileItem !== undefined);
+    const userProfiles: Type[] = userProfilesToCheck.filter(isPresent);
     if (userProfiles.length > 0) {
       const userProfileCollectionIdentifiers = userProfileCollection.map(userProfileItem => this.getUserProfileIdentifier(userProfileItem));
       const userProfilesToAdd = userProfiles.filter(userProfileItem => {

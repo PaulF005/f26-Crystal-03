@@ -1,15 +1,16 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 
-import { Account, AccountService } from 'app/core/auth';
-import { AlertError } from 'app/shared/alert';
+import { Account } from 'app/core/auth/account.model';
+import { AccountService } from 'app/core/auth/account.service';
+import { AlertError } from 'app/shared/alert/alert-error';
 
 const initialAccount: Account = {} as Account;
 
 @Component({
   selector: 'jhi-settings',
-  imports: [AlertError, ReactiveFormsModule, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AlertError, ReactiveFormsModule],
   templateUrl: './settings.html',
 })
 export default class Settings implements OnInit {
@@ -29,6 +30,7 @@ export default class Settings implements OnInit {
       validators: [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email],
     }),
     langKey: new FormControl(initialAccount.langKey, { nonNullable: true }),
+
     activated: new FormControl(initialAccount.activated, { nonNullable: true }),
     authorities: new FormControl(initialAccount.authorities, { nonNullable: true }),
     imageUrl: new FormControl(initialAccount.imageUrl, { nonNullable: true }),

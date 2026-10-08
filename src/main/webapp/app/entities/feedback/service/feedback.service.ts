@@ -1,15 +1,16 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Service, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
-import { createRequestOption } from 'app/core/request';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
 import { IFeedback, NewFeedback } from '../feedback.model';
 
 export type PartialUpdateFeedback = Partial<IFeedback> & Pick<IFeedback, 'id'>;
 
-@Service()
+@Injectable()
 export class FeedbacksService {
   readonly feedbacksParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -26,10 +27,11 @@ export class FeedbacksService {
    * In case of error while fetching the feedbacks, the signal is set to an empty array.
    */
   readonly feedbacks = computed(() => (this.feedbacksResource.hasValue() ? this.feedbacksResource.value() : []));
-  protected readonly resourceUrl = `${serverApiUrl}api/feedbacks`;
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
+  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/feedbacks');
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class FeedbackService extends FeedbacksService {
   protected readonly http = inject(HttpClient);
 
@@ -70,7 +72,7 @@ export class FeedbackService extends FeedbacksService {
     feedbackCollection: Type[],
     ...feedbacksToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const feedbacks: Type[] = feedbacksToCheck.filter(feedbackItem => feedbackItem !== null && feedbackItem !== undefined);
+    const feedbacks: Type[] = feedbacksToCheck.filter(isPresent);
     if (feedbacks.length > 0) {
       const feedbackCollectionIdentifiers = feedbackCollection.map(feedbackItem => this.getFeedbackIdentifier(feedbackItem));
       const feedbacksToAdd = feedbacks.filter(feedbackItem => {

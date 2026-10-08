@@ -2,13 +2,14 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { serverApiUrl } from 'app/config';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
 
 import { ActivateService } from './activate.service';
 
 describe('ActivateService Service', () => {
   let service: ActivateService;
   let httpMock: HttpTestingController;
+  let applicationConfigService: ApplicationConfigService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,6 +17,7 @@ describe('ActivateService Service', () => {
     });
 
     service = TestBed.inject(ActivateService);
+    applicationConfigService = TestBed.inject(ApplicationConfigService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -36,7 +38,7 @@ describe('ActivateService Service', () => {
       });
       const testRequest = httpMock.expectOne({
         method: 'GET',
-        url: `${serverApiUrl}api/activate?key=${key}`,
+        url: applicationConfigService.getEndpointFor(`api/activate?key=${key}`),
       });
       testRequest.flush(value);
 

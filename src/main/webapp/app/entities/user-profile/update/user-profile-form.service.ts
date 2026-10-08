@@ -1,4 +1,4 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { IUserProfile, NewUserProfile } from '../user-profile.model';
@@ -25,7 +25,7 @@ type UserProfileFormGroupContent = {
 
 export type UserProfileFormGroup = FormGroup<UserProfileFormGroupContent>;
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class UserProfileFormService {
   createUserProfileFormGroup(userProfile?: UserProfileFormGroupInput): UserProfileFormGroup {
     const userProfileRawValue = {

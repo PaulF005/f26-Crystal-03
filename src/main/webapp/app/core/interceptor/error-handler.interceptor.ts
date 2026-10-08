@@ -3,7 +3,7 @@ import { inject } from '@angular/core';
 
 import { tap } from 'rxjs';
 
-import { EventManager, EventWithContent } from 'app/core/util';
+import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 
 export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
   const eventManager = inject(EventManager);

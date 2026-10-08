@@ -25,58 +25,58 @@
   <jhi-alert />
 
   @if (legalContents().length === 0) {
-    <div class="alert alert-warning" id="no-result">
-      <span>No Legal Contents found</span>
-    </div>
+  <div class="alert alert-warning" id="no-result">
+    <span>No Legal Contents found</span>
+  </div>
   } @else {
-    <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
-              <div class="d-flex">
-                <span>ID</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="name">
-              <div class="d-flex">
-                <span>Name</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (legalContent of legalContents(); track trackId(legalContent)) {
-            <tr data-cy="entityTable">
-              <td>
-                <a [routerLink]="['/legal-content', legalContent.id, 'view']">{{ legalContent.id }}</a>
-              </td>
-              <td>{{ legalContent.name }}</td>
-              <td class="text-end">
-                <div class="btn-group">
-                  <a [routerLink]="['/legal-content', legalContent.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                    <fa-icon icon="eye" />
-                    <span class="d-none d-md-inline">View</span>
-                  </a>
+  <div class="table-responsive table-entities" id="entities">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
 
-                  <a [routerLink]="['/legal-content', legalContent.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                    <fa-icon icon="pencil-alt" />
-                    <span class="d-none d-md-inline">Edit</span>
-                  </a>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span>Name</span>
 
-                  <button type="submit" (click)="delete(legalContent)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times" />
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (legalContent of legalContents(); track trackId(legalContent)) {
+        <tr data-cy="entityTable">
+          <td><a [routerLink]="['/legal-content', legalContent.id, 'view']">{{ legalContent.id }}</a></td>
+          <td>{{ legalContent.name }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a [routerLink]="['/legal-content', legalContent.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye" />
+                <span class="d-none d-md-inline">View</span>
+              </a>
+
+              <a [routerLink]="['/legal-content', legalContent.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt" />
+                <span class="d-none d-md-inline">Edit</span>
+              </a>
+
+              <button type="submit" (click)="delete(legalContent)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times" />
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   }
 </div>

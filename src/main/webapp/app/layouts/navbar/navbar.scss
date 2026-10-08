@@ -1,180 +1,36 @@
-@import '../../../content/scss/font';
-@import '../../../content/scss/pixel';
-@import '../../../content/scss/palette';
-@import '../../../content/scss/image';
-
 @import 'bootstrap/scss/functions';
 @import 'bootstrap/scss/variables';
 
 /* ==========================================================================
 Navbar
 ========================================================================== */
-:host {
-  display: block;
-  width: 100%;
-}
-.navbar {
-  align-items: stretch;
-
-  min-height: 100vh;
-  width: 100%;
-
-  padding: calc(5 * var(--pixel)) calc(4 * var(--pixel));
-
-  background: transparent !important;
-
-  font-family: 'fancy', sans-serif;
-  font-size: var(--font-fancy-size);
-
-  a.nav-link {
-    font-weight: normal;
-    color: var(--ui-button-highlight);
-  }
-}
 
 .navbar-version {
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
-
-  color: var(--ui-window-background);
+  font-size: 0.65em;
+  color: $navbar-dark-color;
 }
 
 .profile-image {
-  width: calc(7 * var(--pixel));
-  height: calc(7 * var(--pixel));
-
-  image-rendering: pixelated;
+  height: 1.75em;
+  width: 1.75em;
 }
 
-.container-fluid {
-  align-items: stretch;
-  flex-direction: column;
-  padding: 0;
-}
+.navbar {
+  padding: 0.2rem 1rem;
 
-.navbar-brand {
-  margin-bottom: calc(6 * var(--pixel));
-}
-
-.navbar-collapse {
-  display: block !important;
-}
-
-.navbar-nav {
-  flex-direction: column;
-
-  gap: var(--pixel);
-
-  width: 100%;
-}
-
-.nav-item,
-.nav-link {
-  width: 100%;
-}
-
-.nav-link {
-  padding: calc(0 * var(--pixel)) calc(3 * var(--pixel));
-
-  border-radius: calc(2 * var(--pixel));
-}
-
-.nav-link > span {
-  display: flex;
-  align-items: center;
-
-  gap: calc(3 * var(--pixel));
-}
-
-/* ==========================================================================
-Active navigation item
-========================================================================== */
-
-.nav-item.active > .nav-link {
-  background-color: var(--ui-kip-violet);
-  color: var(--ui-button-highlight);
-
-  font-weight: normal;
-}
-
-/* ==========================================================================
-Dropdown
-========================================================================== */
-
-.dropdown-menu {
-  position: static !important;
-  transform: none !important;
-
-  width: 100%;
-
-  margin: var(--pixel) 0 calc(2 * var(--pixel));
-
-  border: 0;
-
-  background-color: color-mix(in srgb, var(--ui-button-highlight) 8%, transparent);
-}
-
-.dropdown-item {
-  color: var(--ui-window-background);
-
-  padding-left: calc(9 * var(--pixel));
-
-  font-family: 'body', sans-serif;
-  font-size: var(--font-body-size);
-}
-
-.dropdown-item:hover,
-.dropdown-item:focus,
-.dropdown-item.active {
-  background-color: color-mix(in srgb, var(--ui-button-highlight) 12%, transparent);
-
-  color: var(--ui-button-highlight);
-}
-
-.navbar-toggler {
-  display: none;
-}
-
-/* ==========================================================================
-Mobile
-========================================================================== */
-
-@media (max-width: 767.98px) {
-  .navbar {
-    min-height: auto;
-    width: 100%;
-  }
-
-  .navbar-brand {
-    margin-bottom: 0;
-  }
-
-  .navbar-collapse {
-    display: none !important;
-  }
-
-  .navbar-collapse.show {
-    display: block !important;
-  }
-
-  .navbar-toggler {
-    display: block;
+  a.nav-link {
+    font-weight: 400;
   }
 }
 
 /* ==========================================================================
-Logo
+Logo styles
 ========================================================================== */
-
 .logo-img {
+  height: 45px;
+  width: 45px;
   display: inline-block;
   vertical-align: middle;
-  width: calc(96 * var(--pixel));
-  height: calc(32 * var(--pixel));
-
-  background: url('/content/images/ui/logo_kip_dev.png') no-repeat center;
-
+  background: url('/content/images/logo-jhipster.png') no-repeat center center;
   background-size: contain;
-
-  image-rendering: pixelated;
 }

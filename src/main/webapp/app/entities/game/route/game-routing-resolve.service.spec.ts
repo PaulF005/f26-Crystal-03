@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router, convertToParamMap } from '@angular/router';
@@ -28,7 +28,7 @@ describe('Game routing resolve service', () => {
       ],
     });
     mockRouter = TestBed.inject(Router);
-    vi.spyOn(mockRouter, 'navigate');
+    vitest.spyOn(mockRouter, 'navigate');
     mockActivatedRouteSnapshot = TestBed.inject(ActivatedRoute).snapshot;
     service = TestBed.inject(GameService);
   });
@@ -36,7 +36,7 @@ describe('Game routing resolve service', () => {
   describe('resolve', () => {
     it('should return IGame returned by find', async () => {
       // GIVEN
-      service.find = vi.fn(id => of({ id }));
+      service.find = vitest.fn(id => of({ id }));
       mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN
@@ -56,7 +56,7 @@ describe('Game routing resolve service', () => {
 
     it('should return null if id is not provided', async () => {
       // GIVEN
-      service.find = vi.fn();
+      service.find = vitest.fn();
       mockActivatedRouteSnapshot.params = {};
 
       // WHEN
@@ -76,7 +76,7 @@ describe('Game routing resolve service', () => {
 
     it('should route to 404 page if data not found in server', async () => {
       // GIVEN
-      vi.spyOn(service, 'find').mockReturnValue(throwError(() => new HttpErrorResponse({ status: 404, statusText: 'Not Found' })));
+      vitest.spyOn(service, 'find').mockReturnValue(throwError(() => new HttpErrorResponse({ status: 404, statusText: 'Not Found' })));
       mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN
@@ -90,9 +90,9 @@ describe('Game routing resolve service', () => {
 
     it('should route to error page if server returns an error other than 404', async () => {
       // GIVEN
-      vi.spyOn(service, 'find').mockReturnValue(
-        throwError(() => new HttpErrorResponse({ status: 500, statusText: 'Internal Server Error' })),
-      );
+      vitest
+        .spyOn(service, 'find')
+        .mockReturnValue(throwError(() => new HttpErrorResponse({ status: 500, statusText: 'Internal Server Error' })));
       mockActivatedRouteSnapshot.params = { id: 123 };
 
       // WHEN

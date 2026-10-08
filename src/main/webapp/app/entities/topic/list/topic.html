@@ -1,6 +1,6 @@
 <div>
   <h2 id="page-heading" data-cy="TopicHeading">
-    <span>Browse Topics</span>
+    <span>Topics</span>
 
     <div class="d-flex justify-content-end">
       <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading()">
@@ -19,73 +19,72 @@
       </button>
     </div>
   </h2>
-  <p class="text-muted">Select a legal topic to learn more.</p>
+
   <jhi-alert-error />
 
   <jhi-alert />
 
   @if (topics().length === 0) {
-    <div class="alert alert-warning" id="no-result">
-      <span>No Topics found</span>
-    </div>
+  <div class="alert alert-warning" id="no-result">
+    <span>No Topics found</span>
+  </div>
   } @else {
-    <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
-              <div class="d-flex">
-                <span>ID</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="name">
-              <div class="d-flex">
-                <span>Name</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="explanation">
-              <div class="d-flex">
-                <span>Explanation</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (topic of topics(); track trackId(topic)) {
-            <tr data-cy="entityTable">
-              <td>
-                <a [routerLink]="['/topic', topic.id, 'view']">{{ topic.id }}</a>
-              </td>
-              <td>
-                <a [routerLink]="['/topic', topic.id, 'view']">{{ topic.name }}</a>
-              </td>
-              <td>{{ topic.explanation }}</td>
-              <td class="text-end">
-                <div class="btn-group">
-                  <a [routerLink]="['/topic', topic.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                    <fa-icon icon="eye" />
-                    <span class="d-none d-md-inline">View</span>
-                  </a>
+  <div class="table-responsive table-entities" id="entities">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
 
-                  <a [routerLink]="['/topic', topic.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                    <fa-icon icon="pencil-alt" />
-                    <span class="d-none d-md-inline">Edit</span>
-                  </a>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span>Name</span>
 
-                  <button type="submit" (click)="delete(topic)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times" />
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="explanation">
+            <div class="d-flex">
+              <span>Explanation</span>
+
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (topic of topics(); track trackId(topic)) {
+        <tr data-cy="entityTable">
+          <td><a [routerLink]="['/topic', topic.id, 'view']">{{ topic.id }}</a></td>
+          <td>{{ topic.name }}</td>
+          <td>{{ topic.explanation }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a [routerLink]="['/topic', topic.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye" />
+                <span class="d-none d-md-inline">View</span>
+              </a>
+
+              <a [routerLink]="['/topic', topic.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt" />
+                <span class="d-none d-md-inline">Edit</span>
+              </a>
+
+              <button type="submit" (click)="delete(topic)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times" />
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   }
 </div>

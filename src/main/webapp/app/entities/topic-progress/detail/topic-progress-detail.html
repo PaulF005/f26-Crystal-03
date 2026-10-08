@@ -1,62 +1,62 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     @if (topicProgress(); as topicProgressRef) {
-      <div>
-        <h2 data-cy="topicProgressDetailsHeading"><span>Topic Progress</span></h2>
+    <div>
+      <h2 data-cy="topicProgressDetailsHeading"><span>Topic Progress</span></h2>
 
-        <hr />
+      <hr />
 
-        <jhi-alert-error />
+      <jhi-alert-error />
 
-        <jhi-alert />
+      <jhi-alert />
 
-        <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ topicProgressRef.id }}</span>
-          </dd>
-          <dt><span>Competency</span></dt>
-          <dd>
-            <span>{{ topicProgressRef.competency }}</span>
-          </dd>
-          <dt><span>Improvement</span></dt>
-          <dd>
-            <span>{{ topicProgressRef.improvement }}</span>
-          </dd>
-          <dt><span>Evidence Count</span></dt>
-          <dd>
-            <span>{{ topicProgressRef.evidenceCount }}</span>
-          </dd>
-          <dt><span>Last Practiced At</span></dt>
-          <dd>
-            <span>{{ topicProgressRef.lastPracticedAt | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span>Topic</span></dt>
-          <dd>
-            @if (topicProgress()!.topic) {
-              <div>
-                <a [routerLink]="['/topic', topicProgress()!.topic?.id, 'view']">{{ topicProgressRef.topic?.id }}</a>
-              </div>
-            }
-          </dd>
-          <dt><span>User Profile</span></dt>
-          <dd>
-            @if (topicProgress()!.userProfile) {
-              <div>
-                <a [routerLink]="['/user-profile', topicProgress()!.userProfile?.id, 'view']">{{ topicProgressRef.userProfile?.id }}</a>
-              </div>
-            }
-          </dd>
-        </dl>
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ topicProgressRef.id }}</span>
+        </dd>
+        <dt><span>Competency</span></dt>
+        <dd>
+          <span>{{ topicProgressRef.competency }}</span>
+        </dd>
+        <dt><span>Improvement</span></dt>
+        <dd>
+          <span>{{ topicProgressRef.improvement }}</span>
+        </dd>
+        <dt><span>Evidence Count</span></dt>
+        <dd>
+          <span>{{ topicProgressRef.evidenceCount }}</span>
+        </dd>
+        <dt><span>Last Practiced At</span></dt>
+        <dd>
+          <span>{{ topicProgressRef.lastPracticedAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Topic</span></dt>
+        <dd>
+          @if (topicProgress()!.topic) {
+          <div>
+            <a [routerLink]="['/topic', topicProgress()!.topic?.id, 'view']">{{ topicProgressRef.topic?.id }}</a>
+          </div>
+          }
+        </dd>
+        <dt><span>User Profile</span></dt>
+        <dd>
+          @if (topicProgress()!.userProfile) {
+          <div>
+            <a [routerLink]="['/user-profile', topicProgress()!.userProfile?.id, 'view']">{{ topicProgressRef.userProfile?.id }}</a>
+          </div>
+          }
+        </dd>
+      </dl>
 
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
-        </button>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
+      </button>
 
-        <button type="button" [routerLink]="['/topic-progress', topicProgressRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
-        </button>
-      </div>
+      <button type="button" [routerLink]="['/topic-progress', topicProgressRef.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
+      </button>
+    </div>
     }
   </div>
 </div>

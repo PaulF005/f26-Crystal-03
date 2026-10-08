@@ -1,94 +1,58 @@
-<div class="home-header">
-  <h1 class="font-title">
-    <span>Welcome to KIP</span>
-  </h1>
+<div class="row">
+  <div class="col-md-3">
+    <span class="hipster img-fluid rounded"></span>
+  </div>
 
-  <p class="font-body">This is your homepage</p>
+  <div class="col-md-9">
+    <h1 class="display-4"><span>Welcome, Java Hipster!</span> (Kip)</h1>
 
-  <div>
-    @if (account() !== null) {
+    <p class="lead">This is your homepage</p>
+
+    <div>
+      @if (account() !== null) {
       <div class="alert alert-success">
         @if (account(); as accountRef) {
-          <span id="home-logged-message" class="font-body"> You are logged in as user &quot;{{ accountRef.login }}&quot;. </span>
+        <span id="home-logged-message">You are logged in as user &quot;{{ accountRef.login }}&quot;.</span>
         }
       </div>
-    } @else {
-      <div class="alert alert-warning font-body">
+      } @else {
+      <div class="alert alert-warning">
         <span>If you want to </span>
-
-        <a class="alert-link" (click)="login()"> sign in </a>
-
-        <span>
-          , you can try the default accounts:
-          <br />
-          - Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-          <br />
-          - User (login=&quot;user&quot; and password=&quot;user&quot;).
-        </span>
+        <a class="alert-link" (click)="login()">sign in</a
+        ><span
+          >, you can try the default accounts:<br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;) <br />- User
+          (login=&quot;user&quot; and password=&quot;user&quot;).</span
+        >
       </div>
 
-      <div class="alert alert-warning font-body">
+      <div class="alert alert-warning">
         <span>You don&apos;t have an account yet?</span>&nbsp;
-
-        <a class="alert-link" routerLink="/account/register"> Register a new account </a>
+        <a class="alert-link" routerLink="/account/register">Register a new account</a>
       </div>
-    }
-  </div>
-</div>
-
-<!-- Dashboard Boxes -->
-
-<div class="dashboard-grid">
-  <div class="dashboard-box recommendation-box">
-    <h2 class="pixel-outline">{{ uiText.dashboard.dailyRecommendation }}</h2>
-
-    <p>Try today's recommended game or activity.</p>
-
-    <a class="btn btn-primary" routerLink="/games"> Start Playing </a>
-  </div>
-
-  <div class="dashboard-box profile-box">
-    <h2 class="pixel-outline">{{ uiText.dashboard.profileSummary }}</h2>
-
-    @if (account(); as accountRef) {
-      <p>Welcome back, {{ accountRef.login }}!</p>
-      <p>Keep going to improve your progress.</p>
-    } @else {
-      <p>Sign in to see your profile and progress.</p>
-
-      <button class="btn btn-primary" (click)="login()">
-        {{ uiText.auth.login }}
-      </button>
-    }
-  </div>
-
-  @if (account() !== null) {
-    <div class="dashboard-box activity-box">
-      <h2 class="pixel-outline">{{ uiText.dashboard.recentActivity }}</h2>
-
-      @for (item of recentActivity; track $index) {
-        <div class="activity-row">
-          <div>
-            <div class="activity-title">
-              {{ item.title }}
-            </div>
-
-            <div class="activity-meta">
-              <span class="activity-topic">
-                {{ item.topic }}
-              </span>
-              -
-              {{ item.recency }}
-            </div>
-          </div>
-
-          <div class="activity-score" [style.color]="scoreColor(item.score)">{{ item.score }}%</div>
-        </div>
-      } @empty {
-        <div class="no-activity-message">
-          <p>Your recent games and activities will appear here.</p>
-        </div>
       }
     </div>
-  }
+
+    <p>If you have any questions on JHipster:</p>
+
+    <ul>
+      <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">JHipster homepage</a></li>
+      <li>
+        <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster on Stack Overflow</a>
+      </li>
+      <li>
+        <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
+          >JHipster bug tracker</a
+        >
+      </li>
+      <li>
+        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">JHipster public chat room</a>
+      </li>
+      <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">follow &#64;jhipster on Twitter</a></li>
+    </ul>
+
+    <p>
+      <span>If you like JHipster, don&apos;t forget to give us a star on</span>
+      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
+    </p>
+  </div>
 </div>

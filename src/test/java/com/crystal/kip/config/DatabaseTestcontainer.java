@@ -1,24 +1,29 @@
 package com.crystal.kip.config;
 
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
-import org.springframework.context.annotation.Bean;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
+import org.testcontainers.junit.jupiter.Container;
 
-@TestConfiguration(proxyBeanMethods = false)
-public class DatabaseTestcontainer {
-
-    private static final MySQLContainer<?> DATABASE_CONTAINER = (MySQLContainer) new MySQLContainer<>("mysql:26.7.0")
+public interface DatabaseTestcontainer {
+    @Container
+    MySQLContainer<?> databaseContainer = (MySQLContainer) new MySQLContainer<>("mysql:9.7.1")
         .withDatabaseName("kip")
         .withConfigurationOverride("conf/mysql")
         .withLogConsumer(new Slf4jLogConsumer(LoggerFactory.getLogger(DatabaseTestcontainer.class)))
         .withReuse(true);
 
-    @Bean
-    @ServiceConnection
-    MySQLContainer<?> databaseContainer() {
-        return DATABASE_CONTAINER;
+    @DynamicPropertySource
+    static void registerProperties(DynamicPropertyRegistry registry) {
+        registry.add(
+            "spring.datasource.url",
+            () ->
+                databaseContainer.getJdbcUrl() +
+                "?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&createDatabaseIfNotExist=true"
+        );
+        registry.add("spring.datasource.username", databaseContainer::getUsername);
+        registry.add("spring.datasource.password", databaseContainer::getPassword);
     }
 }

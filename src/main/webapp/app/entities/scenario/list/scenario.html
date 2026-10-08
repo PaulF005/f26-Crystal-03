@@ -25,97 +25,97 @@
   <jhi-alert />
 
   @if (scenarios().length === 0) {
-    <div class="alert alert-warning" id="no-result">
-      <span>No Scenarios found</span>
-    </div>
+  <div class="alert alert-warning" id="no-result">
+    <span>No Scenarios found</span>
+  </div>
   } @else {
-    <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
-              <div class="d-flex">
-                <span>ID</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="name">
-              <div class="d-flex">
-                <span>Name</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="topic.id">
-              <div class="d-flex">
-                <span>Topic</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="startingStage.id">
-              <div class="d-flex">
-                <span>Starting Stage</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="game.id">
-              <div class="d-flex">
-                <span>Game</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (scenario of scenarios(); track trackId(scenario)) {
-            <tr data-cy="entityTable">
-              <td>
-                <a [routerLink]="['/scenario', scenario.id, 'view']">{{ scenario.id }}</a>
-              </td>
-              <td>{{ scenario.name }}</td>
-              <td>
-                @if (scenario.topic) {
-                  <div>
-                    <a [routerLink]="['/topic', scenario.topic.id, 'view']">{{ scenario.topic.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (scenario.startingStage) {
-                  <div>
-                    <a [routerLink]="['/stage', scenario.startingStage.id, 'view']">{{ scenario.startingStage.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (scenario.game) {
-                  <div>
-                    <a [routerLink]="['/game', scenario.game.id, 'view']">{{ scenario.game.id }}</a>
-                  </div>
-                }
-              </td>
-              <td class="text-end">
-                <div class="btn-group">
-                  <a [routerLink]="['/scenario', scenario.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                    <fa-icon icon="eye" />
-                    <span class="d-none d-md-inline">View</span>
-                  </a>
+  <div class="table-responsive table-entities" id="entities">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
 
-                  <a [routerLink]="['/scenario', scenario.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                    <fa-icon icon="pencil-alt" />
-                    <span class="d-none d-md-inline">Edit</span>
-                  </a>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="name">
+            <div class="d-flex">
+              <span>Name</span>
 
-                  <button type="submit" (click)="delete(scenario)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times" />
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="topic.id">
+            <div class="d-flex">
+              <span>Topic</span>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="startingStage.id">
+            <div class="d-flex">
+              <span>Starting Stage</span>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="game.id">
+            <div class="d-flex">
+              <span>Game</span>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (scenario of scenarios(); track trackId(scenario)) {
+        <tr data-cy="entityTable">
+          <td><a [routerLink]="['/scenario', scenario.id, 'view']">{{ scenario.id }}</a></td>
+          <td>{{ scenario.name }}</td>
+          <td>
+            @if (scenario.topic) {
+            <div>
+              <a [routerLink]="['/topic', scenario.topic.id, 'view']">{{ scenario.topic.id }}</a>
+            </div>
+            }
+          </td>
+          <td>
+            @if (scenario.startingStage) {
+            <div>
+              <a [routerLink]="['/stage', scenario.startingStage.id, 'view']">{{ scenario.startingStage.id }}</a>
+            </div>
+            }
+          </td>
+          <td>
+            @if (scenario.game) {
+            <div>
+              <a [routerLink]="['/game', scenario.game.id, 'view']">{{ scenario.game.id }}</a>
+            </div>
+            }
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a [routerLink]="['/scenario', scenario.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye" />
+                <span class="d-none d-md-inline">View</span>
+              </a>
+
+              <a [routerLink]="['/scenario', scenario.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt" />
+                <span class="d-none d-md-inline">Edit</span>
+              </a>
+
+              <button type="submit" (click)="delete(scenario)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times" />
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   }
 </div>

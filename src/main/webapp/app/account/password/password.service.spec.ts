@@ -2,13 +2,14 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { serverApiUrl } from 'app/config';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
 
 import { PasswordService } from './password.service';
 
 describe('Password Service', () => {
   let service: PasswordService;
   let httpMock: HttpTestingController;
+  let applicationConfigService: ApplicationConfigService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -16,6 +17,7 @@ describe('Password Service', () => {
     });
 
     service = TestBed.inject(PasswordService);
+    applicationConfigService = TestBed.inject(ApplicationConfigService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
@@ -34,7 +36,7 @@ describe('Password Service', () => {
 
       const testRequest = httpMock.expectOne({
         method: 'POST',
-        url: `${serverApiUrl}api/account/change-password`,
+        url: applicationConfigService.getEndpointFor('api/account/change-password'),
       });
 
       // THEN

@@ -1,14 +1,17 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
-import { AccountService } from 'app/core/auth';
+import { of } from 'rxjs';
+
+import { AccountService } from 'app/core/auth/account.service';
 
 import Home from './home';
 
 describe('Home Component', () => {
   let comp: Home;
   let fixture: ComponentFixture<Home>;
+  let mockAccountService: AccountService;
   let mockRouter: Router;
 
   beforeEach(() => {
@@ -16,6 +19,9 @@ describe('Home Component', () => {
       providers: [
         {
           provide: AccountService,
+          useValue: {
+            isAuthenticated: vitest.fn(),
+          },
         },
       ],
     });
@@ -24,9 +30,11 @@ describe('Home Component', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(Home);
     comp = fixture.componentInstance;
+    mockAccountService = TestBed.inject(AccountService);
+    mockAccountService.identity = vitest.fn(() => of(null));
 
     mockRouter = TestBed.inject(Router);
-    vi.spyOn(mockRouter, 'navigate');
+    vitest.spyOn(mockRouter, 'navigate');
   });
 
   describe('login', () => {

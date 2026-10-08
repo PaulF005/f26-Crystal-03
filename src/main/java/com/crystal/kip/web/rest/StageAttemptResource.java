@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/stage-attempts")
-@Transactional(rollbackFor = Exception.class)
+@Transactional
 public class StageAttemptResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(StageAttemptResource.class);

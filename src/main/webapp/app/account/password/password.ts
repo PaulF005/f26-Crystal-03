@@ -1,15 +1,15 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
 
-import { AccountService } from 'app/core/auth';
+import { AccountService } from 'app/core/auth/account.service';
 
 import PasswordStrengthBar from './password-strength-bar/password-strength-bar';
 import { PasswordService } from './password.service';
 
 @Component({
   selector: 'jhi-password',
-  imports: [ReactiveFormsModule, PasswordStrengthBar, RouterLink],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ReactiveFormsModule, PasswordStrengthBar],
   templateUrl: './password.html',
 })
 export default class Password {

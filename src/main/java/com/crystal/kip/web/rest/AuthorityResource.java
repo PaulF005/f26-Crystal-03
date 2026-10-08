@@ -23,7 +23,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/authorities")
-@Transactional(rollbackFor = Exception.class)
+@Transactional
 public class AuthorityResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(AuthorityResource.class);

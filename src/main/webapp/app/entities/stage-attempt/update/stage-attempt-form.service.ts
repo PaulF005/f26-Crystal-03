@@ -1,9 +1,9 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import dayjs from 'dayjs/esm';
 
-import { DATE_TIME_FORMAT } from 'app/config';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { IStageAttempt, NewStageAttempt } from '../stage-attempt.model';
 
 /**
@@ -42,7 +42,7 @@ type StageAttemptFormGroupContent = {
 
 export type StageAttemptFormGroup = FormGroup<StageAttemptFormGroupContent>;
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class StageAttemptFormService {
   createStageAttemptFormGroup(stageAttempt?: StageAttemptFormGroupInput): StageAttemptFormGroup {
     const stageAttemptRawValue = this.convertStageAttemptToStageAttemptRawValue({

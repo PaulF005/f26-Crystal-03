@@ -1,11 +1,12 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Service, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import dayjs from 'dayjs/esm';
 import { Observable, map } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
-import { createRequestOption } from 'app/core/request';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
 import { ITopicProgress, NewTopicProgress } from '../topic-progress.model';
 
 export type PartialUpdateTopicProgress = Partial<ITopicProgress> & Pick<ITopicProgress, 'id'>;
@@ -20,7 +21,7 @@ export type NewRestTopicProgress = RestOf<NewTopicProgress>;
 
 export type PartialUpdateRestTopicProgress = RestOf<PartialUpdateTopicProgress>;
 
-@Service()
+@Injectable()
 export class TopicProgressesService {
   readonly topicProgressesParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -39,7 +40,8 @@ export class TopicProgressesService {
   readonly topicProgresses = computed(() =>
     (this.topicProgressesResource.hasValue() ? this.topicProgressesResource.value() : []).map(item => this.convertValueFromServer(item)),
   );
-  protected readonly resourceUrl = `${serverApiUrl}api/topic-progresses`;
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
+  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/topic-progresses');
 
   protected convertValueFromServer(restTopicProgress: RestTopicProgress): ITopicProgress {
     return {
@@ -49,7 +51,7 @@ export class TopicProgressesService {
   }
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class TopicProgressService extends TopicProgressesService {
   protected readonly http = inject(HttpClient);
 
@@ -101,9 +103,7 @@ export class TopicProgressService extends TopicProgressesService {
     topicProgressCollection: Type[],
     ...topicProgressesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const topicProgresses: Type[] = topicProgressesToCheck.filter(
-      topicProgressItem => topicProgressItem !== null && topicProgressItem !== undefined,
-    );
+    const topicProgresses: Type[] = topicProgressesToCheck.filter(isPresent);
     if (topicProgresses.length > 0) {
       const topicProgressCollectionIdentifiers = topicProgressCollection.map(topicProgressItem =>
         this.getTopicProgressIdentifier(topicProgressItem),

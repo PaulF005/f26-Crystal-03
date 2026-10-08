@@ -1,18 +1,33 @@
-import dayjs from 'dayjs/esm';
-
 export interface IUserManagement {
-  id?: number | null;
   login: string;
+  id?: number | null;
   firstName?: string | null;
   lastName?: string | null;
-  email?: string | null;
-  activated?: boolean | null;
-  imageUrl?: string | null;
-  createdBy?: string | null;
-  createdDate?: dayjs.Dayjs | null;
-  lastModifiedBy?: string | null;
-  lastModifiedDate?: dayjs.Dayjs | null;
-  authorities?: string[] | null;
+  email?: string;
+  activated?: boolean;
+  langKey?: string;
+  authorities?: string[];
+  createdBy?: string;
+  createdDate?: Date;
+  lastModifiedBy?: string;
+  lastModifiedDate?: Date;
 }
 
-export type NewUserManagement = Omit<IUserManagement, 'login'> & { login: null };
+export class User implements IUserManagement {
+  constructor(
+    public login: string,
+    public id?: number | null,
+    public firstName?: string | null,
+    public lastName?: string | null,
+    public email?: string,
+    public activated?: boolean,
+    public langKey?: string,
+    public authorities?: string[],
+    public createdBy?: string,
+    public createdDate?: Date,
+    public lastModifiedBy?: string,
+    public lastModifiedDate?: Date,
+  ) {}
+}
+
+export type NewUserManagement = IUserManagement;

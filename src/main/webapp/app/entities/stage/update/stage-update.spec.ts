@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { HttpResponse } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -55,10 +55,10 @@ describe('Stage Management Update Component', () => {
       stage.question = question;
 
       const questionCollection: IQuestion[] = [{ id: 16375 }];
-      vi.spyOn(questionService, 'query').mockReturnValue(of(new HttpResponse({ body: questionCollection })));
+      vitest.spyOn(questionService, 'query').mockReturnValue(of(new HttpResponse({ body: questionCollection })));
       const additionalQuestions = [question];
       const expectedCollection: IQuestion[] = [...additionalQuestions, ...questionCollection];
-      vi.spyOn(questionService, 'addQuestionToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vitest.spyOn(questionService, 'addQuestionToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ stage });
       comp.ngOnInit();
@@ -77,10 +77,10 @@ describe('Stage Management Update Component', () => {
       stage.scenario = scenario;
 
       const scenarioCollection: IScenario[] = [{ id: 10879 }];
-      vi.spyOn(scenarioService, 'query').mockReturnValue(of(new HttpResponse({ body: scenarioCollection })));
+      vitest.spyOn(scenarioService, 'query').mockReturnValue(of(new HttpResponse({ body: scenarioCollection })));
       const additionalScenarios = [scenario];
       const expectedCollection: IScenario[] = [...additionalScenarios, ...scenarioCollection];
-      vi.spyOn(scenarioService, 'addScenarioToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vitest.spyOn(scenarioService, 'addScenarioToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ stage });
       comp.ngOnInit();
@@ -114,9 +114,9 @@ describe('Stage Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IStage>();
       const stage = { id: 30579 };
-      vi.spyOn(stageFormService, 'getStage').mockReturnValue(stage);
-      vi.spyOn(stageService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(stageFormService, 'getStage').mockReturnValue(stage);
+      vitest.spyOn(stageService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ stage });
       comp.ngOnInit();
 
@@ -137,9 +137,9 @@ describe('Stage Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IStage>();
       const stage = { id: 30579 };
-      vi.spyOn(stageFormService, 'getStage').mockReturnValue({ id: null });
-      vi.spyOn(stageService, 'create').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(stageFormService, 'getStage').mockReturnValue({ id: null });
+      vitest.spyOn(stageService, 'create').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ stage: null });
       comp.ngOnInit();
 
@@ -160,8 +160,8 @@ describe('Stage Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IStage>();
       const stage = { id: 30579 };
-      vi.spyOn(stageService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(stageService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ stage });
       comp.ngOnInit();
 
@@ -182,7 +182,7 @@ describe('Stage Management Update Component', () => {
       it('should forward to questionService', () => {
         const entity = { id: 16375 };
         const entity2 = { id: 15287 };
-        vi.spyOn(questionService, 'compareQuestion');
+        vitest.spyOn(questionService, 'compareQuestion');
         comp.compareQuestion(entity, entity2);
         expect(questionService.compareQuestion).toHaveBeenCalledWith(entity, entity2);
       });
@@ -192,7 +192,7 @@ describe('Stage Management Update Component', () => {
       it('should forward to scenarioService', () => {
         const entity = { id: 10879 };
         const entity2 = { id: 10024 };
-        vi.spyOn(scenarioService, 'compareScenario');
+        vitest.spyOn(scenarioService, 'compareScenario');
         comp.compareScenario(entity, entity2);
         expect(scenarioService.compareScenario).toHaveBeenCalledWith(entity, entity2);
       });

@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
-import { ASC } from 'app/config';
-import { userRouteAccessService } from 'app/core/auth';
+import { ASC } from 'app/config/navigation.constants';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 
 import ConceptProgressResolve from './route/concept-progress-routing-resolve.service';
 
@@ -12,7 +12,7 @@ const conceptProgressRoute: Routes = [
     data: {
       defaultSort: `id,${ASC}`,
     },
-    canActivate: [userRouteAccessService],
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/view',
@@ -20,7 +20,7 @@ const conceptProgressRoute: Routes = [
     resolve: {
       conceptProgress: ConceptProgressResolve,
     },
-    canActivate: [userRouteAccessService],
+    canActivate: [UserRouteAccessService],
   },
   {
     path: 'new',
@@ -28,7 +28,7 @@ const conceptProgressRoute: Routes = [
     resolve: {
       conceptProgress: ConceptProgressResolve,
     },
-    canActivate: [userRouteAccessService],
+    canActivate: [UserRouteAccessService],
   },
   {
     path: ':id/edit',
@@ -36,7 +36,7 @@ const conceptProgressRoute: Routes = [
     resolve: {
       conceptProgress: ConceptProgressResolve,
     },
-    canActivate: [userRouteAccessService],
+    canActivate: [UserRouteAccessService],
   },
 ];
 

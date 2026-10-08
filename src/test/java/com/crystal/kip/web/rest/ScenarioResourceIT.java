@@ -12,6 +12,7 @@ import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Scenario;
 import com.crystal.kip.domain.Topic;
 import com.crystal.kip.repository.ScenarioRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,7 +26,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import tools.jackson.databind.ObjectMapper;
 
 /**
  * Integration tests for the {@link ScenarioResource} REST controller.

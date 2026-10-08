@@ -1,15 +1,16 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Service, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
-import { createRequestOption } from 'app/core/request';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
 import { IConcept, NewConcept } from '../concept.model';
 
 export type PartialUpdateConcept = Partial<IConcept> & Pick<IConcept, 'id'>;
 
-@Service()
+@Injectable()
 export class ConceptsService {
   readonly conceptsParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -26,10 +27,11 @@ export class ConceptsService {
    * In case of error while fetching the concepts, the signal is set to an empty array.
    */
   readonly concepts = computed(() => (this.conceptsResource.hasValue() ? this.conceptsResource.value() : []));
-  protected readonly resourceUrl = `${serverApiUrl}api/concepts`;
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
+  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/concepts');
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class ConceptService extends ConceptsService {
   protected readonly http = inject(HttpClient);
 
@@ -70,7 +72,7 @@ export class ConceptService extends ConceptsService {
     conceptCollection: Type[],
     ...conceptsToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const concepts: Type[] = conceptsToCheck.filter(conceptItem => conceptItem !== null && conceptItem !== undefined);
+    const concepts: Type[] = conceptsToCheck.filter(isPresent);
     if (concepts.length > 0) {
       const conceptCollectionIdentifiers = conceptCollection.map(conceptItem => this.getConceptIdentifier(conceptItem));
       const conceptsToAdd = concepts.filter(conceptItem => {

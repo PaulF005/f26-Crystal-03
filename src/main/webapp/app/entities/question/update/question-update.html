@@ -7,22 +7,21 @@
         <jhi-alert-error />
 
         @if (editForm.controls.id.value !== null) {
-          <div class="mb-3">
-            <label class="form-label" for="field_id">ID</label>
-            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-          </div>
-        }
 
-        @let questionRef = editForm.get('question')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+        } @let questionRef = editForm.get('question')!;
         <div class="mb-3">
           <label class="form-label" for="field_question">Question</label>
           <input type="text" class="form-control" name="question" id="field_question" data-cy="question" formControlName="question" />
           @if (questionRef.invalid && (questionRef.dirty || questionRef.touched)) {
-            <div>
-              @if (questionRef.errors?.required) {
-                <small class="form-text text-danger">This field is required.</small>
-              }
-            </div>
+          <div>
+            @if (questionRef.errors?.required) {
+            <small class="form-text text-danger">This field is required.</small>
+            }
+          </div>
           }
         </div>
 
@@ -37,19 +36,18 @@
             [compareWith]="compareConcept"
           >
             @if (editForm.get(['concept'])!.value === null) {
-              <option [ngValue]="null" selected></option>
-            }
-            @for (conceptOption of conceptsSharedCollection(); track $index) {
-              <option [ngValue]="conceptOption">{{ conceptOption.id }}</option>
+            <option [ngValue]="null" selected></option>
+            } @for (conceptOption of conceptsSharedCollection(); track $index) {
+            <option [ngValue]="conceptOption">{{ conceptOption.id }}</option>
             }
           </select>
         </div>
         @if (editForm.get(['concept'])!.invalid && (editForm.get(['concept'])!.dirty || editForm.get(['concept'])!.touched)) {
-          <div>
-            @if (editForm.get(['concept'])?.errors?.required) {
-              <small class="form-text text-danger">This field is required.</small>
-            }
-          </div>
+        <div>
+          @if (editForm.get(['concept'])?.errors?.required) {
+          <small class="form-text text-danger">This field is required.</small>
+          }
+        </div>
         }
       </div>
 

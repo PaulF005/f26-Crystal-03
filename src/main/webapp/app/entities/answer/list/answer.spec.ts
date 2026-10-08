@@ -1,6 +1,6 @@
-import { MockInstance, afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { MockInstance, afterEach, beforeEach, describe, expect, it, vitest } from 'vitest';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
 
 import { FaIconLibrary } from '@fortawesome/angular-fontawesome';
@@ -13,7 +13,7 @@ import { AnswerService } from '../service/answer.service';
 
 import { Answer } from './answer';
 
-vi.useFakeTimers();
+vitest.useFakeTimers();
 
 describe('Answer Management Component', () => {
   let httpMock: HttpTestingController;
@@ -55,7 +55,7 @@ describe('Answer Management Component', () => {
     fixture = TestBed.createComponent(Answer);
     comp = fixture.componentInstance;
     service = TestBed.inject(AnswerService);
-    routerNavigateSpy = vi.spyOn(comp.router, 'navigate');
+    routerNavigateSpy = vitest.spyOn(comp.router, 'navigate');
 
     const library = TestBed.inject(FaIconLibrary);
     library.addIcons(faEye, faPencilAlt, faPlus, faSort, faSortDown, faSortUp, faSync, faTimes);
@@ -72,7 +72,7 @@ describe('Answer Management Component', () => {
     TestBed.tick();
     const req = httpMock.expectOne({ method: 'GET' });
     req.flush([{ id: 19540 }], { headers: { link: '<http://localhost/api/foo?page=1&size=20>; rel="next"' } });
-    await vi.runAllTimersAsync();
+    await vitest.runAllTimersAsync();
 
     // THEN
     expect(comp.isLoading()).toEqual(false);
@@ -82,7 +82,7 @@ describe('Answer Management Component', () => {
   describe('trackId', () => {
     it('should forward to answerService', () => {
       const entity = { id: 19540 };
-      vi.spyOn(service, 'getAnswerIdentifier');
+      vitest.spyOn(service, 'getAnswerIdentifier');
       const id = comp.trackId(entity);
       expect(service.getAnswerIdentifier).toHaveBeenCalledWith(entity);
       expect(id).toBe(entity.id);
@@ -110,7 +110,7 @@ describe('Answer Management Component', () => {
     httpMock.expectOne({ method: 'GET' });
 
     // THEN
-    expect(service.answersParams()).toMatchObject({ sort: ['id,desc'] });
+    expect(service.answersParams()).toMatchObject(expect.objectContaining({ sort: ['id,desc'] }));
   });
 
   describe('delete', () => {
@@ -121,13 +121,13 @@ describe('Answer Management Component', () => {
       deleteModalMock = { componentInstance: {}, closed: new Subject() };
       // NgbModal is not a singleton using TestBed.inject.
       // ngbModal = TestBed.inject(NgbModal);
-      ngbModal = (comp as unknown as { modalService: NgbModal }).modalService;
-      vi.spyOn(ngbModal, 'open').mockReturnValue(deleteModalMock);
+      ngbModal = (comp as any).modalService;
+      vitest.spyOn(ngbModal, 'open').mockReturnValue(deleteModalMock);
     });
 
-    it('on confirm should call load', () => {
+    it('on confirm should call load', inject([], () => {
       // GIVEN
-      vi.spyOn(comp, 'load');
+      vitest.spyOn(comp, 'load');
 
       // WHEN
       comp.delete(sampleWithRequiredData);
@@ -136,11 +136,11 @@ describe('Answer Management Component', () => {
       // THEN
       expect(ngbModal.open).toHaveBeenCalled();
       expect(comp.load).toHaveBeenCalled();
-    });
+    }));
 
-    it('on dismiss should call load', () => {
+    it('on dismiss should call load', inject([], () => {
       // GIVEN
-      vi.spyOn(comp, 'load');
+      vitest.spyOn(comp, 'load');
 
       // WHEN
       comp.delete(sampleWithRequiredData);
@@ -149,6 +149,6 @@ describe('Answer Management Component', () => {
       // THEN
       expect(ngbModal.open).toHaveBeenCalled();
       expect(comp.load).not.toHaveBeenCalled();
-    });
+    }));
   });
 });

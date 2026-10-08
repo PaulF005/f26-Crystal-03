@@ -82,6 +82,7 @@ describe('Feedback Service', () => {
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush([returnedFromService]);
+      httpMock.verify();
       expect(expectedResult).toMatchObject([expected]);
     });
 
@@ -178,7 +179,7 @@ describe('Feedback Service', () => {
         expect(compareResult2).toEqual(false);
       });
 
-      it('should return true if primaryKey matches', () => {
+      it('should return false if primaryKey matches', () => {
         const entity1 = { id: 10592 };
         const entity2 = { id: 10592 };
 

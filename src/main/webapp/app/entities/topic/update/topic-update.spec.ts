@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
@@ -55,9 +55,9 @@ describe('Topic Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ITopic>();
       const topic = { id: 29581 };
-      vi.spyOn(topicFormService, 'getTopic').mockReturnValue(topic);
-      vi.spyOn(topicService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(topicFormService, 'getTopic').mockReturnValue(topic);
+      vitest.spyOn(topicService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ topic });
       comp.ngOnInit();
 
@@ -78,9 +78,9 @@ describe('Topic Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ITopic>();
       const topic = { id: 29581 };
-      vi.spyOn(topicFormService, 'getTopic').mockReturnValue({ id: null });
-      vi.spyOn(topicService, 'create').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(topicFormService, 'getTopic').mockReturnValue({ id: null });
+      vitest.spyOn(topicService, 'create').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ topic: null });
       comp.ngOnInit();
 
@@ -101,8 +101,8 @@ describe('Topic Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<ITopic>();
       const topic = { id: 29581 };
-      vi.spyOn(topicService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(topicService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ topic });
       comp.ngOnInit();
 

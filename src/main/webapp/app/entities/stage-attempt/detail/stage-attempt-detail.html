@@ -1,70 +1,70 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     @if (stageAttempt(); as stageAttemptRef) {
-      <div>
-        <h2 data-cy="stageAttemptDetailsHeading"><span>Stage Attempt</span></h2>
+    <div>
+      <h2 data-cy="stageAttemptDetailsHeading"><span>Stage Attempt</span></h2>
 
-        <hr />
+      <hr />
 
-        <jhi-alert-error />
+      <jhi-alert-error />
 
-        <jhi-alert />
+      <jhi-alert />
 
-        <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ stageAttemptRef.id }}</span>
-          </dd>
-          <dt><span>Answered At</span></dt>
-          <dd>
-            <span>{{ stageAttemptRef.answeredAt | formatMediumDatetime }}</span>
-          </dd>
-          <dt><span>Correct</span></dt>
-          <dd>
-            <span>{{ stageAttemptRef.correct }}</span>
-          </dd>
-          <dt><span>User</span></dt>
-          <dd>
-            @if (stageAttempt()!.user) {
-              <div>
-                <a [routerLink]="['/user-profile', stageAttempt()!.user?.id, 'view']">{{ stageAttemptRef.user?.id }}</a>
-              </div>
-            }
-          </dd>
-          <dt><span>Stage</span></dt>
-          <dd>
-            @if (stageAttempt()!.stage) {
-              <div>
-                <a [routerLink]="['/stage', stageAttempt()!.stage?.id, 'view']">{{ stageAttemptRef.stage?.id }}</a>
-              </div>
-            }
-          </dd>
-          <dt><span>Selected Answer</span></dt>
-          <dd>
-            @if (stageAttempt()!.selectedAnswer) {
-              <div>
-                <a [routerLink]="['/answer', stageAttempt()!.selectedAnswer?.id, 'view']">{{ stageAttemptRef.selectedAnswer?.id }}</a>
-              </div>
-            }
-          </dd>
-          <dt><span>Game Session</span></dt>
-          <dd>
-            @if (stageAttempt()!.gameSession) {
-              <div>
-                <a [routerLink]="['/game-session', stageAttempt()!.gameSession?.id, 'view']">{{ stageAttemptRef.gameSession?.id }}</a>
-              </div>
-            }
-          </dd>
-        </dl>
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ stageAttemptRef.id }}</span>
+        </dd>
+        <dt><span>Answered At</span></dt>
+        <dd>
+          <span>{{ stageAttemptRef.answeredAt | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Correct</span></dt>
+        <dd>
+          <span>{{ stageAttemptRef.correct }}</span>
+        </dd>
+        <dt><span>User</span></dt>
+        <dd>
+          @if (stageAttempt()!.user) {
+          <div>
+            <a [routerLink]="['/user-profile', stageAttempt()!.user?.id, 'view']">{{ stageAttemptRef.user?.id }}</a>
+          </div>
+          }
+        </dd>
+        <dt><span>Stage</span></dt>
+        <dd>
+          @if (stageAttempt()!.stage) {
+          <div>
+            <a [routerLink]="['/stage', stageAttempt()!.stage?.id, 'view']">{{ stageAttemptRef.stage?.id }}</a>
+          </div>
+          }
+        </dd>
+        <dt><span>Selected Answer</span></dt>
+        <dd>
+          @if (stageAttempt()!.selectedAnswer) {
+          <div>
+            <a [routerLink]="['/answer', stageAttempt()!.selectedAnswer?.id, 'view']">{{ stageAttemptRef.selectedAnswer?.id }}</a>
+          </div>
+          }
+        </dd>
+        <dt><span>Game Session</span></dt>
+        <dd>
+          @if (stageAttempt()!.gameSession) {
+          <div>
+            <a [routerLink]="['/game-session', stageAttempt()!.gameSession?.id, 'view']">{{ stageAttemptRef.gameSession?.id }}</a>
+          </div>
+          }
+        </dd>
+      </dl>
 
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
-        </button>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
+      </button>
 
-        <button type="button" [routerLink]="['/stage-attempt', stageAttemptRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
-        </button>
-      </div>
+      <button type="button" [routerLink]="['/stage-attempt', stageAttemptRef.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
+      </button>
+    </div>
     }
   </div>
 </div>

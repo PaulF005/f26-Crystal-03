@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/concepts")
-@Transactional(rollbackFor = Exception.class)
+@Transactional
 public class ConceptResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(ConceptResource.class);

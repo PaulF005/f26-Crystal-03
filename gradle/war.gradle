@@ -1,20 +1,14 @@
 apply plugin: "war"
 
 bootWar {
-    webAppDirectory = layout.buildDirectory.dir("generated/webapp/")
+    webAppDirectory = file("build/resources/main/static/")
     mainClass = "com.crystal.kip.KipApp"
     includes = ["WEB-INF/**", "META-INF/**"]
 }
 
 war {
-    webAppDirectory = layout.buildDirectory.dir("generated/webapp/")
+    webAppDirectory = file("build/resources/main/static/")
     enabled = true
     archiveExtension = "war.original"
     includes = ["WEB-INF/**", "META-INF/**"]
-}
-
-if (project.hasProperty("e2e")) {
-    tasks.named('bootWar') {
-        archiveFileName = 'e2e.war'
-    }
 }

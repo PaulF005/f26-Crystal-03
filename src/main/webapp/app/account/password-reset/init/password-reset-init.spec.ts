@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { ElementRef } from '@angular/core';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { ElementRef, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { of, throwError } from 'rxjs';
@@ -20,9 +20,9 @@ describe('PasswordResetInit', () => {
 
   it('sets focus after the view has been initialized', () => {
     const node = {
-      focus: vi.fn(),
+      focus: vitest.fn(),
     };
-    vi.spyOn(comp, 'email').mockReturnValue(new ElementRef(node));
+    comp.email = signal(new ElementRef(node));
 
     comp.ngAfterViewInit();
 
@@ -30,7 +30,7 @@ describe('PasswordResetInit', () => {
   });
 
   it('notifies of success upon successful requestReset', () => {
-    vi.spyOn(service, 'save').mockReturnValue(of({}));
+    vitest.spyOn(service, 'save').mockReturnValue(of({}));
     comp.resetRequestForm.patchValue({
       email: 'user@domain.com',
     });
@@ -43,7 +43,7 @@ describe('PasswordResetInit', () => {
 
   it('no notification of success upon error response', () => {
     const err = { status: 503, data: 'something else' };
-    vi.spyOn(service, 'save').mockReturnValue(throwError(() => err));
+    vitest.spyOn(service, 'save').mockReturnValue(throwError(() => err));
     comp.resetRequestForm.patchValue({
       email: 'user@domain.com',
     });

@@ -1,21 +1,22 @@
 import { HttpClient } from '@angular/common/http';
-import { Service, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Observable, map } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
+import { Login } from 'app/login/login.model';
+import { ApplicationConfigService } from '../config/application-config.service';
 
-import { Login } from './login.model';
 import { StateStorageService } from './state-storage.service';
 
 type JwtToken = {
   id_token: string;
 };
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class AuthServerProvider {
   private readonly http = inject(HttpClient);
   private readonly stateStorageService = inject(StateStorageService);
+  private readonly applicationConfigService = inject(ApplicationConfigService);
 
   getToken(): string {
     return this.stateStorageService.getAuthenticationToken() ?? '';
@@ -23,7 +24,7 @@ export class AuthServerProvider {
 
   login(credentials: Login): Observable<void> {
     return this.http
-      .post<JwtToken>(`${serverApiUrl}api/authenticate`, credentials)
+      .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/authenticate'), credentials)
       .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
   }
 

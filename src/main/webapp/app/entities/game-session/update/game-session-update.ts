@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
@@ -10,13 +10,14 @@ import { IGame } from 'app/entities/game/game.model';
 import { GameService } from 'app/entities/game/service/game.service';
 import { UserProfileService } from 'app/entities/user-profile/service/user-profile.service';
 import { IUserProfile } from 'app/entities/user-profile/user-profile.model';
-import { AlertError } from 'app/shared/alert';
+import { AlertError } from 'app/shared/alert/alert-error';
 import { IGameSession } from '../game-session.model';
 import { GameSessionService } from '../service/game-session.service';
 
 import { GameSessionFormGroup, GameSessionFormService } from './game-session-form.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-game-session-update',
   templateUrl: './game-session-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

@@ -1,4 +1,4 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { Observable, Observer } from 'rxjs';
@@ -16,7 +16,9 @@ export interface FileLoadError {
 /**
  * A utility service for data.
  */
-@Service()
+@Injectable({
+  providedIn: 'root',
+})
 export class DataUtils {
   /**
    * Method to find the byte size of the string provides

@@ -1,15 +1,16 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Service, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
-import { createRequestOption } from 'app/core/request';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
 import { ILegalContent, NewLegalContent } from '../legal-content.model';
 
 export type PartialUpdateLegalContent = Partial<ILegalContent> & Pick<ILegalContent, 'id'>;
 
-@Service()
+@Injectable()
 export class LegalContentsService {
   readonly legalContentsParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -26,10 +27,11 @@ export class LegalContentsService {
    * In case of error while fetching the legalContents, the signal is set to an empty array.
    */
   readonly legalContents = computed(() => (this.legalContentsResource.hasValue() ? this.legalContentsResource.value() : []));
-  protected readonly resourceUrl = `${serverApiUrl}api/legal-contents`;
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
+  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/legal-contents');
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class LegalContentService extends LegalContentsService {
   protected readonly http = inject(HttpClient);
 
@@ -76,9 +78,7 @@ export class LegalContentService extends LegalContentsService {
     legalContentCollection: Type[],
     ...legalContentsToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const legalContents: Type[] = legalContentsToCheck.filter(
-      legalContentItem => legalContentItem !== null && legalContentItem !== undefined,
-    );
+    const legalContents: Type[] = legalContentsToCheck.filter(isPresent);
     if (legalContents.length > 0) {
       const legalContentCollectionIdentifiers = legalContentCollection.map(legalContentItem =>
         this.getLegalContentIdentifier(legalContentItem),

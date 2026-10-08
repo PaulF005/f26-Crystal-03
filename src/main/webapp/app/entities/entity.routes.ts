@@ -2,96 +2,96 @@ import { Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'user-management',
-    title: 'UserManagements',
-    loadChildren: () => import('./admin/user-management/user-management.routes'),
-  },
-  {
     path: 'authority',
-    title: 'Authorities',
+    data: { pageTitle: 'Authorities' },
     loadChildren: () => import('./admin/authority/authority.routes'),
   },
   {
     path: 'user-profile',
-    title: 'UserProfiles',
+    data: { pageTitle: 'UserProfiles' },
     loadChildren: () => import('./user-profile/user-profile.routes'),
   },
   {
     path: 'topic',
-    title: 'Topics',
+    data: { pageTitle: 'Topics' },
     loadChildren: () => import('./topic/topic.routes'),
   },
   {
     path: 'concept',
-    title: 'Concepts',
+    data: { pageTitle: 'Concepts' },
     loadChildren: () => import('./concept/concept.routes'),
   },
   {
     path: 'question',
-    title: 'Questions',
+    data: { pageTitle: 'Questions' },
     loadChildren: () => import('./question/question.routes'),
   },
   {
     path: 'answer',
-    title: 'Answers',
+    data: { pageTitle: 'Answers' },
     loadChildren: () => import('./answer/answer.routes'),
   },
   {
     path: 'feedback',
-    title: 'Feedbacks',
+    data: { pageTitle: 'Feedbacks' },
     loadChildren: () => import('./feedback/feedback.routes'),
   },
   {
     path: 'game',
-    title: 'Games',
+    data: { pageTitle: 'Games' },
     loadChildren: () => import('./game/game.routes'),
   },
   {
     path: 'scenario',
-    title: 'Scenarios',
+    data: { pageTitle: 'Scenarios' },
     loadChildren: () => import('./scenario/scenario.routes'),
   },
   {
     path: 'stage',
-    title: 'Stages',
+    data: { pageTitle: 'Stages' },
     loadChildren: () => import('./stage/stage.routes'),
   },
   {
     path: 'legal-content',
-    title: 'LegalContents',
+    data: { pageTitle: 'LegalContents' },
     loadChildren: () => import('./legal-content/legal-content.routes'),
   },
   {
     path: 'source',
-    title: 'Sources',
+    data: { pageTitle: 'Sources' },
     loadChildren: () => import('./source/source.routes'),
   },
   {
     path: 'topic-progress',
-    title: 'TopicProgresses',
+    data: { pageTitle: 'TopicProgresses' },
     loadChildren: () => import('./topic-progress/topic-progress.routes'),
   },
   {
     path: 'game-progress',
-    title: 'GameProgresses',
+    data: { pageTitle: 'GameProgresses' },
     loadChildren: () => import('./game-progress/game-progress.routes'),
   },
   {
     path: 'game-session',
-    title: 'GameSessions',
+    data: { pageTitle: 'GameSessions' },
     loadChildren: () => import('./game-session/game-session.routes'),
   },
   {
     path: 'stage-attempt',
-    title: 'StageAttempts',
+    data: { pageTitle: 'StageAttempts' },
     loadChildren: () => import('./stage-attempt/stage-attempt.routes'),
   },
   {
     path: 'concept-progress',
-    title: 'ConceptProgresses',
+    data: { pageTitle: 'ConceptProgresses' },
     loadChildren: () => import('./concept-progress/concept-progress.routes'),
   },
-  // jhipster-needle-add-entity-route - JHipster will add entity modules routes here
+  {
+    path: 'user-management',
+    data: { pageTitle: 'UserManagements' },
+    loadChildren: () => import('./admin/user-management/user-management.routes'),
+  },
+  /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
 ];
 
 export default routes;

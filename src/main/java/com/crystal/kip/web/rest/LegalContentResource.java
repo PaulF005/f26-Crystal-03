@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/legal-contents")
-@Transactional(rollbackFor = Exception.class)
+@Transactional
 public class LegalContentResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(LegalContentResource.class);

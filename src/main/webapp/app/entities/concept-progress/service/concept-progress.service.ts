@@ -1,11 +1,12 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Service, computed, inject, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
 import dayjs from 'dayjs/esm';
 import { Observable, map } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
-import { createRequestOption } from 'app/core/request';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
+import { createRequestOption } from 'app/core/request/request-util';
+import { isPresent } from 'app/core/util/operators';
 import { IConceptProgress, NewConceptProgress } from '../concept-progress.model';
 
 export type PartialUpdateConceptProgress = Partial<IConceptProgress> & Pick<IConceptProgress, 'id'>;
@@ -20,7 +21,7 @@ export type NewRestConceptProgress = RestOf<NewConceptProgress>;
 
 export type PartialUpdateRestConceptProgress = RestOf<PartialUpdateConceptProgress>;
 
-@Service()
+@Injectable()
 export class ConceptProgressesService {
   readonly conceptProgressesParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
@@ -41,7 +42,8 @@ export class ConceptProgressesService {
       this.convertValueFromServer(item),
     ),
   );
-  protected readonly resourceUrl = `${serverApiUrl}api/concept-progresses`;
+  protected readonly applicationConfigService = inject(ApplicationConfigService);
+  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/concept-progresses');
 
   protected convertValueFromServer(restConceptProgress: RestConceptProgress): IConceptProgress {
     return {
@@ -51,7 +53,7 @@ export class ConceptProgressesService {
   }
 }
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class ConceptProgressService extends ConceptProgressesService {
   protected readonly http = inject(HttpClient);
 
@@ -103,9 +105,7 @@ export class ConceptProgressService extends ConceptProgressesService {
     conceptProgressCollection: Type[],
     ...conceptProgressesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const conceptProgresses: Type[] = conceptProgressesToCheck.filter(
-      conceptProgressItem => conceptProgressItem !== null && conceptProgressItem !== undefined,
-    );
+    const conceptProgresses: Type[] = conceptProgressesToCheck.filter(isPresent);
     if (conceptProgresses.length > 0) {
       const conceptProgressCollectionIdentifiers = conceptProgressCollection.map(conceptProgressItem =>
         this.getConceptProgressIdentifier(conceptProgressItem),

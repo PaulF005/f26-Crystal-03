@@ -1,24 +1,27 @@
-import { Component, effect, inject, signal, untracked } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, effect, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Data, ParamMap, Router, RouterLink } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal';
-import { combineLatest, filter, map, tap } from 'rxjs';
+import { Subscription, combineLatest, filter, tap } from 'rxjs';
 
-import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config';
-import { Alert, AlertError } from 'app/shared/alert';
+import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
+import { Alert } from 'app/shared/alert/alert';
+import { AlertError } from 'app/shared/alert/alert-error';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
 import { UserProfileDeleteDialog } from '../delete/user-profile-delete-dialog';
 import { UserProfileService } from '../service/user-profile.service';
 import { IUserProfile } from '../user-profile.model';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-user-profile',
   templateUrl: './user-profile.html',
-  imports: [RouterLink, FontAwesomeModule, AlertError, Alert, SortDirective, SortByDirective],
+  imports: [RouterLink, FormsModule, FontAwesomeModule, AlertError, Alert, SortDirective, SortByDirective],
 })
-export class UserProfile {
+export class UserProfile implements OnInit {
+  subscription: Subscription | null = null;
   readonly userProfiles = signal<IUserProfile[]>([]);
 
   sortState = sortStateSignal({});
@@ -28,12 +31,6 @@ export class UserProfile {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   readonly isLoading = this.userProfileService.userProfilesResource.isLoading;
   protected readonly activatedRoute = inject(ActivatedRoute);
-  protected readonly activatedRouteState = toSignal(
-    combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
-      map(([queryParamMap, data]) => ({ queryParamMap, data })),
-    ),
-    { initialValue: { queryParamMap: this.activatedRoute.snapshot.queryParamMap, data: this.activatedRoute.snapshot.data } },
-  );
   protected readonly sortService = inject(SortService);
   protected modalService = inject(NgbModal);
 
@@ -41,17 +38,22 @@ export class UserProfile {
     effect(() => {
       this.userProfiles.set(this.fillComponentAttributesFromResponseBody([...this.userProfileService.userProfiles()]));
     });
-    effect(() => {
-      const activatedRouteState = this.activatedRouteState();
-      untracked(() => {
-        // Only watch for route changes. Other signals should be ignored.
-        this.fillComponentAttributeFromRoute(activatedRouteState.queryParamMap, activatedRouteState.data);
-        this.load();
-      });
-    });
   }
 
   trackId = (item: IUserProfile): number => this.userProfileService.getUserProfileIdentifier(item);
+
+  ngOnInit(): void {
+    this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
+      .pipe(
+        tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+        tap(() => {
+          if (this.userProfiles().length === 0) {
+            this.load();
+          }
+        }),
+      )
+      .subscribe();
+  }
 
   delete(userProfile: IUserProfile): void {
     const modalRef = this.modalService.open(UserProfileDeleteDialog, { size: 'lg', backdrop: 'static' });

@@ -1,8 +1,14 @@
 import { describe, expect, it } from 'vitest';
 
-import { filterNaN } from './operators';
+import { filterNaN, isPresent } from './operators';
 
 describe('Operators Test', () => {
+  describe('isPresent', () => {
+    it('should remove null and undefined values', () => {
+      expect([1, null, undefined].filter(isPresent)).toEqual([1]);
+    });
+  });
+
   describe('filterNaN', () => {
     it('should return 0 for NaN', () => {
       expect(filterNaN(Number.NaN)).toBe(0);

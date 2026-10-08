@@ -1,24 +1,27 @@
-import { Component, effect, inject, signal, untracked } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, OnInit, effect, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Data, ParamMap, Router, RouterLink } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap/modal';
-import { combineLatest, filter, map, tap } from 'rxjs';
+import { Subscription, combineLatest, filter, tap } from 'rxjs';
 
-import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config';
-import { Alert, AlertError } from 'app/shared/alert';
+import { DEFAULT_SORT_DATA, ITEM_DELETED_EVENT, SORT } from 'app/config/navigation.constants';
+import { Alert } from 'app/shared/alert/alert';
+import { AlertError } from 'app/shared/alert/alert-error';
 import { SortByDirective, SortDirective, SortService, type SortState, sortStateSignal } from 'app/shared/sort';
 import { IConcept } from '../concept.model';
 import { ConceptDeleteDialog } from '../delete/concept-delete-dialog';
 import { ConceptService } from '../service/concept.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-concept',
   templateUrl: './concept.html',
-  imports: [RouterLink, FontAwesomeModule, AlertError, Alert, SortDirective, SortByDirective],
+  imports: [RouterLink, FormsModule, FontAwesomeModule, AlertError, Alert, SortDirective, SortByDirective],
 })
-export class Concept {
+export class Concept implements OnInit {
+  subscription: Subscription | null = null;
   readonly concepts = signal<IConcept[]>([]);
 
   sortState = sortStateSignal({});
@@ -28,12 +31,6 @@ export class Concept {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   readonly isLoading = this.conceptService.conceptsResource.isLoading;
   protected readonly activatedRoute = inject(ActivatedRoute);
-  protected readonly activatedRouteState = toSignal(
-    combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data]).pipe(
-      map(([queryParamMap, data]) => ({ queryParamMap, data })),
-    ),
-    { initialValue: { queryParamMap: this.activatedRoute.snapshot.queryParamMap, data: this.activatedRoute.snapshot.data } },
-  );
   protected readonly sortService = inject(SortService);
   protected modalService = inject(NgbModal);
 
@@ -41,17 +38,22 @@ export class Concept {
     effect(() => {
       this.concepts.set(this.fillComponentAttributesFromResponseBody([...this.conceptService.concepts()]));
     });
-    effect(() => {
-      const activatedRouteState = this.activatedRouteState();
-      untracked(() => {
-        // Only watch for route changes. Other signals should be ignored.
-        this.fillComponentAttributeFromRoute(activatedRouteState.queryParamMap, activatedRouteState.data);
-        this.load();
-      });
-    });
   }
 
   trackId = (item: IConcept): number => this.conceptService.getConceptIdentifier(item);
+
+  ngOnInit(): void {
+    this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
+      .pipe(
+        tap(([params, data]) => this.fillComponentAttributeFromRoute(params, data)),
+        tap(() => {
+          if (this.concepts().length === 0) {
+            this.load();
+          }
+        }),
+      )
+      .subscribe();
+  }
 
   delete(concept: IConcept): void {
     const modalRef = this.modalService.open(ConceptDeleteDialog, { size: 'lg', backdrop: 'static' });

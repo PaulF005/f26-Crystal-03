@@ -13,6 +13,7 @@ import com.crystal.kip.IntegrationTest;
 import com.crystal.kip.domain.User;
 import com.crystal.kip.repository.UserRepository;
 import com.crystal.kip.web.rest.vm.LoginVM;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
@@ -20,7 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import tools.jackson.databind.ObjectMapper;
 
 /**
  * Integration tests for the {@link AuthenticateController} REST controller.

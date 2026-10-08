@@ -1,9 +1,9 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import dayjs from 'dayjs/esm';
 
-import { DATE_TIME_FORMAT } from 'app/config';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { ITopicProgress, NewTopicProgress } from '../topic-progress.model';
 
 /**
@@ -42,7 +42,7 @@ type TopicProgressFormGroupContent = {
 
 export type TopicProgressFormGroup = FormGroup<TopicProgressFormGroupContent>;
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class TopicProgressFormService {
   createTopicProgressFormGroup(topicProgress?: TopicProgressFormGroupInput): TopicProgressFormGroup {
     const topicProgressRawValue = this.convertTopicProgressToTopicProgressRawValue({

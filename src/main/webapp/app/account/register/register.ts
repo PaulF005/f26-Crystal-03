@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, inject, signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 
@@ -10,11 +10,12 @@ import { RegisterService } from './register.service';
 
 @Component({
   selector: 'jhi-register',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [RouterLink, ReactiveFormsModule, PasswordStrengthBar],
   templateUrl: './register.html',
 })
 export default class Register implements AfterViewInit {
-  readonly login = viewChild.required<ElementRef>('login');
+  login = viewChild.required<ElementRef>('login');
 
   readonly doNotMatch = signal(false);
   readonly error = signal(false);

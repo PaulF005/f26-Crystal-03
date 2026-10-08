@@ -56,6 +56,7 @@ dependencies {
     implementation libs.mapstruct
     implementation libs.springdoc.openapi.starter.webmvc.api
     implementation "org.springframework.boot:spring-boot-h2console"
+    implementation "org.springframework.boot:spring-boot-jackson2"
     implementation "org.springframework.boot:spring-boot-starter"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-aspectj"
@@ -71,6 +72,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-validation"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.security:spring-security-data"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
     implementation "com.github.ben-manes.caffeine:caffeine"
     implementation "com.github.ben-manes.caffeine:jcache"
     implementation "com.mysql:mysql-connector-j"

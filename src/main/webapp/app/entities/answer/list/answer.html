@@ -25,124 +25,123 @@
   <jhi-alert />
 
   @if (answers().length === 0) {
-    <div class="alert alert-warning" id="no-result">
-      <span>No Answers found</span>
-    </div>
+  <div class="alert alert-warning" id="no-result">
+    <span>No Answers found</span>
+  </div>
   } @else {
-    <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
-              <div class="d-flex">
-                <span>ID</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="text">
-              <div class="d-flex">
-                <span>Text</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="outcomeText">
-              <div class="d-flex">
-                <span>Outcome Text</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="correct">
-              <div class="d-flex">
-                <span>Correct</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="terminalResolution">
-              <div class="d-flex">
-                <span>Terminal Resolution</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="nextStage.id">
-              <div class="d-flex">
-                <span>Next Stage</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="feedback.id">
-              <div class="d-flex">
-                <span>Feedback</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="question.id">
-              <div class="d-flex">
-                <span>Question</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (answer of answers(); track trackId(answer)) {
-            <tr data-cy="entityTable">
-              <td>
-                <a [routerLink]="['/answer', answer.id, 'view']">{{ answer.id }}</a>
-              </td>
-              <td>{{ answer.text }}</td>
-              <td>{{ answer.outcomeText }}</td>
-              <td>{{ answer.correct }}</td>
-              <td>
-                {{
-                  { null: '', POSITIVE: 'POSITIVE', NEGATIVE: 'NEGATIVE', INCONCLUSIVE: 'INCONCLUSIVE' }[
-                    answer.terminalResolution ?? 'null'
-                  ]
-                }}
-              </td>
-              <td>
-                @if (answer.nextStage) {
-                  <div>
-                    <a [routerLink]="['/stage', answer.nextStage.id, 'view']">{{ answer.nextStage.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (answer.feedback) {
-                  <div>
-                    <a [routerLink]="['/feedback', answer.feedback.id, 'view']">{{ answer.feedback.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (answer.question) {
-                  <div>
-                    <a [routerLink]="['/question', answer.question.id, 'view']">{{ answer.question.id }}</a>
-                  </div>
-                }
-              </td>
-              <td class="text-end">
-                <div class="btn-group">
-                  <a [routerLink]="['/answer', answer.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
-                    <fa-icon icon="eye" />
-                    <span class="d-none d-md-inline">View</span>
-                  </a>
+  <div class="table-responsive table-entities" id="entities">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
 
-                  <a [routerLink]="['/answer', answer.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
-                    <fa-icon icon="pencil-alt" />
-                    <span class="d-none d-md-inline">Edit</span>
-                  </a>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="text">
+            <div class="d-flex">
+              <span>Text</span>
 
-                  <button type="submit" (click)="delete(answer)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times" />
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="outcomeText">
+            <div class="d-flex">
+              <span>Outcome Text</span>
+
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="correct">
+            <div class="d-flex">
+              <span>Correct</span>
+
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="terminalResolution">
+            <div class="d-flex">
+              <span>Terminal Resolution</span>
+
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nextStage.id">
+            <div class="d-flex">
+              <span>Next Stage</span>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="feedback.id">
+            <div class="d-flex">
+              <span>Feedback</span>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="question.id">
+            <div class="d-flex">
+              <span>Question</span>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (answer of answers(); track trackId(answer)) {
+        <tr data-cy="entityTable">
+          <td><a [routerLink]="['/answer', answer.id, 'view']">{{ answer.id }}</a></td>
+          <td>{{ answer.text }}</td>
+          <td>{{ answer.outcomeText }}</td>
+          <td>{{ answer.correct }}</td>
+          <td>
+            {{ {"null":"","POSITIVE":"POSITIVE","NEGATIVE":"NEGATIVE","INCONCLUSIVE":"INCONCLUSIVE"}[answer.terminalResolution ?? 'null'] }}
+          </td>
+          <td>
+            @if (answer.nextStage) {
+            <div>
+              <a [routerLink]="['/stage', answer.nextStage.id, 'view']">{{ answer.nextStage.id }}</a>
+            </div>
+            }
+          </td>
+          <td>
+            @if (answer.feedback) {
+            <div>
+              <a [routerLink]="['/feedback', answer.feedback.id, 'view']">{{ answer.feedback.id }}</a>
+            </div>
+            }
+          </td>
+          <td>
+            @if (answer.question) {
+            <div>
+              <a [routerLink]="['/question', answer.question.id, 'view']">{{ answer.question.id }}</a>
+            </div>
+            }
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a [routerLink]="['/answer', answer.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye" />
+                <span class="d-none d-md-inline">View</span>
+              </a>
+
+              <a [routerLink]="['/answer', answer.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt" />
+                <span class="d-none d-md-inline">Edit</span>
+              </a>
+
+              <button type="submit" (click)="delete(answer)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times" />
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   }
 </div>

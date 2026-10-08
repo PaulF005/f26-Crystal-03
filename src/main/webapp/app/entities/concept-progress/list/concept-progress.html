@@ -25,113 +25,116 @@
   <jhi-alert />
 
   @if (conceptProgresses().length === 0) {
-    <div class="alert alert-warning" id="no-result">
-      <span>No Concept Progresses found</span>
-    </div>
+  <div class="alert alert-warning" id="no-result">
+    <span>No Concept Progresses found</span>
+  </div>
   } @else {
-    <div class="table-responsive table-entities" id="entities">
-      <table class="table table-striped" aria-describedby="page-heading">
-        <thead>
-          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
-            <th scope="col" jhiSortBy="id">
-              <div class="d-flex">
-                <span>ID</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="competency">
-              <div class="d-flex">
-                <span>Competency</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="improvement">
-              <div class="d-flex">
-                <span>Improvement</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="evidenceCount">
-              <div class="d-flex">
-                <span>Evidence Count</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="lastPracticedAt">
-              <div class="d-flex">
-                <span>Last Practiced At</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="userProfile.id">
-              <div class="d-flex">
-                <span>User Profile</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="concept.id">
-              <div class="d-flex">
-                <span>Concept</span>
-                <fa-icon class="p-1" icon="sort" />
-              </div>
-            </th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (conceptProgress of conceptProgresses(); track trackId(conceptProgress)) {
-            <tr data-cy="entityTable">
-              <td>
-                <a [routerLink]="['/concept-progress', conceptProgress.id, 'view']">{{ conceptProgress.id }}</a>
-              </td>
-              <td>{{ conceptProgress.competency }}</td>
-              <td>{{ conceptProgress.improvement }}</td>
-              <td>{{ conceptProgress.evidenceCount }}</td>
-              <td>{{ conceptProgress.lastPracticedAt | formatMediumDatetime }}</td>
-              <td>
-                @if (conceptProgress.userProfile) {
-                  <div>
-                    <a [routerLink]="['/user-profile', conceptProgress.userProfile.id, 'view']">{{ conceptProgress.userProfile.id }}</a>
-                  </div>
-                }
-              </td>
-              <td>
-                @if (conceptProgress.concept) {
-                  <div>
-                    <a [routerLink]="['/concept', conceptProgress.concept.id, 'view']">{{ conceptProgress.concept.id }}</a>
-                  </div>
-                }
-              </td>
-              <td class="text-end">
-                <div class="btn-group">
-                  <a
-                    [routerLink]="['/concept-progress', conceptProgress.id, 'view']"
-                    class="btn btn-info btn-sm"
-                    data-cy="entityDetailsButton"
-                  >
-                    <fa-icon icon="eye" />
-                    <span class="d-none d-md-inline">View</span>
-                  </a>
+  <div class="table-responsive table-entities" id="entities">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>ID</span>
 
-                  <a
-                    [routerLink]="['/concept-progress', conceptProgress.id, 'edit']"
-                    class="btn btn-primary btn-sm"
-                    data-cy="entityEditButton"
-                  >
-                    <fa-icon icon="pencil-alt" />
-                    <span class="d-none d-md-inline">Edit</span>
-                  </a>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="competency">
+            <div class="d-flex">
+              <span>Competency</span>
 
-                  <button type="submit" (click)="delete(conceptProgress)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
-                    <fa-icon icon="times" />
-                    <span class="d-none d-md-inline">Delete</span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="improvement">
+            <div class="d-flex">
+              <span>Improvement</span>
+
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="evidenceCount">
+            <div class="d-flex">
+              <span>Evidence Count</span>
+
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="lastPracticedAt">
+            <div class="d-flex">
+              <span>Last Practiced At</span>
+
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="maxQuestions">
+            <div class="d-flex">
+              <span>Max Questions</span>
+
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="userProfile.id">
+            <div class="d-flex">
+              <span>User Profile</span>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="concept.id">
+            <div class="d-flex">
+              <span>Concept</span>
+              <fa-icon class="p-1" icon="sort" />
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (conceptProgress of conceptProgresses(); track trackId(conceptProgress)) {
+        <tr data-cy="entityTable">
+          <td><a [routerLink]="['/concept-progress', conceptProgress.id, 'view']">{{ conceptProgress.id }}</a></td>
+          <td>{{ conceptProgress.competency }}</td>
+          <td>{{ conceptProgress.improvement }}</td>
+          <td>{{ conceptProgress.evidenceCount }}</td>
+          <td>{{ conceptProgress.lastPracticedAt | formatMediumDatetime }}</td>
+          <td>{{ conceptProgress.maxQuestions }}</td>
+          <td>
+            @if (conceptProgress.userProfile) {
+            <div>
+              <a [routerLink]="['/user-profile', conceptProgress.userProfile.id, 'view']">{{ conceptProgress.userProfile.id }}</a>
+            </div>
+            }
+          </td>
+          <td>
+            @if (conceptProgress.concept) {
+            <div>
+              <a [routerLink]="['/concept', conceptProgress.concept.id, 'view']">{{ conceptProgress.concept.id }}</a>
+            </div>
+            }
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a [routerLink]="['/concept-progress', conceptProgress.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye" />
+                <span class="d-none d-md-inline">View</span>
+              </a>
+
+              <a [routerLink]="['/concept-progress', conceptProgress.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt" />
+                <span class="d-none d-md-inline">Edit</span>
+              </a>
+
+              <button type="submit" (click)="delete(conceptProgress)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times" />
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   }
 </div>

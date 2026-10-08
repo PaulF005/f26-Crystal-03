@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/user-profiles")
-@Transactional(rollbackFor = Exception.class)
+@Transactional
 public class UserProfileResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(UserProfileResource.class);

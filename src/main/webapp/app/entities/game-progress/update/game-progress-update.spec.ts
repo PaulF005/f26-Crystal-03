@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { HttpResponse } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -55,10 +55,10 @@ describe('GameProgress Management Update Component', () => {
       gameProgress.game = game;
 
       const gameCollection: IGame[] = [{ id: 7137 }];
-      vi.spyOn(gameService, 'query').mockReturnValue(of(new HttpResponse({ body: gameCollection })));
+      vitest.spyOn(gameService, 'query').mockReturnValue(of(new HttpResponse({ body: gameCollection })));
       const additionalGames = [game];
       const expectedCollection: IGame[] = [...additionalGames, ...gameCollection];
-      vi.spyOn(gameService, 'addGameToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vitest.spyOn(gameService, 'addGameToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ gameProgress });
       comp.ngOnInit();
@@ -77,10 +77,10 @@ describe('GameProgress Management Update Component', () => {
       gameProgress.userProfile = userProfile;
 
       const userProfileCollection: IUserProfile[] = [{ id: 22058 }];
-      vi.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
+      vitest.spyOn(userProfileService, 'query').mockReturnValue(of(new HttpResponse({ body: userProfileCollection })));
       const additionalUserProfiles = [userProfile];
       const expectedCollection: IUserProfile[] = [...additionalUserProfiles, ...userProfileCollection];
-      vi.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
+      vitest.spyOn(userProfileService, 'addUserProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ gameProgress });
       comp.ngOnInit();
@@ -114,9 +114,9 @@ describe('GameProgress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IGameProgress>();
       const gameProgress = { id: 24479 };
-      vi.spyOn(gameProgressFormService, 'getGameProgress').mockReturnValue(gameProgress);
-      vi.spyOn(gameProgressService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(gameProgressFormService, 'getGameProgress').mockReturnValue(gameProgress);
+      vitest.spyOn(gameProgressService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ gameProgress });
       comp.ngOnInit();
 
@@ -137,9 +137,9 @@ describe('GameProgress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IGameProgress>();
       const gameProgress = { id: 24479 };
-      vi.spyOn(gameProgressFormService, 'getGameProgress').mockReturnValue({ id: null });
-      vi.spyOn(gameProgressService, 'create').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(gameProgressFormService, 'getGameProgress').mockReturnValue({ id: null });
+      vitest.spyOn(gameProgressService, 'create').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ gameProgress: null });
       comp.ngOnInit();
 
@@ -160,8 +160,8 @@ describe('GameProgress Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IGameProgress>();
       const gameProgress = { id: 24479 };
-      vi.spyOn(gameProgressService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(gameProgressService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ gameProgress });
       comp.ngOnInit();
 
@@ -182,7 +182,7 @@ describe('GameProgress Management Update Component', () => {
       it('should forward to gameService', () => {
         const entity = { id: 7137 };
         const entity2 = { id: 5760 };
-        vi.spyOn(gameService, 'compareGame');
+        vitest.spyOn(gameService, 'compareGame');
         comp.compareGame(entity, entity2);
         expect(gameService.compareGame).toHaveBeenCalledWith(entity, entity2);
       });
@@ -192,7 +192,7 @@ describe('GameProgress Management Update Component', () => {
       it('should forward to userProfileService', () => {
         const entity = { id: 22058 };
         const entity2 = { id: 9009 };
-        vi.spyOn(userProfileService, 'compareUserProfile');
+        vitest.spyOn(userProfileService, 'compareUserProfile');
         comp.compareUserProfile(entity, entity2);
         expect(userProfileService.compareUserProfile).toHaveBeenCalledWith(entity, entity2);
       });

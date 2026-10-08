@@ -3,7 +3,6 @@ package com.crystal.kip.security;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -37,8 +36,7 @@ public final class SecurityUtils {
     }
 
     private static String extractPrincipal(Authentication authentication) {
-        // AnonymousAuthenticationToken has a String principal that would fall through below
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
+        if (authentication == null) {
             return null;
         } else if (authentication.getPrincipal() instanceof UserDetails springSecurityUser) {
             return springSecurityUser.getUsername();

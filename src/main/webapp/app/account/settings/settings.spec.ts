@@ -1,9 +1,10 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { of, throwError } from 'rxjs';
 
-import { Account, AccountService } from 'app/core/auth';
+import { Account } from 'app/core/auth/account.model';
+import { AccountService } from 'app/core/auth/account.service';
 
 import Settings from './settings';
 
@@ -28,7 +29,7 @@ describe('Settings', () => {
         {
           provide: AccountService,
           useValue: {
-            authenticate: vi.fn(),
+            authenticate: vitest.fn(),
           },
         },
       ],
@@ -39,12 +40,12 @@ describe('Settings', () => {
     fixture = TestBed.createComponent(Settings);
     comp = fixture.componentInstance;
     mockAccountService = TestBed.inject(AccountService);
-    mockAccountService.identity = vi.fn(() => of(account));
+    mockAccountService.identity = vitest.fn(() => of(account));
   });
 
   it('should send the current identity upon save', () => {
     // GIVEN
-    mockAccountService.save = vi.fn(() => of({}));
+    mockAccountService.save = vitest.fn(() => of({}));
     const settingsFormValues = {
       firstName: 'John',
       lastName: 'Doe',
@@ -59,12 +60,12 @@ describe('Settings', () => {
     expect(mockAccountService.identity).toHaveBeenCalled();
     expect(mockAccountService.save).toHaveBeenCalledWith(account);
     expect(mockAccountService.authenticate).toHaveBeenCalledWith(account);
-    expect(comp.settingsForm.value).toMatchObject(settingsFormValues);
+    expect(comp.settingsForm.value).toMatchObject(expect.objectContaining(settingsFormValues));
   });
 
   it('should notify of success upon successful save', () => {
     // GIVEN
-    mockAccountService.save = vi.fn(() => of({}));
+    mockAccountService.save = vitest.fn(() => of({}));
 
     // WHEN
     comp.ngOnInit();
@@ -76,7 +77,7 @@ describe('Settings', () => {
 
   it('should notify of error upon failed save', () => {
     // GIVEN
-    mockAccountService.save = vi.fn(() => throwError(Error));
+    mockAccountService.save = vitest.fn(() => throwError(Error));
 
     // WHEN
     comp.ngOnInit();

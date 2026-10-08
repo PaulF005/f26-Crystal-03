@@ -1,16 +1,17 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Service, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { serverApiUrl } from 'app/config';
+import { ApplicationConfigService } from 'app/core/config/application-config.service';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class ActivateService {
   private readonly http = inject(HttpClient);
+  private readonly applicationConfigService = inject(ApplicationConfigService);
 
   get(key: string): Observable<{}> {
-    return this.http.get(`${serverApiUrl}api/activate`, {
+    return this.http.get(this.applicationConfigService.getEndpointFor('api/activate'), {
       params: new HttpParams().set('key', key),
     });
   }

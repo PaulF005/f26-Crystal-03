@@ -82,7 +82,7 @@
             <column name="name" type="string"/>
         </loadData>
         <loadData
-                  file="config/liquibase/fake-data/user.csv"
+                  file="config/liquibase/data/user.csv"
                   separator=";"
                   tableName="jhi_user"
                   usePreparedStatements="true">

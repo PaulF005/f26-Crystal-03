@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
@@ -55,9 +55,9 @@ describe('Feedback Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IFeedback>();
       const feedback = { id: 10592 };
-      vi.spyOn(feedbackFormService, 'getFeedback').mockReturnValue(feedback);
-      vi.spyOn(feedbackService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(feedbackFormService, 'getFeedback').mockReturnValue(feedback);
+      vitest.spyOn(feedbackService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ feedback });
       comp.ngOnInit();
 
@@ -78,9 +78,9 @@ describe('Feedback Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IFeedback>();
       const feedback = { id: 10592 };
-      vi.spyOn(feedbackFormService, 'getFeedback').mockReturnValue({ id: null });
-      vi.spyOn(feedbackService, 'create').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(feedbackFormService, 'getFeedback').mockReturnValue({ id: null });
+      vitest.spyOn(feedbackService, 'create').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ feedback: null });
       comp.ngOnInit();
 
@@ -101,8 +101,8 @@ describe('Feedback Management Update Component', () => {
       // GIVEN
       const saveSubject = new Subject<IFeedback>();
       const feedback = { id: 10592 };
-      vi.spyOn(feedbackService, 'update').mockReturnValue(saveSubject);
-      vi.spyOn(comp, 'previousState');
+      vitest.spyOn(feedbackService, 'update').mockReturnValue(saveSubject);
+      vitest.spyOn(comp, 'previousState');
       activatedRoute.data = of({ feedback });
       comp.ngOnInit();
 

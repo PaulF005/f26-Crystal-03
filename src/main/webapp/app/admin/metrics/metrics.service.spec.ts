@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { ThreadDump, ThreadState } from './metrics.model';
 import { MetricsService } from './metrics.service';
 
-describe('Metrics Service', () => {
+describe('Logs Service', () => {
   let service: MetricsService;
   let httpMock: HttpTestingController;
 

@@ -1,4 +1,4 @@
-import { SecurityContext, Service, Signal, WritableSignal, inject, signal } from '@angular/core';
+import { Injectable, SecurityContext, inject } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 export type AlertType = 'success' | 'danger' | 'warning' | 'info';
@@ -10,10 +10,12 @@ export interface AlertModel {
   timeout?: number;
   toast?: boolean;
   position?: string;
-  close?: () => void;
+  close?: (alerts: AlertModel[]) => void;
 }
 
-@Service()
+@Injectable({
+  providedIn: 'root',
+})
 export class AlertService {
   timeout = 5000;
   toast = false;
@@ -21,51 +23,51 @@ export class AlertService {
 
   // unique id for each alert. Starts from 0.
   private alertId = 0;
-  private readonly alertsSignal = signal<AlertModel[]>([]);
-  private readonly alertsReadonly = this.alertsSignal.asReadonly();
+  private alerts: AlertModel[] = [];
 
   private readonly sanitizer = inject(DomSanitizer);
 
-  get alerts(): Signal<AlertModel[]> {
-    return this.alertsReadonly;
-  }
-
   clear(): void {
-    this.alertsSignal.set([]);
+    this.alerts = [];
   }
 
   get(): AlertModel[] {
-    return this.alertsSignal();
+    return this.alerts;
   }
 
   /**
    * Adds alert to alerts array and returns added alert.
    * @param alertToAdd Alert to add. If `timeout`, `toast` or `position` is missing then applying default value.
-   * @param extAlerts  If missing then adding `alert` to `AlertService` internal signal and alerts can be retrieved by `get()`.
+   * @param extAlerts  If missing then adding `alert` to `AlertService` internal array and alerts can be retrieved by `get()`.
    *                   Else adding `alert` to `extAlerts`.
    * @returns  Added alert
    */
-  addAlert(alertToAdd: Omit<AlertModel, 'id'>, extAlerts?: WritableSignal<AlertModel[]>): AlertModel {
+  addAlert(alertToAdd: Omit<AlertModel, 'id'>, extAlerts?: AlertModel[]): AlertModel {
     const alert: AlertModel = { ...alertToAdd, id: this.alertId++ };
 
     alert.message = this.sanitizer.sanitize(SecurityContext.HTML, alert.message ?? '') ?? '';
     alert.timeout ??= this.timeout;
     alert.toast ??= this.toast;
     alert.position ??= this.position;
-    alert.close = () => this.closeAlert(alert.id, extAlerts);
+    alert.close = (alertsArray: AlertModel[]) => this.closeAlert(alert.id, alertsArray);
 
-    (extAlerts ?? this.alertsSignal).update(alerts => [...alerts, alert]);
+    (extAlerts ?? this.alerts).push(alert);
 
     if (alert.timeout > 0) {
       setTimeout(() => {
-        this.closeAlert(alert.id, extAlerts);
+        this.closeAlert(alert.id, extAlerts ?? this.alerts);
       }, alert.timeout);
     }
 
     return alert;
   }
 
-  private closeAlert(alertId: number, extAlerts?: WritableSignal<AlertModel[]>): void {
-    (extAlerts ?? this.alertsSignal).update(alerts => alerts.filter(alert => alert.id !== alertId));
+  private closeAlert(alertId: number, extAlerts?: AlertModel[]): void {
+    const alerts = extAlerts ?? this.alerts;
+    const alertIndex = alerts.map(alert => alert.id).indexOf(alertId);
+    // if found alert then remove
+    if (alertIndex >= 0) {
+      alerts.splice(alertIndex, 1);
+    }
   }
 }

@@ -58,6 +58,7 @@ describe('Authority Service', () => {
 
       const req = httpMock.expectOne({ method: 'GET' });
       req.flush([returnedFromService]);
+      httpMock.verify();
       expect(expectedResult).toMatchObject([expected]);
     });
 
@@ -154,7 +155,7 @@ describe('Authority Service', () => {
         expect(compareResult2).toEqual(false);
       });
 
-      it('should return true if primaryKey matches', () => {
+      it('should return false if primaryKey matches', () => {
         const entity1 = { name: '572a7ecc-bf76-43f4-8026-46b42fba586d' };
         const entity2 = { name: '572a7ecc-bf76-43f4-8026-46b42fba586d' };
 

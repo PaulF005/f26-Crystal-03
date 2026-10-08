@@ -1,13 +1,17 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md">
+<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
       <span class="logo-img"></span>
+      <span class="navbar-title">Kip</span>
+      <span class="navbar-version">{{ version }}</span>
     </a>
     <a
       class="navbar-toggler d-lg-none"
       href="javascript:void(0);"
+      data-toggle="collapse"
+      data-target="#navbarResponsive"
       aria-controls="navbarResponsive"
-      [attr.aria-expanded]="!isNavbarCollapsed()"
+      aria-expanded="false"
       aria-label="Toggle navigation"
       (click)="isNavbarCollapsed.update(isNavbarCollapsed => !isNavbarCollapsed)"
     >
@@ -18,279 +22,228 @@
         <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
             <span>
-              <img src="/content/images/ui/icon_dashboard.png" class="pixel-image pixel-art" style="--image-width: 16" alt="" />
-              <span>Dashboard</span>
+              <fa-icon icon="home" />
+              <span>Home</span>
             </span>
           </a>
         </li>
         @if (account() !== null) {
-          <!-- User navbar -->
-          <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/games" (click)="collapseNavbar()">
-              <span>
-                <img src="/content/images/ui/icon_browser.png" class="pixel-image pixel-art" style="--image-width: 16" alt="" />
-                <span>Games</span>
-              </span>
-            </a>
-          </li>
-          <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/my-progress" (click)="collapseNavbar()">
-              <span>
-                <img src="/content/images/ui/icon_progress.png" class="pixel-image pixel-art" style="--image-width: 16" alt="" />
-                <span>Progress</span>
-              </span>
-            </a>
-          </li>
-          <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active">
-            <a class="nav-link" routerLink="/settings" (click)="collapseNavbar()">
-              <span>
-                <img src="/content/images/ui/icon_settings.png" class="pixel-image pixel-art" style="--image-width: 16" alt="" />
-                <span>Settings</span>
-              </span>
-            </a>
-          </li>
-          <!-- Admin navbar -->
-          <li
-            *jhiHasAnyAuthority="'ROLE_ADMIN'"
-            ngbDropdown
-            class="nav-item dropdown pointer"
-            display="static"
-            routerLinkActive="active"
-            [routerLinkActiveOptions]="{ exact: true }"
-            data-cy="entity"
-          >
-            <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
-              <span>
-                <fa-icon icon="th-list" />
-                <span>Entities</span>
-              </span>
-            </a>
-            <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/user-profile"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>User Profile</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/topic"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Topic</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/concept"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Concept</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/question"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Question</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/answer"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Answer</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/feedback"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Feedback</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/game"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Game</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/scenario"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Scenario</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/stage"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Stage</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/legal-content"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Legal Content</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/source"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Source</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/topic-progress"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Topic Progress</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/game-progress"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Game Progress</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/game-session"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Game Session</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/stage-attempt"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Stage Attempt</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/concept-progress"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Concept Progress</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/user-detail"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>User Detail</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/progress"
-                  routerLinkActive="active"
-                  [routerLinkActiveOptions]="{ exact: true }"
-                  (click)="collapseNavbar()"
-                >
-                  <fa-icon icon="asterisk" [fixedWidth]="true" />
-                  <span>Progress</span>
-                </a>
-              </li>
-              <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-            </ul>
-          </li>
+        <li
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          data-cy="entity"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
+            <span>
+              <fa-icon icon="th-list" />
+              <span>Entities</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/user-profile"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>User Profile</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/topic"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Topic</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/concept"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Concept</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/question"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Question</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/answer"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Answer</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/feedback"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Feedback</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/game"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Game</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/scenario"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Scenario</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/stage"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Stage</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/legal-content"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Legal Content</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/source"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Source</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/topic-progress"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Topic Progress</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/game-progress"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Game Progress</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/game-session"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Game Session</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/stage-attempt"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Stage Attempt</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/concept-progress"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>Concept Progress</span>
+              </a>
+            </li>
+            <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+          </ul>
+        </li>
         }
         <li
           *jhiHasAnyAuthority="'ROLE_ADMIN'"
           ngbDropdown
           class="nav-item dropdown pointer"
-          display="static"
+          display="dynamic"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           data-cy="adminMenu"
@@ -305,18 +258,6 @@
             <li>
               <a
                 class="dropdown-item"
-                routerLink="/user-management"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true" />
-                <span>User Management</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
                 routerLink="/authority"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -324,6 +265,18 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true" />
                 <span>Authority</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/user-management"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true" />
+                <span>User Management</span>
               </a>
             </li>
             <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
@@ -352,19 +305,19 @@
               </a>
             </li>
             @if (openAPIEnabled()) {
-              <li>
-                <a class="dropdown-item" routerLink="/admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
-                  <fa-icon icon="book" [fixedWidth]="true" />
-                  <span>API</span>
-                </a>
-              </li>
+            <li>
+              <a class="dropdown-item" routerLink="/admin/docs" routerLinkActive="active" (click)="collapseNavbar()">
+                <fa-icon icon="book" [fixedWidth]="true" />
+                <span>API</span>
+              </a>
+            </li>
             }
           </ul>
         </li>
         <li
           ngbDropdown
           class="nav-item dropdown pointer"
-          display="static"
+          display="dynamic"
           routerLinkActive="active"
           [routerLinkActiveOptions]="{ exact: true }"
           data-cy="accountMenu"
@@ -372,55 +325,67 @@
           @let accountRef = account();
           <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
             @if (!accountRef?.imageUrl) {
-              <span>
-                <img src="/content/images/ui/icon_user.png" class="pixel-image pixel-art" style="--image-width: 16" alt="" />
-                <span>Account</span>
-              </span>
+            <span>
+              <fa-icon icon="user" />
+              <span>Account</span>
+            </span>
             } @else {
-              <span>
-                <img [src]="accountRef.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
-              </span>
+            <span>
+              <img [src]="accountRef!.imageUrl" class="profile-image rounded-circle" alt="Avatar" />
+            </span>
             }
           </a>
-          <ul class="dropdown-menu dropdown-menu-end" ngbDropdownMenu aria-labelledby="account-menu">
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="account-menu">
             @if (accountRef !== null) {
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/account/settings"
-                  routerLinkActive="active"
-                  (click)="collapseNavbar()"
-                  data-cy="settings"
-                >
-                  <fa-icon icon="wrench" [fixedWidth]="true" />
-                  <span>Settings</span>
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
-                  <fa-icon icon="sign-out-alt" [fixedWidth]="true" />
-                  <span>Sign out</span>
-                </a>
-              </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/account/settings"
+                routerLinkActive="active"
+                (click)="collapseNavbar()"
+                data-cy="settings"
+              >
+                <fa-icon icon="wrench" [fixedWidth]="true" />
+                <span>Settings</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/account/password"
+                routerLinkActive="active"
+                (click)="collapseNavbar()"
+                data-cy="passwordItem"
+              >
+                <fa-icon icon="lock" [fixedWidth]="true" />
+                <span>Password</span>
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="logout()" id="logout" data-cy="logout">
+                <fa-icon icon="sign-out-alt" [fixedWidth]="true" />
+                <span>Sign out</span>
+              </a>
+            </li>
             } @else {
-              <li>
-                <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
-                  <fa-icon icon="sign-in-alt" [fixedWidth]="true" />
-                  <span>Sign in</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  class="dropdown-item"
-                  routerLink="/account/register"
-                  routerLinkActive="active"
-                  (click)="collapseNavbar()"
-                  data-cy="register"
-                >
-                  <fa-icon icon="user-plus" [fixedWidth]="true" />
-                  <span>Register</span>
-                </a>
-              </li>
+            <li>
+              <a class="dropdown-item" (click)="login()" id="login" data-cy="login">
+                <fa-icon icon="sign-in-alt" [fixedWidth]="true" />
+                <span>Sign in</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="/account/register"
+                routerLinkActive="active"
+                (click)="collapseNavbar()"
+                data-cy="register"
+              >
+                <fa-icon icon="user-plus" [fixedWidth]="true" />
+                <span>Register</span>
+              </a>
+            </li>
             }
           </ul>
         </li>

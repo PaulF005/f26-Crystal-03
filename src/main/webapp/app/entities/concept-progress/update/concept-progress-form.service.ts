@@ -1,9 +1,9 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import dayjs from 'dayjs/esm';
 
-import { DATE_TIME_FORMAT } from 'app/config';
+import { DATE_TIME_FORMAT } from 'app/config/input.constants';
 import { IConceptProgress, NewConceptProgress } from '../concept-progress.model';
 
 /**
@@ -36,13 +36,14 @@ type ConceptProgressFormGroupContent = {
   improvement: FormControl<ConceptProgressFormRawValue['improvement']>;
   evidenceCount: FormControl<ConceptProgressFormRawValue['evidenceCount']>;
   lastPracticedAt: FormControl<ConceptProgressFormRawValue['lastPracticedAt']>;
+  maxQuestions: FormControl<ConceptProgressFormRawValue['maxQuestions']>;
   userProfile: FormControl<ConceptProgressFormRawValue['userProfile']>;
   concept: FormControl<ConceptProgressFormRawValue['concept']>;
 };
 
 export type ConceptProgressFormGroup = FormGroup<ConceptProgressFormGroupContent>;
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class ConceptProgressFormService {
   createConceptProgressFormGroup(conceptProgress?: ConceptProgressFormGroupInput): ConceptProgressFormGroup {
     const conceptProgressRawValue = this.convertConceptProgressToConceptProgressRawValue({
@@ -69,6 +70,9 @@ export class ConceptProgressFormService {
       }),
       lastPracticedAt: new FormControl(conceptProgressRawValue.lastPracticedAt, {
         validators: [Validators.required],
+      }),
+      maxQuestions: new FormControl(conceptProgressRawValue.maxQuestions, {
+        validators: [Validators.required, Validators.min(5)],
       }),
       userProfile: new FormControl(conceptProgressRawValue.userProfile),
       concept: new FormControl(conceptProgressRawValue.concept),

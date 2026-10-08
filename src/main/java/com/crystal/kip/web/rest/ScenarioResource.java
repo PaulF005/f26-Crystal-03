@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/scenarios")
-@Transactional(rollbackFor = Exception.class)
+@Transactional
 public class ScenarioResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(ScenarioResource.class);

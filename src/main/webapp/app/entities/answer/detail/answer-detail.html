@@ -1,72 +1,73 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     @if (answer(); as answerRef) {
-      <div>
-        <h2 data-cy="answerDetailsHeading"><span>Answer</span></h2>
+    <div>
+      <h2 data-cy="answerDetailsHeading"><span>Answer</span></h2>
 
-        <hr />
+      <hr />
 
-        <jhi-alert-error />
+      <jhi-alert-error />
 
-        <jhi-alert />
+      <jhi-alert />
 
-        <dl class="row-md jh-entity-details">
-          <dt><span>ID</span></dt>
-          <dd>
-            <span>{{ answerRef.id }}</span>
-          </dd>
-          <dt><span>Text</span></dt>
-          <dd>
-            <span>{{ answerRef.text }}</span>
-          </dd>
-          <dt><span>Outcome Text</span></dt>
-          <dd>
-            <span>{{ answerRef.outcomeText }}</span>
-          </dd>
-          <dt><span>Correct</span></dt>
-          <dd>
-            <span>{{ answerRef.correct }}</span>
-          </dd>
-          <dt><span>Terminal Resolution</span></dt>
-          <dd>
-            <span>{{
-              { null: '', POSITIVE: 'POSITIVE', NEGATIVE: 'NEGATIVE', INCONCLUSIVE: 'INCONCLUSIVE' }[answerRef.terminalResolution ?? 'null']
-            }}</span>
-          </dd>
-          <dt><span>Next Stage</span></dt>
-          <dd>
-            @if (answer()!.nextStage) {
-              <div>
-                <a [routerLink]="['/stage', answer()!.nextStage?.id, 'view']">{{ answerRef.nextStage?.id }}</a>
-              </div>
-            }
-          </dd>
-          <dt><span>Feedback</span></dt>
-          <dd>
-            @if (answer()!.feedback) {
-              <div>
-                <a [routerLink]="['/feedback', answer()!.feedback?.id, 'view']">{{ answerRef.feedback?.id }}</a>
-              </div>
-            }
-          </dd>
-          <dt><span>Question</span></dt>
-          <dd>
-            @if (answer()!.question) {
-              <div>
-                <a [routerLink]="['/question', answer()!.question?.id, 'view']">{{ answerRef.question?.id }}</a>
-              </div>
-            }
-          </dd>
-        </dl>
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ answerRef.id }}</span>
+        </dd>
+        <dt><span>Text</span></dt>
+        <dd>
+          <span>{{ answerRef.text }}</span>
+        </dd>
+        <dt><span>Outcome Text</span></dt>
+        <dd>
+          <span>{{ answerRef.outcomeText }}</span>
+        </dd>
+        <dt><span>Correct</span></dt>
+        <dd>
+          <span>{{ answerRef.correct }}</span>
+        </dd>
+        <dt><span>Terminal Resolution</span></dt>
+        <dd>
+          <span
+            >{{ {"null":"","POSITIVE":"POSITIVE","NEGATIVE":"NEGATIVE","INCONCLUSIVE":"INCONCLUSIVE"}[answerRef.terminalResolution ??
+            'null'] }}</span
+          >
+        </dd>
+        <dt><span>Next Stage</span></dt>
+        <dd>
+          @if (answer()!.nextStage) {
+          <div>
+            <a [routerLink]="['/stage', answer()!.nextStage?.id, 'view']">{{ answerRef.nextStage?.id }}</a>
+          </div>
+          }
+        </dd>
+        <dt><span>Feedback</span></dt>
+        <dd>
+          @if (answer()!.feedback) {
+          <div>
+            <a [routerLink]="['/feedback', answer()!.feedback?.id, 'view']">{{ answerRef.feedback?.id }}</a>
+          </div>
+          }
+        </dd>
+        <dt><span>Question</span></dt>
+        <dd>
+          @if (answer()!.question) {
+          <div>
+            <a [routerLink]="['/question', answer()!.question?.id, 'view']">{{ answerRef.question?.id }}</a>
+          </div>
+          }
+        </dd>
+      </dl>
 
-        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
-          <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
-        </button>
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left" />&nbsp;<span>Back</span>
+      </button>
 
-        <button type="button" [routerLink]="['/answer', answerRef.id, 'edit']" class="btn btn-primary">
-          <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
-        </button>
-      </div>
+      <button type="button" [routerLink]="['/answer', answerRef.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt" />&nbsp;<span>Edit</span>
+      </button>
+    </div>
     }
   </div>
 </div>

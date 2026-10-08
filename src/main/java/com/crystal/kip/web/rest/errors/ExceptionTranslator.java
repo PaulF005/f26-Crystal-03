@@ -49,7 +49,7 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
     private static final String FIELD_ERRORS_KEY = "fieldErrors";
     private static final String MESSAGE_KEY = "message";
     private static final String PATH_KEY = "path";
-    private static final boolean CAUSAL_CHAIN_ENABLED = false;
+    private static final boolean CASUAL_CHAIN_ENABLED = false;
 
     private static final Logger LOG = LoggerFactory.getLogger(ExceptionTranslator.class);
 
@@ -246,15 +246,15 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
     }
 
     public Optional<ProblemDetailWithCause> buildCause(final Throwable throwable, NativeWebRequest request) {
-        if (throwable != null && isCausalChainEnabled()) {
+        if (throwable != null && isCasualChainEnabled()) {
             return Optional.of(customizeProblem(getProblemDetailWithCause(throwable), throwable, request));
         }
         return Optional.ofNullable(null);
     }
 
-    private boolean isCausalChainEnabled() {
+    private boolean isCasualChainEnabled() {
         // Customize as per the needs
-        return CAUSAL_CHAIN_ENABLED;
+        return CASUAL_CHAIN_ENABLED;
     }
 
     private boolean containsPackageName(String message) {

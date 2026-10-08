@@ -1,17 +1,18 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Observable, finalize } from 'rxjs';
 
-import { AlertError } from 'app/shared/alert';
+import { AlertError } from 'app/shared/alert/alert-error';
 import { TopicService } from '../service/topic.service';
 import { ITopic } from '../topic.model';
 
 import { TopicFormGroup, TopicFormService } from './topic-form.service';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'jhi-topic-update',
   templateUrl: './topic-update.html',
   imports: [FontAwesomeModule, AlertError, ReactiveFormsModule],

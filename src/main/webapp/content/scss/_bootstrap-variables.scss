@@ -7,7 +7,6 @@
 
 // Options:
 // Quickly modify global styling by enabling or disabling optional features.
-
 $enable-rounded: true;
 $enable-shadows: false;
 $enable-gradients: false;
@@ -29,23 +28,9 @@ $border-radius-sm: 0.1rem;
 $body-bg: #ffffff;
 
 // Typography:
-// Bootstrap typography defaults should follow KIP's font standards.
-//
-// body  -> general text
-// field -> fields / monospace-style UI
-// title -> headings
+// Font, line-height, and color for body text, headings, and more.
 
-$font-family-base: 'body', sans-serif;
-$font-family-monospace: 'field', monospace;
-
-$headings-font-family: 'title', sans-serif;
-$headings-font-weight: normal;
-
-// Keep Bootstrap's base unit tied to rem.
-// The root rem size is already controlled by KIP's global pixel scale.
 $font-size-base: 1rem;
-
-// Dropdowns
 
 $dropdown-link-hover-color: white;
 $dropdown-link-hover-bg: #343a40;

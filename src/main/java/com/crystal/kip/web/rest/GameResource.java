@@ -25,7 +25,7 @@ import tech.jhipster.web.util.ResponseUtil;
  */
 @RestController
 @RequestMapping("/api/games")
-@Transactional(rollbackFor = Exception.class)
+@Transactional
 public class GameResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(GameResource.class);

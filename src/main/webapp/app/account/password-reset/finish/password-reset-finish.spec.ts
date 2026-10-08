@@ -1,5 +1,5 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { ElementRef } from '@angular/core';
+import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { ElementRef, signal } from '@angular/core';
 import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
@@ -36,9 +36,9 @@ describe('PasswordResetFinish', () => {
 
   it('sets focus after the view has been initialized', () => {
     const node = {
-      focus: vi.fn(),
+      focus: vitest.fn(),
     };
-    vi.spyOn(comp, 'newPassword').mockReturnValue(new ElementRef(node));
+    comp.newPassword = signal(new ElementRef(node));
 
     comp.ngAfterViewInit();
 
@@ -59,7 +59,7 @@ describe('PasswordResetFinish', () => {
   it('should update success to true after resetting password', inject(
     [PasswordResetFinishService],
     (service: PasswordResetFinishService) => {
-      vi.spyOn(service, 'save').mockReturnValue(of({}));
+      vitest.spyOn(service, 'save').mockReturnValue(of({}));
       comp.passwordForm.patchValue({
         newPassword: 'password',
         confirmPassword: 'password',
@@ -73,7 +73,7 @@ describe('PasswordResetFinish', () => {
   ));
 
   it('should notify of generic error', inject([PasswordResetFinishService], (service: PasswordResetFinishService) => {
-    vi.spyOn(service, 'save').mockReturnValue(throwError(Error));
+    vitest.spyOn(service, 'save').mockReturnValue(throwError(Error));
     comp.passwordForm.patchValue({
       newPassword: 'password',
       confirmPassword: 'password',

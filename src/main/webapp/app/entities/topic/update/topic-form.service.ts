@@ -1,4 +1,4 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { ITopic, NewTopic } from '../topic.model';
@@ -24,7 +24,7 @@ type TopicFormGroupContent = {
 
 export type TopicFormGroup = FormGroup<TopicFormGroupContent>;
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class TopicFormService {
   createTopicFormGroup(topic?: TopicFormGroupInput): TopicFormGroup {
     const topicRawValue = {
