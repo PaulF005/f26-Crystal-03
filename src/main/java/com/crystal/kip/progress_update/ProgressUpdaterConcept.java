@@ -45,7 +45,7 @@ public class ProgressUpdaterConcept {
         }
 
         Instant now = Instant.now();
-        this.linkConcpetProgressRepository.updateConceptProgressToDB((float) currentCompetency, (float) percentDone, now);
+        this.linkConcpetProgressRepository.updateConceptProgressToDBCP((float) currentCompetency, (float) percentDone, now);
     }
 
     public float getImprovement() {

@@ -76,7 +76,7 @@ public class ProgressUpdaterConceptTest {
 
         progressUpdaterConcept.updateConceptProgress(3);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDB(
+        verify(linkConcpetProgressRepository).updateConceptProgressToDBCP(
             competencyCaptor.capture(),
             improvementCaptor.capture(),
             nowCaptor.capture()
@@ -97,7 +97,7 @@ public class ProgressUpdaterConceptTest {
 
         progressUpdaterConcept.updateConceptProgress(1);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDB(
+        verify(linkConcpetProgressRepository).updateConceptProgressToDBCP(
             competencyCaptor.capture(),
             improvementCaptor.capture(),
             nowCaptor.capture()
@@ -118,7 +118,7 @@ public class ProgressUpdaterConceptTest {
 
         progressUpdaterConcept.updateConceptProgress(15);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDB(
+        verify(linkConcpetProgressRepository).updateConceptProgressToDBCP(
             competencyCaptor.capture(),
             improvementCaptor.capture(),
             nowCaptor.capture()

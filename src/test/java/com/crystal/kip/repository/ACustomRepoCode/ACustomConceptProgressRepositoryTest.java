@@ -17,7 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * SHOULD HAVE DOCKER ENGINE ON TO TEST
+ * SHOULD HAVE DOCKER ENGINE ON TO TEST, can take 1-4 minutes to complete as it mimics a sql database
  * ACustomConceptProgressRepositoryTest
  */
 @IntegrationTest
@@ -65,25 +65,25 @@ public class ACustomConceptProgressRepositoryTest {
     void getCompetencyDBCPTest() {
         Optional<Float> currentCompetency = aCustomConceptProgressRepository.getCompetencyDBCP(TESTUSERNAME);
         assertTrue(currentCompetency.isPresent());
-        assertEquals(0.3f, currentCompetency.get(), 0.001f);
+        assertEquals(0.3f, currentCompetency.get(), 0.001);
     }
 
     @Test
     void getCurCompentencyCPTest() {
         double currentCompetency = aCustomConceptProgressRepository.getCurCompentencyCP(TESTUSERNAME);
-        assertEquals(0.3d, currentCompetency, 0.001d);
+        assertEquals(0.3d, currentCompetency, 0.001);
     }
 
     @Test
     void getCurCompentencyCPTestFail() {
         double currentCompetency = aCustomConceptProgressRepository.getCurCompentencyCP(FAILUSERNAME);
-        assertEquals(-1.0d, currentCompetency, 0.001d);
+        assertEquals(-1.0d, currentCompetency, 0.001);
     }
 
     //Get Max Questions Functions
     @Test
     void getmaxQuestionsDBTest() {
-        Optional<Integer> maxQuestions = aCustomConceptProgressRepository.getmaxQuestionsDB(TESTUSERNAME);
+        Optional<Integer> maxQuestions = aCustomConceptProgressRepository.getmaxQuestionsDBCP(TESTUSERNAME);
         assertTrue(maxQuestions.isPresent());
         assertEquals(10, maxQuestions.get());
     }
@@ -105,20 +105,54 @@ public class ACustomConceptProgressRepositoryTest {
     void getImprovementDBCPTest() {
         Optional<Float> imporvement = aCustomConceptProgressRepository.getImprovementDBCP(TESTUSERNAME);
         assertTrue(imporvement.isPresent());
-        assertEquals(0.1f, imporvement.get(), 0.001f);
+        assertEquals(0.1f, imporvement.get(), 0.001);
     }
 
     @Test
     void getImprovementTest() {
         double imporvement = aCustomConceptProgressRepository.getImprovementCP(TESTUSERNAME);
-        assertEquals(0.1d, imporvement, 0.001d);
+        assertEquals(0.1d, imporvement, 0.001);
     }
 
     @Test
     void getImprovementTestFail() {
         double imporvement = aCustomConceptProgressRepository.getImprovementCP(FAILUSERNAME);
-        assertEquals(-1.0d, imporvement, 0.001d);
+        assertEquals(-1.0d, imporvement, 0.001);
+    }
+
+    //Get LastPraticedAt Functions
+    @Test
+    void getLastPracticedAtDBCPTest() {
+        Optional<Instant> now = aCustomConceptProgressRepository.getLastPracticedAtDBCP(TESTUSERNAME);
+        assertTrue(now.isPresent());
+        assertEquals("2026-04-01T11:11:00Z", now.get().toString());
+    }
+
+    @Test
+    void getLastPracticedAtCPTest() {
+        Instant now = aCustomConceptProgressRepository.getLastPracticedAtCP(TESTUSERNAME);
+        assertEquals("2026-04-01T11:11:00Z", now.toString());
+    }
+
+    @Test
+    void getLastPracticedAtCPFail() {
+        Instant now = aCustomConceptProgressRepository.getLastPracticedAtCP(FAILUSERNAME);
+        assertEquals(Instant.EPOCH.toString(), now.toString());
     }
 
     //Update Functions
+    @Test
+    @WithMockUser(username = TESTUSERNAME)
+    void updateConceptProgressToDBTest() {
+        Float competency = 0.6f;
+        Float improvement = 0.2f;
+        Instant now = Instant.parse("2026-04-01T12:00:00Z");
+
+        aCustomConceptProgressRepository.updateConceptProgressToDBCP(competency, improvement, now);
+        entityManager.clear();
+
+        Optional<Float> newCompetency = aCustomConceptProgressRepository.getCompetencyDBCP(TESTUSERNAME);
+        assertTrue(newCompetency.isPresent());
+        assertEquals(competency, newCompetency.get(), 0.001);
+    }
 }
