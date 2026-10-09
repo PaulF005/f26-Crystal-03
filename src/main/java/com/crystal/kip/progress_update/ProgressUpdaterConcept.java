@@ -26,22 +26,26 @@ public class ProgressUpdaterConcept {
             throw new IllegalArgumentException("Concept Progress has an error in its Max Questions!");
         }
 
-        double currentCompantency = this.linkConcpetProgressRepository.getCurCompentencyCP(username);
-        if (currentCompantency < 0) {
-            log.error("Failed to read current compantency from repo!");
-            throw new IllegalArgumentException("Concept Progress has an error in its Current Compantency!");
+        double currentCompetency = this.linkConcpetProgressRepository.getCurCompentencyCP(username);
+        if (currentCompetency < 0) {
+            log.error("Failed to read current competency from repo!");
+            throw new IllegalArgumentException("Concept Progress has an error in its Current Competency!");
         }
 
         double percentDone = (double) questionsRight / totalQuestions;
-        currentCompantency += percentDone;
+        currentCompetency += percentDone;
 
-        //Close enough!!
-        if (currentCompantency >= 0.99) {
-            currentCompantency = 1.0;
+        //Close enough!! Will not indicate an increase in imporvement if there is no increase in Competency
+        if (currentCompetency >= 0.99 && currentCompetency <= 1.0) {
+            currentCompetency = 1.0;
+            percentDone = 0.01;
+        } else if (currentCompetency >= 1.0) {
+            currentCompetency = 1.0;
+            percentDone = 0.0;
         }
 
         Instant now = Instant.now();
-        this.linkConcpetProgressRepository.updateConceptProgressToDB((float) currentCompantency, (float) percentDone, now);
+        this.linkConcpetProgressRepository.updateConceptProgressToDB((float) currentCompetency, (float) percentDone, now);
     }
 
     public float getImprovement() {

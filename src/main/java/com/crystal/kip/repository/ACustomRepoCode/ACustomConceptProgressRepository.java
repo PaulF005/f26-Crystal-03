@@ -16,10 +16,10 @@ public interface ACustomConceptProgressRepository {
             "INNER JOIN up.dataUser u " +
             "WHERE u.login = :username"
     )
-    Optional<Float> getCompantencyDBCP(@Param("username") String username);
+    Optional<Float> getCompetencyDBCP(@Param("username") String username);
 
     default double getCurCompentencyCP(String username) {
-        return getCompantencyDBCP(username).map(Float::doubleValue).orElse(-1.0);
+        return getCompetencyDBCP(username).map(Float::doubleValue).orElse(-1.0);
     }
 
     @Query(

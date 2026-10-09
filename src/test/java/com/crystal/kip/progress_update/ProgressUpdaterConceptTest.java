@@ -35,6 +35,9 @@ public class ProgressUpdaterConceptTest {
     private ArgumentCaptor<Float> competencyCaptor;
 
     @Captor
+    private ArgumentCaptor<Float> improvementCaptor;
+
+    @Captor
     private ArgumentCaptor<Instant> nowCaptor;
 
     private ProgressUpdaterConcept progressUpdaterConcept;
@@ -73,8 +76,13 @@ public class ProgressUpdaterConceptTest {
 
         progressUpdaterConcept.updateConceptProgress(3);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDB(competencyCaptor.capture(), nowCaptor.capture());
+        verify(linkConcpetProgressRepository).updateConceptProgressToDB(
+            competencyCaptor.capture(),
+            improvementCaptor.capture(),
+            nowCaptor.capture()
+        );
         assertEquals(0.3f, competencyCaptor.getValue(), 0.001);
+        assertEquals(0.1f, improvementCaptor.getValue(), 0.001);
         assertNotNull(nowCaptor.getValue());
     }
 
@@ -89,8 +97,13 @@ public class ProgressUpdaterConceptTest {
 
         progressUpdaterConcept.updateConceptProgress(1);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDB(competencyCaptor.capture(), nowCaptor.capture());
+        verify(linkConcpetProgressRepository).updateConceptProgressToDB(
+            competencyCaptor.capture(),
+            improvementCaptor.capture(),
+            nowCaptor.capture()
+        );
         assertEquals(1.0f, competencyCaptor.getValue(), 0.001);
+        assertEquals(0.01f, improvementCaptor.getValue(), 0.0001);
         assertNotNull(nowCaptor.getValue());
     }
 
@@ -105,8 +118,13 @@ public class ProgressUpdaterConceptTest {
 
         progressUpdaterConcept.updateConceptProgress(15);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDB(competencyCaptor.capture(), nowCaptor.capture());
+        verify(linkConcpetProgressRepository).updateConceptProgressToDB(
+            competencyCaptor.capture(),
+            improvementCaptor.capture(),
+            nowCaptor.capture()
+        );
         assertEquals(1.0f, competencyCaptor.getValue(), 0.001);
+        assertEquals(0.0f, improvementCaptor.getValue(), 0.01);
         assertNotNull(nowCaptor.getValue());
     }
 

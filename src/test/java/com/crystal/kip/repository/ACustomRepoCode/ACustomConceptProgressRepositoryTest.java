@@ -52,7 +52,6 @@ public class ACustomConceptProgressRepositoryTest {
         conceptProgress.setUserProfile(userProfile);
         conceptProgress.setCompetency(0.3f);
         conceptProgress.setImprovement(0.10f);
-        conceptProgress.setEvidenceCount(0);
         conceptProgress.setLastPracticedAt(Instant.parse("2026-04-01T11:11:00Z"));
         conceptProgress.setMaxQuestions(10);
         entityManager.persist(conceptProgress);
@@ -64,7 +63,7 @@ public class ACustomConceptProgressRepositoryTest {
     //Get Competency Functions
     @Test
     void getCompetencyDBCPTest() {
-        Optional<Float> currentCompetency = aCustomConceptProgressRepository.getCompantencyDBCP(TESTUSERNAME);
+        Optional<Float> currentCompetency = aCustomConceptProgressRepository.getCompetencyDBCP(TESTUSERNAME);
         assertTrue(currentCompetency.isPresent());
         assertEquals(0.3f, currentCompetency.get(), 0.001f);
     }
