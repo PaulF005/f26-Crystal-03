@@ -41,13 +41,13 @@ public class ProgressUpdaterConcept {
         }
 
         Instant now = Instant.now();
-        this.linkConcpetProgressRepository.updateConceptProgressToDB((float) currentCompantency, now);
+        this.linkConcpetProgressRepository.updateConceptProgressToDB((float) currentCompantency, (float) percentDone, now);
     }
 
     public float getImprovement() {
         String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
 
-        double improvementToAdd = this.linkConcpetProgressRepository.getImprovement(username);
+        double improvementToAdd = this.linkConcpetProgressRepository.getImprovementCP(username);
         if (improvementToAdd < 0) {
             log.error("Failed to read current improvement from repo!");
             throw new IllegalArgumentException("Concept Progress has an error in its current imporvement!");

@@ -42,17 +42,21 @@ public interface ACustomConceptProgressRepository {
     )
     Optional<Float> getImprovementDBCP(@Param("username") String username);
 
-    default double getImprovement(String username) {
+    default double getImprovementCP(String username) {
         return getImprovementDBCP(username).map(Float::doubleValue).orElse(-1.0);
     }
 
     //UPDATE functions
     @Modifying
     @Query(
-        "UPDATE ConceptProgress cp SET cp.competency = :competency, cp.lastPracticedAt = :lastPracticedAt " +
+        "UPDATE ConceptProgress cp SET cp.competency = :competency, cp.improvement = :imporvement, cp.lastPracticedAt = :lastPracticedAt " +
             "WHERE cp.userProfile IN (" +
             "  SELECT up FROM UserProfile up JOIN up.dataUser u WHERE u.login = ?#{principal.username}" +
             ")"
     )
-    void updateConceptProgressToDB(@Param("competency") Float competency, @Param("lastPracticedAt") Instant lastPracticedAt);
+    void updateConceptProgressToDB(
+        @Param("competency") Float competency,
+        @Param("improvement") Float improvement,
+        @Param("lastPracticedAt") Instant lastPracticedAt
+    );
 }

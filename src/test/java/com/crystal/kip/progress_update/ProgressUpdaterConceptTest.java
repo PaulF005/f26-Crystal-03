@@ -150,7 +150,7 @@ public class ProgressUpdaterConceptTest {
     @Test
     void getImprovementSuccess() {
         mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getImprovement(TESTUSER)).thenReturn(7.2);
+        when(linkConcpetProgressRepository.getImprovementCP(TESTUSER)).thenReturn(7.2);
 
         float improvementTest = progressUpdaterConcept.getImprovement();
 
@@ -163,7 +163,7 @@ public class ProgressUpdaterConceptTest {
     @Test
     void getImprovementExeceptionBadReadImprovement() {
         mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getImprovement(TESTUSER)).thenReturn(-1.0);
+        when(linkConcpetProgressRepository.getImprovementCP(TESTUSER)).thenReturn(-1.0);
 
         assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.getImprovement());
     }
