@@ -12,6 +12,7 @@ import com.crystal.kip.domain.Topic;
 import com.crystal.kip.domain.TopicProgress;
 import com.crystal.kip.domain.UserProfile;
 import com.crystal.kip.repository.TopicProgressRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.util.Random;
@@ -25,7 +26,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import tools.jackson.databind.ObjectMapper;
 
 /**
  * Integration tests for the {@link TopicProgressResource} REST controller.
@@ -40,9 +40,6 @@ class TopicProgressResourceIT {
 
     private static final Float DEFAULT_IMPROVEMENT = 1F;
     private static final Float UPDATED_IMPROVEMENT = 2F;
-
-    private static final Integer DEFAULT_EVIDENCE_COUNT = 0;
-    private static final Integer UPDATED_EVIDENCE_COUNT = 1;
 
     private static final Instant DEFAULT_LAST_PRACTICED_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_PRACTICED_AT = Instant.ofEpochMilli(1787767274668L);
@@ -79,7 +76,6 @@ class TopicProgressResourceIT {
         TopicProgress topicProgress = new TopicProgress()
             .competency(DEFAULT_COMPETENCY)
             .improvement(DEFAULT_IMPROVEMENT)
-            .evidenceCount(DEFAULT_EVIDENCE_COUNT)
             .lastPracticedAt(DEFAULT_LAST_PRACTICED_AT);
         // Add required entity
         Topic topic;
@@ -114,7 +110,6 @@ class TopicProgressResourceIT {
         TopicProgress updatedTopicProgress = new TopicProgress()
             .competency(UPDATED_COMPETENCY)
             .improvement(UPDATED_IMPROVEMENT)
-            .evidenceCount(UPDATED_EVIDENCE_COUNT)
             .lastPracticedAt(UPDATED_LAST_PRACTICED_AT);
         // Add required entity
         Topic topic;
@@ -225,22 +220,6 @@ class TopicProgressResourceIT {
 
     @Test
     @Transactional
-    void checkEvidenceCountIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        topicProgress.setEvidenceCount(null);
-
-        // Create the TopicProgress, which fails.
-
-        restTopicProgressMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(topicProgress)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void checkLastPracticedAtIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
@@ -269,7 +248,6 @@ class TopicProgressResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(topicProgress.getId().intValue())))
             .andExpect(jsonPath("$.[*].competency").value(hasItem(DEFAULT_COMPETENCY.doubleValue())))
             .andExpect(jsonPath("$.[*].improvement").value(hasItem(DEFAULT_IMPROVEMENT.doubleValue())))
-            .andExpect(jsonPath("$.[*].evidenceCount").value(hasItem(DEFAULT_EVIDENCE_COUNT)))
             .andExpect(jsonPath("$.[*].lastPracticedAt").value(hasItem(DEFAULT_LAST_PRACTICED_AT.toString())));
     }
 
@@ -287,7 +265,6 @@ class TopicProgressResourceIT {
             .andExpect(jsonPath("$.id").value(topicProgress.getId().intValue()))
             .andExpect(jsonPath("$.competency").value(DEFAULT_COMPETENCY.doubleValue()))
             .andExpect(jsonPath("$.improvement").value(DEFAULT_IMPROVEMENT.doubleValue()))
-            .andExpect(jsonPath("$.evidenceCount").value(DEFAULT_EVIDENCE_COUNT))
             .andExpect(jsonPath("$.lastPracticedAt").value(DEFAULT_LAST_PRACTICED_AT.toString()));
     }
 
@@ -310,11 +287,7 @@ class TopicProgressResourceIT {
         TopicProgress updatedTopicProgress = topicProgressRepository.findById(topicProgress.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedTopicProgress are not directly saved in db
         em.detach(updatedTopicProgress);
-        updatedTopicProgress
-            .competency(UPDATED_COMPETENCY)
-            .improvement(UPDATED_IMPROVEMENT)
-            .evidenceCount(UPDATED_EVIDENCE_COUNT)
-            .lastPracticedAt(UPDATED_LAST_PRACTICED_AT);
+        updatedTopicProgress.competency(UPDATED_COMPETENCY).improvement(UPDATED_IMPROVEMENT).lastPracticedAt(UPDATED_LAST_PRACTICED_AT);
 
         restTopicProgressMockMvc
             .perform(
@@ -426,7 +399,6 @@ class TopicProgressResourceIT {
         partialUpdatedTopicProgress
             .competency(UPDATED_COMPETENCY)
             .improvement(UPDATED_IMPROVEMENT)
-            .evidenceCount(UPDATED_EVIDENCE_COUNT)
             .lastPracticedAt(UPDATED_LAST_PRACTICED_AT);
 
         restTopicProgressMockMvc

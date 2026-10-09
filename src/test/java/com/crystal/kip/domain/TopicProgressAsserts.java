@@ -49,7 +49,6 @@ public class TopicProgressAsserts {
             .as("Verify TopicProgress relevant properties")
             .satisfies(a -> assertThat(a.getCompetency()).as("check competency").isEqualTo(expected.getCompetency()))
             .satisfies(a -> assertThat(a.getImprovement()).as("check improvement").isEqualTo(expected.getImprovement()))
-            .satisfies(a -> assertThat(a.getEvidenceCount()).as("check evidenceCount").isEqualTo(expected.getEvidenceCount()))
             .satisfies(a -> assertThat(a.getLastPracticedAt()).as("check lastPracticedAt").isEqualTo(expected.getLastPracticedAt()));
     }
 

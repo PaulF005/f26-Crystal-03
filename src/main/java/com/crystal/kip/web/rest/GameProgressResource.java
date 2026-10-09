@@ -126,7 +126,6 @@ public class GameProgressResource {
             .map(existingGameProgress -> {
                 updateIfPresent(existingGameProgress::setSessionsPlayed, gameProgress.getSessionsPlayed());
                 updateIfPresent(existingGameProgress::setPerformance, gameProgress.getPerformance());
-                updateIfPresent(existingGameProgress::setEvidenceCount, gameProgress.getEvidenceCount());
                 updateIfPresent(existingGameProgress::setLastPlayedAt, gameProgress.getLastPlayedAt());
 
                 return existingGameProgress;

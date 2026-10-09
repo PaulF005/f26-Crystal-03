@@ -39,9 +39,6 @@ class ConceptProgressResourceIT {
     private static final Float DEFAULT_IMPROVEMENT = 1F;
     private static final Float UPDATED_IMPROVEMENT = 2F;
 
-    private static final Integer DEFAULT_EVIDENCE_COUNT = 0;
-    private static final Integer UPDATED_EVIDENCE_COUNT = 1;
-
     private static final Instant DEFAULT_LAST_PRACTICED_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_PRACTICED_AT = Instant.ofEpochMilli(1787767274668L);
 
@@ -80,7 +77,6 @@ class ConceptProgressResourceIT {
         return new ConceptProgress()
             .competency(DEFAULT_COMPETENCY)
             .improvement(DEFAULT_IMPROVEMENT)
-            .evidenceCount(DEFAULT_EVIDENCE_COUNT)
             .lastPracticedAt(DEFAULT_LAST_PRACTICED_AT)
             .maxQuestions(DEFAULT_MAX_QUESTIONS);
     }
@@ -95,7 +91,6 @@ class ConceptProgressResourceIT {
         return new ConceptProgress()
             .competency(UPDATED_COMPETENCY)
             .improvement(UPDATED_IMPROVEMENT)
-            .evidenceCount(UPDATED_EVIDENCE_COUNT)
             .lastPracticedAt(UPDATED_LAST_PRACTICED_AT)
             .maxQuestions(UPDATED_MAX_QUESTIONS);
     }
@@ -186,22 +181,6 @@ class ConceptProgressResourceIT {
 
     @Test
     @Transactional
-    void checkEvidenceCountIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        conceptProgress.setEvidenceCount(null);
-
-        // Create the ConceptProgress, which fails.
-
-        restConceptProgressMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(conceptProgress)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void checkLastPracticedAtIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
@@ -246,7 +225,6 @@ class ConceptProgressResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(conceptProgress.getId().intValue())))
             .andExpect(jsonPath("$.[*].competency").value(hasItem(DEFAULT_COMPETENCY.doubleValue())))
             .andExpect(jsonPath("$.[*].improvement").value(hasItem(DEFAULT_IMPROVEMENT.doubleValue())))
-            .andExpect(jsonPath("$.[*].evidenceCount").value(hasItem(DEFAULT_EVIDENCE_COUNT)))
             .andExpect(jsonPath("$.[*].lastPracticedAt").value(hasItem(DEFAULT_LAST_PRACTICED_AT.toString())))
             .andExpect(jsonPath("$.[*].maxQuestions").value(hasItem(DEFAULT_MAX_QUESTIONS)));
     }
@@ -265,7 +243,6 @@ class ConceptProgressResourceIT {
             .andExpect(jsonPath("$.id").value(conceptProgress.getId().intValue()))
             .andExpect(jsonPath("$.competency").value(DEFAULT_COMPETENCY.doubleValue()))
             .andExpect(jsonPath("$.improvement").value(DEFAULT_IMPROVEMENT.doubleValue()))
-            .andExpect(jsonPath("$.evidenceCount").value(DEFAULT_EVIDENCE_COUNT))
             .andExpect(jsonPath("$.lastPracticedAt").value(DEFAULT_LAST_PRACTICED_AT.toString()))
             .andExpect(jsonPath("$.maxQuestions").value(DEFAULT_MAX_QUESTIONS));
     }
@@ -292,7 +269,6 @@ class ConceptProgressResourceIT {
         updatedConceptProgress
             .competency(UPDATED_COMPETENCY)
             .improvement(UPDATED_IMPROVEMENT)
-            .evidenceCount(UPDATED_EVIDENCE_COUNT)
             .lastPracticedAt(UPDATED_LAST_PRACTICED_AT)
             .maxQuestions(UPDATED_MAX_QUESTIONS);
 
@@ -374,7 +350,7 @@ class ConceptProgressResourceIT {
         ConceptProgress partialUpdatedConceptProgress = new ConceptProgress();
         partialUpdatedConceptProgress.setId(conceptProgress.getId());
 
-        partialUpdatedConceptProgress.competency(UPDATED_COMPETENCY).maxQuestions(UPDATED_MAX_QUESTIONS);
+        partialUpdatedConceptProgress.competency(UPDATED_COMPETENCY);
 
         restConceptProgressMockMvc
             .perform(
@@ -408,7 +384,6 @@ class ConceptProgressResourceIT {
         partialUpdatedConceptProgress
             .competency(UPDATED_COMPETENCY)
             .improvement(UPDATED_IMPROVEMENT)
-            .evidenceCount(UPDATED_EVIDENCE_COUNT)
             .lastPracticedAt(UPDATED_LAST_PRACTICED_AT)
             .maxQuestions(UPDATED_MAX_QUESTIONS);
 

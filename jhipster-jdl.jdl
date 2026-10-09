@@ -19,7 +19,6 @@ entity UserProfile {
 entity ConceptProgress {
   competency Float required min(0) max(1)
   improvement Float required
-  evidenceCount Integer required min(0)
   lastPracticedAt Instant required
   maxQuestions Integer required min(5)
 }
@@ -27,14 +26,12 @@ entity ConceptProgress {
 entity TopicProgress {
   competency Float required min(0) max(1)
   improvement Float required
-  evidenceCount Integer required min(0)
   lastPracticedAt Instant required
 }
 
 entity GameProgress {
   sessionsPlayed Integer required min(0)
   performance Float required min(0) max(1)
-  evidenceCount Integer required min(0)
   lastPlayedAt Instant required
 }
 

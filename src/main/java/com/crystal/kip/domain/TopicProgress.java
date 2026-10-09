@@ -37,11 +37,6 @@ public class TopicProgress implements Serializable {
     private Float improvement;
 
     @NotNull
-    @Min(value = 0)
-    @Column(name = "evidence_count", nullable = false)
-    private Integer evidenceCount;
-
-    @NotNull
     @Column(name = "last_practiced_at", nullable = false)
     private Instant lastPracticedAt;
 
@@ -94,19 +89,6 @@ public class TopicProgress implements Serializable {
 
     public void setImprovement(Float improvement) {
         this.improvement = improvement;
-    }
-
-    public Integer getEvidenceCount() {
-        return this.evidenceCount;
-    }
-
-    public TopicProgress evidenceCount(Integer evidenceCount) {
-        this.setEvidenceCount(evidenceCount);
-        return this;
-    }
-
-    public void setEvidenceCount(Integer evidenceCount) {
-        this.evidenceCount = evidenceCount;
     }
 
     public Instant getLastPracticedAt() {
@@ -174,7 +156,6 @@ public class TopicProgress implements Serializable {
             "id=" + getId() +
             ", competency=" + getCompetency() +
             ", improvement=" + getImprovement() +
-            ", evidenceCount=" + getEvidenceCount() +
             ", lastPracticedAt='" + getLastPracticedAt() + "'" +
             "}";
     }

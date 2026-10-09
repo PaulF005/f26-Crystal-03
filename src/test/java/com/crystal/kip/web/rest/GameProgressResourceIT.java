@@ -12,6 +12,7 @@ import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.GameProgress;
 import com.crystal.kip.domain.UserProfile;
 import com.crystal.kip.repository.GameProgressRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.time.Instant;
 import java.util.Random;
@@ -25,7 +26,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-import tools.jackson.databind.ObjectMapper;
 
 /**
  * Integration tests for the {@link GameProgressResource} REST controller.
@@ -40,9 +40,6 @@ class GameProgressResourceIT {
 
     private static final Float DEFAULT_PERFORMANCE = 0F;
     private static final Float UPDATED_PERFORMANCE = 1F;
-
-    private static final Integer DEFAULT_EVIDENCE_COUNT = 0;
-    private static final Integer UPDATED_EVIDENCE_COUNT = 1;
 
     private static final Instant DEFAULT_LAST_PLAYED_AT = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_LAST_PLAYED_AT = Instant.ofEpochMilli(1787767274668L);
@@ -79,7 +76,6 @@ class GameProgressResourceIT {
         GameProgress gameProgress = new GameProgress()
             .sessionsPlayed(DEFAULT_SESSIONS_PLAYED)
             .performance(DEFAULT_PERFORMANCE)
-            .evidenceCount(DEFAULT_EVIDENCE_COUNT)
             .lastPlayedAt(DEFAULT_LAST_PLAYED_AT);
         // Add required entity
         Game game;
@@ -114,7 +110,6 @@ class GameProgressResourceIT {
         GameProgress updatedGameProgress = new GameProgress()
             .sessionsPlayed(UPDATED_SESSIONS_PLAYED)
             .performance(UPDATED_PERFORMANCE)
-            .evidenceCount(UPDATED_EVIDENCE_COUNT)
             .lastPlayedAt(UPDATED_LAST_PLAYED_AT);
         // Add required entity
         Game game;
@@ -225,22 +220,6 @@ class GameProgressResourceIT {
 
     @Test
     @Transactional
-    void checkEvidenceCountIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        gameProgress.setEvidenceCount(null);
-
-        // Create the GameProgress, which fails.
-
-        restGameProgressMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(gameProgress)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void checkLastPlayedAtIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
@@ -269,7 +248,6 @@ class GameProgressResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(gameProgress.getId().intValue())))
             .andExpect(jsonPath("$.[*].sessionsPlayed").value(hasItem(DEFAULT_SESSIONS_PLAYED)))
             .andExpect(jsonPath("$.[*].performance").value(hasItem(DEFAULT_PERFORMANCE.doubleValue())))
-            .andExpect(jsonPath("$.[*].evidenceCount").value(hasItem(DEFAULT_EVIDENCE_COUNT)))
             .andExpect(jsonPath("$.[*].lastPlayedAt").value(hasItem(DEFAULT_LAST_PLAYED_AT.toString())));
     }
 
@@ -287,7 +265,6 @@ class GameProgressResourceIT {
             .andExpect(jsonPath("$.id").value(gameProgress.getId().intValue()))
             .andExpect(jsonPath("$.sessionsPlayed").value(DEFAULT_SESSIONS_PLAYED))
             .andExpect(jsonPath("$.performance").value(DEFAULT_PERFORMANCE.doubleValue()))
-            .andExpect(jsonPath("$.evidenceCount").value(DEFAULT_EVIDENCE_COUNT))
             .andExpect(jsonPath("$.lastPlayedAt").value(DEFAULT_LAST_PLAYED_AT.toString()));
     }
 
@@ -310,11 +287,7 @@ class GameProgressResourceIT {
         GameProgress updatedGameProgress = gameProgressRepository.findById(gameProgress.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedGameProgress are not directly saved in db
         em.detach(updatedGameProgress);
-        updatedGameProgress
-            .sessionsPlayed(UPDATED_SESSIONS_PLAYED)
-            .performance(UPDATED_PERFORMANCE)
-            .evidenceCount(UPDATED_EVIDENCE_COUNT)
-            .lastPlayedAt(UPDATED_LAST_PLAYED_AT);
+        updatedGameProgress.sessionsPlayed(UPDATED_SESSIONS_PLAYED).performance(UPDATED_PERFORMANCE).lastPlayedAt(UPDATED_LAST_PLAYED_AT);
 
         restGameProgressMockMvc
             .perform(
@@ -394,10 +367,7 @@ class GameProgressResourceIT {
         GameProgress partialUpdatedGameProgress = new GameProgress();
         partialUpdatedGameProgress.setId(gameProgress.getId());
 
-        partialUpdatedGameProgress
-            .sessionsPlayed(UPDATED_SESSIONS_PLAYED)
-            .performance(UPDATED_PERFORMANCE)
-            .lastPlayedAt(UPDATED_LAST_PLAYED_AT);
+        partialUpdatedGameProgress.sessionsPlayed(UPDATED_SESSIONS_PLAYED).performance(UPDATED_PERFORMANCE);
 
         restGameProgressMockMvc
             .perform(
@@ -431,7 +401,6 @@ class GameProgressResourceIT {
         partialUpdatedGameProgress
             .sessionsPlayed(UPDATED_SESSIONS_PLAYED)
             .performance(UPDATED_PERFORMANCE)
-            .evidenceCount(UPDATED_EVIDENCE_COUNT)
             .lastPlayedAt(UPDATED_LAST_PLAYED_AT);
 
         restGameProgressMockMvc

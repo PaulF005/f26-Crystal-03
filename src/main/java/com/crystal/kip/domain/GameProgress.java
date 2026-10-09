@@ -38,11 +38,6 @@ public class GameProgress implements Serializable {
     private Float performance;
 
     @NotNull
-    @Min(value = 0)
-    @Column(name = "evidence_count", nullable = false)
-    private Integer evidenceCount;
-
-    @NotNull
     @Column(name = "last_played_at", nullable = false)
     private Instant lastPlayedAt;
 
@@ -94,19 +89,6 @@ public class GameProgress implements Serializable {
 
     public void setPerformance(Float performance) {
         this.performance = performance;
-    }
-
-    public Integer getEvidenceCount() {
-        return this.evidenceCount;
-    }
-
-    public GameProgress evidenceCount(Integer evidenceCount) {
-        this.setEvidenceCount(evidenceCount);
-        return this;
-    }
-
-    public void setEvidenceCount(Integer evidenceCount) {
-        this.evidenceCount = evidenceCount;
     }
 
     public Instant getLastPlayedAt() {
@@ -174,7 +156,6 @@ public class GameProgress implements Serializable {
             "id=" + getId() +
             ", sessionsPlayed=" + getSessionsPlayed() +
             ", performance=" + getPerformance() +
-            ", evidenceCount=" + getEvidenceCount() +
             ", lastPlayedAt='" + getLastPlayedAt() + "'" +
             "}";
     }

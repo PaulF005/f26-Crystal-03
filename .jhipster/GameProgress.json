@@ -18,12 +18,6 @@
       "fieldValidateRulesMin": "0"
     },
     {
-      "fieldName": "evidenceCount",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required", "min"],
-      "fieldValidateRulesMin": "0"
-    },
-    {
       "fieldName": "lastPlayedAt",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]

@@ -17,12 +17,6 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "evidenceCount",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required", "min"],
-      "fieldValidateRulesMin": "0"
-    },
-    {
       "fieldName": "lastPracticedAt",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]

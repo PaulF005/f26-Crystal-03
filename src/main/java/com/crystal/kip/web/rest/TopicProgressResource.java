@@ -131,9 +131,6 @@ public class TopicProgressResource {
                 if (topicProgress.getImprovement() != null) {
                     existingTopicProgress.setImprovement(topicProgress.getImprovement());
                 }
-                if (topicProgress.getEvidenceCount() != null) {
-                    existingTopicProgress.setEvidenceCount(topicProgress.getEvidenceCount());
-                }
                 if (topicProgress.getLastPracticedAt() != null) {
                     existingTopicProgress.setLastPracticedAt(topicProgress.getLastPracticedAt());
                 }
