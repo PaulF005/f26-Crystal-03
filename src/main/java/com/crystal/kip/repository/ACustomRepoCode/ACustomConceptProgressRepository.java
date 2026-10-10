@@ -27,7 +27,7 @@ public interface ACustomConceptProgressRepository {
      * @param username tableholder's username
      * @return  competency value or -1.0 as an error
      */
-    default double getCurCompentencyCP(String username) {
+    default double getCurCompetencyCP(String username) {
         return getCompetencyDBCP(username).map(Float::doubleValue).orElse(-1.0);
     }
 

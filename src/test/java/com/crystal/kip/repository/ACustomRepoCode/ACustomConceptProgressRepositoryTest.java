@@ -70,13 +70,13 @@ public class ACustomConceptProgressRepositoryTest {
 
     @Test
     void getCurCompentencyCPTest() {
-        double currentCompetency = aCustomConceptProgressRepository.getCurCompentencyCP(TESTUSERNAME);
+        double currentCompetency = aCustomConceptProgressRepository.getCurCompetencyCP(TESTUSERNAME);
         assertEquals(0.3d, currentCompetency, 0.001);
     }
 
     @Test
     void getCurCompentencyCPTestFail() {
-        double currentCompetency = aCustomConceptProgressRepository.getCurCompentencyCP(FAILUSERNAME);
+        double currentCompetency = aCustomConceptProgressRepository.getCurCompetencyCP(FAILUSERNAME);
         assertEquals(-1.0d, currentCompetency, 0.001);
     }
 
@@ -103,21 +103,21 @@ public class ACustomConceptProgressRepositoryTest {
     //Get Improvement Functions
     @Test
     void getImprovementDBCPTest() {
-        Optional<Float> imporvement = aCustomConceptProgressRepository.getImprovementDBCP(TESTUSERNAME);
-        assertTrue(imporvement.isPresent());
-        assertEquals(0.1f, imporvement.get(), 0.001);
+        Optional<Float> improvement = aCustomConceptProgressRepository.getImprovementDBCP(TESTUSERNAME);
+        assertTrue(improvement.isPresent());
+        assertEquals(0.1f, improvement.get(), 0.001);
     }
 
     @Test
     void getImprovementTest() {
-        double imporvement = aCustomConceptProgressRepository.getImprovementCP(TESTUSERNAME);
-        assertEquals(0.1d, imporvement, 0.001);
+        double improvement = aCustomConceptProgressRepository.getImprovementCP(TESTUSERNAME);
+        assertEquals(0.1d, improvement, 0.001);
     }
 
     @Test
     void getImprovementTestFail() {
-        double imporvement = aCustomConceptProgressRepository.getImprovementCP(FAILUSERNAME);
-        assertEquals(-1.0d, imporvement, 0.001);
+        double improvement = aCustomConceptProgressRepository.getImprovementCP(FAILUSERNAME);
+        assertEquals(-1.0d, improvement, 0.001);
     }
 
     //Get LastPraticedAt Functions
@@ -152,7 +152,11 @@ public class ACustomConceptProgressRepositoryTest {
         entityManager.clear();
 
         Optional<Float> newCompetency = aCustomConceptProgressRepository.getCompetencyDBCP(TESTUSERNAME);
+        Optional<Float> newImprovement = aCustomConceptProgressRepository.getImprovementDBCP(TESTUSERNAME);
+        Optional<Instant> newNow = aCustomConceptProgressRepository.getLastPracticedAtDBCP(TESTUSERNAME);
         assertTrue(newCompetency.isPresent());
         assertEquals(competency, newCompetency.get(), 0.001);
+        assertEquals(improvement, newImprovement.get(), 0.01);
+        assertEquals(now.toString(), newNow.get().toString());
     }
 }

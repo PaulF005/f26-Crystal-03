@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-import com.crystal.kip.repository.LinkRepo.LinkConcpetProgressRepository;
+import com.crystal.kip.repository.LinkRepo.LinkTopicProgressRepository;
 import com.crystal.kip.security.SecurityUtils;
 import java.time.Instant;
 import java.util.Optional;
@@ -23,13 +23,13 @@ import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class ProgressUpdaterConceptTest {
+public class ProgressUpdaterTopicTest {
 
     /**
-     * Creates a mock database entry for a LinkConcpetProgressRepository to test against
+     * Creates a mock database entry for a LinkTopicProgressRepository to test against
      */
     @Mock
-    private LinkConcpetProgressRepository linkConcpetProgressRepository;
+    private LinkTopicProgressRepository linkTopicProgressRepository;
 
     @Captor
     private ArgumentCaptor<Float> competencyCaptor;
@@ -40,16 +40,16 @@ public class ProgressUpdaterConceptTest {
     @Captor
     private ArgumentCaptor<Instant> nowCaptor;
 
-    private ProgressUpdaterConcept progressUpdaterConcept;
+    private ProgressUpdaterTopic progressUpdaterTopic;
     private MockedStatic<SecurityUtils> mockedSecurtiyUtils;
     private static final String TESTUSER = "testUser";
 
     /**
-     * Sets up a ProgressUpdaterConcept and opens the Mock
+     * Sets up a ProgressUpdaterTopic and opens the Mock
      */
     @BeforeEach
     void setUp() {
-        progressUpdaterConcept = new ProgressUpdaterConcept(linkConcpetProgressRepository);
+        progressUpdaterTopic = new ProgressUpdaterTopic(linkTopicProgressRepository);
         mockedSecurtiyUtils = mockStatic(SecurityUtils.class);
     }
 
@@ -71,12 +71,12 @@ public class ProgressUpdaterConceptTest {
     @Test
     void updateConceptProgressSuccess() {
         mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(30);
-        when(linkConcpetProgressRepository.getCurCompetencyCP(TESTUSER)).thenReturn(0.2);
+        when(linkTopicProgressRepository.getCurCompetencyTP(TESTUSER)).thenReturn(0.2);
+        when(linkTopicProgressRepository.getAllTopicNumTP(TESTUSER)).thenReturn(2);
 
-        progressUpdaterConcept.updateConceptProgress(3);
+        progressUpdaterTopic.updateTopicProgress(0.2f);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDBCP(
+        verify(linkTopicProgressRepository).updateTopicProgressToDB(
             competencyCaptor.capture(),
             improvementCaptor.capture(),
             nowCaptor.capture()
@@ -92,12 +92,12 @@ public class ProgressUpdaterConceptTest {
     @Test
     void updateConceptProgressWith99() {
         mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(100);
-        when(linkConcpetProgressRepository.getCurCompetencyCP(TESTUSER)).thenReturn(0.98);
+        when(linkTopicProgressRepository.getAllTopicNumTP(TESTUSER)).thenReturn(2);
+        when(linkTopicProgressRepository.getCurCompetencyTP(TESTUSER)).thenReturn(0.98);
 
-        progressUpdaterConcept.updateConceptProgress(1);
+        progressUpdaterTopic.updateTopicProgress(0.02f);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDBCP(
+        verify(linkTopicProgressRepository).updateTopicProgressToDB(
             competencyCaptor.capture(),
             improvementCaptor.capture(),
             nowCaptor.capture()
@@ -113,12 +113,12 @@ public class ProgressUpdaterConceptTest {
     @Test
     void updateConceptProgressWithMoreThan99() {
         mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(100);
-        when(linkConcpetProgressRepository.getCurCompetencyCP(TESTUSER)).thenReturn(0.98);
+        when(linkTopicProgressRepository.getAllTopicNumTP(TESTUSER)).thenReturn(2);
+        when(linkTopicProgressRepository.getCurCompetencyTP(TESTUSER)).thenReturn(0.98);
 
-        progressUpdaterConcept.updateConceptProgress(15);
+        progressUpdaterTopic.updateTopicProgress(0.15f);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDBCP(
+        verify(linkTopicProgressRepository).updateTopicProgressToDB(
             competencyCaptor.capture(),
             improvementCaptor.capture(),
             nowCaptor.capture()
@@ -135,8 +135,8 @@ public class ProgressUpdaterConceptTest {
     void updateConceptProgressExceptionNoUser() {
         mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.empty());
 
-        assertThrows(IllegalStateException.class, () -> progressUpdaterConcept.updateConceptProgress(3));
-        verifyNoInteractions(linkConcpetProgressRepository);
+        assertThrows(IllegalStateException.class, () -> progressUpdaterTopic.updateTopicProgress(0.3f));
+        verifyNoInteractions(linkTopicProgressRepository);
     }
 
     /**
@@ -145,9 +145,10 @@ public class ProgressUpdaterConceptTest {
     @Test
     void updateConceptProgressExceptionBadReadTotalQuestions() {
         mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(-1);
+        when(linkTopicProgressRepository.getCurCompetencyTP(TESTUSER)).thenReturn(0.2);
+        when(linkTopicProgressRepository.getAllTopicNumTP(TESTUSER)).thenReturn(-1);
 
-        assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.updateConceptProgress(3));
+        assertThrows(IllegalArgumentException.class, () -> progressUpdaterTopic.updateTopicProgress(0.3f));
     }
 
     /**
@@ -156,33 +157,8 @@ public class ProgressUpdaterConceptTest {
     @Test
     void updateConceptProgressExceptionBadReadCurrentCompetency() {
         mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(100);
-        when(linkConcpetProgressRepository.getCurCompetencyCP(TESTUSER)).thenReturn(-1.0);
+        when(linkTopicProgressRepository.getCurCompetencyTP(TESTUSER)).thenReturn(-1.0);
 
-        assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.updateConceptProgress(3));
-    }
-
-    /**
-     * Tests to see if the getImprovement function works
-     */
-    @Test
-    void getImprovementSuccess() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getImprovementCP(TESTUSER)).thenReturn(7.2);
-
-        float improvementTest = progressUpdaterConcept.getImprovement();
-
-        assertEquals(7.2f, improvementTest);
-    }
-
-    /**
-     * Tests to see if throws execption when improvemnt has a bad read
-     */
-    @Test
-    void getImprovementExeceptionBadReadImprovement() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getImprovementCP(TESTUSER)).thenReturn(-1.0);
-
-        assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.getImprovement());
+        assertThrows(IllegalArgumentException.class, () -> progressUpdaterTopic.updateTopicProgress(3));
     }
 }
