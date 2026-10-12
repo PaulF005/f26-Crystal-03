@@ -26,30 +26,35 @@ public class ProgressUpdaterConcept {
             throw new IllegalArgumentException("Concept Progress has an error in its Max Questions!");
         }
 
-        double currentCompantency = this.linkConcpetProgressRepository.getCurCompantencyCP(username);
-        if (currentCompantency < 0) {
-            log.error("Failed to read current compantency from repo!");
-            throw new IllegalArgumentException("Concept Progress has an error in its Current Compantency!");
+        double currentCompetency = this.linkConcpetProgressRepository.getCurCompetencyCP(username);
+        if (currentCompetency < 0) {
+            log.error("Failed to read current competency from repo!");
+            throw new IllegalArgumentException("Concept Progress has an error in its Current Competency!");
         }
 
         double percentDone = (double) questionsRight / totalQuestions;
-        currentCompantency += percentDone;
+        currentCompetency += percentDone;
 
-        //Close enough!!
-        if (currentCompantency >= 0.99) {
-            currentCompantency = 1.0;
+        double marginOfError = 0.00001;
+        //Close enough (Hate Floating Point Errors)!! Will not indicate an increase in imporvement if there is no increase in Competency
+        if (currentCompetency >= 1.0 - marginOfError) {
+            currentCompetency = 1.0;
+            percentDone = 0.0;
+        } else if (currentCompetency >= 0.99 - marginOfError) {
+            currentCompetency = 1.0;
+            percentDone = 0.01;
         }
 
         Instant now = Instant.now();
-        this.linkConcpetProgressRepository.updateConceptProgressToDB((float) currentCompantency, now);
+        this.linkConcpetProgressRepository.updateConceptProgressToDBCP((float) currentCompetency, (float) percentDone, now);
     }
 
     public float getImprovement() {
         String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
 
-        double improvementToAdd = this.linkConcpetProgressRepository.getImprovement(username);
+        double improvementToAdd = this.linkConcpetProgressRepository.getImprovementCP(username);
         if (improvementToAdd < 0) {
-            log.error("Failed to read current imporvement from repo!");
+            log.error("Failed to read current improvement from repo!");
             throw new IllegalArgumentException("Concept Progress has an error in its current imporvement!");
         }
 

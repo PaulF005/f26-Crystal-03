@@ -127,8 +127,8 @@ public class ConceptProgressResource {
             .map(existingConceptProgress -> {
                 updateIfPresent(existingConceptProgress::setCompetency, conceptProgress.getCompetency());
                 updateIfPresent(existingConceptProgress::setImprovement, conceptProgress.getImprovement());
-                updateIfPresent(existingConceptProgress::setEvidenceCount, conceptProgress.getEvidenceCount());
                 updateIfPresent(existingConceptProgress::setLastPracticedAt, conceptProgress.getLastPracticedAt());
+                updateIfPresent(existingConceptProgress::setMaxQuestions, conceptProgress.getMaxQuestions());
 
                 return existingConceptProgress;
             })
