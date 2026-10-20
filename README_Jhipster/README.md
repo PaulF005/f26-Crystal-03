@@ -215,9 +215,10 @@ Modify `jhipster-jdl.jdl` with your required schema changes.
 ### 3. Run the JHipster Regeneration Command
 
 Run the import command to regenerate the core application architecture:
+--skip-client preserves Angular frontend
 
 ```bash
-jhipster import-jdl jhipster-jdl.jdl --force --skip-fake-data
+jhipster import-jdl jhipster-jdl.jdl --force --skip-fake-data --skip-client
 ```
 ### 4. Review Generated Files
 
