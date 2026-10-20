@@ -4,6 +4,7 @@ import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Scenario;
 import com.crystal.kip.domain.Topic;
 import com.crystal.kip.repository.LinkRepo.LinkScenarioRepository;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,13 +16,16 @@ public class ScenarioSelector {
         this.scenarioRepository = scenarioRepository;
     }
 
-    public Scenario selectNext(GameSession session) {
-        Game game = session.getGame();
-        Topic topic = session.getTopic();
+    public Scenario selectNew(GameActive active) {
+        Game game = active.getGame();
+        Topic topic = active.getTopic();
+        List<Scenario> scenarios = active.getScenariosPlayed();
 
-        // List<Scenario> scenarios = scenarioRepository.findByGameAndTopic(game.getId(), topic.getId());
+        // TODO: Select new Scenario from repository (Curation) using current game, current topic, and scenarios already played
+        // Should also take into consideration the user's performance in the game session so far
+        // That is, select Scenarios that cover concepts they've been struggling with
+        // This is why each proceeding Scenario is selected upon each Scenario's completion during runtime rather than in advance, all at once
 
-        // choose from scenarios that fit some criteria tbd
         return null;
     }
 }

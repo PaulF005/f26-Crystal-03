@@ -1,10 +1,11 @@
 package com.crystal.kip.game;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Topic;
-import com.crystal.kip.domain.User;
+import com.crystal.kip.domain.UserProfile;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,27 +13,27 @@ import org.junit.jupiter.api.Test;
 class SessionManagerTest {
 
     private SessionManager manager;
-    private GameSession session;
+    private GameActive active;
 
     @BeforeEach
     void setUp() {
         manager = new SessionManager();
-        session = new GameSession(new User(), new Game(), new Topic());
+        active = new GameActive(new UserProfile(), new Game(), new Topic());
     }
 
     @Test
     void testAdd() {
-        manager.add(session);
+        manager.add(active);
 
-        assertEquals(session, manager.get(session.getId()));
+        assertEquals(active, manager.get(active.getId()));
     }
 
     @Test
     void testRemove() {
-        manager.add(session);
-        manager.remove(session.getId());
+        manager.add(active);
+        manager.remove(active.getId());
 
-        assertNull(manager.get(session.getId()));
+        assertNull(manager.get(active.getId()));
     }
 
     @Test

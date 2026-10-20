@@ -423,6 +423,50 @@ Dashboard boxes
   font-size: var(--font-body-size);
 }
 
+.settings-panel-box .form-check.form-switch {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 0.5rem;
+}
+
+.settings-panel-box .form-check.form-switch .form-check-input {
+  flex: 0 0 auto;
+  float: none;
+  margin: 0;
+  border: var(--pixel) solid var(--ui-window-shadow);
+  border-radius: 0;
+  background-color: var(--ui-button-center);
+  background-image: linear-gradient(var(--ui-button-highlight), var(--ui-button-highlight));
+  background-repeat: no-repeat;
+  background-position: calc(1 * var(--pixel)) center;
+  background-size: calc(10 * var(--pixel)) calc(10 * var(--pixel));
+  box-shadow: none;
+}
+
+.settings-panel-box .form-check.form-switch .form-check-input:checked {
+  background-color: var(--ui-kip-violet);
+  background-position: right calc(1 * var(--pixel)) center;
+}
+
+.settings-panel-box .form-check.form-switch .form-check-input:focus {
+  border-color: var(--ui-kip-gold);
+  box-shadow: none;
+}
+
+.settings-panel-box .form-check.form-switch .form-check-input:focus-visible {
+  outline: var(--pixel) solid var(--ui-kip-gold);
+  outline-offset: var(--pixel);
+}
+
+.settings-panel-box .form-check.form-switch .form-check-label {
+  margin-bottom: 0;
+}
+
+.settings-panel-box > .mb-3 {
+  padding-inline: 0.5rem;
+}
+
 .btn {
   font-family: 'field', monospace;
   font-size: var(--font-field-size);

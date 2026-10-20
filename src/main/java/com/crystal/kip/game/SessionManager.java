@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class SessionManager {
 
-    private final Map<UUID, GameSession> sessions = new HashMap<>();
+    private final Map<UUID, GameActive> sessions = new HashMap<>();
 
-    public void add(GameSession session) {
+    public void add(GameActive session) {
         sessions.put(session.getId(), session);
     }
 
-    public GameSession get(UUID sessionId) {
+    public GameActive get(UUID sessionId) {
         return sessions.get(sessionId);
     }
 
