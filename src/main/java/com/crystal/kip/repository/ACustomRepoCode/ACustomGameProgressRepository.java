@@ -18,7 +18,12 @@ public interface ACustomGameProgressRepository {
     )
     Optional<Integer> getSessionsDBGP(@Param("username") String username);
 
-    default int getSessionsPlayed(String username) {
+    /**
+     * Get Sessiosn Played
+     * @param username Tableholder's username
+     * @return Int value of sessions played or -1 for error
+     */
+    default int getSessionsPlayedGP(String username) {
         return getSessionsDBGP(username).map(Integer::intValue).orElse(-1);
     }
 
@@ -30,14 +35,36 @@ public interface ACustomGameProgressRepository {
     )
     Optional<Float> getPerformanceDBGP(@Param("username") String username);
 
-    default double getPerformance(String username) {
+    /**
+     * Get Performance
+     * @param username Tableholder's username
+     * @return Performance value or -1.0 for error
+     */
+    default double getPerformanceGP(String username) {
         return getPerformanceDBGP(username).map(Float::doubleValue).orElse(-1.0);
+    }
+
+    @Query(
+        "SELECT gp.lastPlayedAt FROM GameProgress gp " +
+            "INNER JOIN gp.userProfile up " +
+            "INNER JOIN up.dataUser u " +
+            "WHERE u.login = :username"
+    )
+    Optional<Instant> getLastPlayedAtdAtDBGP(@Param("username") String username);
+
+    /**
+     * Gets LastPlayedAt
+     * @param username tableholder's username
+     * @return Instant value or EPOCH for error
+     */
+    default Instant getlastPlayedAtAtGP(String username) {
+        return getLastPlayedAtdAtDBGP(username).orElse(Instant.EPOCH);
     }
 
     //UPDATE functions
     @Modifying
     @Query(
-        "UPDATE GameProgress gp SET gp.sessionsPlayed = :sessionsPlayed, gp.performance = :performance, gp.lastPlayedAt = lastPlayedAt " +
+        "UPDATE GameProgress gp SET gp.sessionsPlayed = :sessionsPlayed, gp.performance = :performance, gp.lastPlayedAt = :lastPlayedAt " +
             "WHERE gp.userProfile IN (" +
             " SELECT up From UserProfile up JOIN up.dataUser u WHERE u.login = ?#{principal.username}" +
             ")"

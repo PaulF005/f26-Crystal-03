@@ -20,13 +20,13 @@ public class ProgressUpdaterGame {
     public void updateGameProgress(float performance) {
         String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
 
-        int sessionsPlayed = this.linkGameProgressRepository.getSessionsPlayed(username);
+        int sessionsPlayed = this.linkGameProgressRepository.getSessionsPlayedGP(username);
         if (sessionsPlayed < 0) {
             log.error("Failed to read sessions played from repo!");
             throw new IllegalArgumentException("Game Progress has an error in its session played!");
         }
 
-        double dbPerformance = this.linkGameProgressRepository.getPerformance(username);
+        double dbPerformance = this.linkGameProgressRepository.getPerformanceGP(username);
         if (dbPerformance < 0.0) {
             log.error("Failed to read performance from repo!");
             throw new IllegalArgumentException("Game Progress has an error in its performance!");

@@ -20,10 +20,10 @@
             <column name="improvement" type="${floatType}">
                 <constraints nullable="false" />
             </column>
-            <column name="evidence_count" type="integer">
+            <column name="last_practiced_at" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="last_practiced_at" type="${datetimeType}">
+            <column name="max_questions" type="integer">
                 <constraints nullable="false" />
             </column>
             <column name="user_profile_id" type="bigint">

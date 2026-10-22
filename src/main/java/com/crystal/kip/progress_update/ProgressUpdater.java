@@ -6,6 +6,12 @@ public class ProgressUpdater {
     private final ProgressUpdaterTopic progressUpdaterTopic;
     private final ProgressUpdaterGame progressUpdaterGame;
 
+    /**
+     * Updates a user's progress
+     * @param progressUpdaterConcept
+     * @param progressUpdaterTopic
+     * @param progressUpdaterGame
+     */
     public ProgressUpdater(
         ProgressUpdaterConcept progressUpdaterConcept,
         ProgressUpdaterTopic progressUpdaterTopic,
@@ -15,6 +21,8 @@ public class ProgressUpdater {
         this.progressUpdaterTopic = progressUpdaterTopic;
         this.progressUpdaterGame = progressUpdaterGame;
     }
+
+    //ADD ME need a constuctor to specify the updaters' specific entity
 
     public void updateAllProgress(int questionsRight, float performance) {
         this.progressUpdaterConcept.updateConceptProgress(questionsRight);

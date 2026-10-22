@@ -49,7 +49,6 @@ public class GameProgressAsserts {
             .as("Verify GameProgress relevant properties")
             .satisfies(a -> assertThat(a.getSessionsPlayed()).as("check sessionsPlayed").isEqualTo(expected.getSessionsPlayed()))
             .satisfies(a -> assertThat(a.getPerformance()).as("check performance").isEqualTo(expected.getPerformance()))
-            .satisfies(a -> assertThat(a.getEvidenceCount()).as("check evidenceCount").isEqualTo(expected.getEvidenceCount()))
             .satisfies(a -> assertThat(a.getLastPlayedAt()).as("check lastPlayedAt").isEqualTo(expected.getLastPlayedAt()));
     }
 

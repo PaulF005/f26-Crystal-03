@@ -1,7 +1,6 @@
 package com.crystal.kip.feedback_game;
 
 import com.crystal.kip.progress_update.ProgressUpdater;
-import com.crystal.kip.progress_update.ProgressUpdaterConcept;
 
 /**
  * Used to return question if it is correct or wrong and an explanation.
