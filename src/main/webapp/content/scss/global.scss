@@ -468,14 +468,27 @@ Dashboard boxes
 }
 
 .btn {
+  color: var(--ui-button-highlight);
+  background-color: var(--ui-button-gold);
+  border-color: var(--ui-window-shadow);
+
   font-family: 'field', monospace;
   font-size: var(--font-field-size);
   font-weight: normal;
 
   border-width: var(--pixel);
-  border-radius: 0;
+  border-radius: calc(2 * var(--pixel));
 
   padding: calc(2 * var(--pixel)) calc(3 * var(--pixel));
+
+  outline: var(--pixel) solid var(--ui-button-highlight);
+  outline-offset: calc(-2 * var(--pixel));
+}
+
+.btn:hover {
+  color: var(--ui-button-highlight);
+  background-color: var(--ui-button-gold-hover);
+  border-color: var(--ui-window-shadow);
 }
 
 .alert {
