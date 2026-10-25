@@ -6,7 +6,6 @@
     xsi:schemaLocation="http://liquibase.org http://liquibase.org/dbchangelog-latest.xsd
                         http://liquibase.org-ext http://liquibase.org/dbchangelog-ext.xsd">
 
-    
     <changeSet id="20260916023744-1" author="jhipster">
         <createTable tableName="concept">
             <column name="id" type="bigint" autoIncrement="true" startWith="1500">
@@ -28,7 +27,6 @@
         </createTable>
     </changeSet>
 
-    
     <changeSet id="20260916023744-1-data" author="rachel" context="faker">
         <loadData
             file="config/liquibase/fake-data/concept.csv"
