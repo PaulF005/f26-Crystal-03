@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { provideRouter, Router } from '@angular/router';
 
 import { AccountService } from 'app/core/auth';
 
@@ -37,5 +37,16 @@ describe('Home Component', () => {
       // THEN
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
     });
+  });
+});
+
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    providers: [
+      provideRouter([]),
+      {
+        provide: AccountService,
+      },
+    ],
   });
 });

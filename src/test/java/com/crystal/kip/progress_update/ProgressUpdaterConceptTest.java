@@ -3,12 +3,13 @@ package com.crystal.kip.progress_update;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
-import com.crystal.kip.repository.LinkRepo.LinkConcpetProgressRepository;
+import com.crystal.kip.repository.LinkRepo.LinkConceptProgressRepository;
 import com.crystal.kip.security.SecurityUtils;
 import java.time.Instant;
 import java.util.Optional;
@@ -25,11 +26,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class ProgressUpdaterConceptTest {
 
-    /**
-     * Creates a mock database entry for a LinkConcpetProgressRepository to test against
-     */
     @Mock
-    private LinkConcpetProgressRepository linkConcpetProgressRepository;
+    private LinkConceptProgressRepository linkConceptProgressRepository;
 
     @Captor
     private ArgumentCaptor<Float> competencyCaptor;
@@ -41,148 +39,168 @@ public class ProgressUpdaterConceptTest {
     private ArgumentCaptor<Instant> nowCaptor;
 
     private ProgressUpdaterConcept progressUpdaterConcept;
-    private MockedStatic<SecurityUtils> mockedSecurtiyUtils;
-    private static final String TESTUSER = "testUser";
+    private MockedStatic<SecurityUtils> mockedSecurityUtils;
 
-    /**
-     * Sets up a ProgressUpdaterConcept and opens the Mock
-     */
+    private static final String TESTUSER = "testUser";
+    private static final Long CONCEPT_ID = 17L;
+
     @BeforeEach
     void setUp() {
-        progressUpdaterConcept = new ProgressUpdaterConcept(linkConcpetProgressRepository);
-        mockedSecurtiyUtils = mockStatic(SecurityUtils.class);
+        progressUpdaterConcept = new ProgressUpdaterConcept(linkConceptProgressRepository);
+        mockedSecurityUtils = mockStatic(SecurityUtils.class);
     }
 
-    /**
-     * Closes the Mock
-     */
     @AfterEach
     void tearDown() {
-        if (mockedSecurtiyUtils != null) {
-            mockedSecurtiyUtils.close();
+        if (mockedSecurityUtils != null) {
+            mockedSecurityUtils.close();
         }
     }
 
-    //TESTS BELOW
-
-    /**
-     * Tests to see if the update function works
-     */
     @Test
     void updateConceptProgressSuccess() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(30);
-        when(linkConcpetProgressRepository.getCurCompetencyCP(TESTUSER)).thenReturn(0.2);
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkConceptProgressRepository.getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID)).thenReturn(30);
+        when(linkConceptProgressRepository.getCurCompetencyCP(TESTUSER, CONCEPT_ID)).thenReturn(0.2);
 
-        progressUpdaterConcept.updateConceptProgress(3);
+        float improvement = progressUpdaterConcept.updateConceptProgress(CONCEPT_ID, 3);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDBCP(
+        verify(linkConceptProgressRepository).getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID);
+        verify(linkConceptProgressRepository).getCurCompetencyCP(TESTUSER, CONCEPT_ID);
+        verify(linkConceptProgressRepository).updateConceptProgressToDBCP(
+            eq(CONCEPT_ID),
             competencyCaptor.capture(),
             improvementCaptor.capture(),
             nowCaptor.capture()
         );
+
         assertEquals(0.3f, competencyCaptor.getValue(), 0.001);
         assertEquals(0.1f, improvementCaptor.getValue(), 0.001);
+        assertEquals(0.1f, improvement, 0.001);
         assertNotNull(nowCaptor.getValue());
     }
 
-    /**
-     * Tests to see if the compentency gets round up correctly
-     */
     @Test
-    void updateConceptProgressWith99() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(100);
-        when(linkConcpetProgressRepository.getCurCompetencyCP(TESTUSER)).thenReturn(0.98);
+    void updateConceptProgressDoesNotRound99ToOne() {
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkConceptProgressRepository.getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID)).thenReturn(100);
+        when(linkConceptProgressRepository.getCurCompetencyCP(TESTUSER, CONCEPT_ID)).thenReturn(0.98);
 
-        progressUpdaterConcept.updateConceptProgress(1);
+        float improvement = progressUpdaterConcept.updateConceptProgress(CONCEPT_ID, 1);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDBCP(
+        verify(linkConceptProgressRepository).getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID);
+        verify(linkConceptProgressRepository).getCurCompetencyCP(TESTUSER, CONCEPT_ID);
+        verify(linkConceptProgressRepository).updateConceptProgressToDBCP(
+            eq(CONCEPT_ID),
             competencyCaptor.capture(),
             improvementCaptor.capture(),
             nowCaptor.capture()
         );
-        assertEquals(1.0f, competencyCaptor.getValue(), 0.001);
+
+        assertEquals(0.99f, competencyCaptor.getValue(), 0.001);
         assertEquals(0.01f, improvementCaptor.getValue(), 0.0001);
+        assertEquals(0.01f, improvement, 0.0001);
         assertNotNull(nowCaptor.getValue());
     }
 
-    /**
-     * Tests to see if the compentency gets round up correctly
-     */
     @Test
-    void updateConceptProgressWithMoreThan99() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(100);
-        when(linkConcpetProgressRepository.getCurCompetencyCP(TESTUSER)).thenReturn(0.98);
+    void updateConceptProgressClampsAtOneAndReturnsActualImprovement() {
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkConceptProgressRepository.getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID)).thenReturn(100);
+        when(linkConceptProgressRepository.getCurCompetencyCP(TESTUSER, CONCEPT_ID)).thenReturn(0.98);
 
-        progressUpdaterConcept.updateConceptProgress(15);
+        float improvement = progressUpdaterConcept.updateConceptProgress(CONCEPT_ID, 15);
 
-        verify(linkConcpetProgressRepository).updateConceptProgressToDBCP(
+        verify(linkConceptProgressRepository).getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID);
+        verify(linkConceptProgressRepository).getCurCompetencyCP(TESTUSER, CONCEPT_ID);
+        verify(linkConceptProgressRepository).updateConceptProgressToDBCP(
+            eq(CONCEPT_ID),
             competencyCaptor.capture(),
             improvementCaptor.capture(),
             nowCaptor.capture()
         );
+
         assertEquals(1.0f, competencyCaptor.getValue(), 0.001);
-        assertEquals(0.0f, improvementCaptor.getValue(), 0.01);
+        assertEquals(0.02f, improvementCaptor.getValue(), 0.001);
+        assertEquals(0.02f, improvement, 0.001);
         assertNotNull(nowCaptor.getValue());
     }
 
-    /**
-     * Tests to see if throws execption when no user is logged in
-     */
+    @Test
+    void updateConceptProgressAtMaxReturnsNoImprovement() {
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkConceptProgressRepository.getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID)).thenReturn(100);
+        when(linkConceptProgressRepository.getCurCompetencyCP(TESTUSER, CONCEPT_ID)).thenReturn(1.0);
+
+        float improvement = progressUpdaterConcept.updateConceptProgress(CONCEPT_ID, 10);
+
+        verify(linkConceptProgressRepository).updateConceptProgressToDBCP(
+            eq(CONCEPT_ID),
+            competencyCaptor.capture(),
+            improvementCaptor.capture(),
+            nowCaptor.capture()
+        );
+
+        assertEquals(1.0f, competencyCaptor.getValue(), 0.001);
+        assertEquals(0.0f, improvementCaptor.getValue(), 0.001);
+        assertEquals(0.0f, improvement, 0.001);
+    }
+
     @Test
     void updateConceptProgressExceptionNoUser() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.empty());
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.empty());
 
-        assertThrows(IllegalStateException.class, () -> progressUpdaterConcept.updateConceptProgress(3));
-        verifyNoInteractions(linkConcpetProgressRepository);
+        assertThrows(IllegalStateException.class, () -> progressUpdaterConcept.updateConceptProgress(CONCEPT_ID, 3));
+
+        verifyNoInteractions(linkConceptProgressRepository);
     }
 
-    /**
-     * Tests to see if throws execption when totalQuestions has a bad read
-     */
     @Test
     void updateConceptProgressExceptionBadReadTotalQuestions() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(-1);
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkConceptProgressRepository.getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID)).thenReturn(-1);
 
-        assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.updateConceptProgress(3));
+        assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.updateConceptProgress(CONCEPT_ID, 3));
     }
 
-    /**
-     * Tests to see if throws execption when currentComptency has a bad read
-     */
+    @Test
+    void updateConceptProgressExceptionZeroQuestions() {
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkConceptProgressRepository.getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID)).thenReturn(0);
+
+        assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.updateConceptProgress(CONCEPT_ID, 3));
+    }
+
     @Test
     void updateConceptProgressExceptionBadReadCurrentCompetency() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getMaxQuestionsForRepo(TESTUSER)).thenReturn(100);
-        when(linkConcpetProgressRepository.getCurCompetencyCP(TESTUSER)).thenReturn(-1.0);
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkConceptProgressRepository.getMaxQuestionsForRepo(TESTUSER, CONCEPT_ID)).thenReturn(100);
+        when(linkConceptProgressRepository.getCurCompetencyCP(TESTUSER, CONCEPT_ID)).thenReturn(-1.0);
 
-        assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.updateConceptProgress(3));
+        assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.updateConceptProgress(CONCEPT_ID, 3));
     }
 
-    /**
-     * Tests to see if the getImprovement function works
-     */
     @Test
-    void getImprovementSuccess() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getImprovementCP(TESTUSER)).thenReturn(7.2);
+    void updateConceptProgressUsesRequestedConceptId() {
+        Long otherConceptId = 99L;
 
-        float improvementTest = progressUpdaterConcept.getImprovement();
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkConceptProgressRepository.getMaxQuestionsForRepo(TESTUSER, otherConceptId)).thenReturn(10);
+        when(linkConceptProgressRepository.getCurCompetencyCP(TESTUSER, otherConceptId)).thenReturn(0.4);
 
-        assertEquals(7.2f, improvementTest);
-    }
+        float improvement = progressUpdaterConcept.updateConceptProgress(otherConceptId, 2);
 
-    /**
-     * Tests to see if throws execption when improvemnt has a bad read
-     */
-    @Test
-    void getImprovementExeceptionBadReadImprovement() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkConcpetProgressRepository.getImprovementCP(TESTUSER)).thenReturn(-1.0);
+        verify(linkConceptProgressRepository).getMaxQuestionsForRepo(TESTUSER, otherConceptId);
+        verify(linkConceptProgressRepository).getCurCompetencyCP(TESTUSER, otherConceptId);
+        verify(linkConceptProgressRepository).updateConceptProgressToDBCP(
+            eq(otherConceptId),
+            competencyCaptor.capture(),
+            improvementCaptor.capture(),
+            nowCaptor.capture()
+        );
 
-        assertThrows(IllegalArgumentException.class, () -> progressUpdaterConcept.getImprovement());
+        assertEquals(0.6f, competencyCaptor.getValue(), 0.001);
+        assertEquals(0.2f, improvementCaptor.getValue(), 0.001);
+        assertEquals(0.2f, improvement, 0.001);
     }
 }

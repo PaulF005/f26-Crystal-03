@@ -17,30 +17,33 @@ public class ProgressUpdaterTopic {
         this.linkTopicProgressRepository = linkTopicProgressRepository;
     }
 
-    public void updateTopicProgress(float improvementToAdd) {
+    public void updateTopicProgress(Long topicId, float improvementToAdd) {
         String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
 
-        double currentCompetency = this.linkTopicProgressRepository.getCurCompetencyTP(username);
+        double currentCompetency = this.linkTopicProgressRepository.getCurCompetencyTP(username, topicId);
+
         if (currentCompetency < 0.0) {
-            log.error("Failed to read current compantency from repo!");
-            throw new IllegalArgumentException("Concept Progress has an error in its Current Compantency!");
+            log.error("Failed to read current competency from repo!");
+            throw new IllegalArgumentException("Topic Progress has an error in its Current Competency!");
         }
 
-        int maxConcepts = this.linkTopicProgressRepository.getAllTopicNumTP(username);
+        int maxConcepts = this.linkTopicProgressRepository.getAllTopicNumTP(topicId);
+
         if (maxConcepts < 0) {
             log.error("Failed to read max concepts from repo!");
-            throw new IllegalArgumentException("Topic Progress has an error in its Max Questions!");
-        }
-        if (maxConcepts == 0) {
-            log.error("Failed to have any concepts from repo!");
-            throw new IllegalArgumentException("Topic Progress has an error in its Max Questions!");
+            throw new IllegalArgumentException("Topic Progress has an error in its Max Concepts!");
         }
 
-        double percentDone = (double) improvementToAdd / (double) maxConcepts;
+        if (maxConcepts == 0) {
+            log.error("Failed to find any concepts for Topic!");
+            throw new IllegalArgumentException("Topic Progress cannot be updated with zero Concepts!");
+        }
+
+        double percentDone = (double) improvementToAdd / maxConcepts;
         currentCompetency += percentDone;
 
         double marginOfError = 0.00001;
-        //Close enough (Hate Floating Point Errors)!! Will not indicate an increase in imporvement if there is no increase in Competency
+
         if (currentCompetency >= 1.0 - marginOfError) {
             currentCompetency = 1.0;
             percentDone = 0.0;
@@ -50,6 +53,7 @@ public class ProgressUpdaterTopic {
         }
 
         Instant now = Instant.now();
-        this.linkTopicProgressRepository.updateTopicProgressToDB((float) currentCompetency, (float) percentDone, now);
+
+        this.linkTopicProgressRepository.updateTopicProgressToDB(topicId, (float) currentCompetency, (float) percentDone, now);
     }
 }

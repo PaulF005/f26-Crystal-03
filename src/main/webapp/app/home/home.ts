@@ -16,8 +16,6 @@ export default class Home {
 
   public readonly account = inject(AccountService).account;
 
-  private readonly router = inject(Router);
-
   // TODO: Connect it to backend for real info
   // Hardcoded to see how it looks in UI
   public readonly recentActivity = [
@@ -26,6 +24,8 @@ export default class Home {
     { title: 'Fact or Fiction?', topic: 'Creative Rights', recency: '2 days ago', score: 95 },
     { title: 'Choose the Outcome', topic: 'On the Road', recency: '2 days ago', score: 75 },
   ];
+
+  private readonly router = inject(Router);
 
   login(): void {
     this.router.navigate(['/login']);
