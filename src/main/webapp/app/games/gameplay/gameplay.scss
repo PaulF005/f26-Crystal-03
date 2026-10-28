@@ -1,0 +1,16 @@
+.gameplay-box {
+  max-width: calc(130 * var(--pixel));
+  margin: 0 auto;
+}
+
+.gameplay-module {
+  padding: calc(2 * var(--pixel)) calc(4 * var(--pixel));
+
+  border-bottom: var(--pixel) solid var(--ui-window-shadow);
+
+  background: var(--ui-window-background-dim);
+}
+
+.gameplay-content {
+  padding: calc(4 * var(--pixel));
+}

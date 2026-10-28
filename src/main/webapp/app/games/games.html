@@ -1,6 +1,6 @@
 <div class="games-grid">
   @for (game of games; track game.id) {
-    <div class="dashboard-box game-box">
+    <div class="dashboard-box game-box" (click)="navigateToGame(game.id)">
       <h2 class="pixel-outline">{{ game.name }}</h2>
 
       <div class="game-content">
