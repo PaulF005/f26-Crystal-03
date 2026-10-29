@@ -1,3 +1,4 @@
 id;username;email;data_user_id
-1;"rthomas";"rachel.thomas@crystal.com";3
-2;"mablegirl";"chewie@crystal.com";4
+1;admin;admin@localhost;2
+2;rthomas;rachel.thomas@crystal.com;3
+3;mablegirl;chewie@crystal.com;4

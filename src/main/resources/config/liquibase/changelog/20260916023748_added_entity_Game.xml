@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    xmlns="http://liquibase.org"
+    xmlns:ext="http://liquibase.org-ext"
+    xmlns:xsi="http://w3.org"
+    xsi:schemaLocation="http://liquibase.org http://liquibase.org/dbchangelog-latest.xsd
+                        http://liquibase.org-ext http://liquibase.org/dbchangelog-ext.xsd">
 
-    <!--
-        Added the entity Game.
-    -->
     <changeSet id="20260916023748-1" author="jhipster">
         <createTable tableName="game">
             <column name="id" type="bigint" autoIncrement="true" startWith="1500">
@@ -19,6 +16,16 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+    </changeSet>
+
+    <changeSet id="20260916023748-1-data" author="rachel" context="faker">
+        <loadData
+            file="config/liquibase/fake-data/game.csv"
+            separator=";"
+            tableName="game">
+            <column name="id" type="numeric"/>
+            <column name="name" type="string"/>
+        </loadData>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
