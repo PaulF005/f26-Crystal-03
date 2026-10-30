@@ -17,29 +17,33 @@ public class ProgressUpdaterGame {
         this.linkGameProgressRepository = linkGameProgressRepository;
     }
 
-    public void updateGameProgress(float performance) {
+    public void updateGameProgress(Long gameId, float performance) {
         String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
 
-        int sessionsPlayed = this.linkGameProgressRepository.getSessionsPlayedGP(username);
+        int sessionsPlayed = this.linkGameProgressRepository.getSessionsPlayedGP(username, gameId);
+
         if (sessionsPlayed < 0) {
             log.error("Failed to read sessions played from repo!");
-            throw new IllegalArgumentException("Game Progress has an error in its session played!");
+            throw new IllegalArgumentException("Game Progress has an error in its sessions played!");
         }
 
-        double dbPerformance = this.linkGameProgressRepository.getPerformanceGP(username);
+        double dbPerformance = this.linkGameProgressRepository.getPerformanceGP(username, gameId);
+
         if (dbPerformance < 0.0) {
             log.error("Failed to read performance from repo!");
             throw new IllegalArgumentException("Game Progress has an error in its performance!");
         }
 
         double performanceOut;
+
         if (sessionsPlayed == 0) {
             performanceOut = performance;
         } else {
-            performanceOut = (dbPerformance * (float) sessionsPlayed + performance) / (float) (sessionsPlayed + 1);
+            performanceOut = (dbPerformance * sessionsPlayed + performance) / (sessionsPlayed + 1);
         }
 
         Instant now = Instant.now();
-        this.linkGameProgressRepository.updateGameProgressToDb(sessionsPlayed + 1, (float) performanceOut, now);
+
+        this.linkGameProgressRepository.updateGameProgressToDb(gameId, sessionsPlayed + 1, (float) performanceOut, now);
     }
 }

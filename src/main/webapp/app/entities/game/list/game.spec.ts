@@ -70,8 +70,13 @@ describe('Game Management Component', () => {
   it('should call load all on init', async () => {
     // WHEN
     TestBed.tick();
-    const req = httpMock.expectOne({ method: 'GET' });
-    req.flush([{ id: 7137 }], { headers: { link: '<http://localhost/api/foo?page=1&size=20>; rel="next"' } });
+
+    const scenarioReq = httpMock.expectOne(req => req.method === 'GET' && req.url.includes('api/scenarios'));
+    scenarioReq.flush([]);
+
+    const gameReq = httpMock.expectOne(req => req.method === 'GET' && req.url.includes('api/games'));
+    gameReq.flush([{ id: 7137 }], { headers: { link: '<http://localhost/api/foo?page=1&size=20>; rel="next"' } });
+
     await vi.runAllTimersAsync();
 
     // THEN
@@ -107,7 +112,12 @@ describe('Game Management Component', () => {
   it('should calculate the sort attribute for an id', () => {
     // WHEN
     TestBed.tick();
-    httpMock.expectOne({ method: 'GET' });
+
+    const scenarioReq = httpMock.expectOne(req => req.method === 'GET' && req.url.includes('api/scenarios'));
+    scenarioReq.flush([]);
+
+    const gameReq = httpMock.expectOne(req => req.method === 'GET' && req.url.includes('api/games'));
+    gameReq.flush([]);
 
     // THEN
     expect(service.gamesParams()).toMatchObject({ sort: ['id,desc'] });

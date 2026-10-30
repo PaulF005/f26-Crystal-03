@@ -1,49 +1,37 @@
 package com.crystal.kip.feedback_game;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
 
-import com.crystal.kip.progress_update.ProgressUpdater;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class FeedbackTest {
+class FeedbackTest {
 
-    private ProgressUpdater progressUpdater;
-    private Feedback feedbackTest;
+    private Feedback feedback;
 
-    /**
-     * Basic set for tests, uses Mockito so it can run independently of a database
-     */
     @BeforeEach
     void setUp() {
-        progressUpdater = mock(ProgressUpdater.class);
-        feedbackTest = new Feedback(4, progressUpdater);
+        feedback = new Feedback();
     }
 
-    /**
-     * This test all methods for Feedback class in a condense fashion
-     */
-    /*
     @Test
-    void testFeedback() {
-        String correct1 = feedbackTest.questionDecider(1, 1, "Explanation");
-        assertThat(correct1).isEqualTo("Corrrect || Explanation");
-        verify(progressUpdater, never()).updateConceptProgress(anyInt());
+    void testCorrectAnswerReturnsCorrectFeedback() {
+        String result = feedback.questionDecider(2, 2, "Because this choice is legal.");
 
-        String incorrect1 = feedbackTest.questionDecider(3, 2, "Wrong");
-        assertThat(incorrect1).isEqualTo("Incorrect  || Wrong");
-        verify(progressUpdater, never()).updateConceptProgress(anyInt());
-
-        String correct2 = feedbackTest.questionDecider(3, 3, "Explanation 1");
-        assertThat(correct2).isEqualTo("Corrrect || Explanation 1");
-        verify(progressUpdater, never()).updateConceptProgress(anyInt());
-
-        String incorrect3 = feedbackTest.questionDecider(4, 2, "Wrong 1");
-        assertThat(incorrect3).isEqualTo("Incorrect  || Wrong 1");
-
-        verify(progressUpdater, times(1)).updateConceptProgress(2);
+        assertThat(result).isEqualTo("Correct || Because this choice is legal.");
     }
-        */
+
+    @Test
+    void testIncorrectAnswerReturnsIncorrectFeedback() {
+        String result = feedback.questionDecider(1, 2, "The second choice is required.");
+
+        assertThat(result).isEqualTo("Incorrect || The second choice is required.");
+    }
+
+    @Test
+    void testFeedbackDoesNotRetainQuestionProgressState() {
+        assertThat(feedback.questionDecider(1, 1, "First")).isEqualTo("Correct || First");
+        assertThat(feedback.questionDecider(1, 2, "Second")).isEqualTo("Incorrect || Second");
+        assertThat(feedback.questionDecider(3, 3, "Third")).isEqualTo("Correct || Third");
+    }
 }

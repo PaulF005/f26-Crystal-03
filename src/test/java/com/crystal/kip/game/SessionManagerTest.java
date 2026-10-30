@@ -1,7 +1,9 @@
 package com.crystal.kip.game;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.Topic;
@@ -34,6 +36,17 @@ class SessionManagerTest {
         manager.remove(active.getId());
 
         assertNull(manager.get(active.getId()));
+    }
+
+    @Test
+    void testContainsTracksActiveSession() {
+        assertFalse(manager.contains(active.getId()));
+
+        manager.add(active);
+        assertTrue(manager.contains(active.getId()));
+
+        manager.remove(active.getId());
+        assertFalse(manager.contains(active.getId()));
     }
 
     @Test
