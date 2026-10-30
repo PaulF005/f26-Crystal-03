@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { GameCard } from './game-card/game-card';
 
 interface Game {
@@ -17,6 +18,8 @@ interface Game {
   imports: [GameCard],
 })
 export default class Games {
+  private readonly router = inject(Router);
+
   protected readonly games: Game[] = [
     {
       id: 'fact-or-fiction',
@@ -35,4 +38,8 @@ export default class Games {
       experience: 'Familiar',
     },
   ];
+
+  protected navigateToGame(gameId: string): void {
+    this.router.navigate(['/games', gameId]);
+  }
 }

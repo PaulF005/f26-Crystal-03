@@ -1,6 +1,7 @@
 <div class="games-grid">
   @for (game of games; track game.id) {
     <jhi-game-card
+      (click)="navigateToGame(game.id)"          
       [name]="game.name"
       [thumbnail]="game.thumbnail"
       [description]="game.description"

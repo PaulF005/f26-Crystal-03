@@ -56,6 +56,11 @@ const routes: Routes = [
     title: 'Games',
   },
   {
+    path: 'games/:id',
+    loadComponent: () => import('./games/gameplay/gameplay'),
+    title: 'Gameplay',
+  },
+  {
     path: 'my-progress',
     loadComponent: () => import('./progress/progress'),
     title: 'Progress',
