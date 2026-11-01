@@ -28,4 +28,17 @@
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+     <changeSet id="20260916023741-1-data" author="jhipster" context="faker">
+    <loadData
+        file="../fake-data/user_profile.csv"
+        relativeToChangelogFile="true"
+        separator=";"
+        tableName="user_profile"
+        usePreparedStatements="true">
+        <column name="id" type="numeric"/>
+        <column name="username" type="string"/>
+        <column name="email" type="string"/>
+        <column name="data_user_id" type="numeric"/>
+    </loadData>
+</changeSet>
 </databaseChangeLog>

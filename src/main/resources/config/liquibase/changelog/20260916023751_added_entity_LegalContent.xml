@@ -20,6 +20,15 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>
-
+<changeSet id="20260916023751-1-data" author="rachel" context="faker">
+    <loadData
+        file="config/liquibase/fake-data/legal_content.csv"
+        separator=";"
+        tableName="legal_content"
+        usePreparedStatements="true">
+        <column name="id" type="numeric"/>
+        <column name="name" type="string"/>
+    </loadData>
+</changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 </databaseChangeLog>

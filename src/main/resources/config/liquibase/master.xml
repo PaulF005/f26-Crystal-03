@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- namespace declarations and schema location for Liquibase -->
 <databaseChangeLog
-    xmlns="http://liquibase.org"
-    xmlns:xsi="http://w3.org"
-    xsi:schemaLocation="http://liquibase.org http://liquibase.org/dbchangelog-latest.xsd">
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <property name="now" value="now()" dbms="mysql"/>
     <property name="floatType" value="float" dbms="mysql"/>
     <property name="clobType" value="clob" dbms="mysql"/>
@@ -13,39 +13,39 @@
     <property name="timeType" value="time(6)" dbms="mysql"/>
 
     <!-- STEP 1: Core Base Tables. These are empty shells with defaults -->
-<include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023741_added_entity_UserProfile.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023743_added_entity_Topic.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023744_added_entity_Concept.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023745_added_entity_Question.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023746_added_entity_Answer.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023747_added_entity_Feedback.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023748_added_entity_Game.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023749_added_entity_Scenario.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023750_added_entity_Stage.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023751_added_entity_LegalContent.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023752_added_entity_Source.xml" relativeToChangelogFile="false"/>
+<include file="changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023741_added_entity_UserProfile.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023743_added_entity_Topic.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023744_added_entity_Concept.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023745_added_entity_Question.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023746_added_entity_Answer.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023747_added_entity_Feedback.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023748_added_entity_Game.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023749_added_entity_Scenario.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023750_added_entity_Stage.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023751_added_entity_LegalContent.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023752_added_entity_Source.xml" relativeToChangelogFile="true"/>
     
     
   <!-- STEP 2: Progress Tracker Extension Tables -->
-    <include file="config/liquibase/changelog/20260920173900_added_entity_TopicProgress.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260920173901_added_entity_GameProgress.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260920220839_added_entity_GameSession.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260920220840_added_entity_StageAttempt.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260920234300_added_entity_ConceptProgress.xml" relativeToChangelogFile="false"/>
+    <include file="changelog/20260920173900_added_entity_TopicProgress.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260920173901_added_entity_GameProgress.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260920220839_added_entity_GameSession.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260920220840_added_entity_StageAttempt.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260920234300_added_entity_ConceptProgress.xml" relativeToChangelogFile="true"/>
     
     <!-- STEP 3: Database Relationships & Constraints (Must load prior to CSV execution context) -->
     
-    <include file="config/liquibase/changelog/20260916023741_added_entity_constraints_UserProfile.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023744_added_entity_constraints_Concept.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023745_added_entity_constraints_Question.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023746_added_entity_constraints_Answer.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023749_added_entity_constraints_Scenario.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023750_added_entity_constraints_Stage.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260916023752_added_entity_constraints_Source.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260920173900_added_entity_constraints_TopicProgress.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260920173901_added_entity_constraints_GameProgress.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260920220839_added_entity_constraints_GameSession.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260920220840_added_entity_constraints_StageAttempt.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20260920234300_added_entity_constraints_ConceptProgress.xml" relativeToChangelogFile="false"/>
+    <include file="changelog/20260916023741_added_entity_constraints_UserProfile.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023744_added_entity_constraints_Concept.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023745_added_entity_constraints_Question.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023746_added_entity_constraints_Answer.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023749_added_entity_constraints_Scenario.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023750_added_entity_constraints_Stage.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260916023752_added_entity_constraints_Source.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260920173900_added_entity_constraints_TopicProgress.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260920173901_added_entity_constraints_GameProgress.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260920220839_added_entity_constraints_GameSession.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260920220840_added_entity_constraints_StageAttempt.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/20260920234300_added_entity_constraints_ConceptProgress.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
