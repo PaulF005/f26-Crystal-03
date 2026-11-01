@@ -1,7 +1,8 @@
 package com.crystal.kip.repository;
 
 import com.crystal.kip.domain.GameProgress;
-import org.springframework.data.jpa.repository.*;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,4 +10,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface GameProgressRepository extends JpaRepository<GameProgress, Long> {}
+public interface GameProgressRepository extends JpaRepository<GameProgress, Long> {
+    List<GameProgress> findByUserProfile_DataUser_Login(String login);
+}

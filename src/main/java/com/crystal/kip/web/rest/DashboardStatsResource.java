@@ -1,12 +1,15 @@
 package com.crystal.kip.web.rest;
 
 import com.crystal.kip.service.DashboardStatsService;
-import java.util.Map;
+import com.crystal.kip.service.DashboardStatsService.DashboardSummary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Dashboard data for the signed-in user. Protected by the "/api/**" authenticated rule in SecurityConfiguration.
+ */
 @RestController
 @RequestMapping("/api/dashboard")
 public class DashboardStatsResource {
@@ -17,10 +20,8 @@ public class DashboardStatsResource {
         this.dashboardStatsService = dashboardStatsService;
     }
 
-    @GetMapping("/current-streak")
-    public ResponseEntity<Map<String, Integer>> getCurrentStreak() {
-        int currentStreak = dashboardStatsService.getCurrentStreak();
-
-        return ResponseEntity.ok(Map.of("currentStreak", currentStreak));
+    @GetMapping("/summary")
+    public ResponseEntity<DashboardSummary> getSummary() {
+        return ResponseEntity.ok(dashboardStatsService.getSummary());
     }
 }
