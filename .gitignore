@@ -81,6 +81,7 @@ out/
 /build/
 /buildSrc/.gradle/
 /buildSrc/build/
+/source-fingerprints/
 
 ######################
 # Package Files
