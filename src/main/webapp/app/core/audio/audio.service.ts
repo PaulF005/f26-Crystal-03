@@ -15,6 +15,8 @@ export class AudioService {
 
     const audio = new Audio(assetPath);
     audio.volume = this.masterVolume();
-    audio.play().catch(() => {});
+    audio.play().catch(error => {
+      console.error('Audio playback failed:', error);
+    });
   }
 }
