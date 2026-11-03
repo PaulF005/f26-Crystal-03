@@ -100,6 +100,8 @@ dependencies {
     testRuntimeOnly(libs.archunit.junit5.engine) {
         exclude group: 'org.slf4j', module: 'slf4j-api'
     }
+    testRuntimeOnly "com.h2database:h2"
+
     annotationProcessor libs.mapstruct.processor
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     annotationProcessor "org.glassfish.jaxb:jaxb-runtime"

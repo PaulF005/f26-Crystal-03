@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261102000200-2" author="kip">
+
+        <addForeignKeyConstraint
+            baseTableName="fof_question"
+            baseColumnNames="question_id"
+            referencedTableName="question"
+            referencedColumnNames="id"
+            constraintName="fk_fof_question_question"/>
+
+        <addForeignKeyConstraint
+            baseTableName="fof_question"
+            baseColumnNames="game_id"
+            referencedTableName="game"
+            referencedColumnNames="id"
+            constraintName="fk_fof_question_game"/>
+
+        <addForeignKeyConstraint
+            baseTableName="fof_question"
+            baseColumnNames="source_id"
+            referencedTableName="source"
+            referencedColumnNames="id"
+            constraintName="fk_fof_question_source"/>
+
+        <createIndex
+            tableName="fof_question"
+            indexName="idx_fof_question_game">
+            <column name="game_id"/>
+        </createIndex>
+
+        <createIndex
+            tableName="fof_question"
+            indexName="idx_fof_question_source">
+            <column name="source_id"/>
+        </createIndex>
+
+    </changeSet>
+</databaseChangeLog>

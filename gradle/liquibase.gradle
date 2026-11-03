@@ -25,7 +25,10 @@ liquibase {
   username "root"
   changelogFile "config/liquibase/master.xml"
   logLevel "info"
-  classpath "src/main/resources"
+  classpath files(
+    "src/main/resources",
+    layout.buildDirectory.dir("classes/java/main")
+  )
   searchPath "src/main/resources"
   contexts "faker"
 }
@@ -45,7 +48,7 @@ liquibase {
 
 tasks.named('liquibaseDiff').configure { dependsOn(tasks.named('compileJava')) }
 tasks.named('liquibaseDiffChangelog').configure { dependsOn(tasks.named('compileJava')) }
-
+tasks.named('liquibaseUpdate').configure { dependsOn(tasks.named('compileJava')) }
 ext {
   if (project.hasProperty("no-liquibase")) {
     springProfiles += ",no-liquibase"

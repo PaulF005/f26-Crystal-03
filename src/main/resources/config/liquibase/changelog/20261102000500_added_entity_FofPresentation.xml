@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet id="20261102000500-1" author="kip">
+        <createTable tableName="fof_presentation">
+            <column name="id" type="varchar(36)"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="engine_session_id" type="varchar(36)"><constraints nullable="false"/></column>
+            <column name="user_profile_id" type="bigint"><constraints nullable="false"/></column>
+            <column name="question_id" type="bigint"><constraints nullable="false"/></column>
+            <column name="shown_at" type="${datetimeType}"><constraints nullable="false"/></column>
+            <column name="answered_at" type="${datetimeType}"/>
+            <column name="selected_answer_id" type="bigint"/>
+            <column name="correct" type="boolean"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
