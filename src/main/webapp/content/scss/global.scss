@@ -491,9 +491,13 @@ Dashboard boxes
   border-color: var(--ui-window-shadow);
 }
 
-.btn:active,
-.btn:focus {
+.btn:focus,
+.btn:focus-visible,
+.btn:active {
+  color: var(--ui-button-highlight) !important;
   background-color: var(--ui-button-gold-hover) !important;
+  border-color: var(--ui-window-shadow) !important;
+  outline: none !important;
   box-shadow: none !important;
 }
 
