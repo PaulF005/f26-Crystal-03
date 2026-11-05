@@ -16,11 +16,15 @@ export default class Settings implements OnInit {
 
   ngOnInit(): void {
     this.soundEffectsEnabled = this.audioService.soundEffectsEnabled();
+
+    console.log('Initial sound setting:', this.soundEffectsEnabled);
   }
 
   onSoundToggleChange(): void {
     localStorage.setItem('soundEffectsEnabled', this.soundEffectsEnabled.toString());
 
     this.audioService.soundEffectsEnabled.set(this.soundEffectsEnabled);
+
+    console.log('Sound effects enabled:', this.soundEffectsEnabled);
   }
 }

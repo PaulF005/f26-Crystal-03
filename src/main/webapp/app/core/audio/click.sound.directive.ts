@@ -9,7 +9,6 @@ export class ClickSoundDirective {
   private audioService = inject(AudioService);
 
   @Input('appClickSound') soundPath = '/content/sounds/select_neutral.wav';
-
   @HostListener('click')
   onClick(): void {
     this.audioService.play(this.soundPath);
