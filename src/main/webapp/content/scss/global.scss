@@ -491,6 +491,12 @@ Dashboard boxes
   border-color: var(--ui-window-shadow);
 }
 
+.btn:active,
+.btn:focus {
+  background-color: var(--ui-button-gold-hover) !important;
+  box-shadow: none !important;
+}
+
 .alert {
   font-family: 'body', sans-serif;
   font-size: var(--font-body-size);

@@ -1,47 +1,69 @@
-import { Component, inject } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Component, effect, inject, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { AccountService } from 'app/core/auth';
-
+import { serverApiUrl } from 'app/config';
 import { UI_TEXT } from 'app/shared/ui/ui-text';
+
+interface RecentActivity {
+  id: number;
+  gameName: string;
+  completedAt: string;
+}
+
+interface DashboardSummary {
+  gamesPlayed: number;
+  averagePerformance: number | null;
+  currentStreak: number;
+  recentActivity: RecentActivity[];
+}
 
 @Component({
   selector: 'jhi-home',
   templateUrl: './home.html',
   styleUrl: './home.scss',
-  imports: [RouterLink],
+  imports: [RouterLink, DatePipe],
 })
 export default class Home {
   readonly uiText = UI_TEXT;
-
-  public readonly account = inject(AccountService).account;
-
-  // TODO: Connect it to backend for real info
-  // Hardcoded to see how it looks in UI
-  public readonly recentActivity = [
-    { title: 'Choose the Outcome', topic: 'Ownership', recency: '10 mins ago', score: 45 },
-    { title: 'Choose the Outcome', topic: 'Ownership', recency: 'Yesterday', score: 22 },
-    { title: 'Fact or Fiction?', topic: 'Creative Rights', recency: '2 days ago', score: 95 },
-    { title: 'Choose the Outcome', topic: 'On the Road', recency: '2 days ago', score: 75 },
-  ];
+  readonly account = inject(AccountService).account;
+  readonly summary = signal<DashboardSummary | null>(null);
+  readonly loading = signal(false);
+  readonly loadError = signal(false);
 
   private readonly router = inject(Router);
+  private readonly http = inject(HttpClient);
+
+  constructor() {
+    effect(onCleanup => {
+      this.summary.set(null);
+      this.loadError.set(false);
+
+      if (this.account() === null) {
+        this.loading.set(false);
+        return;
+      }
+
+      this.loading.set(true);
+      const request = this.http.get<DashboardSummary>(`${serverApiUrl}api/dashboard/summary`).subscribe({
+        next: data => {
+          this.summary.set(data);
+          this.loading.set(false);
+        },
+        error: () => {
+          this.loadError.set(true);
+          this.loading.set(false);
+        },
+      });
+
+      // Prevent an old user's response appearing after logout/account changes.
+      onCleanup(() => request.unsubscribe());
+    });
+  }
 
   login(): void {
     this.router.navigate(['/login']);
-  }
-
-  // Red 0-25, orange 26-50, yellow 51-75, green 76-100
-  scoreColor(score: number): string {
-    if (score <= 25) {
-      return '#d32f2f'; // red
-    }
-    if (score <= 50) {
-      return '#ef6c00'; // orange
-    }
-    if (score <= 75) {
-      return '#e0a800'; // yellow
-    }
-    return '#2e7d32'; // green
   }
 }

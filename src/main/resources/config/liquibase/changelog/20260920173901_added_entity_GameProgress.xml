@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    xmlns="http://liquibase.org"
+    xmlns:ext="http://liquibase.org-ext"
+    xmlns:xsi="http://w3.org"
+    xsi:schemaLocation="http://liquibase.org http://liquibase.org/dbchangelog-latest.xsd
+                        http://liquibase.org-ext http://liquibase.org/dbchangelog-ext.xsd">
 
-    <!--
-        Added the entity GameProgress.
-    -->
     <changeSet id="20260920173901-1" author="jhipster">
         <createTable tableName="game_progress">
             <column name="id" type="bigint" autoIncrement="true" startWith="1500">
@@ -17,21 +14,34 @@
             <column name="sessions_played" type="integer">
                 <constraints nullable="false" />
             </column>
-            <column name="performance" type="${floatType}">
+            <column name="performance" type="float">
                 <constraints nullable="false" />
             </column>
             <column name="last_played_at" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="game_id" type="bigint">
+            <column name="user_profile_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="user_profile_id" type="bigint">
+            <column name="game_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="game_progress" columnName="last_played_at" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <changeSet id="20260920173901-1-data" author="rachel" context="faker">
+        <loadData
+            file="config/liquibase/fake-data/game_progress.csv"
+            separator=";"
+            tableName="game_progress">
+            <column name="id" type="numeric"/>
+            <column name="sessions_played" type="numeric"/>
+            <column name="performance" type="numeric"/>
+            <column name="last_played_at" type="datetime"/>
+            <column name="user_profile_id" type="numeric"/>
+            <column name="game_id" type="numeric"/>
+        </loadData>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->

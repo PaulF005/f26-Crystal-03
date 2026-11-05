@@ -1,0 +1,32 @@
+.game-box {
+  min-width: 0;
+}
+
+.game-thumbnail {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.game-content {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(37 * var(--pixel));
+  padding: calc(4 * var(--pixel));
+}
+
+.game-description {
+  margin: 0;
+}
+
+.game-meta {
+  margin-top: auto;
+  padding-top: calc(6 * var(--pixel));
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
+}
+
+.game-meta-label {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+}

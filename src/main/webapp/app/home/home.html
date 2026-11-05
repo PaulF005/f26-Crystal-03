@@ -1,50 +1,30 @@
 <div class="home-header">
-  <h1 class="font-title">
-    <span>Welcome to KIP</span>
-  </h1>
+  <h1 class="font-title">Welcome to KIP</h1>
+  <p class="font-body">Practice your legal knowledge with interactive games.</p>
 
-  <p class="font-body">This is your homepage</p>
-
-  <div>
-    @if (account() !== null) {
-      <div class="alert alert-success">
-        @if (account(); as accountRef) {
-          <span id="home-logged-message" class="font-body"> You are logged in as user &quot;{{ accountRef.login }}&quot;. </span>
-        }
-      </div>
-    } @else {
-      <div class="alert alert-warning font-body">
-        <span>If you want to </span>
-
-        <a class="alert-link" (click)="login()"> sign in </a>
-
-        <span>
-          , you can try the default accounts:
-          <br />
-          - Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-          <br />
-          - User (login=&quot;user&quot; and password=&quot;user&quot;).
-        </span>
-      </div>
-
-      <div class="alert alert-warning font-body">
-        <span>You don&apos;t have an account yet?</span>&nbsp;
-
-        <a class="alert-link" routerLink="/account/register"> Register a new account </a>
-      </div>
-    }
-  </div>
+  @if (account(); as accountRef) {
+    <div class="alert alert-success font-body">
+      <span id="home-logged-message">You are logged in as user &quot;{{ accountRef.login }}&quot;.</span>
+    </div>
+  } @else {
+    <div class="alert alert-warning font-body">
+      <span>Sign in to save your game activity and progress.</span>
+      <button class="btn btn-primary" (click)="login()">
+        {{ uiText.auth.login }}
+      </button>
+    </div>
+    <div class="alert alert-warning font-body">
+      <span>Don't have an account?</span>
+      <a class="alert-link" routerLink="/account/register">Register a new account</a>
+    </div>
+  }
 </div>
-
-<!-- Dashboard Boxes -->
 
 <div class="dashboard-grid">
   <div class="dashboard-box recommendation-box">
     <h2 class="pixel-outline">{{ uiText.dashboard.dailyRecommendation }}</h2>
-
-    <p>Try today's recommended game or activity.</p>
-
-    <a class="btn btn-primary" routerLink="/games"> Start Playing </a>
+    <p>Choose a game to practice your legal knowledge today.</p>
+    <a class="btn btn-primary" routerLink="/games">Browse Games</a>
   </div>
 
   <div class="dashboard-box profile-box">
@@ -52,10 +32,36 @@
 
     @if (account(); as accountRef) {
       <p>Welcome back, {{ accountRef.login }}!</p>
-      <p>Keep going to improve your progress.</p>
+
+      @if (loading()) {
+        <p>Loading your progress...</p>
+      } @else if (loadError()) {
+        <p>Couldn't load your progress right now. Please try again later.</p>
+      } @else if (summary(); as stats) {
+        <div class="profile-stats">
+          <div class="profile-stat">
+            <span class="profile-stat-value">{{ stats.gamesPlayed }}</span>
+            <span class="profile-stat-label">Games Played</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-value">
+              @if (stats.averagePerformance !== null) {
+                {{ stats.averagePerformance }}%
+              } @else {
+                —
+              }
+            </span>
+            <span class="profile-stat-label">Avg. Performance</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-value">{{ stats.currentStreak }}</span>
+            <span class="profile-stat-label">Day Streak</span>
+          </div>
+        </div>
+        <p><a routerLink="/my-progress">View All Progress (Coming Soon)</a></p>
+      }
     } @else {
       <p>Sign in to see your profile and progress.</p>
-
       <button class="btn btn-primary" (click)="login()">
         {{ uiText.auth.login }}
       </button>
@@ -66,28 +72,23 @@
     <div class="dashboard-box activity-box">
       <h2 class="pixel-outline">{{ uiText.dashboard.recentActivity }}</h2>
 
-      @for (item of recentActivity; track $index) {
-        <div class="activity-row">
-          <div>
-            <div class="activity-title">
-              {{ item.title }}
-            </div>
-
-            <div class="activity-meta">
-              <span class="activity-topic">
-                {{ item.topic }}
-              </span>
-              -
-              {{ item.recency }}
+      @if (loading()) {
+        <p>Loading recent activity...</p>
+      } @else if (loadError()) {
+        <p>Couldn't load your recent activity right now.</p>
+      } @else if (summary(); as stats) {
+        @for (item of stats.recentActivity; track item.id) {
+          <div class="activity-row">
+            <div>
+              <div class="activity-title">{{ item.gameName }}</div>
+              <div class="activity-meta">Completed {{ item.completedAt | date: 'medium' }}</div>
             </div>
           </div>
-
-          <div class="activity-score" [style.color]="scoreColor(item.score)">{{ item.score }}%</div>
-        </div>
-      } @empty {
-        <div class="no-activity-message">
-          <p>Your recent games and activities will appear here.</p>
-        </div>
+        } @empty {
+          <div class="no-activity-message">
+            <p>You haven't completed any games yet. Your recent activities will appear here.</p>
+          </div>
+        }
       }
     </div>
   }

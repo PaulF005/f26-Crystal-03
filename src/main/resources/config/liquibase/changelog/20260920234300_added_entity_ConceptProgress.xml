@@ -1,23 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
-                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <!--
-        Added the entity ConceptProgress.
-    -->
     <changeSet id="20260920234300-1" author="jhipster">
         <createTable tableName="concept_progress">
-            <column name="id" type="bigint" autoIncrement="true" startWith="1500">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="competency" type="${floatType}">
+            <column name="competency" type="float">
                 <constraints nullable="false" />
             </column>
-            <column name="improvement" type="${floatType}">
+            <column name="improvement" type="float">
                 <constraints nullable="false" />
             </column>
             <column name="last_practiced_at" type="${datetimeType}">
@@ -32,10 +27,22 @@
             <column name="concept_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="concept_progress" columnName="last_practiced_at" columnDataType="${datetimeType}"/>
     </changeSet>
 
-    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+    <!-- Semicolon Data Loader Configuration -->
+    <changeSet id="20260920234300-1-data" author="rachel" context="faker">
+        <loadData
+                  file="config/liquibase/fake-data/concept_progress.csv"
+                  separator=";"
+                  tableName="concept_progress">
+            <column name="id" type="numeric"/>
+            <column name="competency" type="numeric"/>
+            <column name="improvement" type="numeric"/>
+            <column name="last_practiced_at" type="datetime"/>
+            <column name="max_questions" type="numeric"/>
+            <column name="user_profile_id" type="numeric"/>
+            <column name="concept_id" type="numeric"/>
+        </loadData>
+    </changeSet>
 </databaseChangeLog>

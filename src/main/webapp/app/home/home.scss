@@ -93,3 +93,36 @@ Recent Activity
   font-size: var(--font-field-size);
   font-weight: normal;
 }
+
+/* Profile summary populated by /api/dashboard/summary. */
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: calc(3 * var(--pixel));
+  margin: calc(3 * var(--pixel)) 0;
+}
+
+.profile-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  border: var(--pixel) solid var(--ui-kip-gold);
+  padding: calc(3 * var(--pixel));
+}
+
+.profile-stat-value {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+}
+
+.profile-stat-label {
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
+}
+
+@media (max-width: 480px) {
+  .profile-stats {
+    grid-template-columns: 1fr;
+  }
+}

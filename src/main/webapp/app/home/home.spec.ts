@@ -1,42 +1,156 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter, Router } from '@angular/router';
+import { Router, provideRouter } from '@angular/router';
 
-import { AccountService } from 'app/core/auth';
+import { Account, AccountService } from 'app/core/auth';
+import { serverApiUrl } from 'app/config';
 
 import Home from './home';
+
+const SUMMARY_URL = `${serverApiUrl}api/dashboard/summary`;
+
+function makeAccount(login: string): Account {
+  return {
+    activated: true,
+    authorities: ['ROLE_USER'],
+    email: `${login}@example.com`,
+    firstName: null,
+    langKey: 'en',
+    lastName: null,
+    login,
+    imageUrl: null,
+  };
+}
 
 describe('Home Component', () => {
   let comp: Home;
   let fixture: ComponentFixture<Home>;
   let mockRouter: Router;
+  let accountService: AccountService;
+  let httpMock: HttpTestingController;
+
+  // Runs the signal effect, then re-renders the template.
+  function render(): void {
+    fixture.detectChanges();
+    TestBed.tick();
+    fixture.detectChanges();
+  }
+
+  function pageText(): string {
+    return fixture.nativeElement.textContent as string;
+  }
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: AccountService,
-        },
-      ],
+      // provideRouter([]) is needed because the template now renders routerLink.
+      providers: [provideHttpClientTesting(), provideRouter([])],
     });
-  });
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(Home);
     comp = fixture.componentInstance;
-
     mockRouter = TestBed.inject(Router);
+    accountService = TestBed.inject(AccountService);
+    httpMock = TestBed.inject(HttpTestingController);
     vi.spyOn(mockRouter, 'navigate');
   });
 
-  describe('login', () => {
-    it('should navigate to /login on login', () => {
-      // WHEN
-      comp.login();
+  afterEach(() => httpMock.verify());
 
-      // THEN
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+  it('should navigate to /login on login', () => {
+    comp.login();
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('should not request private stats for a guest', () => {
+    render();
+
+    httpMock.expectNone(SUMMARY_URL);
+    expect(pageText()).toContain('Sign in to see your profile and progress.');
+  });
+
+  it('should load live dashboard statistics for a logged-in user', () => {
+    accountService.authenticate(makeAccount('tester'));
+    render();
+    expect(pageText()).toContain('Loading your progress...');
+
+    const req = httpMock.expectOne(SUMMARY_URL);
+    expect(req.request.method).toBe('GET');
+    req.flush({
+      gamesPlayed: 3,
+      averagePerformance: 80,
+      currentStreak: 2,
+      recentActivity: [{ id: 1, gameName: 'Fact or Fiction?', completedAt: '2026-10-29T12:00:00Z' }],
     });
+    render();
+
+    expect(comp.summary()?.gamesPlayed).toBe(3);
+    expect(pageText()).toContain('80%');
+    expect(pageText()).toContain('Fact or Fiction?');
+  });
+
+  it('should show the empty message when the user has no activity yet', () => {
+    accountService.authenticate(makeAccount('newuser'));
+    render();
+
+    httpMock.expectOne(SUMMARY_URL).flush({
+      gamesPlayed: 0,
+      averagePerformance: null,
+      currentStreak: 0,
+      recentActivity: [],
+    });
+    render();
+
+    expect(pageText()).toContain("You haven't completed any games yet.");
+    expect(pageText()).not.toContain('null%');
+  });
+
+  it('should show an error message when the request fails', () => {
+    accountService.authenticate(makeAccount('tester'));
+    render();
+
+    httpMock.expectOne(SUMMARY_URL).flush('Server error', { status: 500, statusText: 'Server Error' });
+    render();
+
+    expect(comp.loadError()).toBe(true);
+    expect(comp.loading()).toBe(false);
+    expect(pageText()).toContain("Couldn't load your progress right now.");
+  });
+
+  it('should clear the stats on logout', () => {
+    accountService.authenticate(makeAccount('tester'));
+    render();
+    httpMock.expectOne(SUMMARY_URL).flush({
+      gamesPlayed: 3,
+      averagePerformance: 80,
+      currentStreak: 2,
+      recentActivity: [{ id: 1, gameName: 'Fact or Fiction?', completedAt: '2026-10-29T12:00:00Z' }],
+    });
+    render();
+
+    accountService.authenticate(null);
+    render();
+
+    httpMock.expectNone(SUMMARY_URL);
+    expect(comp.summary()).toBeNull();
+    expect(pageText()).not.toContain('Fact or Fiction?');
+  });
+
+  it("should cancel the first user's request when the account switches", () => {
+    accountService.authenticate(makeAccount('userA'));
+    render();
+    const firstReq = httpMock.expectOne(SUMMARY_URL);
+
+    accountService.authenticate(makeAccount('userB'));
+    render();
+    const secondReq = httpMock.expectOne(SUMMARY_URL);
+
+    // userA's response must never show up for userB.
+    expect(firstReq.cancelled).toBe(true);
+    secondReq.flush({ gamesPlayed: 1, averagePerformance: 50, currentStreak: 1, recentActivity: [] });
+    render();
+
+    expect(comp.summary()?.gamesPlayed).toBe(1);
   });
 });
 

@@ -1,7 +1,9 @@
 package com.crystal.kip.repository;
 
 import com.crystal.kip.domain.GameSession;
-import org.springframework.data.jpa.repository.*;
+import java.util.List;
+import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -9,4 +11,7 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface GameSessionRepository extends JpaRepository<GameSession, Long> {}
+public interface GameSessionRepository extends JpaRepository<GameSession, Long> {
+    @EntityGraph(attributePaths = "game")
+    List<GameSession> findByUser_DataUser_LoginOrderByCompletedAtDesc(String login);
+}
