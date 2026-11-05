@@ -4,6 +4,7 @@
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
     <property name="now" value="now()" dbms="mysql"/>
     <property name="floatType" value="float" dbms="mysql"/>
     <property name="clobType" value="clob" dbms="mysql"/>
@@ -12,7 +13,7 @@
     <property name="datetimeType" value="datetime(6)" dbms="mysql"/>
     <property name="timeType" value="time(6)" dbms="mysql"/>
 
-<!-- STEP 1: Create core tables and load optional entity seed data -->
+    <!-- STEP 1: Create core tables and load optional entity seed data -->
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260916023741_added_entity_UserProfile.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260916023743_added_entity_Topic.xml" relativeToChangelogFile="false"/>
@@ -28,17 +29,15 @@
     <include file="config/liquibase/changelog/20261102000100_added_entity_QuestionHistory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20261102000200_added_entity_FofQuestion.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20261102000500_added_entity_FofPresentation.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20261102000300_load_FofSupportingData.xml" relativeToChangelogFile="false"/>
 
-    
-  <!-- STEP 2: Progress Tracker Extension Tables -->
-    <include file="changelog/20260920173900_added_entity_TopicProgress.xml" relativeToChangelogFile="true"/>
-    <include file="changelog/20260920173901_added_entity_GameProgress.xml" relativeToChangelogFile="true"/>
-    <include file="changelog/20260920220839_added_entity_GameSession.xml" relativeToChangelogFile="true"/>
-    <include file="changelog/20260920220840_added_entity_StageAttempt.xml" relativeToChangelogFile="true"/>
-    <include file="changelog/20260920234300_added_entity_ConceptProgress.xml" relativeToChangelogFile="true"/>
-    
-<!-- STEP 3: Add foreign key constraints after entity tables and optional CSV data -->
+    <!-- STEP 2: Progress Tracker Extension Tables -->
+    <include file="config/liquibase/changelog/20260920173900_added_entity_TopicProgress.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260920173901_added_entity_GameProgress.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260920220839_added_entity_GameSession.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260920220840_added_entity_StageAttempt.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260920234300_added_entity_ConceptProgress.xml" relativeToChangelogFile="false"/>
+
+    <!-- STEP 3: Database Relationships & Constraints -->
     <include file="config/liquibase/changelog/20260916023741_added_entity_constraints_UserProfile.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260916023744_added_entity_constraints_Concept.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260916023745_added_entity_constraints_Question.xml" relativeToChangelogFile="false"/>
@@ -55,6 +54,8 @@
     <include file="config/liquibase/changelog/20261102000200_added_entity_constraints_FofQuestion.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20261102000500_added_entity_constraints_FofPresentation.xml" relativeToChangelogFile="false"/>
 
-    <!-- Application Content -->
+    <!-- STEP 4: Application Content -->
+    <include file="config/liquibase/changelog/20261102000300_load_FofSupportingData.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20261102000400_load_FofQuestions.xml" relativeToChangelogFile="false"/>
+
 </databaseChangeLog>
