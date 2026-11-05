@@ -16,15 +16,6 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="20260916023748-1-data" author="rachel" context="faker">
-        <loadData
-            file="config/liquibase/fake-data/game.csv"
-            separator=";"
-            tableName="game">
-            <column name="id" type="numeric"/>
-            <column name="name" type="string"/>
-        </loadData>
-    </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 </databaseChangeLog>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 interface FactOrFictionQuestion {
@@ -85,4 +85,33 @@ const GAMES: Record<string, GameContent> = {
 })
 export default class Gameplay {
   protected readonly content: GameContent | undefined = GAMES[inject(ActivatedRoute).snapshot.paramMap.get('id') ?? ''];
+
+  // Fact or Fiction always has the same answers
+  protected readonly factAnswers = ['Fact', 'Fiction', 'Situational'] as const;
+
+  protected readonly questionIndex = signal(0);
+  protected readonly explanation = signal<string | null>(null);
+  protected readonly selectedEvidence = signal<EvidenceItem | null>(null);
+
+  protected readonly factQuestion = computed(() =>
+    this.content?.type === 'fact-or-fiction' ? this.content.questions[this.questionIndex()] : undefined,
+  );
+
+  protected readonly outcomeQuestion = computed(() =>
+    this.content?.type === 'choose-the-outcome' ? this.content.questions[this.questionIndex()] : undefined,
+  );
+
+  protected readonly finished = computed(() => !this.factQuestion() && !this.outcomeQuestion());
+
+  protected reveal(explanation: string): void {
+    this.explanation.set(explanation);
+  }
+
+  protected selectEvidence(item: EvidenceItem): void {
+    this.selectedEvidence.set(item);
+  }
+
+  protected next(): void {
+    // TODO: Make it go to the next question or finish
+  }
 }

@@ -20,13 +20,18 @@ if (!project.hasProperty("runList")) {
 liquibase {
   activities {
     main {
-      driver "com.mysql.cj.jdbc.Driver"
-      url "jdbc:mysql://localhost:3306/kip"
-      username "root"
-      changelogFile "src/main/resources/config/liquibase/master.xml"
-      logLevel "debug"
-      classpath "src/main/resources/"
-    }
+  driver "com.mysql.cj.jdbc.Driver"
+  url "jdbc:mysql://localhost:3306/kip"
+  username "root"
+  changelogFile "config/liquibase/master.xml"
+  logLevel "info"
+  classpath files(
+    "src/main/resources",
+    layout.buildDirectory.dir("classes/java/main")
+  )
+  searchPath "src/main/resources"
+  contexts "faker"
+}
     diffLog {
       driver "com.mysql.cj.jdbc.Driver"
       url "jdbc:mysql://localhost:3306/kip"
@@ -43,7 +48,7 @@ liquibase {
 
 tasks.named('liquibaseDiff').configure { dependsOn(tasks.named('compileJava')) }
 tasks.named('liquibaseDiffChangelog').configure { dependsOn(tasks.named('compileJava')) }
-
+tasks.named('liquibaseUpdate').configure { dependsOn(tasks.named('compileJava')) }
 ext {
   if (project.hasProperty("no-liquibase")) {
     springProfiles += ",no-liquibase"

@@ -32,13 +32,20 @@
             "polyfills": ["@angular/localize/init"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+
             "assets": [
               "src/main/webapp/content",
+              {
+                "glob": "**/*",
+                "input": "src/main/webapp/content/sounds",
+                "output": "/content/sounds"
+              },
               "src/main/webapp/favicon.ico",
               "src/main/webapp/manifest.webapp",
               "src/main/webapp/robots.txt",
               "src/main/webapp/swagger-ui"
             ],
+
             "styles": ["src/main/webapp/content/scss/vendor.scss", "src/main/webapp/content/scss/global.scss"],
             "scripts": [],
             "define": {

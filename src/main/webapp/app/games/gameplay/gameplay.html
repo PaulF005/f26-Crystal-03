@@ -5,7 +5,71 @@
     <div class="gameplay-module font-field">{{ content.module }}</div>
 
     <div class="gameplay-content">
-      <!-- The question and buttons go here later -->
+      @if (factQuestion(); as question) {
+        <h3>The Claim:</h3>
+        <p class="font-body">{{ question.claim }}</p>
+
+        <p class="font-field">Is this...</p>
+
+        <div class="gameplay-answers">
+          <button type="button" class="btn btn-fact" [disabled]="explanation() !== null" (click)="reveal(question.explanation)">
+            Fact?
+          </button>
+          <button type="button" class="btn btn-fiction" [disabled]="explanation() !== null" (click)="reveal(question.explanation)">
+            Fiction?
+          </button>
+          <button type="button" class="btn btn-situational" [disabled]="explanation() !== null" (click)="reveal(question.explanation)">
+            Situational?
+          </button>
+        </div>
+      }
+
+      @if (outcomeQuestion(); as question) {
+        <h3>The Situation:</h3>
+        <p class="font-body">{{ question.situation }}</p>
+
+        <div class="gameplay-evidence">
+          @for (item of question.evidence; track item.name) {
+            <button
+              type="button"
+              class="gameplay-evidence-item font-field pixel-outline"
+              [class.gameplay-evidence-selected]="selectedEvidence() === item"
+              (click)="selectEvidence(item)"
+            >
+              > {{ item.name }}
+            </button>
+          }
+        </div>
+
+        @if (selectedEvidence(); as item) {
+          <p class="font-body">{{ item.detail }}</p>
+        }
+
+        <p class="font-field">Do you...</p>
+
+        <div class="gameplay-answers">
+          @for (choice of question.choices; track choice.label) {
+            <button type="button" class="btn" [disabled]="explanation() !== null" (click)="reveal(choice.explanation)">
+              {{ choice.label }}
+            </button>
+          }
+        </div>
+      }
+
+      @if (explanation(); as text) {
+        <div class="gameplay-explanation">
+          @if (factQuestion(); as fq) {
+            <h3>Correct Answer: {{ fq.answer }}</h3>
+          }
+          <p class="font-body">{{ text }}</p>
+        </div>
+
+        <button type="button" class="btn" (click)="next()">Next...</button>
+      }
+
+      @if (finished()) {
+        <p class="font-body">No more questions.</p>
+      }
     </div>
   </div>
 }

@@ -2,7 +2,7 @@
   <h1 class="font-title">
     <span>Platform Settings</span>
   </h1>
-  <p class="font-body">Adjust game configurations, audio parameters, or visual scale adjustments.</p>
+  <p class="font-body">Adjust your game settings.</p>
 </div>
 
 <div class="dashboard-grid">
@@ -17,7 +17,14 @@
     </div>
 
     <div class="form-check form-switch mb-3">
-      <input id="muteSound" class="form-check-input" type="checkbox" role="switch" checked />
+      <input
+        id="muteSound"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        [(ngModel)]="soundEffectsEnabled"
+        (ngModelChange)="onSoundToggleChange()"
+      />
       <label class="form-check-label font-body" for="muteSound">Enable Sound Effects</label>
     </div>
   </div>
@@ -45,5 +52,5 @@
 
 <!-- Navigation Controls Footer -->
 <div class="mt-4 text-start">
-  <a class="btn btn-secondary" routerLink="/"> Back to Dashboard </a>
+  <a class="btn btn-secondary" routerLink="/" appClickSound="/content/sounds/select_neutral.wav"> Back to Dashboard </a>
 </div>
