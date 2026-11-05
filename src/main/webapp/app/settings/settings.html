@@ -9,16 +9,48 @@
   <!-- Audio Settings Panel -->
   <div class="dashboard-box settings-panel-box">
     <h2 class="pixel-outline">Audio Configuration</h2>
-    <p>Enable or disable game sound effects.</p>
+    <p>Fine-tune environmental sound effects and volume thresholds.</p>
 
     <div class="mb-3">
-      <input type="checkbox" id="muteSound" [(ngModel)]="soundEffectsEnabled" (ngModelChange)="onSoundToggleChange()" />
+      <label class="form-label font-body d-block" for="masterVolume">Master Volume</label>
+      <input id="masterVolume" type="range" class="form-range" min="0" max="100" value="80" />
+    </div>
 
-      <label for="muteSound" class="font-body"> Enable Sound Effects </label>
+    <div class="form-check form-switch mb-3">
+      <input
+        id="muteSound"
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        [(ngModel)]="soundEffectsEnabled"
+        (ngModelChange)="onSoundToggleChange()"
+      />
+      <label class="form-check-label font-body" for="muteSound">Enable Sound Effects</label>
+    </div>
+  </div>
 
-      <!-- Temporary debugging indicator -->
-      <p class="font-body">Sound effects: {{ soundEffectsEnabled ? 'ON' : 'OFF' }}</p>
+  <!-- Visual Scale Panel -->
+  <div class="dashboard-box settings-panel-box">
+    <h2 class="pixel-outline">Display & Scale</h2>
+    <p>Modify display ratios and toggle visual interface optimizations.</p>
+
+    <div class="mb-3">
+      <label class="form-label font-body" for="interfaceResolutionMode">Interface Resolution Mode</label>
+      <select id="interfaceResolutionMode" class="form-select">
+        <option value="normal" selected>Standard Pixel Ratio (1x)</option>
+        <option value="crisp">Crisp Upscaled Pixel-Art (2x)</option>
+        <option value="hd">High Definition Smoothing</option>
+      </select>
+    </div>
+
+    <div class="form-check form-switch mb-3">
+      <input id="fullscreenToggle" class="form-check-input" type="checkbox" role="switch" />
+      <label class="form-check-label font-body" for="fullscreenToggle">Fullscreen Mode</label>
     </div>
   </div>
 </div>
-<a class="btn btn-secondary" routerLink="/" appClickSound="/content/sounds/select_neutral.wav"> Back to Dashboard </a>
+
+<!-- Navigation Controls Footer -->
+<div class="mt-4 text-start">
+  <a class="btn btn-secondary" routerLink="/" appClickSound="/content/sounds/select_neutral.wav"> Back to Dashboard </a>
+</div>

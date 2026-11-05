@@ -153,3 +153,14 @@ describe('Home Component', () => {
     expect(comp.summary()?.gamesPlayed).toBe(1);
   });
 });
+
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    providers: [
+      provideRouter([]),
+      {
+        provide: AccountService,
+      },
+    ],
+  });
+});
