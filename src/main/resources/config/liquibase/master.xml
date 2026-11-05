@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- namespace declarations and schema location for Liquibase -->
 <databaseChangeLog
-    xmlns="http://liquibase.org"
-    xmlns:xsi="http://w3.org"
-    xsi:schemaLocation="http://liquibase.org http://liquibase.org/dbchangelog-latest.xsd">
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <property name="now" value="now()" dbms="mysql"/>
     <property name="floatType" value="float" dbms="mysql"/>
     <property name="clobType" value="clob" dbms="mysql"/>
@@ -25,6 +25,9 @@
     <include file="config/liquibase/changelog/20260916023750_added_entity_Stage.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260916023751_added_entity_LegalContent.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260916023752_added_entity_Source.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20261102000100_added_entity_QuestionHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20261102000200_added_entity_FofQuestion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20261102000500_added_entity_FofPresentation.xml" relativeToChangelogFile="false"/>
     
     
   <!-- STEP 2: Progress Tracker Extension Tables -->
@@ -35,7 +38,6 @@
     <include file="config/liquibase/changelog/20260920234300_added_entity_ConceptProgress.xml" relativeToChangelogFile="false"/>
     
     <!-- STEP 3: Database Relationships & Constraints (Must load prior to CSV execution context) -->
-    
     <include file="config/liquibase/changelog/20260916023741_added_entity_constraints_UserProfile.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260916023744_added_entity_constraints_Concept.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260916023745_added_entity_constraints_Question.xml" relativeToChangelogFile="false"/>
@@ -48,4 +50,11 @@
     <include file="config/liquibase/changelog/20260920220839_added_entity_constraints_GameSession.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260920220840_added_entity_constraints_StageAttempt.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20260920234300_added_entity_constraints_ConceptProgress.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20261102000100_added_entity_constraints_QuestionHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20261102000200_added_entity_constraints_FofQuestion.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20261102000500_added_entity_constraints_FofPresentation.xml" relativeToChangelogFile="false"/>
+
+    <!-- Application Content -->
+    <include file="config/liquibase/changelog/20261102000300_load_FofSupportingData.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20261102000400_load_FofQuestions.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

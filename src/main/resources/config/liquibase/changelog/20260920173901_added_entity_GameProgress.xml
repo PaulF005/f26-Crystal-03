@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <databaseChangeLog
-    xmlns="http://liquibase.org"
-    xmlns:ext="http://liquibase.org-ext"
-    xmlns:xsi="http://w3.org"
-    xsi:schemaLocation="http://liquibase.org http://liquibase.org/dbchangelog-latest.xsd
-                        http://liquibase.org-ext http://liquibase.org/dbchangelog-ext.xsd">
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="20260920173901-1" author="jhipster">
         <createTable tableName="game_progress">
