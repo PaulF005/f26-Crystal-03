@@ -1,37 +1,40 @@
 import { HttpClient, HttpResponse, httpResource } from '@angular/common/http';
-import { Injectable, computed, inject, signal } from '@angular/core';
+import { Service, computed, inject, signal } from '@angular/core';
 
 import { Observable } from 'rxjs';
 
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
-import { createRequestOption } from 'app/core/request/request-util';
-import { isPresent } from 'app/core/util/operators';
+import { serverApiUrl } from 'app/config';
+import { createRequestOption } from 'app/core/request';
 import { IModule, NewModule } from '../module.model';
 
 export type PartialUpdateModule = Partial<IModule> & Pick<IModule, 'id'>;
 
-@Injectable()
+@Service()
 export class ModulesService {
   readonly modulesParams = signal<Record<string, string | number | boolean | readonly (string | number | boolean)[]> | undefined>(
     undefined,
   );
+
   readonly modulesResource = httpResource<IModule[]>(() => {
     const params = this.modulesParams();
     if (!params) {
       return undefined;
     }
+
     return { url: this.resourceUrl, params };
   });
+
   /**
-   * This signal holds the list of module that have been fetched. It is updated when the modulesResource emits a new value.
+   * This signal holds the list of module that have been fetched.
+   * It is updated when the modulesResource emits a new value.
    * In case of error while fetching the modules, the signal is set to an empty array.
    */
   readonly modules = computed(() => (this.modulesResource.hasValue() ? this.modulesResource.value() : []));
-  protected readonly applicationConfigService = inject(ApplicationConfigService);
-  protected readonly resourceUrl = this.applicationConfigService.getEndpointFor('api/modules');
+
+  protected readonly resourceUrl = `${serverApiUrl}api/modules`;
 }
 
-@Injectable({ providedIn: 'root' })
+@Service()
 export class ModuleService extends ModulesService {
   protected readonly http = inject(HttpClient);
 
@@ -53,7 +56,11 @@ export class ModuleService extends ModulesService {
 
   query(req?: any): Observable<HttpResponse<IModule[]>> {
     const options = createRequestOption(req);
-    return this.http.get<IModule[]>(this.resourceUrl, { params: options, observe: 'response' });
+
+    return this.http.get<IModule[]>(this.resourceUrl, {
+      params: options,
+      observe: 'response',
+    });
   }
 
   delete(id: number): Observable<undefined> {
@@ -72,19 +79,25 @@ export class ModuleService extends ModulesService {
     moduleCollection: Type[],
     ...modulesToCheck: (Type | null | undefined)[]
   ): Type[] {
-    const modules: Type[] = modulesToCheck.filter(isPresent);
+    const modules: Type[] = modulesToCheck.filter(moduleItem => moduleItem !== null && moduleItem !== undefined);
+
     if (modules.length > 0) {
       const moduleCollectionIdentifiers = moduleCollection.map(moduleItem => this.getModuleIdentifier(moduleItem));
+
       const modulesToAdd = modules.filter(moduleItem => {
         const moduleIdentifier = this.getModuleIdentifier(moduleItem);
+
         if (moduleCollectionIdentifiers.includes(moduleIdentifier)) {
           return false;
         }
+
         moduleCollectionIdentifiers.push(moduleIdentifier);
         return true;
       });
+
       return [...modulesToAdd, ...moduleCollection];
     }
+
     return moduleCollection;
   }
 }

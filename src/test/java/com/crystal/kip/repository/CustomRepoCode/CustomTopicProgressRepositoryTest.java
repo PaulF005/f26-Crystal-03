@@ -1,4 +1,4 @@
-package com.crystal.kip.repository.ACustomRepoCode;
+package com.crystal.kip.repository.CustomRepoCode;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,20 +22,21 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 /**
  * SHOULD HAVE DOCKER ENGINE ON TO TEST, can take 1-4 minutes to complete as it mimics a sql database
- * ACustomTopicProgressRepositoryTest
+ * CustomTopicProgressRepositoryTest
  */
 @IntegrationTest
 @Transactional
-public class ACustomTopicProgressRepositoryTest {
+public class CustomTopicProgressRepositoryTest {
 
     @Autowired
-    private ACustomTopicProgressRepository aCustomTopicProgressRepository;
+    private CustomTopicProgressRepository aCustomTopicProgressRepository;
 
     @Autowired
     private EntityManager entityManager;
 
     private static final String TESTUSERNAME = "testUser";
     private static final String FAILUSERNAME = "failUser";
+    private Long topicId;
 
     @BeforeEach
     void setUp() {
@@ -66,6 +67,8 @@ public class ACustomTopicProgressRepositoryTest {
         topic.setName("fakeTopic1");
         topic.setConcepts(concepts);
         entityManager.persist(topic);
+        entityManager.flush();
+        topicId = topic.getId();
 
         ConceptProgress conceptProgress = new ConceptProgress();
         conceptProgress.setUserProfile(userProfile);
@@ -90,81 +93,80 @@ public class ACustomTopicProgressRepositoryTest {
     //Get Competency Functions
     @Test
     void getCompetencyDBTPTest() {
-        Optional<Float> currentCompetency = aCustomTopicProgressRepository.getCompetencyDBTP(TESTUSERNAME);
+        Optional<Float> currentCompetency = aCustomTopicProgressRepository.getCompetencyDBTP(TESTUSERNAME, topicId);
         assertTrue(currentCompetency.isPresent());
         assertEquals(0.25f, currentCompetency.get(), 0.0001);
     }
 
     @Test
     void getCurCompentencyTPTest() {
-        double currentCompetency = aCustomTopicProgressRepository.getCurCompetencyTP(TESTUSERNAME);
+        double currentCompetency = aCustomTopicProgressRepository.getCurCompetencyTP(TESTUSERNAME, topicId);
         assertEquals(0.25d, currentCompetency, 0.0001);
     }
 
     @Test
     void getCurCompentencyTPTestFail() {
-        double currentCompetency = aCustomTopicProgressRepository.getCurCompetencyTP(FAILUSERNAME);
+        double currentCompetency = aCustomTopicProgressRepository.getCurCompetencyTP(FAILUSERNAME, topicId);
         assertEquals(-1.0d, currentCompetency, 0.001);
     }
 
     //Get Improvement Functions
     @Test
     void getImprovementDBTPTest() {
-        Optional<Float> improvement = aCustomTopicProgressRepository.getImprovementDBTP(TESTUSERNAME);
+        Optional<Float> improvement = aCustomTopicProgressRepository.getImprovementDBTP(TESTUSERNAME, topicId);
         assertTrue(improvement.isPresent());
         assertEquals(0.05f, improvement.get(), 0.0001);
     }
 
     @Test
     void getImprovementTPTest() {
-        double improvement = aCustomTopicProgressRepository.getImprovementTP(TESTUSERNAME);
+        double improvement = aCustomTopicProgressRepository.getImprovementTP(TESTUSERNAME, topicId);
         assertEquals(0.05d, improvement, 0.0001);
     }
 
     @Test
     void getImprovementTPTestFail() {
-        double improvement = aCustomTopicProgressRepository.getImprovementTP(FAILUSERNAME);
+        double improvement = aCustomTopicProgressRepository.getImprovementTP(FAILUSERNAME, topicId);
         assertEquals(-1.0d, improvement, 0.001);
     }
 
     //Get LastPraticedAt Functions
     @Test
     void getLastPracticedAtDBTPTest() {
-        Optional<Instant> now = aCustomTopicProgressRepository.getLastPracticedAtDBTP(TESTUSERNAME);
+        Optional<Instant> now = aCustomTopicProgressRepository.getLastPracticedAtDBTP(TESTUSERNAME, topicId);
         assertTrue(now.isPresent());
         assertEquals("2026-04-01T11:11:00Z", now.get().toString());
     }
 
     @Test
     void getLastPracticedAtTPTest() {
-        Instant now = aCustomTopicProgressRepository.getLastPracticedAtTP(TESTUSERNAME);
+        Instant now = aCustomTopicProgressRepository.getLastPracticedAtTP(TESTUSERNAME, topicId);
         assertEquals("2026-04-01T11:11:00Z", now.toString());
     }
 
     @Test
     void getLastPracticedAtTPTestFail() {
-        Instant now = aCustomTopicProgressRepository.getLastPracticedAtTP(FAILUSERNAME);
+        Instant now = aCustomTopicProgressRepository.getLastPracticedAtTP(FAILUSERNAME, topicId);
         assertEquals(Instant.EPOCH.toString(), now.toString());
     }
 
     //Get TopicNumber Functions
     @Test
     void getAllTopicNumTPDBTest() {
-        Optional<Integer> numTopics = aCustomTopicProgressRepository.getAllTopicNumTPDB(TESTUSERNAME);
-        assertTrue(numTopics.isPresent());
-        assertEquals(2, numTopics.get());
+        Long numTopics = aCustomTopicProgressRepository.getAllTopicNumTPDB(topicId);
+        assertEquals(2L, numTopics);
     }
 
     @Test
     void getAllTopicNumTPTest() {
-        int numTopics = aCustomTopicProgressRepository.getAllTopicNumTP(TESTUSERNAME);
+        int numTopics = aCustomTopicProgressRepository.getAllTopicNumTP(topicId);
         assertEquals(2, numTopics);
     }
 
     @Test
     void getAllTopicNumTPTestFail() {
-        int numTopics = aCustomTopicProgressRepository.getAllTopicNumTP(FAILUSERNAME);
-        assertEquals(-1, numTopics);
+        int numTopics = aCustomTopicProgressRepository.getAllTopicNumTP(Long.MAX_VALUE);
+        assertEquals(0, numTopics);
     }
 
     //Update Functions
@@ -175,12 +177,12 @@ public class ACustomTopicProgressRepositoryTest {
         Float improvement = 0.2f;
         Instant now = Instant.parse("2026-04-01T12:00:00Z");
 
-        aCustomTopicProgressRepository.updateTopicProgressToDB(competency, improvement, now);
+        aCustomTopicProgressRepository.updateTopicProgressToDB(topicId, competency, improvement, now);
         entityManager.clear();
 
-        Optional<Float> newCompetency = aCustomTopicProgressRepository.getCompetencyDBTP(TESTUSERNAME);
-        Optional<Float> newImprovement = aCustomTopicProgressRepository.getImprovementDBTP(TESTUSERNAME);
-        Optional<Instant> newNow = aCustomTopicProgressRepository.getLastPracticedAtDBTP(TESTUSERNAME);
+        Optional<Float> newCompetency = aCustomTopicProgressRepository.getCompetencyDBTP(TESTUSERNAME, topicId);
+        Optional<Float> newImprovement = aCustomTopicProgressRepository.getImprovementDBTP(TESTUSERNAME, topicId);
+        Optional<Instant> newNow = aCustomTopicProgressRepository.getLastPracticedAtDBTP(TESTUSERNAME, topicId);
         assertTrue(newCompetency.isPresent());
         assertEquals(competency, newCompetency.get(), 0.001);
         assertEquals(improvement, newImprovement.get(), 0.01);
