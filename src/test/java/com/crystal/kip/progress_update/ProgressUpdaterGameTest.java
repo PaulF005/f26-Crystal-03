@@ -3,6 +3,7 @@ package com.crystal.kip.progress_update;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -25,9 +26,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 public class ProgressUpdaterGameTest {
 
-    /**
-     * Creates a mock database entry for a LinkGameProgressRepository to test against
-     */
     @Mock
     private LinkGameProgressRepository linkGameProgressRepository;
 
@@ -41,103 +39,89 @@ public class ProgressUpdaterGameTest {
     private ArgumentCaptor<Instant> nowCaptor;
 
     private ProgressUpdaterGame progressUpdaterGame;
-    private MockedStatic<SecurityUtils> mockedSecurtiyUtils;
-    private static final String TESTUSER = "testUser";
+    private MockedStatic<SecurityUtils> mockedSecurityUtils;
 
-    /**
-     * Sets up a ProgressUpdaterConcept and opens the Mock
-     */
+    private static final String TESTUSER = "testUser";
+    private static final Long GAME_ID = 31L;
+
     @BeforeEach
     void setUp() {
         progressUpdaterGame = new ProgressUpdaterGame(linkGameProgressRepository);
-        mockedSecurtiyUtils = mockStatic(SecurityUtils.class);
+        mockedSecurityUtils = mockStatic(SecurityUtils.class);
     }
 
-    /**
-     * Closes the Mock
-     */
     @AfterEach
     void tearDown() {
-        if (mockedSecurtiyUtils != null) {
-            mockedSecurtiyUtils.close();
+        if (mockedSecurityUtils != null) {
+            mockedSecurityUtils.close();
         }
     }
 
-    //TESTS BELOW
-
-    /**
-     * Tests to see if the update function works
-     */
     @Test
     void updateGameProgressSuccess() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkGameProgressRepository.getSessionsPlayedGP(TESTUSER)).thenReturn(67);
-        when(linkGameProgressRepository.getPerformanceGP(TESTUSER)).thenReturn(0.89);
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkGameProgressRepository.getSessionsPlayedGP(TESTUSER, GAME_ID)).thenReturn(67);
+        when(linkGameProgressRepository.getPerformanceGP(TESTUSER, GAME_ID)).thenReturn(0.89);
 
-        progressUpdaterGame.updateGameProgress(0.95f);
+        progressUpdaterGame.updateGameProgress(GAME_ID, 0.95f);
 
+        verify(linkGameProgressRepository).getSessionsPlayedGP(TESTUSER, GAME_ID);
+        verify(linkGameProgressRepository).getPerformanceGP(TESTUSER, GAME_ID);
         verify(linkGameProgressRepository).updateGameProgressToDb(
+            eq(GAME_ID),
             sessionsPlayedCaptor.capture(),
             performanceCaptor.capture(),
             nowCaptor.capture()
         );
+
         assertEquals(68, sessionsPlayedCaptor.getValue());
-        assertEquals(0.89088, performanceCaptor.getValue(), .00001);
+        assertEquals(0.89088, performanceCaptor.getValue(), 0.00001);
         assertNotNull(nowCaptor.getValue());
     }
 
-    /**
-     * Tests to see if the intal game progress is updated with no previous ones
-     */
     @Test
     void updateGameProgressWith0SessionsPlayed() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkGameProgressRepository.getSessionsPlayedGP(TESTUSER)).thenReturn(0);
-        when(linkGameProgressRepository.getPerformanceGP(TESTUSER)).thenReturn(0.0);
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkGameProgressRepository.getSessionsPlayedGP(TESTUSER, GAME_ID)).thenReturn(0);
+        when(linkGameProgressRepository.getPerformanceGP(TESTUSER, GAME_ID)).thenReturn(0.0);
 
-        progressUpdaterGame.updateGameProgress(0.95f);
+        progressUpdaterGame.updateGameProgress(GAME_ID, 0.95f);
 
         verify(linkGameProgressRepository).updateGameProgressToDb(
+            eq(GAME_ID),
             sessionsPlayedCaptor.capture(),
             performanceCaptor.capture(),
             nowCaptor.capture()
         );
+
         assertEquals(1, sessionsPlayedCaptor.getValue());
-        assertEquals(0.95, performanceCaptor.getValue(), .001);
+        assertEquals(0.95, performanceCaptor.getValue(), 0.001);
         assertNotNull(nowCaptor.getValue());
     }
 
-    /**
-     * Tests to see if throws execption when no user is logged in
-     */
     @Test
-    void updateGameProgressExecptionNoUser() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.empty());
+    void updateGameProgressExceptionNoUser() {
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.empty());
 
-        assertThrows(IllegalStateException.class, () -> progressUpdaterGame.updateGameProgress(0.95f));
+        assertThrows(IllegalStateException.class, () -> progressUpdaterGame.updateGameProgress(GAME_ID, 0.95f));
+
         verifyNoInteractions(linkGameProgressRepository);
     }
 
-    /**
-     * Tests to see if throws execption when sessionsPlayed has a bad read
-     */
     @Test
     void updateGameProgressExceptionBadReadSessionsPlayed() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkGameProgressRepository.getSessionsPlayedGP(TESTUSER)).thenReturn(-1);
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkGameProgressRepository.getSessionsPlayedGP(TESTUSER, GAME_ID)).thenReturn(-1);
 
-        assertThrows(IllegalArgumentException.class, () -> progressUpdaterGame.updateGameProgress(.95f));
+        assertThrows(IllegalArgumentException.class, () -> progressUpdaterGame.updateGameProgress(GAME_ID, 0.95f));
     }
 
-    /**
-     * Tests to see if throws execption when performance has a bad read
-     */
     @Test
-    void updateConceptProgressExceptionBadReadCurrentCompetency() {
-        mockedSecurtiyUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
-        when(linkGameProgressRepository.getSessionsPlayedGP(TESTUSER)).thenReturn(100);
-        when(linkGameProgressRepository.getPerformanceGP(TESTUSER)).thenReturn(-1.0);
+    void updateGameProgressExceptionBadReadPerformance() {
+        mockedSecurityUtils.when(SecurityUtils::getCurrentUserLogin).thenReturn(Optional.of(TESTUSER));
+        when(linkGameProgressRepository.getSessionsPlayedGP(TESTUSER, GAME_ID)).thenReturn(100);
+        when(linkGameProgressRepository.getPerformanceGP(TESTUSER, GAME_ID)).thenReturn(-1.0);
 
-        assertThrows(IllegalArgumentException.class, () -> progressUpdaterGame.updateGameProgress(.95f));
+        assertThrows(IllegalArgumentException.class, () -> progressUpdaterGame.updateGameProgress(GAME_ID, 0.95f));
     }
 }

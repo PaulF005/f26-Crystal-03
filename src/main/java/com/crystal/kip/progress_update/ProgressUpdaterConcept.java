@@ -1,6 +1,6 @@
 package com.crystal.kip.progress_update;
 
-import com.crystal.kip.repository.LinkRepo.LinkConcpetProgressRepository;
+import com.crystal.kip.repository.LinkRepo.LinkConceptProgressRepository;
 import com.crystal.kip.security.SecurityUtils;
 import java.time.Instant;
 import org.slf4j.Logger;
@@ -10,54 +10,48 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProgressUpdaterConcept {
 
-    private final LinkConcpetProgressRepository linkConcpetProgressRepository;
+    private final LinkConceptProgressRepository linkConceptProgressRepository;
     private static final Logger log = LoggerFactory.getLogger(ProgressUpdaterConcept.class);
 
-    public ProgressUpdaterConcept(LinkConcpetProgressRepository linkConcpetProgressRepository) {
-        this.linkConcpetProgressRepository = linkConcpetProgressRepository;
+    public ProgressUpdaterConcept(LinkConceptProgressRepository linkConceptProgressRepository) {
+        this.linkConceptProgressRepository = linkConceptProgressRepository;
     }
 
-    public void updateConceptProgress(int questionsRight) {
+    public float updateConceptProgress(Long conceptId, int questionsRight) {
         String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
 
-        int totalQuestions = this.linkConcpetProgressRepository.getMaxQuestionsForRepo(username);
+        int totalQuestions = this.linkConceptProgressRepository.getMaxQuestionsForRepo(username, conceptId);
+
         if (totalQuestions < 0) {
             log.error("Failed to read total questions from repo!");
             throw new IllegalArgumentException("Concept Progress has an error in its Max Questions!");
         }
 
-        double currentCompetency = this.linkConcpetProgressRepository.getCurCompetencyCP(username);
+        if (totalQuestions == 0) {
+            log.error("Concept has no questions!");
+            throw new IllegalArgumentException("Concept Progress cannot be updated with zero questions!");
+        }
+
+        double currentCompetency = this.linkConceptProgressRepository.getCurCompetencyCP(username, conceptId);
+
         if (currentCompetency < 0) {
             log.error("Failed to read current competency from repo!");
             throw new IllegalArgumentException("Concept Progress has an error in its Current Competency!");
         }
 
+        double competencyBefore = currentCompetency;
+
         double percentDone = (double) questionsRight / totalQuestions;
         currentCompetency += percentDone;
 
-        double marginOfError = 0.00001;
-        //Close enough (Hate Floating Point Errors)!! Will not indicate an increase in imporvement if there is no increase in Competency
-        if (currentCompetency >= 1.0 - marginOfError) {
-            currentCompetency = 1.0;
-            percentDone = 0.0;
-        } else if (currentCompetency >= 0.99 - marginOfError) {
-            currentCompetency = 1.0;
-            percentDone = 0.01;
-        }
+        currentCompetency = Math.min(currentCompetency, 1.0);
+
+        double improvement = currentCompetency - competencyBefore;
 
         Instant now = Instant.now();
-        this.linkConcpetProgressRepository.updateConceptProgressToDBCP((float) currentCompetency, (float) percentDone, now);
-    }
 
-    public float getImprovement() {
-        String username = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
+        this.linkConceptProgressRepository.updateConceptProgressToDBCP(conceptId, (float) currentCompetency, (float) improvement, now);
 
-        double improvementToAdd = this.linkConcpetProgressRepository.getImprovementCP(username);
-        if (improvementToAdd < 0) {
-            log.error("Failed to read current improvement from repo!");
-            throw new IllegalArgumentException("Concept Progress has an error in its current imporvement!");
-        }
-
-        return (float) improvementToAdd;
+        return (float) improvement;
     }
 }
