@@ -182,3 +182,14 @@ describe('Home Component', () => {
     expect(statValue('Favorite Game')).toBe('Choose the Outcome');
   });
 });
+
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    providers: [
+      provideRouter([]),
+      {
+        provide: AccountService,
+      },
+    ],
+  });
+});

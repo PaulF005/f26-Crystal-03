@@ -1,4 +1,4 @@
-package com.crystal.kip.repository.ACustomRepoCode;
+package com.crystal.kip.repository.CustomRepoCode;
 
 import com.crystal.kip.domain.Scenario;
 import java.util.List;
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
  * Spring Data JPA repository for the Scenario entity.
  */
 @Repository
-public interface ACustomScenarioRepository extends JpaRepository<Scenario, Long> {
+public interface CustomScenarioRepository extends JpaRepository<Scenario, Long> {
     List<Scenario> findByGameIdAndTopicId(Long gameId, Long topicId);
 }
