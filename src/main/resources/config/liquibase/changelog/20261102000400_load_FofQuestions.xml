@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20261102000400-1" author="kip" runInTransaction="true">
+        <customChange class="com.crystal.kip.config.liquibase.FactFictionQuestionImport">
+            <param name="csvFile" value="config/liquibase/data/questions_fact_fiction.csv"/>
+        </customChange>
+    </changeSet>
+</databaseChangeLog>

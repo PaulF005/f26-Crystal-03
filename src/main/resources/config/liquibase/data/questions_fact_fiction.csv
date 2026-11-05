@@ -1,0 +1,76 @@
+id;game_id;concept_id;question;correct_answer;explanation;source_id
+20101;10;201;An eight-sided traffic sign means stop.;true;The octagonal shape identifies a stop sign, which requires a full stop.;4
+20102;10;201;A triangular yield sign gives approaching traffic an unconditional right-of-way.;false;A yield sign requires slowing and giving priority to conflicting vehicles, pedestrians and bicyclists. Stopping may be necessary.;4
+20103;10;201;Regulatory signs give instructions that drivers are required to obey.;true;Regulatory signs communicate enforceable traffic rules rather than optional suggestions.;4
+20104;10;201;A red circle with a slash means the pictured action is permitted.;false;The slash marks the pictured action as prohibited.;4
+20105;10;201;Black lettering on a white traffic sign commonly communicates a regulation.;true;Black-and-white signs communicate rules such as speed limits and turning restrictions.;4
+20106;10;201;Yellow-and-black signs generally identify driver services such as fuel or lodging.;false;Yellow-and-black signs warn of hazards. Blue-and-white signs identify motorist services.;4
+20107;10;201;A green-and-white sign commonly provides destination information.;true;Green-and-white guide signs identify destinations and routes.;4
+20108;10;201;Brown-and-white signs primarily identify construction areas.;false;Brown-and-white signs identify historical or cultural interests. Construction warnings use orange and black.;4
+20109;10;201;Orange-and-black signs warn of construction areas.;true;Orange-and-black signs alert drivers to construction-related conditions.;4
+20110;10;201;A diamond-shaped warning sign means that the road ahead is free of hazards.;false;A diamond-shaped sign warns of a condition or hazard ahead.;4
+20111;10;201;A five-sided sign can identify a school zone or school crossing.;true;The pentagonal shape alerts drivers to school zones and crossings.;4
+20112;10;201;A One Way sign permits travel opposite its arrow when no other vehicles are present.;false;The arrow identifies the permitted direction of travel. An empty road does not reverse that restriction.;4
+20113;10;201;A Do Not Enter sign prohibits entering the roadway from that direction.;true;The sign marks an entrance that traffic approaching from that direction must not use.;4
+20114;10;201;A No Right Turn sign allows a right turn after a complete stop.;false;A stop does not remove the posted prohibition on right turns.;4
+20115;10;201;A No U-Turn sign prohibits making a U-turn at that location.;true;This sign specifically prohibits reversing direction by making a U-turn.;4
+20116;10;201;A No Turn on Red sign allows a turn on red whenever the intersection is empty.;false;The restriction applies while the signal is red, even when the intersection appears empty.;4
+20117;10;201;A Do Not Pass sign marks the start of a passing restriction.;true;The sign begins a zone where passing cars ahead in the same lane is prohibited.;4
+20118;10;201;A Left Turn Yield on Green sign gives left-turning traffic priority over oncoming vehicles.;false;The sign requires left-turning traffic to yield to vehicles approaching from the opposite direction.;4
+20119;10;201;A Keep Right sign directs traffic to pass on the indicated side of an obstacle.;true;The arrow directs traffic around an island, divider or other obstruction.;4
+20120;10;201;A lane-use sign requiring a turn can be ignored if the driver prefers to continue straight.;false;Traffic in a lane with a required turn must follow the displayed direction.;4
+20121;10;201;A posted speed limit describes the maximum permitted speed under good weather conditions.;true;The posted maximum does not guarantee that the same speed is safe in poor conditions.;4
+20122;10;201;A Low Clearance sign means any vehicle can fit beneath the structure ahead.;false;The sign identifies limited overhead space. A vehicle taller than the displayed clearance must not proceed.;4
+20123;10;201;A Divided Highway Ends sign warns that the median or divider ends ahead.;true;The sign warns that opposing traffic will no longer be separated by the divider.;4
+20124;10;201;A railroad crossbuck guarantees that trains approach from only one direction.;false;Rail traffic may approach from either direction. Multiple tracks can carry separate trains.;4
+20125;10;201;A school-crossing sign can be accompanied by an arrow identifying the crossing location.;true;A second sign may point to the actual school-crossing location.;4
+20201;10;202;A steady red traffic light normally requires a complete stop before the intersection.;true;Stop at the marked stop line or, without one, before the intersection or crosswalk. A permitted turn still requires stopping first.;4
+20202;10;202;An ordinary right turn on a circular red light may be made without stopping if the road is clear.;false;A permitted right turn on red requires a full stop and yielding first. Posted restrictions can prohibit the turn.;4
+20203;10;202;A flashing red traffic light requires stopping before proceeding when the way is clear.;true;A flashing red signal requires a full stop and yielding to conflicting vehicles and pedestrians.;4
+20204;10;202;A flashing yellow traffic light has the same mandatory-stop meaning as a flashing red light.;false;Flashing yellow calls for reduced speed and caution. Flashing red requires a full stop.;4
+20205;10;202;A flashing yellow turn arrow requires yielding to conflicting traffic and pedestrians.;true;The arrow allows the indicated turn only when the way is clear and conflicting traffic and pedestrians have priority.;4
+20206;10;202;A green traffic light allows a driver to turn through pedestrians already crossing.;false;A green signal does not remove the obligation to let pedestrians already in the crossing finish.;4
+20207;10;202;At a green light without a green turn arrow, a left-turning driver must yield to oncoming traffic.;true;The circular green signal does not give a left turn priority over conflicting oncoming traffic or pedestrians.;4
+20208;10;202;A yellow traffic light instructs drivers to accelerate to enter before the light turns red.;false;Yellow warns that the signal is changing. Stop if safe, or continue cautiously when stopping would be unsafe.;4
+20209;10;202;Without other traffic control, a dark traffic signal must be treated as an all-way stop.;true;When signals display no lights, all approaches must stop unless an authorized person or portable stop signs direct traffic differently.;4
+20210;10;202;A red X lane-control signal permits driving in that lane when traffic is light.;false;A red X identifies a lane that traffic must not use. Light traffic does not change that instruction.;4
+20211;10;202;A green downward lane-control arrow permits traffic to use that lane.;true;The green lane-control arrow identifies a lane open to traffic in that direction.;4
+20212;10;202;A yellow X lane-control signal means the lane will remain open indefinitely.;false;A yellow X warns drivers to leave the lane as soon as doing so is safe.;4
+20213;10;202;The solid red phase of a pedestrian hybrid beacon requires drivers to stop.;true;The beacon displays solid red while pedestrians receive a walk signal, requiring traffic to stop.;4
+20214;10;202;Broken white lane lines separate traffic traveling in opposite directions.;false;Broken white lines separate lanes moving in the same direction. Yellow center markings separate opposing traffic.;4
+20215;10;202;A broken yellow centerline allows passing when the road ahead is clear.;true;The broken yellow centerline permits passing in either direction when it can be completed safely and no other restriction applies.;4
+20216;10;202;Double solid yellow centerlines allow ordinary passing of another car whenever no traffic is visible.;false;Double solid yellow lines prohibit ordinary passing. Limited exceptions allow left turns and safely passing pedestrians, bicyclists, and scooter or skateboard riders when the opposing lane is clear.;4
+20217;10;202;A driver may cross double solid yellow lines to make a left turn when the opposing lane is clear and the turn is safe.;true;Crossing these lines for a left turn is permitted when opposing traffic is clear and the movement is safe.;4
+20218;10;202;Double solid white lines may be crossed merely because the adjacent lane is empty.;false;Crossing double solid white lines is prohibited. Access to a special-use lane is through permitted openings.;4
+20219;10;202;An ONLY turn arrow painted in a lane requires traffic in that lane to make the indicated turn.;true;A lane marked for a required turn cannot be used to continue in a different direction.;4
+20220;10;202;A lane marked with both straight and curved arrows permits only a turn.;false;The combined arrows permit either continuing straight or turning in the indicated direction.;4
+20221;10;202;A yield line can mark where a vehicle must yield or stop when necessary.;true;A row of triangular markings identifies the yielding point, often near roundabouts.;4
+20222;10;202;A two-way center left-turn lane may be used as a travel lane for more than 150 feet.;false;Travel in the shared center left-turn lane is limited to 150 feet.;4
+20223;10;202;A red signal at an intersection with a bicycle box requires motorists to stop behind the box.;true;The marked bicycle waiting area must remain clear of stopped motor vehicles.;4
+20224;10;202;A right turn on red is permitted at an intersection with a bicycle box.;false;Right turns on red are prohibited at intersections with bicycle boxes.;4
+20225;10;202;Signs identify the occupancy requirement and operating hours of an HOV lane.;true;HOV restrictions depend on the posted occupancy requirement, hours and applicable vehicle exceptions.;4
+20301;10;203;Bad weather can require driving below the posted speed limit.;true;The posted maximum applies to ideal conditions. Weather that makes that speed unsafe requires reducing speed.;4
+20302;10;203;Virginia permits a driver to exceed the speed limit while passing another vehicle.;false;Passing does not create an exception to the posted speed limit.;4
+20303;10;203;Virginia prohibits using a radar detector in a vehicle.;true;Using a radar detector in a vehicle is prohibited in Virginia.;4
+20304;10;203;A driver following another vehicle through a stop sign may skip stopping.;false;Each approaching vehicle must make its own stop, even when the vehicle ahead has already proceeded.;4
+20305;10;203;A driver entering a street across a sidewalk from a driveway must stop.;true;Stopping is required when entering a street or crossing a sidewalk from a driveway or similar access point.;4
+20306;10;203;Vehicles entering an interstate from a ramp have priority over vehicles already on it.;false;Ramp traffic must yield to vehicles already traveling on the interstate.;4
+20307;10;203;A driver entering a roundabout must yield to traffic already circulating.;true;Vehicles already inside the roundabout have priority over vehicles entering it.;4
+20308;10;203;Traffic travels clockwise around Virginia roundabouts.;false;Traffic moves counterclockwise around the center island.;4
+20309;10;203;At an uncontrolled intersection, the left-hand driver yields when two vehicles arrive simultaneously.;true;When there are no signs or signals and arrivals are simultaneous, the vehicle on the right has priority.;4
+20310;10;203;A driver leaving a private driveway may enter without yielding to pedestrians.;false;Entering from a private driveway requires stopping and yielding to traffic and pedestrians.;4
+20311;10;203;Drivers must yield to traffic already within an intersection.;true;Entering traffic must give priority to vehicles already occupying the intersection.;4
+20312;10;203;A driver may cut through a funeral procession to avoid waiting.;false;Cutting through, joining or interfering with a funeral procession is prohibited.;4
+20313;10;203;Drivers must yield to military convoys.;true;Drivers must yield to military convoys and must not cut through or join them.;4
+20314;10;203;Driving onto the shoulder is an allowed way to pass a vehicle on its right.;false;Passing on the right must not require leaving the pavement or main traveled portion of the road.;4
+20315;10;203;Passing a bicyclist requires reducing speed and providing at least three feet of clearance to the left.;true;Passing a bicyclist requires reducing speed and leaving at least three feet of clearance to the left.;4
+20316;10;203;When the opposite side of a divided road has a stopped school bus, a driver must always stop despite a separating median.;false;Traffic traveling opposite a bus across a dividing median or barrier is exempt from the stop requirement.;4
+20317;10;203;On an undivided road, traffic approaching a stopped school bus with flashing red lights and an extended stop sign must stop.;true;Traffic approaching from either direction must stop and wait until people are clear and the bus moves again.;4
+20318;10;203;A motorist may park on a sidewalk if there is room for pedestrians to walk around the vehicle.;false;Parking on a sidewalk is prohibited. Leaving some space does not create an exception.;4
+20319;10;203;Parking in front of a driveway is prohibited.;true;Parked vehicles must not block driveways.;4
+20320;10;203;Double parking beside another parked vehicle is permitted if the driver stays inside.;false;Parking alongside another parked vehicle is prohibited. Remaining inside does not remove the restriction.;4
+20321;10;203;When parked next to a curb, a vehicle may not be more than one foot from it.;true;A vehicle parked next to a curb must be within one foot of it.;4
+20322;10;203;Motor vehicles may use a bicycle lane as a parking space.;false;Parking in a bicycle lane is prohibited.;4
+20323;10;203;Parking within 15 feet of a fire hydrant is prohibited.;true;Parking is prohibited within 15 feet of a fire hydrant.;4
+20324;10;203;Headlights are optional after sunset if streetlights illuminate the road.;false;Headlights are required between sunset and sunrise, including on lighted streets.;4
+20325;10;203;A driver following another vehicle within 200 feet should use low-beam headlights.;true;Low-beam headlights should be used within 200 feet of a vehicle ahead to limit glare.;4
