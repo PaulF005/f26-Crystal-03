@@ -41,6 +41,14 @@ describe('Home Component', () => {
     return fixture.nativeElement.textContent as string;
   }
 
+  // Finds a Profile Summary box by its label and returns the value shown in it.
+  function statValue(label: string): string | undefined {
+    const container = fixture.nativeElement as HTMLElement;
+    const stats = Array.from(container.querySelectorAll<HTMLElement>('.profile-stat'));
+    const stat = stats.find(element => element.querySelector('.profile-stat-label')?.textContent.trim() === label);
+    return stat?.querySelector('.profile-stat-value')?.textContent.trim();
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       // provideRouter([]) is needed because the template now renders routerLink.
@@ -80,12 +88,16 @@ describe('Home Component', () => {
       gamesPlayed: 3,
       averagePerformance: 80,
       currentStreak: 2,
+      weeklyPlays: 3,
+      favoriteGame: 'Fact or Fiction?',
       recentActivity: [{ id: 1, gameName: 'Fact or Fiction?', completedAt: '2026-10-29T12:00:00Z' }],
     });
     render();
 
     expect(comp.summary()?.gamesPlayed).toBe(3);
     expect(pageText()).toContain('80%');
+    expect(statValue('Weekly Plays')).toBe('3');
+    expect(statValue('Favorite Game')).toBe('Fact or Fiction?');
     expect(pageText()).toContain('Fact or Fiction?');
   });
 
@@ -97,12 +109,17 @@ describe('Home Component', () => {
       gamesPlayed: 0,
       averagePerformance: null,
       currentStreak: 0,
+      weeklyPlays: 0,
+      favoriteGame: null,
       recentActivity: [],
     });
     render();
 
     expect(pageText()).toContain("You haven't completed any games yet.");
     expect(pageText()).not.toContain('null%');
+    expect(statValue('Weekly Plays')).toBe('0');
+    expect(statValue('Favorite Game')).toBe('—');
+    expect(comp.summary()?.favoriteGame).toBeNull();
   });
 
   it('should show an error message when the request fails', () => {
@@ -124,6 +141,8 @@ describe('Home Component', () => {
       gamesPlayed: 3,
       averagePerformance: 80,
       currentStreak: 2,
+      weeklyPlays: 3,
+      favoriteGame: 'Fact or Fiction?',
       recentActivity: [{ id: 1, gameName: 'Fact or Fiction?', completedAt: '2026-10-29T12:00:00Z' }],
     });
     render();
@@ -147,9 +166,19 @@ describe('Home Component', () => {
 
     // userA's response must never show up for userB.
     expect(firstReq.cancelled).toBe(true);
-    secondReq.flush({ gamesPlayed: 1, averagePerformance: 50, currentStreak: 1, recentActivity: [] });
+    secondReq.flush({
+      gamesPlayed: 1,
+      averagePerformance: 50,
+      currentStreak: 1,
+      weeklyPlays: 1,
+      favoriteGame: 'Choose the Outcome',
+      recentActivity: [],
+    });
     render();
 
     expect(comp.summary()?.gamesPlayed).toBe(1);
+    expect(comp.summary()?.weeklyPlays).toBe(1);
+    expect(comp.summary()?.favoriteGame).toBe('Choose the Outcome');
+    expect(statValue('Favorite Game')).toBe('Choose the Outcome');
   });
 });
