@@ -97,7 +97,7 @@ Recent Activity
 /* Profile summary populated by /api/dashboard/summary. */
 .profile-stats {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: calc(3 * var(--pixel));
   margin: calc(3 * var(--pixel)) 0;
 }
@@ -116,11 +116,22 @@ Recent Activity
   font-size: var(--font-field-size);
 }
 
+.profile-stat-value--name {
+  overflow-wrap: anywhere;
+  font-size: var(--font-body-size);
+}
+
 .profile-stat-label {
   font-family: 'body', sans-serif;
   font-size: var(--font-body-size);
 }
 
+/* With five stats, center the last one across the second row. */
+.profile-stat:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+/* On phones, stack the stats in one column. */
 @media (max-width: 480px) {
   .profile-stats {
     grid-template-columns: 1fr;

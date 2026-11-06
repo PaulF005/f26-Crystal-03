@@ -17,6 +17,8 @@ interface DashboardSummary {
   gamesPlayed: number;
   averagePerformance: number | null;
   currentStreak: number;
+  weeklyPlays: number;
+  favoriteGame: string | null;
   recentActivity: RecentActivity[];
 }
 

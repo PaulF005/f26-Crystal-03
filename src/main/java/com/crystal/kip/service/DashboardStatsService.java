@@ -9,7 +9,9 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +36,14 @@ public class DashboardStatsService {
 
     public record RecentActivity(Long id, String gameName, Instant completedAt) {}
 
-    public record DashboardSummary(long gamesPlayed, Integer averagePerformance, int currentStreak, List<RecentActivity> recentActivity) {}
+    public record DashboardSummary(
+        long gamesPlayed,
+        Integer averagePerformance,
+        int currentStreak,
+        long weeklyPlays,
+        String favoriteGame,
+        List<RecentActivity> recentActivity
+    ) {}
 
     @Transactional(readOnly = true)
     public DashboardSummary getSummary() {
@@ -57,12 +66,57 @@ public class DashboardStatsService {
             .filter(session -> session.getCompletedAt() != null)
             .count();
 
+        LocalDate today = LocalDate.now(STREAK_TIME_ZONE);
         return new DashboardSummary(
             completedGames,
             calculateAveragePerformance(progress),
-            calculateStreak(sessions, LocalDate.now(STREAK_TIME_ZONE)),
+            calculateStreak(sessions, today),
+            calculateWeeklyPlays(sessions, today),
+            calculateFavoriteGame(sessions),
             recent
         );
+    }
+
+    /**
+     * Completed games from today and the six previous calendar days, using Eastern time.
+     * Several completed games in one day each count as a play.
+     */
+    static long calculateWeeklyPlays(List<GameSession> sessions, LocalDate today) {
+        LocalDate firstDay = today.minusDays(6);
+        return sessions
+            .stream()
+            .filter(session -> session.getCompletedAt() != null)
+            .map(session -> session.getCompletedAt().atZone(STREAK_TIME_ZONE).toLocalDate())
+            .filter(date -> !date.isBefore(firstDay) && !date.isAfter(today))
+            .count();
+    }
+
+    /**
+     * The most frequently completed game. Sessions are newest first from the repository,
+     * so a tie goes to the game the user completed most recently.
+     */
+    static String calculateFavoriteGame(List<GameSession> sessions) {
+        Map<Long, Long> playCounts = new LinkedHashMap<>();
+        Map<Long, String> gameNames = new LinkedHashMap<>();
+
+        for (GameSession session : sessions) {
+            if (session.getCompletedAt() == null || session.getGame() == null || session.getGame().getId() == null) {
+                continue;
+            }
+            Long gameId = session.getGame().getId();
+            playCounts.merge(gameId, 1L, Long::sum);
+            gameNames.putIfAbsent(gameId, session.getGame().getName());
+        }
+
+        Long favoriteId = null;
+        long highestCount = 0;
+        for (Map.Entry<Long, Long> entry : playCounts.entrySet()) {
+            if (entry.getValue() > highestCount) {
+                favoriteId = entry.getKey();
+                highestCount = entry.getValue();
+            }
+        }
+        return favoriteId == null ? null : gameNames.get(favoriteId);
     }
 
     private static String getGameName(GameSession session) {

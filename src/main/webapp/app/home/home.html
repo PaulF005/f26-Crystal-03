@@ -57,6 +57,14 @@
             <span class="profile-stat-value">{{ stats.currentStreak }}</span>
             <span class="profile-stat-label">Day Streak</span>
           </div>
+          <div class="profile-stat">
+            <span class="profile-stat-value">{{ stats.weeklyPlays }}</span>
+            <span class="profile-stat-label">Weekly Plays</span>
+          </div>
+          <div class="profile-stat">
+            <span class="profile-stat-value profile-stat-value--name">{{ stats.favoriteGame ?? '—' }}</span>
+            <span class="profile-stat-label">Favorite Game</span>
+          </div>
         </div>
         <p><a routerLink="/my-progress">View All Progress (Coming Soon)</a></p>
       }

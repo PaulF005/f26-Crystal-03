@@ -2,6 +2,7 @@ package com.crystal.kip.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.crystal.kip.domain.Game;
 import com.crystal.kip.domain.GameProgress;
 import com.crystal.kip.domain.GameSession;
 import java.time.Instant;
@@ -52,6 +53,60 @@ class DashboardStatsServiceTest {
         List<GameSession> sessions = List.of(sessionAt("2026-10-31T03:30:00Z"));
         assertThat(DashboardStatsService.calculateStreak(sessions, TODAY)).isEqualTo(1);
         assertThat(DashboardStatsService.calculateStreak(sessions, LocalDate.of(2026, 11, 1))).isZero();
+    }
+
+    @Test
+    void weeklyPlaysCountsCompletionsInLastSevenCalendarDays() {
+        List<GameSession> sessions = List.of(
+            sessionAt("2026-10-25T15:00:00Z"), // first day included
+            sessionAt("2026-10-31T14:00:00Z"),
+            sessionAt("2026-10-31T19:00:00Z"), // second game today counts too
+            sessionAt("2026-10-24T15:00:00Z"), // too old
+            sessionAt("2026-11-01T16:00:00Z") // future date
+        );
+        assertThat(DashboardStatsService.calculateWeeklyPlays(sessions, TODAY)).isEqualTo(3);
+    }
+
+    @Test
+    void weeklyPlaysIgnoresUnfinishedSessionsAndUsesEasternTime() {
+        List<GameSession> sessions = List.of(
+            sessionAt("2026-10-25T03:30:00Z"), // Oct 24 in Eastern time, too old
+            sessionAt("2026-11-01T03:30:00Z"), // Oct 31 in Eastern time, included
+            new GameSession() // incomplete
+        );
+        assertThat(DashboardStatsService.calculateWeeklyPlays(sessions, TODAY)).isEqualTo(1);
+        assertThat(DashboardStatsService.calculateWeeklyPlays(List.of(), TODAY)).isZero();
+    }
+
+    private static GameSession playedGame(long gameId, String name, String completedAt) {
+        return new GameSession().game(new Game().id(gameId).name(name)).completedAt(Instant.parse(completedAt));
+    }
+
+    @Test
+    void favoriteGameIsMostFrequentlyCompletedGame() {
+        List<GameSession> sessions = List.of(
+            playedGame(2L, "Choose the Outcome", "2026-10-31T15:00:00Z"),
+            playedGame(1L, "Fact or Fiction?", "2026-10-30T15:00:00Z"),
+            playedGame(1L, "Fact or Fiction?", "2026-10-29T15:00:00Z"),
+            new GameSession().game(new Game().id(2L).name("Choose the Outcome")) // not completed
+        );
+        assertThat(DashboardStatsService.calculateFavoriteGame(sessions)).isEqualTo("Fact or Fiction?");
+    }
+
+    @Test
+    void favoriteGameTieGoesToMostRecentlyCompleted() {
+        // Same count, but sessions are supplied newest first (as returned by the repository).
+        List<GameSession> sessions = List.of(
+            playedGame(2L, "Choose the Outcome", "2026-10-31T15:00:00Z"),
+            playedGame(1L, "Fact or Fiction?", "2026-10-30T15:00:00Z")
+        );
+        assertThat(DashboardStatsService.calculateFavoriteGame(sessions)).isEqualTo("Choose the Outcome");
+    }
+
+    @Test
+    void favoriteGameIsNullWithNoCompletedGame() {
+        assertThat(DashboardStatsService.calculateFavoriteGame(List.of())).isNull();
+        assertThat(DashboardStatsService.calculateFavoriteGame(List.of(new GameSession()))).isNull();
     }
 
     @Test
