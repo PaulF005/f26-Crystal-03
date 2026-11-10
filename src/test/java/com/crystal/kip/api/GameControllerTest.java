@@ -25,6 +25,7 @@ import com.crystal.kip.domain.Stage;
 import com.crystal.kip.domain.Topic;
 import com.crystal.kip.domain.UserProfile;
 import com.crystal.kip.domain.enumeration.ScenarioResolution;
+import com.crystal.kip.feedback_game.Feedback;
 import com.crystal.kip.game.GameActive;
 import com.crystal.kip.game.GameEngine;
 import com.crystal.kip.game.SessionManager;
@@ -32,6 +33,7 @@ import com.crystal.kip.repository.GameRepository;
 import com.crystal.kip.repository.LinkRepo.LinkUserProfileRepository;
 import com.crystal.kip.repository.TopicRepository;
 import com.crystal.kip.security.SecurityUtils;
+import com.crystal.kip.service.UserService;
 import java.util.Optional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -49,6 +51,7 @@ class GameControllerTest {
     private GameRepository gameRepository;
     private TopicRepository topicRepository;
     private LinkUserProfileRepository userProfileRepository;
+    private UserService userService;
     private GameController controller;
     private MockedStatic<SecurityUtils> securityUtils;
 
@@ -63,10 +66,20 @@ class GameControllerTest {
         gameRepository = mock(GameRepository.class);
         topicRepository = mock(TopicRepository.class);
         userProfileRepository = mock(LinkUserProfileRepository.class);
+        userService = mock(UserService.class);
 
-        controller = new GameController(gameEngine, sessionManager, gameRepository, topicRepository, userProfileRepository);
+        controller = new GameController(
+            gameEngine,
+            sessionManager,
+            gameRepository,
+            topicRepository,
+            userProfileRepository,
+            new Feedback(),
+            userService
+        );
 
         user = new UserProfile().id(1L).username(USERNAME);
+        when(userService.getOrCreatePlayerProfile()).thenReturn(user);
         game = new Game().id(10L).name("Fact or Fiction");
         topic = new Topic().id(20L).name("Test Topic");
 
@@ -173,6 +186,7 @@ class GameControllerTest {
             .text("Finish")
             .outcomeText("The scenario ends here.")
             .correct(true)
+            .feedback(new com.crystal.kip.domain.Feedback().explanation("Example explanation."))
             .question(question)
             .terminalResolution(ScenarioResolution.POSITIVE);
 
@@ -189,7 +203,7 @@ class GameControllerTest {
         AnswerResultDTO response = controller.selectAnswer(active.getId(), terminalAnswer.getId());
 
         assertNull(response.nextStage());
-        assertNull(response.result().feedbackText());
+        assertEquals("Correct || Example explanation.", response.result().feedbackText());
         assertEquals(terminalAnswer.getOutcomeText(), response.result().outcomeText());
     }
 
@@ -277,13 +291,12 @@ class GameControllerTest {
 
     @Test
     void testCurrentUserProfileMustExist() {
-        when(userProfileRepository.findOneByDataUserLogin(USERNAME)).thenReturn(Optional.empty());
-        when(gameRepository.findById(game.getId())).thenReturn(Optional.of(game));
-        when(topicRepository.findById(topic.getId())).thenReturn(Optional.of(topic));
+        GameActive active = new GameActive(user, game, topic);
+        sessionManager.add(active);
 
-        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () ->
-            controller.startGame(new RequestStartDTO(game.getId(), topic.getId()))
-        );
+        when(userProfileRepository.findOneByDataUserLogin(USERNAME)).thenReturn(Optional.empty());
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> controller.abandonGame(active.getId()));
 
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatusCode());
     }

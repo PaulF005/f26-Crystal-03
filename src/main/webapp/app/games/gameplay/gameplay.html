@@ -1,27 +1,73 @@
-@if (content) {
-  <div class="dashboard-box gameplay-box">
-    <h2 class="pixel-outline">{{ content.title }}</h2>
+@if (isFactOrFiction) {
+  @if (error(); as message) {
+    <p class="font-body" role="alert">{{ message }}</p>
+  }
 
-    <div class="gameplay-module font-field">{{ content.module }}</div>
+  @if (busy()) {
+    <p class="font-body" role="status">Loading…</p>
+  }
+
+  @if (!session() && !completed()) {
+    <h2>Select a topic</h2>
+
+    @for (topic of topics(); track topic.id) {
+      <button type="button" class="btn" [disabled]="busy()" (click)="startFactOrFiction(topic)">
+        {{ topic.name }}
+      </button>
+    } @empty {
+      @if (!busy() && !error()) {
+        <p>No topics are available for this game yet.</p>
+      }
+    }
+
+    <p><a routerLink="/games">Return to Games</a></p>
+  }
+}
+
+@if (content || (isFactOrFiction && (session() || completed()))) {
+  <div class="dashboard-box gameplay-box">
+    <h2 class="pixel-outline">{{ isFactOrFiction ? 'Fact or Fiction' : content?.title }}</h2>
+
+    <div class="gameplay-module font-field">{{ isFactOrFiction ? selectedTopic()?.name : content?.module }}</div>
 
     <div class="gameplay-content">
-      @if (factQuestion(); as question) {
-        <h3>The Claim:</h3>
-        <p class="font-body">{{ question.claim }}</p>
+      @if (isFactOrFiction) {
+        @if (completed()) {
+          <h3>Practice complete</h3>
+          <p class="font-body">You finished all ten questions. Your progress has been saved.</p>
+        } @else if (currentStage(); as question) {
+          <p class="font-field">Question {{ questionNumber() }} of 10</p>
 
-        <p class="font-field">Is this...</p>
+          <h3>The Claim</h3>
+          <p class="font-body">{{ question.prompt }}</p>
 
-        <div class="gameplay-answers">
-          <button type="button" class="btn btn-fact" [disabled]="explanation() !== null" (click)="reveal(question.explanation)">
-            Fact?
-          </button>
-          <button type="button" class="btn btn-fiction" [disabled]="explanation() !== null" (click)="reveal(question.explanation)">
-            Fiction?
-          </button>
-          <button type="button" class="btn btn-situational" [disabled]="explanation() !== null" (click)="reveal(question.explanation)">
-            Situational?
-          </button>
-        </div>
+          <div class="gameplay-answers">
+            @for (answer of question.answers; track answer.answerId) {
+              <button
+                type="button"
+                class="btn"
+                [class.btn-fact]="answer.text === 'True'"
+                [class.btn-fiction]="answer.text === 'False'"
+                [disabled]="busy() || answered() || error() !== null"
+                (click)="answerFactOrFiction(answer.answerId)"
+              >
+                {{ answer.text }}
+              </button>
+            }
+          </div>
+
+          @if (answered()) {
+            <div class="gameplay-explanation" aria-live="polite">
+              <p class="font-body">{{ feedback() }}</p>
+            </div>
+
+            <button type="button" class="btn" [disabled]="busy() || error() !== null" (click)="nextFactOrFiction()">
+              {{ questionNumber() === 10 ? 'Finish practice' : 'Next question' }}
+            </button>
+          }
+        }
+
+        <p><a routerLink="/games">Return to Games</a></p>
       }
 
       @if (outcomeQuestion(); as question) {
@@ -58,16 +104,13 @@
 
       @if (explanation(); as text) {
         <div class="gameplay-explanation">
-          @if (factQuestion(); as fq) {
-            <h3>Correct Answer: {{ fq.answer }}</h3>
-          }
           <p class="font-body">{{ text }}</p>
         </div>
 
         <button type="button" class="btn" (click)="next()">Next...</button>
       }
 
-      @if (finished()) {
+      @if (!isFactOrFiction && finished()) {
         <p class="font-body">No more questions.</p>
       }
     </div>

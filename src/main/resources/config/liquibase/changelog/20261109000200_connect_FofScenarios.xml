@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Allow scenarios to be inserted before their starting stages exist. -->
+    <changeSet id="20261109000200-1" author="kip">
+ 
+        <dropNotNullConstraint tableName="scenario"
+            columnName="starting_stage_id" columnDataType="bigint"/>
+    </changeSet>
+
+    <!-- Use each question ID as its scenario ID and stage ID in separate tables. -->
+    <changeSet id="20261109000200-2" author="kip" runInTransaction="true">
+        <sql><![CDATA[
+            INSERT INTO scenario (id, name, game_id, topic_id, starting_stage_id)
+            SELECT q.id, CONCAT('FOF question ', q.id), m.game_id, c.topic_id, NULL
+            FROM fof_question m
+            JOIN question q ON q.id = m.question_id
+            JOIN concept c ON c.id = q.concept_id
+            WHERE m.game_id = 10 AND c.topic_id = 104;
+
+            INSERT INTO stage (id, scenario_id, question_id)
+            SELECT s.id, s.id, m.question_id
+            FROM scenario s
+            JOIN fof_question m ON m.question_id = s.id AND m.game_id = s.game_id
+            WHERE s.game_id = 10 AND s.topic_id = 104;
+
+            UPDATE scenario
+            SET starting_stage_id = id
+            WHERE game_id = 10 AND topic_id = 104
+              AND id IN (SELECT question_id FROM fof_question WHERE game_id = 10);
+
+            UPDATE answer
+            SET terminal_resolution = CASE WHEN correct THEN 'POSITIVE' ELSE 'NEGATIVE' END
+            WHERE question_id IN (
+                SELECT st.question_id
+                FROM stage st
+                JOIN scenario s ON s.id = st.scenario_id
+                JOIN fof_question m ON m.question_id = st.question_id AND m.game_id = s.game_id
+                WHERE s.game_id = 10 AND s.topic_id = 104
+            );
+        ]]></sql>
+    </changeSet>
+
+    <!-- Restore the original requirement after all starting stages are linked. -->
+    <changeSet id="20261109000200-3" author="kip">
+        <addNotNullConstraint tableName="scenario"
+            columnName="starting_stage_id" columnDataType="bigint"/>
+    </changeSet>
+
+</databaseChangeLog>

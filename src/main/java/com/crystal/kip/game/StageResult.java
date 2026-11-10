@@ -10,12 +10,16 @@ public class StageResult {
     private final Answer selectedAnswer;
     private final Instant answeredAt;
     private final boolean correct;
+    private final String explanation;
 
     public StageResult(Stage stage, Answer selectedAnswer) {
         this.stage = stage;
         this.selectedAnswer = selectedAnswer;
         this.answeredAt = Instant.now();
         this.correct = Boolean.TRUE.equals(selectedAnswer.getCorrect());
+
+        var feedback = selectedAnswer.getFeedback();
+        this.explanation = feedback == null ? "" : feedback.getExplanation();
     }
 
     public Stage getStage() {
@@ -32,5 +36,9 @@ public class StageResult {
 
     public boolean isCorrect() {
         return correct;
+    }
+
+    public String getExplanation() {
+        return explanation;
     }
 }

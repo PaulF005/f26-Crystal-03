@@ -3,15 +3,24 @@ package com.crystal.kip.service;
 import com.crystal.kip.config.Constants;
 import com.crystal.kip.domain.Authority;
 import com.crystal.kip.domain.User;
+import com.crystal.kip.domain.UserProfile;
 import com.crystal.kip.repository.AuthorityRepository;
+import com.crystal.kip.repository.LinkRepo.LinkUserProfileRepository;
 import com.crystal.kip.repository.UserRepository;
 import com.crystal.kip.security.AuthoritiesConstants;
 import com.crystal.kip.security.SecurityUtils;
 import com.crystal.kip.service.dto.AdminUserDTO;
 import com.crystal.kip.service.dto.UserDTO;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.LockModeType;
+import jakarta.persistence.PersistenceContext;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,16 +50,23 @@ public class UserService {
 
     private final CacheManager cacheManager;
 
+    private final LinkUserProfileRepository linkUserProfileRepository;
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
     public UserService(
         UserRepository userRepository,
         PasswordEncoder passwordEncoder,
         AuthorityRepository authorityRepository,
-        CacheManager cacheManager
+        CacheManager cacheManager,
+        LinkUserProfileRepository linkUserProfileRepository
     ) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.linkUserProfileRepository = linkUserProfileRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -244,6 +260,22 @@ public class UserService {
                 this.clearUserCaches(user);
                 LOG.debug("Changed Information for User: {}", user);
             });
+    }
+
+    public UserProfile getOrCreatePlayerProfile() {
+        String login = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new IllegalStateException("No current user logged in"));
+
+        User account = entityManager
+            .createQuery("SELECT u FROM User u WHERE u.login = :login", User.class)
+            .setParameter("login", login)
+            .setLockMode(LockModeType.PESSIMISTIC_WRITE)
+            .getSingleResult();
+
+        return linkUserProfileRepository
+            .findOneByDataUserLogin(login)
+            .orElseGet(() ->
+                linkUserProfileRepository.save(new UserProfile().username(account.getLogin()).email(account.getEmail()).dataUser(account))
+            );
     }
 
     @Transactional

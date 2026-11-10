@@ -2,6 +2,7 @@ package com.crystal.kip.repository.CustomRepoCode;
 
 import com.crystal.kip.domain.Scenario;
 import java.util.List;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +11,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface CustomScenarioRepository extends JpaRepository<Scenario, Long> {
+    @EntityGraph(attributePaths = { "startingStage.question.answers", "startingStage.question.concept", "stages" })
     List<Scenario> findByGameIdAndTopicId(Long gameId, Long topicId);
 }
