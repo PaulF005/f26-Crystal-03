@@ -3,7 +3,9 @@ package com.crystal.kip.repository.CustomRepoCode;
 import com.crystal.kip.domain.TopicProgress;
 import java.time.Instant;
 import java.util.Optional;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -76,7 +78,7 @@ public interface CustomTopicProgressRepository extends JpaRepository<TopicProgre
             "SET tp.competency = :competency, tp.improvement = :improvement, tp.lastPracticedAt = :lastPracticedAt " +
             "WHERE tp.topic.id = :topicId " +
             "AND tp.userProfile IN (" +
-            "  SELECT up FROM UserProfile up JOIN up.dataUser u WHERE u.login = ?#{principal.username}" +
+            "  SELECT up FROM UserProfile up JOIN up.dataUser u WHERE u.login = ?#{authentication.name}" +
             ")"
     )
     void updateTopicProgressToDB(

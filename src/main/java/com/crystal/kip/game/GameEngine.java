@@ -53,6 +53,10 @@ public class GameEngine {
         sessionManager.add(active);
 
         try {
+            if (Long.valueOf(10L).equals(game.getId())) {
+                scenarioSelector.prepareFactFictionSession(active);
+                progressUpdater.initializeProgress(active);
+            }
             // Invoke the new GameActive to start the very first Scenario
             advanceScenario(active);
         } catch (RuntimeException e) {
@@ -159,6 +163,7 @@ public class GameEngine {
         // and don't advance Scenario immediately
     }
 
+    @Transactional
     public void selectAnswer(GameActive active, Long answerId) {
         requireActive(active);
 

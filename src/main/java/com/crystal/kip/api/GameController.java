@@ -14,6 +14,7 @@ import com.crystal.kip.domain.Scenario;
 import com.crystal.kip.domain.Stage;
 import com.crystal.kip.domain.Topic;
 import com.crystal.kip.domain.UserProfile;
+import com.crystal.kip.feedback_game.Feedback;
 import com.crystal.kip.game.GameActive;
 import com.crystal.kip.game.GameEngine;
 import com.crystal.kip.game.SessionManager;
@@ -22,8 +23,11 @@ import com.crystal.kip.repository.GameRepository;
 import com.crystal.kip.repository.LinkRepo.LinkUserProfileRepository;
 import com.crystal.kip.repository.TopicRepository;
 import com.crystal.kip.security.SecurityUtils;
+import com.crystal.kip.service.UserService;
+import java.util.List;
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,19 +46,40 @@ public class GameController {
     private final GameRepository gameRepository;
     private final TopicRepository topicRepository;
     private final LinkUserProfileRepository userProfileRepository;
+    private final Feedback feedback;
+    private final UserService userService;
 
     public GameController(
         GameEngine gameEngine,
         SessionManager sessionManager,
         GameRepository gameRepository,
         TopicRepository topicRepository,
-        LinkUserProfileRepository userProfileRepository
+        LinkUserProfileRepository userProfileRepository,
+        Feedback feedback,
+        UserService userService
     ) {
         this.gameEngine = gameEngine;
         this.sessionManager = sessionManager;
         this.gameRepository = gameRepository;
         this.topicRepository = topicRepository;
         this.userProfileRepository = userProfileRepository;
+        this.feedback = feedback;
+        this.userService = userService;
+    }
+
+    public record TopicChoice(Long id, String name) {}
+
+    @GetMapping("/{gameId}/topics")
+    public List<TopicChoice> getTopicsForGame(@PathVariable Long gameId) {
+        if (!gameRepository.existsById(gameId)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found");
+        }
+
+        return topicRepository
+            .findTopicsForGame(gameId)
+            .stream()
+            .map(topic -> new TopicChoice(topic.getId(), topic.getName()))
+            .toList();
     }
 
     @PostMapping("/start")
@@ -72,7 +97,7 @@ public class GameController {
             .findById(request.topicID())
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Topic not found: " + request.topicID()));
 
-        UserProfile user = getCurrentUserProfile();
+        UserProfile user = userService.getOrCreatePlayerProfile();
 
         GameActive active = gameEngine.startActive(user, game, topic);
 
@@ -188,7 +213,7 @@ public class GameController {
         );
 
         return new ResultDTO(
-            null, // TODO: Feedback System evaluates this
+            feedback.questionDecider(stageResult.isCorrect(), stageResult.getExplanation()),
             selectedAnswer.getOutcomeText()
         );
     }

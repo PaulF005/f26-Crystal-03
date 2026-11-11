@@ -1,9 +1,12 @@
 package com.crystal.kip.feedback_game;
 
+import org.springframework.stereotype.Service;
+
 /**
  * Used to determine whether a question was answered correctly
  * and return the appropriate explanation
  */
+@Service
 public class Feedback {
 
     /**
@@ -24,5 +27,9 @@ public class Feedback {
 
     private String questionWrong(String explanation) {
         return "Incorrect || " + explanation;
+    }
+
+    public String questionDecider(boolean correct, String explanation) {
+        return correct ? questionRight(explanation) : questionWrong(explanation);
     }
 }

@@ -22,7 +22,7 @@ public class GameActive {
 
     Instant startedAt;
 
-    List<Scenario> scenariosPlayed;
+    List<Scenario> scenariosPlayed, selectedScenarios;
     Scenario scenarioCurrent;
     Stage stageCurrent;
 
@@ -120,5 +120,16 @@ public class GameActive {
 
     public List<StageResult> getStageResults() {
         return stageResults;
+    }
+
+    public List<Scenario> getSelectedScenarios() {
+        return selectedScenarios;
+    }
+
+    public void setSelectedScenarios(List<Scenario> selectedScenarios) {
+        if (this.selectedScenarios != null) {
+            throw new IllegalStateException("Scenarios have already been selected for this session");
+        }
+        this.selectedScenarios = List.copyOf(selectedScenarios);
     }
 }

@@ -57,5 +57,7 @@
     <!-- STEP 4: Application Content -->
     <include file="config/liquibase/changelog/20261102000300_load_FofSupportingData.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20261102000400_load_FofQuestions.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20261109000100_remove_ObsoleteFofHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20261109000200_connect_FofScenarios.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

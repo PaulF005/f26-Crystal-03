@@ -97,7 +97,7 @@ public interface CustomConceptProgressRepository {
             "SET cp.competency = :competency, cp.improvement = :improvement, cp.lastPracticedAt = :lastPracticedAt " +
             "WHERE cp.concept.id = :conceptId " +
             "AND cp.userProfile IN (" +
-            "  SELECT up FROM UserProfile up JOIN up.dataUser u WHERE u.login = ?#{principal.username}" +
+            "  SELECT up FROM UserProfile up JOIN up.dataUser u WHERE u.login = ?#{authentication.name}" +
             ")"
     )
     void updateConceptProgressToDBCP(

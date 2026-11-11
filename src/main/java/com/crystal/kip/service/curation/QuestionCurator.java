@@ -1,8 +1,12 @@
 package com.crystal.kip.service.curation;
 
+import com.crystal.kip.domain.Scenario;
+import com.crystal.kip.domain.StageAttempt;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,72 +14,82 @@ import java.util.Objects;
 import java.util.Random;
 import org.springframework.stereotype.Service;
 
-/** Selects questions from a supplied FOF bank using one player's history. */
+/** Selects ten FOF scenarios using the current player's completed-session attempts. */
 @Service
 public class QuestionCurator {
 
-    public record Candidate(long questionId, long conceptId) {
-        public Candidate {
-            if (questionId <= 0 || conceptId <= 0) {
-                throw new IllegalArgumentException("Question and concept IDs must be positive");
-            }
-        }
+    public List<Scenario> select(List<Scenario> scenarios, List<StageAttempt> attempts) {
+        return select(scenarios, attempts, 10, new Random());
     }
 
-    public record History(int timesShown, int timesCorrect, int timesIncorrect) {
-        public History {
-            if (timesShown < 0 || timesCorrect < 0 || timesIncorrect < 0 || (long) timesCorrect + timesIncorrect > timesShown) {
-                throw new IllegalArgumentException("History counts must be nonnegative; answers cannot exceed displays");
-            }
-        }
-    }
-
-    /** Default practice session: ten distinct questions from the selected concept. */
-    public List<Long> select(List<Candidate> bank, long conceptId, Map<Long, History> playerHistory) {
-        return select(bank, conceptId, playerHistory, 10);
-    }
-
-    public List<Long> select(List<Candidate> bank, long conceptId, Map<Long, History> playerHistory, int count) {
-        return select(bank, conceptId, playerHistory, count, new Random());
-    }
-
-    // Supplying a seeded Random makes tie handling repeatable in tests.
-    List<Long> select(List<Candidate> bank, long conceptId, Map<Long, History> playerHistory, int count, Random random) {
-        Objects.requireNonNull(bank, "bank");
-        Objects.requireNonNull(playerHistory, "playerHistory");
+    // Tests can supply a smaller session size and repeatable random ordering.
+    List<Scenario> select(List<Scenario> scenarios, List<StageAttempt> attempts, int count, Random random) {
+        Objects.requireNonNull(scenarios, "scenarios");
+        Objects.requireNonNull(attempts, "attempts");
         Objects.requireNonNull(random, "random");
-        if (conceptId <= 0 || count < 1) throw new IllegalArgumentException("Concept ID and count must be positive");
+        if (count < 1 || scenarios.size() < count) {
+            throw new IllegalArgumentException("There must be enough scenarios for the requested session size");
+        }
 
-        List<Ranked> eligible = new ArrayList<>();
-        var seenIds = new HashSet<Long>();
-        for (Candidate question : bank) {
-            if (!seenIds.add(question.questionId())) {
-                throw new IllegalArgumentException("Duplicate question ID: " + question.questionId());
+        Map<Long, History> historyByStage = summarizeHistory(attempts);
+        var scenarioIds = new HashSet<Long>();
+        var stageIds = new HashSet<Long>();
+        List<Ranked> ranked = new ArrayList<>();
+        for (Scenario scenario : scenarios) {
+            Long scenarioId = Objects.requireNonNull(scenario.getId(), "scenario ID");
+            Long stageId = Objects.requireNonNull(scenario.getStartingStage().getId(), "starting stage ID");
+            if (!scenarioIds.add(scenarioId) || !stageIds.add(stageId)) {
+                throw new IllegalArgumentException("FOF scenarios and their starting stages must be distinct");
             }
-            if (question.conceptId() != conceptId) continue;
-            History history = playerHistory.getOrDefault(question.questionId(), new History(0, 0, 0));
-            eligible.add(new Ranked(question.questionId(), priority(history)));
-        }
-        if (eligible.size() < count) {
-            throw new IllegalArgumentException(
-                "Concept " + conceptId + " needs " + count + " questions, but only " + eligible.size() + " are available"
-            );
+            History history = historyByStage.getOrDefault(stageId, new History());
+            ranked.add(new Ranked(scenario, history.total() == 0, history.priority(), history.lastAnsweredAt));
         }
 
-        // Shuffle before a stable sort so equally ranked questions vary between sessions.
-        Collections.shuffle(eligible, random);
-        eligible.sort(Comparator.comparingDouble(Ranked::priority).reversed());
-        return eligible.subList(0, count).stream().map(Ranked::questionId).toList();
+        // Shuffle first so exact ties vary between sessions.
+        Collections.shuffle(ranked, random);
+        ranked.sort(
+            Comparator.comparing(Ranked::unanswered)
+                .reversed()
+                .thenComparing(Comparator.comparingDouble(Ranked::priority).reversed())
+                .thenComparing(Ranked::lastAnsweredAt, Comparator.nullsFirst(Comparator.naturalOrder()))
+        );
+        return ranked.subList(0, count).stream().map(Ranked::scenario).toList();
     }
 
-    /** Starting policy; higher values receive priority. This is not a mastery score. */
-    public double priority(History history) {
-        Objects.requireNonNull(history, "history");
-        if (history.timesShown() == 0) return 3.0;
-        long answered = (long) history.timesCorrect() + history.timesIncorrect();
-        double errorRate = answered == 0 ? 0.0 : (double) history.timesIncorrect() / answered;
-        return 4.0 * errorRate + 2.0 / (history.timesShown() + 1.0);
+    private Map<Long, History> summarizeHistory(List<StageAttempt> attempts) {
+        Map<Long, History> historyByStage = new HashMap<>();
+        for (StageAttempt attempt : attempts) {
+            Long stageId = Objects.requireNonNull(attempt.getStage().getId(), "attempt stage ID");
+            Instant answeredAt = Objects.requireNonNull(attempt.getAnsweredAt(), "answer time");
+            History history = historyByStage.computeIfAbsent(stageId, id -> new History());
+            if (Objects.requireNonNull(attempt.getCorrect(), "answer correctness")) {
+                history.correct++;
+            } else {
+                history.incorrect++;
+            }
+            if (history.lastAnsweredAt == null || answeredAt.isAfter(history.lastAnsweredAt)) {
+                history.lastAnsweredAt = answeredAt;
+            }
+        }
+        return historyByStage;
     }
 
-    private record Ranked(long questionId, double priority) {}
+    private static class History {
+
+        long correct;
+        long incorrect;
+        Instant lastAnsweredAt;
+
+        long total() {
+            return correct + incorrect;
+        }
+
+        double priority() {
+            if (total() == 0) return 0.0;
+            double errorRate = (double) incorrect / total();
+            return 4.0 * errorRate + 2.0 / (total() + 1.0);
+        }
+    }
+
+    private record Ranked(Scenario scenario, boolean unanswered, double priority, Instant lastAnsweredAt) {}
 }

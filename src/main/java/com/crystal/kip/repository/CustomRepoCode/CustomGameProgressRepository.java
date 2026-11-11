@@ -56,7 +56,7 @@ public interface CustomGameProgressRepository {
             "SET gp.sessionsPlayed = :sessionsPlayed, gp.performance = :performance, gp.lastPlayedAt = :lastPlayedAt " +
             "WHERE gp.game.id = :gameId " +
             "AND gp.userProfile IN (" +
-            "  SELECT up FROM UserProfile up JOIN up.dataUser u WHERE u.login = ?#{principal.username}" +
+            "  SELECT up FROM UserProfile up JOIN up.dataUser u WHERE u.login = ?#{authentication.name}" +
             ")"
     )
     void updateGameProgressToDb(
