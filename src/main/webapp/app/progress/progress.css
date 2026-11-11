@@ -1,0 +1,150 @@
+/* ==========================================================================
+KIP Progress Page Styles
+========================================================================== */
+
+.progress-header {
+  background: transparent;
+  padding: calc(0 * var(--pixel));
+  margin-bottom: calc(8 * var(--pixel));
+}
+
+.progress-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: calc(8 * var(--pixel));
+  width: 100%;
+  margin: 0;
+}
+
+.topic-box {
+  border: var(--pixel) solid var(--ui-kip-gold);
+  padding: calc(4 * var(--pixel));
+}
+
+.topic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(4 * var(--pixel));
+  cursor: pointer;
+  padding-bottom: calc(3 * var(--pixel));
+  border-bottom: var(--pixel) solid var(--ui-kip-gold);
+  user-select: none;
+}
+
+.topic-header--collapsed {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.topic-title {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+  font-weight: normal;
+  margin: 0;
+}
+
+.topic-explanation {
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
+  margin: calc(3 * var(--pixel)) 0;
+}
+
+/* ==========================================================================
+Pixel Progress Bar
+========================================================================== */
+
+.pixel-bar-wrapper {
+  display: flex;
+  align-items: center;
+  gap: calc(3 * var(--pixel, 2px));
+  margin-top: calc(2 * var(--pixel, 2px));
+  width: 100%;
+}
+
+.pixel-bar {
+  flex: 1;
+  width: 100%;
+  height: calc(7 * var(--pixel, 2px));
+  border: var(--pixel, 2px) solid var(--ui-kip-gold, #d4af37);
+  background: rgba(0, 0, 0, 0.25);
+  padding: var(--pixel, 2px);
+  box-sizing: border-box;
+}
+
+.pixel-bar--sm {
+  height: calc(5 * var(--pixel, 2px));
+}
+
+.pixel-bar-fill {
+  display: block;
+  height: 100%;
+  transition:
+    width 0.2s steps(10),
+    background-color 0.2s ease;
+}
+
+.pixel-score {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+.pixel-delta {
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
+  margin-left: calc(2 * var(--pixel));
+}
+
+/* ==========================================================================
+Concept Rows 
+========================================================================== */
+
+.concept-list {
+  margin-top: calc(2 * var(--pixel));
+  margin-left: calc(4 * var(--pixel));
+}
+
+.concept-row {
+  display: flex;
+  flex-direction: column;
+  padding: calc(3 * var(--pixel)) 0;
+  padding-right: calc(4 * var(--pixel));
+  border-bottom: var(--pixel) solid var(--ui-kip-gold);
+}
+
+.concept-row:last-child {
+  border-bottom: none;
+}
+
+.concept-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(3 * var(--pixel));
+}
+
+.concept-title {
+  font-family: 'field', monospace;
+  font-size: var(--font-field-size);
+  font-weight: normal;
+}
+
+.concept-meta {
+  font-family: 'body', sans-serif;
+  font-size: var(--font-body-size);
+  font-weight: normal;
+}
+
+@media (max-width: 768px) {
+  .topic-header,
+  .concept-row-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .concept-list {
+    margin-left: 0;
+  }
+}

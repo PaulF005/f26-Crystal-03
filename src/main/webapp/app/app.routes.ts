@@ -62,7 +62,7 @@ const routes: Routes = [
   },
   {
     path: 'my-progress',
-    loadComponent: () => import('./progress/progress'),
+    loadComponent: () => import('./progress/progress').then(m => m.ProgressComponent),
     title: 'Progress',
   },
   ...errorRoute,
