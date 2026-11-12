@@ -1,4 +1,87 @@
-<div class="dashboard-box">
-  <h2 class="pixel-outline">Progress</h2>
-  <p>Progress will appear here.</p>
+<div class="progress-header">
+  <h1 class="topic-title">Progress</h1>
 </div>
+
+@if (isLoading()) {
+  <p class="concept-meta">Loading progress...</p>
+} @else {
+  <div class="progress-grid">
+    @for (item of topicViews(); track item.topic.id) {
+      <div class="topic-box">
+        <div class="topic-header" [class.topic-header--collapsed]="isCollapsed(item.topic.id)" (click)="toggleTopic(item.topic.id)">
+          <div style="flex: 1; width: 100%">
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <h2 class="topic-title">{{ isCollapsed(item.topic.id) ? '[+]' : '[-]' }} {{ item.topic.name }}</h2>
+
+              <div>
+                @if (item.progress?.improvement) {
+                  <span class="pixel-delta">
+                    ({{ item.progress!.improvement! > 0 ? '+' : '' }}{{ item.progress!.improvement! * 100 | number: '1.0-0' }}%)
+                  </span>
+                }
+
+                <span class="pixel-score">
+                  {{ item.progress?.competency != null ? getCompetencyPercent(item.progress?.competency) + '%' : 'NOT STARTED' }}
+                </span>
+              </div>
+            </div>
+
+            <div class="pixel-bar-wrapper">
+              <div class="pixel-bar">
+                <div
+                  class="pixel-bar-fill"
+                  [style.width.%]="getCompetencyPercent(item.progress?.competency)"
+                  [style.background-color]="getProgressColor(item.progress?.competency)"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        @if (!isCollapsed(item.topic.id)) {
+          @if (item.topic.explanation) {
+            <p class="topic-explanation">{{ item.topic.explanation }}</p>
+          }
+
+          <div class="concept-list">
+            @for (cItem of item.concepts; track cItem.concept.id) {
+              <div class="concept-row">
+                <div class="concept-row-top">
+                  <div>
+                    <div class="concept-title">{{ cItem.concept.name }}</div>
+                    @if (cItem.progress?.lastPracticedAt) {
+                      <div class="concept-meta">Last practiced: {{ cItem.progress!.lastPracticedAt!.toDate() | date: 'mediumDate' }}</div>
+                    }
+                  </div>
+
+                  <div>
+                    @if (cItem.progress?.improvement) {
+                      <span class="pixel-delta">
+                        ({{ cItem.progress!.improvement! > 0 ? '+' : '' }}{{ cItem.progress!.improvement! * 100 | number: '1.0-0' }}%)
+                      </span>
+                    }
+                    <span class="pixel-score">
+                      {{ cItem.progress?.competency != null ? getCompetencyPercent(cItem.progress?.competency) + '%' : '0%' }}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="pixel-bar-wrapper">
+                  <div class="pixel-bar pixel-bar--sm">
+                    <div
+                      class="pixel-bar-fill"
+                      [style.width.%]="getCompetencyPercent(cItem.progress?.competency)"
+                      [style.background-color]="getProgressColor(cItem.progress?.competency)"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+            } @empty {
+              <p class="concept-meta">No concepts defined for this topic yet.</p>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+}
