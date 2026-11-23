@@ -6,11 +6,13 @@ import { serverApiUrl } from 'app/config';
 import { AccountService } from 'app/core/auth';
 import { GameCard } from './game-card/game-card';
 
-interface Game {
+export interface Game {
   id: string;
   name: string;
   thumbnail: string;
   description: string;
+  status?: string;
+  experience?: string;
 }
 
 interface GameStat {
@@ -25,6 +27,25 @@ interface DashboardSummary {
   gameStats: GameStat[];
 }
 
+export const GAMES: Game[] = [
+  {
+    id: 'fact-or-fiction',
+    name: 'Fact or Fiction?',
+    thumbnail: '/content/images/ui/thumb_fof.png',
+    description: 'Decide whether legal claims are fact, fiction, or context-dependent and learn why',
+    status: 'New',
+    experience: 'Unfamiliar',
+  },
+  {
+    id: 'choose-the-outcome',
+    name: 'Choose the Outcome',
+    thumbnail: '/content/images/ui/thumb_bn.png',
+    description: 'Choose what happens next and discover how legal decisions shape the outcome.',
+    status: 'Optional',
+    experience: 'Familiar',
+  },
+];
+
 @Component({
   selector: 'jhi-games',
   templateUrl: './games.html',
@@ -38,20 +59,7 @@ export default class Games {
   private readonly router = inject(Router);
   private readonly http = inject(HttpClient);
 
-  protected readonly games: Game[] = [
-    {
-      id: 'fact-or-fiction',
-      name: 'Fact or Fiction?',
-      thumbnail: '/content/images/ui/thumb_fof.png',
-      description: 'Decide whether legal claims are fact, fiction, or context-dependent and learn why',
-    },
-    {
-      id: 'choose-the-outcome',
-      name: 'Choose the Outcome',
-      thumbnail: '/content/images/ui/thumb_bn.png',
-      description: 'Choose what happens next and discover how legal decisions shape the outcome.',
-    },
-  ];
+  protected readonly games = GAMES;
 
   constructor() {
     effect(onCleanup => {

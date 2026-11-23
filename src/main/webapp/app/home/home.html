@@ -22,9 +22,18 @@
 
 <div class="dashboard-grid">
   <jhi-gui-window class="recommendation-box" [title]="uiText.dashboard.dailyRecommendation" width="100%" height="100%">
-    <p>Choose a game to practice your legal knowledge today.</p>
+    @if (recommendedGame(); as game) {
+      <div class="recommended-game">
+        <a class="recommended-game-link" [routerLink]="['/games', game.id]">
+          <img class="pixel-art recommended-game-thumb" [src]="game.thumbnail" [alt]="game.name" />
+        </a>
 
-    <jhi-gui-button caption="Browse Games" color="var(--ui-button-gold)" width="200px" height="48px" (buttonClick)="browseGames()" />
+        <div class="recommended-game-info">
+          <div class="font-field">{{ game.name }}</div>
+          <jhi-gui-button caption="Browse Games" color="var(--ui-button-gold)" width="200px" height="48px" (buttonClick)="browseGames()" />
+        </div>
+      </div>
+    }
   </jhi-gui-window>
 
   <div class="dashboard-box profile-box">

@@ -123,7 +123,7 @@ Generic styles
   padding: 1.5%;
   margin-top: calc(5 * var(--pixel));
 
-  border: var(--pixel) solid var(--ui-kip-gold);
+  border: calc(1.5 * var(--pixel)) solid var(--ui-kip-gold);
 
   background-color: var(--ui-window-background-dim);
 }
@@ -349,7 +349,7 @@ Dashboard boxes
 .dashboard-box {
   background: var(--ui-window-background);
 
-  border: var(--pixel) solid var(--ui-kip-gold);
+  border: calc(1.5 * var(--pixel)) solid var(--ui-kip-gold);
 
   padding: calc(0 * var(--pixel));
   min-height: calc(45 * var(--pixel));
@@ -364,7 +364,7 @@ Dashboard boxes
   background: var(--ui-kip-gold);
   color: var(--ui-button-highlight);
 
-  margin: calc(-1 * var(--pixel)) calc(0 * var(--pixel)) calc(0 * var(--pixel)) calc(0 * var(--pixel));
+  margin: calc(-2 * var(--pixel)) calc(0 * var(--pixel)) calc(0 * var(--pixel)) calc(0 * var(--pixel));
 
   padding-inline: calc(2 * var(--pixel));
 

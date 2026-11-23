@@ -27,19 +27,6 @@
   image-rendering: pixelated;
 }
 
-.gui-button::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-
-  background-image: url('/content/images/ui/button_center.png');
-  background-repeat: repeat;
-  background-size: calc(8 * var(--pixel)) calc(8 * var(--pixel));
-
-  opacity: 0.15;
-  pointer-events: none;
-}
-
 .gui-button__caption {
   position: relative;
   z-index: 1;

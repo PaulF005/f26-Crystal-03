@@ -17,7 +17,7 @@ KIP Progress Page Styles
 }
 
 .topic-box {
-  border: var(--pixel) solid var(--ui-kip-gold);
+  border: calc(1.5 * var(--pixel)) solid var(--ui-kip-gold);
   padding: calc(4 * var(--pixel));
 }
 
@@ -28,7 +28,7 @@ KIP Progress Page Styles
   gap: calc(4 * var(--pixel));
   cursor: pointer;
   padding-bottom: calc(3 * var(--pixel));
-  border-bottom: var(--pixel) solid var(--ui-kip-gold);
+  border-bottom: calc(1.5 * var(--pixel)) solid var(--ui-kip-gold);
   user-select: none;
 }
 
@@ -66,7 +66,7 @@ Pixel Progress Bar
   flex: 1;
   width: 100%;
   height: calc(7 * var(--pixel, 2px));
-  border: var(--pixel, 2px) solid var(--ui-kip-gold, #d4af37);
+  border: calc(1.5 * var(--pixel, 2px)) solid var(--ui-kip-gold, #d4af37);
   background: rgba(0, 0, 0, 0.25);
   padding: var(--pixel, 2px);
   box-sizing: border-box;
@@ -111,7 +111,7 @@ Concept Rows
   flex-direction: column;
   padding: calc(3 * var(--pixel)) 0;
   padding-right: calc(4 * var(--pixel));
-  border-bottom: var(--pixel) solid var(--ui-kip-gold);
+  border-bottom: calc(1.5 * var(--pixel)) solid var(--ui-kip-gold);
 }
 
 .concept-row:last-child {
