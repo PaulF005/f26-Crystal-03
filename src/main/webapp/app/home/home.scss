@@ -22,6 +22,7 @@ KIP Homepage Styles
 
 .dashboard-grid > .dashboard-box > :not(h2) {
   margin-left: calc(4 * var(--pixel));
+  margin-right: calc(4 * var(--pixel));
 }
 
 .recommendation-box > .btn {
@@ -107,7 +108,7 @@ Recent Activity
   flex-direction: column;
   align-items: center;
   text-align: center;
-  border: var(--pixel) solid var(--ui-kip-gold);
+  border: calc(1.5 * var(--pixel)) solid var(--ui-kip-gold);
   padding: calc(3 * var(--pixel));
 }
 
@@ -124,6 +125,43 @@ Recent Activity
 .profile-stat-label {
   font-family: 'body', sans-serif;
   font-size: var(--font-body-size);
+}
+
+.profile-box p,
+.profile-stat-label {
+  font-size: calc(8 * var(--pixel));
+}
+
+.profile-stat-value {
+  font-size: calc(20 * var(--pixel));
+}
+
+// Recommended game stuff
+.recommended-game {
+  display: flex;
+  align-items: center;
+  gap: calc(4 * var(--pixel));
+  margin-top: calc(4 * var(--pixel));
+  margin-right: calc(4 * var(--pixel));
+  margin-bottom: calc(4 * var(--pixel));
+}
+
+.recommended-game-link {
+  flex: 0 0 60%;
+  width: 60%;
+}
+
+.recommended-game-thumb {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.recommended-game-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: calc(3 * var(--pixel));
 }
 
 /* With five stats, center the last one across the second row. */
