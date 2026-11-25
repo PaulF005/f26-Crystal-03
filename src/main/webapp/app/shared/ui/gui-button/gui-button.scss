@@ -2,6 +2,8 @@
   --gui-button-color: var(--ui-button-gold);
 
   position: relative;
+  box-sizing: border-box;
+  max-width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -30,6 +32,7 @@
 .gui-button__caption {
   position: relative;
   z-index: 1;
+  white-space: nowrap;
 }
 
 .gui-button:hover {
